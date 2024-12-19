@@ -1,0 +1,141 @@
+{
+  "pages": [
+    {
+      "id": 1,
+      "title": "The Hotel",
+      "image": "https://q-xx.bstatic.com/xdata/images/hotel/max500/559584698.jpg?k=fbf75d6c59888fe8d14eb99064b0af4ceea2258632178345751d8e2fa6e843c7&o="
+    },
+    {
+      "id": 2,
+      "title": "Rooms",
+      "image": "https://hydehotels.com/wp-content/uploads/sites/4/2024/05/hydebodrum-bed-beigeheadboard-creamseat.jpg"
+    },
+    {
+      "id": 3,
+      "title": "Restaurants",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJ0EqHI6h5QgFTXGG_1i2FADG1xulRbVtecA&s"
+    },
+    {
+      "id": 4,
+      "title": "Spa",
+      "image": "https://thegrandhotram.com/wp-content/uploads/2021/08/S43695-min.jpg"
+    },
+    {
+      "id": 5,
+      "title": "Events",
+      "image": "https://blog.topcv.vn/wp-content/uploads/2021/07/sk2uEvents_Page_Header_2903ed9c-40c1-4f6c-9a69-70bb8415295b.jpg"
+    },
+    {
+      "id": 6,
+      "title": "Kids Club",
+      "image": "https://sp-ao.shortpixel.ai/client/to_webp,q_glossy,ret_img/https://neworienthoteldanang.com/wp-content/uploads/2023/09/kid1-1.jpg"
+    },
+    {
+      "id": 7,
+      "title": "Gallery",
+      "image": "https://artgallery.yale.edu/sites/default/files/styles/hero_small/public/2023-01/ag-doc-2281-0036-pub.jpg?h=147a4df9&itok=uclO7OrF"
+    }
+  ],
+  "features": [
+    {
+      "id": 1,
+      "title": "Blog"
+    },
+    {
+      "id": 2,
+      "title": "Offers"
+    },
+    {
+      "id": 3,
+      "title": "Gift Cards"
+    },
+    {
+      "id": 4,
+      "title": "Weddings"
+    },
+    {
+      "id": 5,
+      "title": "Meeting Rooms"
+    },
+    {
+      "id": 6,
+      "title": "Conference Facilities"
+    },
+    {
+      "id": 7,
+      "title": "Contact"
+    },
+    {
+      "id": 8,
+      "title": "Work with us"
+    }
+  ],
+  "views": [
+    {
+      "id": 1,
+      "title": "Premier",
+      "image": "https://aguasdeibiza.com/wp-content/uploads/2019/09/Aguasdeibiza-2019-070-HABITACIONES-ALTA-edit.jpg",
+      "description": "An Ibiza style room with a natural set of design details to add up to a king size bed and a large private terrace. Contemporary elements like copper and limestone, or pebble stone floor in its large bathroom, a bathtub and a separate shower make this space is a magnificent amenity in itself."
+    },
+    {
+      "id": 2,
+      "title": "Junior Suite Sea View",
+      "image": "https://aguasdeibiza.com/wp-content/uploads/2023/09/AGUAS-DE-IBIZA-2023-080-baja-1200x900.jpg",
+      "description": "When the idea of a perfect marine retreat includes unbeatable sea sights, this is the perfect choice. A big and bright room with views of Formentera Island and its pristine waters, combined with a beautiful modern furniture."
+    },
+    {
+      "id": 3,
+      "title": "Cloud 9 Sea View",
+      "image": "https://aguasdeibiza.com/wp-content/uploads/2023/07/C9SV-2023-004-baja-1200x675.jpg",
+      "description": "Floor-to-ceiling windows with an uninterrupted view of the Mediterranean and Santa Eulalia bay. A living room of your own, a big bed and bathroom including a vanity top with a double sink, bathtub and independent shower. The most memorable experience for the eyes and the mind."
+    }
+  ],
+  "luxury": [
+    {
+      "id": 1,
+      "title": "Ibiza",
+      "image": "https://aguasdeibiza.com/wp-content/uploads/2019/03/aguasdeibiza-esvedra02-1200x800.jpg",
+      "description": "Island vacation full with natural light. White. Green. Turquoise. Sun and water together with a perfect design and textures. Airy spacious rooms in a 5 star hotel in Santa Eulalia for the perfect Ibiza mood."
+    },
+    {
+      "id": 2,
+      "title": "EcoLuxury",
+      "image": "https://aguasdeibiza.com/wp-content/uploads/2019/09/Aguasdeibiza-2019-135-PISCINA-ALTA-EDIT-1200x1038.jpg",
+      "description": "Here comes natural as the new conceptual luxury at a 5 star hotel in Ibiza. The fantastical Aguas de Ibiza has been recognized and honoured as the luxury boutique hotel in Ibiza with the most innovative and ambitious concept of what it means to be environmentally friendly."
+    }
+  ],
+  "packages": [
+    {
+      "id": 1,
+      "title": "Long Stay Promotion",
+      "discount": "Upt to 10% off",
+
+      "image": "https://aguasdeibiza.com/wp-content/uploads/2019/09/Aguasdeibiza-2019-152-TERRAZAS-ALTA-Velo-768x1024.jpg",
+      "description": [
+        "We’d like you to stay longer with us!",
+        "Get up to 10% discount for stays of 7 nights or more."
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Flexible Rates",
+      "discount": "No cancellation fee",
+      "image": "https://aguasdeibiza.com/wp-content/uploads/2020/03/AGUASDEIBIZA-2019-127-baja-1024x768.jpg",
+      "description": [
+        "We are flexible, you are free",
+        "Make your reservation now without, any cancellation fee (up tp 72 hours previous arrival) and make payment upon check-in.",
+        "*Offer valid for stays from April 8 to October 31."
+      ]
+    },
+    {
+      "id": 3,
+      "discount": "10% Off",
+      "title": "Loyalty Deal",
+      "image": "https://aguasdeibiza.com/wp-content/uploads/2019/09/Aguasdeibiza-2019-142-TERRAZAS-MEDIA-768x1024.jpg",
+      "description": [
+        "Have you already stayed with us? We’d like you back!",
+        "Get a 10% discount on your next reservation by calling directly to 971 31 99 62 or writing an email to reservas@aguasdeibiza.com."
+      ]
+    }
+  ]
+}

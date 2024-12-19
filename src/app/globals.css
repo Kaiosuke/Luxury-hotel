@@ -1,21 +1,143 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,100..900;1,100..900&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  background: #fff;
+  font-family: "Merriweather", serif;
+  font-weight: 300;
+  font-optical-sizing: auto;
+}
+:root {
+  /* --background: #ffffff;
+  --foreground: #0a0a0a;
+  --card: #ffffff;
+  --card-foreground: #0a0a0a;
+  --popover: #ffffff;
+  --popover-foreground: #0a0a0a; */
+  --primary: #fff;
+  --primary-foreground: #ffffff33;
+  --secondary: #94b2bb;
+  --secondary-foreground: #94b2bb;
+  /* --muted: #f4f4f4;
+  --muted-foreground: #757575; */
+  --accent: #ffffff33;
+  --accent-foreground: #fff;
+  /* --destructive: #d10000;
+  --destructive-foreground: #fafafa;
+  --border: #e5e5e5;
+  --input: #e5e5e5;
+  --ring: #0a0a0a;
+  --chart-1: #fa1e1e;
+  --chart-2: #2abf82;
+  --chart-3: #3a7b94;
+  --chart-4: #a6d567;
+  --chart-5: #f2db5a;
+  --radius: 0.5rem; */
+}
+
+/* .dark {
+  --background: #0a0a0a;
+  --foreground: #ffffff;
+  --card: #0a0a0a;
+  --card-foreground: #ffffff;
+  --popover: #0a0a0a;
+  --popover-foreground: #ffffff;
+  --primary: #fafafa;
+  --primary-foreground: #1a1a1a;
+  --secondary: #292929;
+  --secondary-foreground: #ffffff;
+  --muted: #292929;
+  --muted-foreground: #a3a3a3;
+  --accent: #292929;
+  --accent-foreground: #ffffff;
+  --destructive: #7a0000;
+  --destructive-foreground: #ffffff;
+  --border: #292929;
+  --input: #292929;
+  --ring: #d4d4d4;
+  --chart-1: #0066ff;
+  --chart-2: #29c480;
+  --chart-3: #ffcc00;
+  --chart-4: #c94cf2;
+  --chart-5: #ff4c7d;
+} */
+
+/* @layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+} */
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
+}
+
+@layer components {
+  /* Over lay */
+  .overlay {
+    position: relative;
+  }
+  .overlay::before {
+    content: "";
+    @apply absolute inset-0 bg-black bg-opacity-30;
+    z-index: 1;
+  }
+  /* Padding */
+  .padding-main {
+    @apply xl:px-28 md:px-10 sm:px-6 px-3;
+  }
+  .pd-high {
+    @apply lg:h-[180px] md:h-[96px] h-[64px];
+  }
+  .pd-medium {
+    @apply lg:h-[120px] md:h-[64px] h-[32px];
+  }
+
+  /* Animation */
+  .animation-slow {
+    @apply transition duration-700 ease-in-out;
+  }
+
+  .animation-normal {
+    @apply transition duration-500 ease-in-out;
+  }
+
+  /* Text */
+  .text-size-7xl {
+    @apply lg:text-7xl md:text-5xl text-4xl;
+  }
+
+  .text-size-5xl {
+    @apply lg:text-5xl md:text-3xl text-2xl;
+  }
+
+  .text-size-4xl {
+    @apply lg:text-4xl md:text-3xl text-2xl;
+  }
+
+  .text-size-3xl {
+    @apply lg:text-3xl md:text-2xl text-xl;
+  }
+
+  .text-size-2xl {
+    @apply lg:text-2xl md:text-xl text-lg;
+  }
 }
