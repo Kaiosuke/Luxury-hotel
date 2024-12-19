@@ -76,6 +76,7 @@ const Home = () => {
           See all offers
         </Link>
       </div>
+
       <div className="pd-high"></div>
     </>
   );

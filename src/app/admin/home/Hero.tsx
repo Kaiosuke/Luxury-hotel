@@ -13,21 +13,28 @@ import Link from "next/link";
 
 import { FaArrowDownLong, FaChevronDown } from "react-icons/fa6";
 import { useState } from "react";
+import { BannerLayer, ParallaxBanner } from "react-scroll-parallax";
 
 const HeroSection = () => {
   const [dateCheckIn, setDateCheckIn] = useState<Date>();
   const [dateCheckOut, setDateCheckOut] = useState<Date>();
 
-  return (
-    <section className="text-primary">
-      <div className="relative">
-        <div className="h-screen w-full ">
-          <img
-            className="h-full w-full object-cover"
-            src="https://aguasdeibiza.com/wp-content/uploads/2019/01/aguasdeibiza-404.jpg"
-            alt="banner"
-          />
-        </div>
+  const background: BannerLayer = {
+    image:
+      "https://aguasdeibiza.com/wp-content/uploads/2019/01/aguasdeibiza-404.jpg",
+    translateY: [0, 50],
+    opacity: [1, 0.3],
+    scale: [1.05, 1, "easeOutCubic"],
+    shouldAlwaysCompleteAnimation: true,
+  };
+
+  const headline: BannerLayer = {
+    translateY: [0, 30],
+    scale: [1, 1.05, "easeOutCubic"],
+    shouldAlwaysCompleteAnimation: true,
+    expanded: false,
+    children: (
+      <div className="absolute inset-0 flex items-center justify-center">
         <div className="absolute lg:bottom-[220px] bottom-[80px] padding-main xl:w-full lg:w-2/3 w-full">
           <h1 className="text-size-7xl">
             Slip your body and mind <br />
@@ -42,6 +49,18 @@ const HeroSection = () => {
             </Link>
           </div>
         </div>
+      </div>
+    ),
+  };
+
+  return (
+    <section className="text-primary">
+      <div className="relative">
+        <ParallaxBanner
+          layers={[background, headline]}
+          className="h-screen bg-gray-900"
+        />
+
         <div className="border-t border-white xl:px-28 md:px-10 px-6 absolute bottom-0 w-full lg:block hidden">
           <div className="flex justify-between">
             <div className="h-20">

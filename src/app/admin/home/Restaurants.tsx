@@ -1,3 +1,4 @@
+import MotionWrapper from "@/app/_components/MotionWrapper";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import Image from "next/image";
 import React from "react";
@@ -5,7 +6,7 @@ import React from "react";
 const Restaurants = () => {
   return (
     <section className="text-black padding-main">
-      <div className="grid grid-cols-1 lg:grid-cols-2 items-center">
+      <MotionWrapper className="grid grid-cols-1 lg:grid-cols-2 items-center">
         <div>
           <span>Restaurants</span>
           <h3 className="text-size-5xl">
@@ -23,7 +24,7 @@ const Restaurants = () => {
             />
           </AspectRatio>
         </div>
-      </div>
+      </MotionWrapper>
     </section>
   );
 };

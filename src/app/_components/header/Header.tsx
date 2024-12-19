@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { RxHamburgerMenu } from "react-icons/rx";
 import data from "../../data.json";
 import { HiMiniXMark } from "react-icons/hi2";
+import { motion, useScroll, useSpring } from "framer-motion";
 
 const Header = () => {
   const { pages, features } = data;
@@ -16,9 +17,16 @@ const Header = () => {
 
   const [isScrolled, setIsScrolled] = useState(false);
 
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001,
+  });
+
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+      setIsScrolled(window.scrollY > 600);
     };
     window.addEventListener("scroll", handleScroll);
     return () => {
@@ -151,6 +159,7 @@ const Header = () => {
           </nav>
         </div>
       </div>
+      <motion.div className="progress-bar z-[9999]" style={{ scaleX }} />
     </header>
   );
 };

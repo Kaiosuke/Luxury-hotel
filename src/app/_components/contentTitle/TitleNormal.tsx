@@ -1,10 +1,11 @@
 import React from "react";
+import MotionWrapper from "../MotionWrapper";
 
 const TitleNormal = ({ title }: { title: string }) => {
   return (
-    <div className="lg:w-2/3 lg:px-0 padding-main m-auto">
+    <MotionWrapper className="lg:w-2/3 lg:px-0 padding-main m-auto">
       <p className="text-size-3xl text-center">{title}</p>
-    </div>
+    </MotionWrapper>
   );
 };
 

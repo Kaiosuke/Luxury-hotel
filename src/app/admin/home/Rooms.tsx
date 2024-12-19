@@ -3,6 +3,7 @@ import data from "../../data.json";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import Image from "next/image";
 import Link from "next/link";
+import MotionWrapper from "@/app/_components/MotionWrapper";
 
 const Rooms = () => {
   const { views } = data;
@@ -11,7 +12,7 @@ const Rooms = () => {
     <section className="padding-main text-white">
       <div className="grid lg:grid-cols-3 gap-6 grid-cols-1">
         {views.map((view) => (
-          <div key={view.id}>
+          <MotionWrapper key={view.id}>
             <Link href="#!" className="relative group/view cursor-pointer">
               <AspectRatio
                 ratio={8 / 10}
@@ -31,7 +32,7 @@ const Rooms = () => {
                 </p>
               </div>
             </Link>
-          </div>
+          </MotionWrapper>
         ))}
       </div>
     </section>

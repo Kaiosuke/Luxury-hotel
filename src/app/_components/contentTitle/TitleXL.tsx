@@ -1,5 +1,6 @@
 import Link from "next/link";
 import React from "react";
+import MotionWrapper from "../MotionWrapper";
 
 interface TLinkContext {
   href: string;
@@ -14,7 +15,7 @@ const TitleXL = ({
   links: TLinkContext[];
 }) => {
   return (
-    <div className="lg:w-2/3 lg:px-0 padding-main m-auto text-center">
+    <MotionWrapper className="lg:w-2/3 lg:px-0 padding-main m-auto text-center">
       <h2 className="text-size-5xl">{title}</h2>
       <div className="flex items-center gap-4 justify-center mt-6">
         {links.map((value, index) => (
@@ -27,7 +28,7 @@ const TitleXL = ({
           </Link>
         ))}
       </div>
-    </div>
+    </MotionWrapper>
   );
 };
 

@@ -38,37 +38,49 @@ const Footer = () => {
         </p>
       </div>
       <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className=" mt-10 grid md:grid-cols-2 grid-cols-1 gap-4"
-        >
-          <FormField
-            control={form.control}
-            name="username"
-            render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                  <Input placeholder="username" {...field} />
-                </FormControl>
-                <FormDescription />
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                  <Input type="email" placeholder="email" {...field} />
-                </FormControl>
-                <FormDescription />
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <Button variant="outline" type="submit" className="w-fit text-white">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="mt-10">
+          <div className="sm:flex gap-4">
+            <FormField
+              control={form.control}
+              name="username"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input
+                      placeholder="username"
+                      className="lg:w-[400px] md:w-[300px]"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormDescription />
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input
+                      type="email"
+                      placeholder="email"
+                      className="lg:w-[400px] md:w-[300px]"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormDescription />
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+          <Button
+            variant="outline"
+            type="submit"
+            className="w-fit text-white mt-4"
+          >
             Subscribe
           </Button>
         </form>

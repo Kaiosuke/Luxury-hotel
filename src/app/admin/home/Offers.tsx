@@ -3,12 +3,13 @@ import data from "@/app/data.json";
 import Link from "next/link";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import Image from "next/image";
+import MotionWrapper from "@/app/_components/MotionWrapper";
 
 const Offers = () => {
   const { packages } = data;
   return (
     <section className="padding-main text-white">
-      <div className="grid lg:grid-cols-3 gap-6 grid-cols-1">
+      <MotionWrapper className="grid lg:grid-cols-3 gap-6 grid-cols-1">
         {packages.map((pack) => (
           <div key={pack.id}>
             <Link href="#!" className="relative group/pack cursor-pointer">
@@ -43,7 +44,7 @@ const Offers = () => {
             </Link>
           </div>
         ))}
-      </div>
+      </MotionWrapper>
     </section>
   );
 };
