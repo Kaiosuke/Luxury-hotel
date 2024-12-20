@@ -1,12 +1,11 @@
 "use client";
-import React from "react";
 import { Button } from "@/components/ui/button";
+import { motion, useScroll, useSpring } from "framer-motion";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { HiMiniXMark } from "react-icons/hi2";
 import { RxHamburgerMenu } from "react-icons/rx";
 import data from "../../data.json";
-import { HiMiniXMark } from "react-icons/hi2";
-import { motion, useScroll, useSpring } from "framer-motion";
 
 const Header = () => {
   const { pages, features } = data;
@@ -61,7 +60,7 @@ const Header = () => {
             className={`md:text-lg text-base ${
               isScrolled &&
               !openMenu &&
-              "border-black text-black hover:text-black hover:bg-black hover:bg-opacity-10 transition duration-300"
+              "border-third text-black hover:border-white transition duration-300"
             }`}
           >
             Book now
@@ -102,7 +101,10 @@ const Header = () => {
                   }
                   className="hover:text-gray-600 transition duration-300 w-fit"
                 >
-                  <Link href="#!" className="lg:text-3xl md:text-2xl text-xl">
+                  <Link
+                    href={page.href}
+                    className="lg:text-3xl md:text-2xl text-xl"
+                  >
                     {page.title}
                   </Link>
                 </li>

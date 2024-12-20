@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
@@ -15,15 +16,22 @@ import { FaArrowDownLong, FaChevronDown } from "react-icons/fa6";
 import { useState } from "react";
 import { BannerLayer, ParallaxBanner } from "react-scroll-parallax";
 
-const HeroSection = () => {
+interface IHeroImage {
+  image: string;
+  title: string;
+  linkContext: string;
+  link?: string;
+}
+
+const HeroImage = ({ image, title, linkContext, link }: IHeroImage) => {
   const [dateCheckIn, setDateCheckIn] = useState<Date>();
   const [dateCheckOut, setDateCheckOut] = useState<Date>();
 
   const background: BannerLayer = {
-    image:
-      "https://aguasdeibiza.com/wp-content/uploads/2019/01/aguasdeibiza-404.jpg",
-    translateY: [0, 50],
+    image: image,
+    translateY: [0, 10],
     opacity: [1, 0.3],
+    className: "overlay",
     scale: [1.05, 1, "easeOutCubic"],
     shouldAlwaysCompleteAnimation: true,
   };
@@ -34,20 +42,18 @@ const HeroSection = () => {
     shouldAlwaysCompleteAnimation: true,
     expanded: false,
     children: (
-      <div className="absolute inset-0 flex items-center justify-center">
-        <div className="absolute lg:bottom-[220px] bottom-[80px] padding-main xl:w-full lg:w-2/3 w-full">
-          <h1 className="text-size-7xl">
-            Slip your body and mind <br />
-            into the spirit of Ibiza.
+      <div className="absolute inset-0">
+        <div className="absolute lg:bottom-[220px] bottom-[80px] padding-main">
+          <h1 className="text-size-7xl max-w-[90%] lg:max-w-[60%] break-words">
+            {title}
           </h1>
-          <div className="mt-6 flex items-center gap-4">
-            <span className="text-base md:text-lg">
-              A Five Star Grand Luxe Hotel to get inspired
-            </span>
-            <Link href="#!">
-              <FaArrowDownLong />
-            </Link>
-          </div>
+          <Link
+            href={link ? link : "#!"}
+            className="text-base mt-6 md:text-lg flex items-center gap-4"
+          >
+            {linkContext}
+            <FaArrowDownLong />
+          </Link>
         </div>
       </div>
     ),
@@ -61,7 +67,7 @@ const HeroSection = () => {
           className="h-screen bg-gray-900"
         />
 
-        <div className="border-t border-white xl:px-28 md:px-10 px-6 absolute bottom-0 w-full lg:block hidden">
+        <div className="border-t border-white xl:px-28 md:px-10 px-6 absolute bottom-0 w-full lg:block hidden z-[2]">
           <div className="flex justify-between">
             <div className="h-20">
               <Popover>
@@ -126,7 +132,9 @@ const HeroSection = () => {
                 variant={"outline"}
                 className="h-full border-none text-xl"
               >
-                <Link href="#!">Check-availability</Link>
+                <Link href="#!" className="text-white">
+                  Check-availability
+                </Link>
               </Button>
             </div>
           </div>
@@ -136,4 +144,4 @@ const HeroSection = () => {
   );
 };
 
-export default HeroSection;
+export default HeroImage;

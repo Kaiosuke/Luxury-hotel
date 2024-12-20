@@ -18,6 +18,10 @@ export default {
           DEFAULT: "var(--secondary)",
           foreground: "var(--secondary-foreground)",
         },
+        third: {
+          DEFAULT: "var(--third)",
+          foreground: "var(--third-foreground)",
+        },
         background: "var(--background)",
         foreground: "var(--foreground)",
         card: {
