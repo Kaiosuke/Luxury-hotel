@@ -1,11 +1,7 @@
-import React from "react";
 import data from "@/app/data.json";
 
-import Image from "next/image";
-import { AspectRatio } from "@/components/ui/aspect-ratio";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
 import TitleXL from "@/app/_components/contentTitle/TitleXL";
+import Link from "next/link";
 
 const RestaurantList = () => {
   const { restaurants } = data;

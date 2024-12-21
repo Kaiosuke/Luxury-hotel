@@ -4,18 +4,10 @@ import Link from "next/link";
 
 import { FaArrowDownLong } from "react-icons/fa6";
 import { BannerLayer, ParallaxBanner } from "react-scroll-parallax";
-import BookingCalendar from "./BookingCalendar";
 
-interface IHeroImage {
-  image: string;
-  title: string;
-  linkContext: string;
-  link?: string;
-}
-
-const HeroImage = ({ image, title, linkContext, link }: IHeroImage) => {
+const BookingHero = () => {
   const background: BannerLayer = {
-    image: image,
+    image: "//aguasdeibiza.com/wp-content/uploads/2019/01/aguasdeibiza-404.jpg",
     translateY: [0, 10],
     opacity: [1, 0.3],
     className: "overlay",
@@ -32,13 +24,13 @@ const HeroImage = ({ image, title, linkContext, link }: IHeroImage) => {
       <div className="absolute inset-0">
         <div className="absolute lg:bottom-[140px] bottom-[80px] padding-main">
           <h1 className="text-size-7xl max-w-[90%] lg:max-w-[60%] break-words bg-animate">
-            {title}
+            Slip your body and mind into the spirit of Ibiza.
           </h1>
           <Link
-            href={link ? link : "#!"}
+            href={"#!"}
             className="text-base mt-6 md:text-lg flex items-center gap-4"
           >
-            {linkContext}
+            A Five Star Grand Luxe Hotel to get inspired
             <FaArrowDownLong />
           </Link>
         </div>
@@ -53,11 +45,9 @@ const HeroImage = ({ image, title, linkContext, link }: IHeroImage) => {
           layers={[background, headline]}
           className="h-screen bg-gray-900"
         />
-
-        <BookingCalendar />
       </div>
     </section>
   );
 };
 
-export default HeroImage;
+export default BookingHero;

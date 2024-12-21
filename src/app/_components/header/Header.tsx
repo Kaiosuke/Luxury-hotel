@@ -38,7 +38,7 @@ const Header = () => {
 
   return (
     <header
-      className={`text-primary fixed w-full z-[9999] animation-slow
+      className={`text-primary fixed w-full z-[40] animation-slow
         ${isScrolled ? "bg-primary" : "bg-transparent"} 
         ${
           isScrolled && scrollDir === "down"
