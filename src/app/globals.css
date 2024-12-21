@@ -108,7 +108,7 @@ body {
   }
   /* Padding */
   .padding-main {
-    @apply 2xl:px-40 lg:px-28 md:px-10 sm:px-6 px-3;
+    @apply 2xl:px-40 xl:px-28 lg:px-14 md:px-10 sm:px-6 px-3;
   }
   .pd-high {
     @apply lg:h-[180px] md:h-[96px] h-[64px];
@@ -186,6 +186,12 @@ body {
   /* Link */
   .link-under {
     @apply text-third underline underline-offset-8 text-size-2xl decoration-gray-200 hover:decoration-secondary animation-fast;
+  }
+
+  /* line through */
+
+  .line-1 {
+    @apply w-full h-[1px] bg-third my-6;
   }
 }
 

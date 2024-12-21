@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Select,
   SelectContent,
@@ -6,14 +5,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Copy } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Dialog,
   DialogClose,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -22,18 +20,27 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Slider } from "@/components/ui/slider";
-import {
-  InputOTP,
-  InputOTPGroup,
-  InputOTPSeparator,
-  InputOTPSlot,
-} from "@/components/ui/input-otp";
+import { useState } from "react";
+import { FaAngleDown } from "react-icons/fa6";
 
 const BookingFilter = () => {
+  const [price, setPrice] = useState(120);
+
+  const handleSliderChange = (value: number[]) => {
+    setPrice(value[0]);
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = +e.target.value;
+
+    if (value >= 0 && value <= 400) {
+      setPrice(value);
+    }
+  };
+
   return (
-    <div className="flex items-center gap-6">
+    <div className="flex items-center sm:gap-6 gap-2">
       <Select>
         <SelectTrigger className="w-[180px] md:py-6">
           <SelectValue
@@ -72,13 +79,15 @@ const BookingFilter = () => {
 
       <Dialog>
         <DialogTrigger asChild>
-          <Button variant="secondary">Filters</Button>
+          <Button variant="secondary">
+            Filters <FaAngleDown />
+          </Button>
         </DialogTrigger>
         <DialogContent className="bg-secondary text-primary">
           <DialogHeader>
             <DialogTitle className="md:text-2xl">Filters</DialogTitle>
           </DialogHeader>
-          <div className="grid grid-cols-2 items-start w-full">
+          <div className="grid sm:grid-cols-2 grid-cols-1 items-start w-full">
             <RadioGroup defaultValue="comfortable">
               <h3 className="text-size-xl">Display</h3>
               <div className="flex items-center space-x-2">
@@ -227,22 +236,29 @@ const BookingFilter = () => {
               <h3 className="text-size-xl">Price (avg/night)</h3>
               <div className="flex items-center space-x-2">
                 <Slider
-                  defaultValue={[33]}
-                  max={100}
-                  step={1}
+                  defaultValue={[price]}
+                  max={400}
+                  step={10}
+                  onValueChange={handleSliderChange}
                   className="bg-red-200"
                 />
               </div>
               <div className=" mt-4 w-full">
                 <div className="flex items-center w-full gap-2">
-                  <Input type="number" className="w-full" placeholder="Price" />
+                  <Input
+                    type="number"
+                    className="w-full"
+                    value={price}
+                    onChange={(e) => setPrice(+e.target.value)}
+                    placeholder="Price"
+                  />
                   To
-                  <Input type="number" placeholder="Price" />
+                  <Input type="number" placeholder="460" readOnly />
                 </div>
               </div>
             </div>
           </div>
-          <DialogFooter className="sm:justify-start">
+          <DialogFooter className="sm:justify-center">
             <DialogClose asChild>
               <Button type="reset" variant="secondary">
                 Save

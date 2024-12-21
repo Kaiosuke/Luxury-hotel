@@ -150,7 +150,7 @@
       "id": 1,
       "thumbnail": "https://aguasdeibiza.com/wp-content/uploads/2024/12/aguas-de-ibiza-11-2024-S-1004_web.jpg",
       "title": "Dreamer",
-      "quantity": 12,
+      "quantity": 3,
       "description": "Calling all lovers of the Feng Shui principles to enter these interiors made of natural elements for their most intimate and pleasant experience. Lose yourself in your privacy while the sun lights up the iridescent tiles recreating seashells… and enter your most magical dreams.",
       "quickDes": [
         "34 – 40 sqm (inc. terrace)",
@@ -171,19 +171,22 @@
       "square": "34 to 40 sqm",
       "typeBed": "1 King bed",
       "sleeps": 3,
-      "type": [
+      "types": [
         {
           "typeName": "Early Booking - Best Rate",
+          "extensions": ["Deposit Required"],
           "price": 280,
           "typeDescription": "Room only. Rate includes spa access and WiFi. Touristic Tax not included. Full prepayment is required at time of booking and it is not refundable in case of cancellation or modification."
         },
         {
           "typeName": "Early Booking with Breakfast - Best Rate",
+          "extensions": ["Deposit Required", "Breakfast Included"],
           "price": 320,
           "typeDescription": "Rate includes breakfast, spa access and WiFi. Touristic Tax not included. Full prepayment is required at time of booking and it is not refundable in case of cancellation or modification."
         },
         {
           "typeName": "Early Booking",
+          "extensions": ["Deposit Required"],
           "price": 240,
           "typeDescription": "Rate is room only and includes spa access and WiFi. Touristic Tax not included. The credit card used to make the reservation will be requested upon arrival."
         }
@@ -238,19 +241,23 @@
       "square": "35 sqm",
       "typeBed": "1 King bed",
       "sleeps": 3,
-      "type": [
+      "types": [
         {
           "typeName": "Early Booking - Best Rate",
+          "extensions": ["Deposit Required"],
           "price": 290,
           "typeDescription": "Room only. Rate includes spa access and WiFi. Touristic Tax not included. Full prepayment is required at time of booking and it is not refundable in case of cancellation or modification."
         },
         {
           "typeName": "Early Booking with Breakfast - Best Rate",
+          "extensions": ["Deposit Required", "Breakfast Included"],
+
           "price": 330,
           "typeDescription": "Rate includes breakfast, spa access and WiFi. Touristic Tax not included. Full prepayment is required at time of booking and it is not refundable in case of cancellation or modification."
         },
         {
           "typeName": "Early Booking",
+          "extensions": ["Deposit Required"],
           "price": 250,
           "typeDescription": "Rate is room only and includes spa access and WiFi. Touristic Tax not included. The credit card used to make the reservation will be requested upon arrival."
         }
@@ -305,20 +312,23 @@
       "square": "34 to 40 sqm",
       "typeBed": "2 Twin beds",
       "sleeps": 2,
-      "type": [
+      "types": [
         {
           "typeName": "Early Booking - Best Rate",
+          "extensions": ["Deposit Required"],
           "price": 320,
           "typeDescription": "Room only. Rate includes spa access and WiFi. Touristic Tax not included. Full prepayment is required at time of booking and it is not refundable in case of cancellation or modification."
         },
         {
           "typeName": "Early Booking with Breakfast - Best Rate",
+          "extensions": ["Deposit Required", "Breakfast Included"],
           "price": 360,
           "typeDescription": "Rate includes breakfast, spa access and WiFi. Touristic Tax not included. Full prepayment is required at time of booking and it is not refundable in case of cancellation or modification."
         },
         {
           "typeName": "Early Booking",
           "price": 280,
+          "extensions": ["Deposit Required"],
           "typeDescription": "Rate is room only and includes spa access and WiFi. Touristic Tax not included. The credit card used to make the reservation will be requested upon arrival."
         }
       ],
@@ -368,20 +378,23 @@
       "square": "34 to 40 sqm",
       "typeBed": "2 Twin beds",
       "sleeps": 2,
-      "type": [
+      "types": [
         {
           "typeName": "Early Booking - Best Rate",
           "price": 330,
+          "extensions": ["Deposit Required"],
           "typeDescription": "Room only. Rate includes spa access and WiFi. Touristic Tax not included. Full prepayment is required at time of booking and it is not refundable in case of cancellation or modification."
         },
         {
           "typeName": "Early Booking with Breakfast - Best Rate",
           "price": 370,
+          "extensions": ["Deposit Required", "Breakfast Included"],
           "typeDescription": "Rate includes breakfast, spa access and WiFi. Touristic Tax not included. Full prepayment is required at time of booking and it is not refundable in case of cancellation or modification."
         },
         {
           "typeName": "Early Booking",
           "price": 290,
+          "extensions": ["Deposit Required"],
           "typeDescription": "Rate is room only and includes spa access and WiFi. Touristic Tax not included. The credit card used to make the reservation will be requested upon arrival."
         }
       ],
@@ -440,20 +453,23 @@
       "square": "64 to 87 sqm",
       "typeBed": "2 Twin beds",
       "sleeps": 4,
-      "type": [
+      "types": [
         {
           "typeName": "Early Booking - Best Rate",
           "price": 340,
+          "extensions": ["Deposit Required"],
           "typeDescription": "Room only. Rate includes spa access and WiFi. Touristic Tax not included. Full prepayment is required at time of booking and it is not refundable in case of cancellation or modification."
         },
         {
           "typeName": "Early Booking with Breakfast - Best Rate",
           "price": 380,
+          "extensions": ["Deposit Required", "Breakfast Included"],
           "typeDescription": "Rate includes breakfast, spa access and WiFi. Touristic Tax not included. Full prepayment is required at time of booking and it is not refundable in case of cancellation or modification."
         },
         {
           "typeName": "Early Booking",
           "price": 300,
+          "extensions": ["Deposit Required"],
           "typeDescription": "Rate is room only and includes spa access and WiFi. Touristic Tax not included. The credit card used to make the reservation will be requested upon arrival."
         }
       ],
@@ -509,20 +525,23 @@
       "square": "38 to 45 sqm",
       "typeBed": "1 King bed",
       "sleeps": 4,
-      "type": [
+      "types": [
         {
           "typeName": "Early Booking - Best Rate",
           "price": 400,
+          "extensions": ["Deposit Required"],
           "typeDescription": "Room only. Rate includes spa access and WiFi. Touristic Tax not included. Full prepayment is required at time of booking and it is not refundable in case of cancellation or modification."
         },
         {
           "typeName": "Early Booking with Breakfast - Best Rate",
           "price": 460,
+          "extensions": ["Deposit Required", "Breakfast Included"],
           "typeDescription": "Rate includes breakfast, spa access and WiFi. Touristic Tax not included. Full prepayment is required at time of booking and it is not refundable in case of cancellation or modification."
         },
         {
           "typeName": "Early Booking",
           "price": 340,
+          "extensions": ["Deposit Required"],
           "typeDescription": "Rate is room only and includes spa access and WiFi. Touristic Tax not included. The credit card used to make the reservation will be requested upon arrival."
         }
       ],

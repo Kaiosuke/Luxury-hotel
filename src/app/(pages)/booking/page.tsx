@@ -6,8 +6,8 @@ const Booking = () => {
   return (
     <>
       <BookingHero />
-      <div className="pd-high" />
       <BookingList />
+      <div className="pd-medium" />
     </>
   );
 };

@@ -24,14 +24,14 @@ const BookingCalendar = ({ isShow }: { isShow?: boolean }) => {
           : "text-primary xl:px-28 md:px-10 px-6 absolute bottom-0 w-full lg:block hidden"
       }`}
     >
-      <div className="flex justify-between">
-        <div className="h-20">
+      <div className="flex justify-between sm:flex-row flex-col">
+        <div className="h-20 flex ">
           <Popover>
             <PopoverTrigger asChild>
               <Button
                 variant={"outline"}
                 className={cn(
-                  `w-[240px] justify-start text-left font-normal h-full border-none ${
+                  `sm:w-[240px] justify-start text-left font-normal sm:h-full h-[60%] border-none ${
                     isShow ? "text-third" : "text-primary"
                   } `,
                   !dateCheckIn && "text-muted-foreground"
@@ -61,7 +61,7 @@ const BookingCalendar = ({ isShow }: { isShow?: boolean }) => {
               <Button
                 variant={"outline"}
                 className={cn(
-                  `w-[240px] justify-start text-left font-normal h-full border-none ${
+                  `sm:w-[240px] justify-start text-left font-normal sm:h-full h-[60%] border-none ${
                     isShow ? "text-third" : "text-primary"
                   } `,
                   !dateCheckOut && "text-muted-foreground"
@@ -90,10 +90,10 @@ const BookingCalendar = ({ isShow }: { isShow?: boolean }) => {
             </PopoverContent>
           </Popover>
         </div>
-        <div className="h-20">
+        <div className="h-20 text-left">
           <Button
             variant="outline"
-            className={`h-full border-none ${
+            className={`sm:h-full h-[60%] mt-4 sm:mt-0 border-none ${
               isShow ? "text-third" : "text-primary"
             }`}
           >
