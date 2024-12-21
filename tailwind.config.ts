@@ -18,6 +18,10 @@ export default {
           DEFAULT: "var(--secondary)",
           foreground: "var(--secondary-foreground)",
         },
+        third: {
+          DEFAULT: "var(--third)",
+          foreground: "var(--third-foreground)",
+        },
         background: "var(--background)",
         foreground: "var(--foreground)",
         card: {
@@ -58,5 +62,9 @@ export default {
       },
     },
   },
-  plugins: [require("tailwindcss-animate"), require("tailwindcss-motion")],
+  plugins: [
+    require("tailwindcss-animate"),
+    require("tailwindcss-motion"),
+    require("tailwind-scrollbar")({ nocompatible: true }),
+  ],
 } satisfies Config;

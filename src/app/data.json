@@ -3,37 +3,44 @@
     {
       "id": 1,
       "title": "The Hotel",
-      "image": "https://q-xx.bstatic.com/xdata/images/hotel/max500/559584698.jpg?k=fbf75d6c59888fe8d14eb99064b0af4ceea2258632178345751d8e2fa6e843c7&o="
+      "image": "https://q-xx.bstatic.com/xdata/images/hotel/max500/559584698.jpg?k=fbf75d6c59888fe8d14eb99064b0af4ceea2258632178345751d8e2fa6e843c7&o=",
+      "href": "/home"
     },
     {
       "id": 2,
       "title": "Rooms",
-      "image": "https://hydehotels.com/wp-content/uploads/sites/4/2024/05/hydebodrum-bed-beigeheadboard-creamseat.jpg"
+      "image": "https://hydehotels.com/wp-content/uploads/sites/4/2024/05/hydebodrum-bed-beigeheadboard-creamseat.jpg",
+      "href": "/rooms"
     },
     {
       "id": 3,
       "title": "Restaurants",
-      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJ0EqHI6h5QgFTXGG_1i2FADG1xulRbVtecA&s"
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJ0EqHI6h5QgFTXGG_1i2FADG1xulRbVtecA&s",
+      "href": "#!"
     },
     {
       "id": 4,
       "title": "Spa",
-      "image": "https://thegrandhotram.com/wp-content/uploads/2021/08/S43695-min.jpg"
+      "image": "https://thegrandhotram.com/wp-content/uploads/2021/08/S43695-min.jpg",
+      "href": "#!"
     },
     {
       "id": 5,
       "title": "Events",
-      "image": "https://blog.topcv.vn/wp-content/uploads/2021/07/sk2uEvents_Page_Header_2903ed9c-40c1-4f6c-9a69-70bb8415295b.jpg"
+      "image": "https://blog.topcv.vn/wp-content/uploads/2021/07/sk2uEvents_Page_Header_2903ed9c-40c1-4f6c-9a69-70bb8415295b.jpg",
+      "href": "#!"
     },
     {
       "id": 6,
       "title": "Kids Club",
-      "image": "https://sp-ao.shortpixel.ai/client/to_webp,q_glossy,ret_img/https://neworienthoteldanang.com/wp-content/uploads/2023/09/kid1-1.jpg"
+      "image": "https://sp-ao.shortpixel.ai/client/to_webp,q_glossy,ret_img/https://neworienthoteldanang.com/wp-content/uploads/2023/09/kid1-1.jpg",
+      "href": "#!"
     },
     {
       "id": 7,
       "title": "Gallery",
-      "image": "https://artgallery.yale.edu/sites/default/files/styles/hero_small/public/2023-01/ag-doc-2281-0036-pub.jpg?h=147a4df9&itok=uclO7OrF"
+      "image": "https://artgallery.yale.edu/sites/default/files/styles/hero_small/public/2023-01/ag-doc-2281-0036-pub.jpg?h=147a4df9&itok=uclO7OrF",
+      "href": "#!"
     }
   ],
   "features": [
@@ -135,6 +142,101 @@
       "description": [
         "Have you already stayed with us? We’d like you back!",
         "Get a 10% discount on your next reservation by calling directly to 971 31 99 62 or writing an email to reservas@aguasdeibiza.com."
+      ]
+    }
+  ],
+  "rooms": [
+    {
+      "id": 1,
+      "thumbnail": "https://aguasdeibiza.com/wp-content/uploads/2024/12/aguas-de-ibiza-11-2024-S-1004_web.jpg",
+      "title": "Dreamer",
+      "description": "Calling all lovers of the Feng Shui principles to enter these interiors made of natural elements for their most intimate and pleasant experience. Lose yourself in your privacy while the sun lights up the iridescent tiles recreating seashells… and enter your most magical dreams.",
+      "features": [
+        "34 – 40 sqm (inc. terrace)",
+        "Pillow menu",
+        "Terrace",
+        "Twin beds or King size bed",
+        "Bathtub",
+        "Unlimited access to spa",
+        "It is located on the 1st , 2nd and 3rd floor. Subject to availability"
+      ]
+    },
+    {
+      "id": 2,
+      "thumbnail": "https://aguasdeibiza.com/wp-content/uploads/2019/01/aguas-de-ibiza-11-2024-S-1019.jpg",
+      "title": "Deluxe",
+      "description": "The mysterious principles of Feng Shui open up to the views of Santa Eulalia. Inside this Deluxe space, the most natural elements have gathered from the bathroom itself to the beautiful Ibiza marine views at the open terrace. The essence of the Mediterranean soul.",
+      "features": [
+        "35 sqm (inc. terrace)",
+        "Bathtub",
+        "Unlimited access to spa",
+        "Pool view",
+        "Pillow menu",
+        "Double beds",
+        "Terrace",
+        "It is located on 1st, 2nd and 3rd floor. Subject to availability"
+      ]
+    },
+    {
+      "id": 3,
+      "thumbnail": "https://aguasdeibiza.com/wp-content/uploads/2019/01/2861F1D5-2517-4343-9240-AF3D6557292F.jpg",
+      "title": "Premier",
+      "description": "Calling all lovers of the Feng Shui principles to enter these interiors made of natural elements for their most intimate and pleasant experience. Lose yourself in your privacy while the sun lights up the iridescent tiles recreating seashells… and enter your most magical dreams.",
+      "features": [
+        "34 – 40 sqm (inc. terrace)",
+        "Pillow menu",
+        "Terrace",
+        "Twin beds or King size bed",
+        "Bathtub",
+        "Unlimited access to spa",
+        "It is located on the 1st , 2nd and 3rd floor. Subject to availability"
+      ]
+    },
+    {
+      "id": 4,
+      "thumbnail": "https://aguasdeibiza.com/wp-content/uploads/2023/09/AGUAS-DE-IBIZA-2023-029-baja.jpg",
+      "title": "Premier Bay",
+      "description": "The mysterious principles of Feng Shui open up to the views of Santa Eulalia. Inside this Deluxe space, the most natural elements have gathered from the bathroom itself to the beautiful Ibiza marine views at the open terrace. The essence of the Mediterranean soul.",
+      "features": [
+        "35 sqm (inc. terrace)",
+        "Bathtub",
+        "Unlimited access to spa",
+        "Pool view",
+        "Pillow menu",
+        "Double beds",
+        "Terrace",
+        "It is located on 1st, 2nd and 3rd floor. Subject to availability"
+      ]
+    },
+    {
+      "id": 5,
+      "thumbnail": "https://aguasdeibiza.com/wp-content/uploads/2023/10/01_AGUAS-DE-IBIZA-2023-156-baja_r.jpg",
+      "title": "Conner Suite",
+      "description": "Calling all lovers of the Feng Shui principles to enter these interiors made of natural elements for their most intimate and pleasant experience. Lose yourself in your privacy while the sun lights up the iridescent tiles recreating seashells… and enter your most magical dreams.",
+      "features": [
+        "34 – 40 sqm (inc. terrace)",
+        "Pillow menu",
+        "Terrace",
+        "Twin beds or King size bed",
+        "Bathtub",
+        "Unlimited access to spa",
+        "It is located on the 1st , 2nd and 3rd floor. Subject to availability"
+      ]
+    },
+    {
+      "id": 6,
+      "thumbnail": "https://aguasdeibiza.com/wp-content/uploads/2023/09/AGUAS-DE-IBIZA-2023-081-baja.jpg",
+      "title": "Junior Suite",
+      "description": "The mysterious principles of Feng Shui open up to the views of Santa Eulalia. Inside this Deluxe space, the most natural elements have gathered from the bathroom itself to the beautiful Ibiza marine views at the open terrace. The essence of the Mediterranean soul.",
+      "features": [
+        "35 sqm (inc. terrace)",
+        "Bathtub",
+        "Unlimited access to spa",
+        "Pool view",
+        "Pillow menu",
+        "Double beds",
+        "Terrace",
+        "It is located on 1st, 2nd and 3rd floor. Subject to availability"
       ]
     }
   ]

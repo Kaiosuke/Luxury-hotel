@@ -1,12 +1,11 @@
 "use client";
-import React from "react";
 import { Button } from "@/components/ui/button";
+import { motion, useScroll, useSpring } from "framer-motion";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { HiMiniXMark } from "react-icons/hi2";
 import { RxHamburgerMenu } from "react-icons/rx";
 import data from "../../data.json";
-import { HiMiniXMark } from "react-icons/hi2";
-import { motion, useScroll, useSpring } from "framer-motion";
 
 const Header = () => {
   const { pages, features } = data;
@@ -37,20 +36,27 @@ const Header = () => {
   return (
     <header
       className={`text-primary fixed w-full z-[9999] 
-        ${openMenu ? "bg-secondary" : ""}
         ${isScrolled && !openMenu ? "bg-white" : ""} 
         `}
     >
-      <div className="flex justify-between items-center md:px-10 py-4 sm:px-6 px-3">
+      <div
+        className={`flex justify-between items-center md:px-10 py-4 sm:px-6 px-3 relative z-[2] `}
+      >
         <div
-          className={`text-sm lg:block hidden ${isScrolled && "text-black"}`}
+          className={`text-sm lg:block hidden animation-slow ${
+            isScrolled && "text-black"
+          } ${openMenu ? "opacity-0 invisible" : "opacity-100 visible"}`}
         >
           <span>
             Grand Luxe <br />
             Hotel
           </span>
         </div>
-        <div className="">
+        <div
+          className={`${
+            openMenu ? "opacity-0 invisible" : "opacity-100 visible"
+          }`}
+        >
           <Link href="/home" className="md:text-2xl text-xl">
             Aguas de Ibiza
           </Link>
@@ -61,7 +67,7 @@ const Header = () => {
             className={`md:text-lg text-base ${
               isScrolled &&
               !openMenu &&
-              "border-black text-black hover:text-black hover:bg-black hover:bg-opacity-10 transition duration-300"
+              "border-third text-black hover:border-white transition duration-300"
             }`}
           >
             Book now
@@ -69,7 +75,7 @@ const Header = () => {
           {openMenu ? (
             <HiMiniXMark
               className={`md:text-4xl text-2xl cursor-pointer ${
-                isScrolled && !openMenu && "border-black text-black "
+                isScrolled && !openMenu && "border-black text-black"
               }`}
               onClick={() => setOpenMenu(!openMenu)}
             />
@@ -84,12 +90,12 @@ const Header = () => {
         </div>
       </div>
       <div
-        className={`bg-bg-primary lg:pl-32 lg:pr-20 lg:py-20 sm:pl-20 sm:pr-16 sm: py-16 px-10 h-screen ${
-          openMenu ? "block" : "hidden"
+        className={`bg-secondary lg:pl-32 lg:pr-20 lg:py-28 fixed top-0 sm:pl-20 sm:pr-16 sm: py-10 px-10 h-screen rb-top-animate animation-slow overflow-y-auto scrollbar-none ${
+          openMenu ? "translate-y-[0px]" : "translate-y-[-1000px]"
         }`}
       >
         <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-1 gap-4">
-          <nav className="col-span-1 md:col-span-2  lg:col-span-1">
+          <nav className="col-span-1 md:col-span-2 lg:col-span-1">
             <ul className="flex flex-col gap-4">
               {pages.map((page) => (
                 <li
@@ -100,25 +106,32 @@ const Header = () => {
                       "https://aguasdeibiza.com/wp-content/uploads/2019/01/salva-lopez-esvedra-aguasdeibiza-w-1200x857.jpg"
                     )
                   }
+                  onClick={() => setOpenMenu(!openMenu)}
                   className="hover:text-gray-600 transition duration-300 w-fit"
                 >
-                  <Link href="#!" className="lg:text-3xl md:text-2xl text-xl">
+                  <Link
+                    href={page.href}
+                    className="lg:text-3xl md:text-2xl text-xl"
+                  >
                     {page.title}
                   </Link>
                 </li>
               ))}
             </ul>
           </nav>
-          <div className="col-span-2 lg:block hidden">
+          <div className="col-span-2 lg:block hidden ">
             {image && (
-              <img src={image} alt="logo" className="w-[500px] h-[600px]" />
+              <img src={image} alt="logo" className="w-[60%] aspect-[8/10]" />
             )}
           </div>
-          <nav className="col-1 md:col-2 lg:col-1 mt-10 md:mt-0">
+          <nav className="col-1 md:col-2 lg:col-1 mt-10 md:mt-0 ">
             <ul className="flex flex-col gap-4">
               {features.map((feature) => (
                 <li key={feature.id}>
-                  <Link href="#!" className="lg:text-xl md:text-lg text-base">
+                  <Link
+                    href="#!"
+                    className="lg:text-xl md:text-lg text-base hover:text-gray-600 transition duration-300 w-fit"
+                  >
                     {feature.title}
                   </Link>
                 </li>

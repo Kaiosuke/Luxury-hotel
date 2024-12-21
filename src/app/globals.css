@@ -3,6 +3,10 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   background: #fff;
   font-family: "Merriweather", serif;
@@ -20,6 +24,8 @@ body {
   --primary-foreground: #ffffff33;
   --secondary: #94b2bb;
   --secondary-foreground: #94b2bb;
+  --third: #202020;
+  --third-foreground: #202020;
   /* --muted: #f4f4f4;
   --muted-foreground: #757575; */
   --accent: #ffffff33;
@@ -125,6 +131,10 @@ body {
     @apply lg:text-7xl md:text-5xl text-4xl;
   }
 
+  .text-size-6xl {
+    @apply lg:text-6xl md:text-4xl text-3xl;
+  }
+
   .text-size-5xl {
     @apply lg:text-5xl md:text-3xl text-2xl;
   }
@@ -140,6 +150,30 @@ body {
   .text-size-2xl {
     @apply lg:text-2xl md:text-xl text-lg;
   }
+
+  .text-size-xl {
+    @apply lg:text-xl md:text-lg text-base;
+  }
+
+  .text-size-lg {
+    @apply lg:text-lg md:text-base text-sm;
+  }
+
+  /* Rombo animate */
+  .rb-modal-animate {
+    @apply motion-scale-in-[0.5] motion-translate-x-in-[-25%] motion-translate-y-in-[25%] motion-opacity-in-[0%] motion-rotate-in-[-10deg] motion-blur-in-[5px] motion-duration-[0.35s] motion-duration-[0.53s]/scale motion-duration-[0.53s]/translate motion-duration-[0.63s]/rotate;
+  }
+  .rb-left-animate {
+    @apply motion-translate-x-in-[-120%] motion-translate-y-in-[0%];
+  }
+
+  .rb-top-animate {
+    @apply motion-translate-x-in-[-1%] motion-translate-y-in-[-101%] motion-duration-[1.0s];
+  }
+
+  .rb-focus-in {
+    @apply motion-scale-in-[0.5] motion-rotate-in-[-10deg] motion-blur-in-[10px] motion-delay-[0.75s]/rotate motion-delay-[0.75s]/blur;
+  }
 }
 
 @layer base {
@@ -152,5 +186,47 @@ body {
     background: #94b2bb;
     transform-origin: 0%;
     z-index: 99999;
+  }
+
+  .bg-animate {
+    color: transparent;
+    padding-right: 2rem;
+    font-weight: 700;
+    animation: back 20s linear infinite;
+    -webkit-text-stroke: 1px #fff;
+    -webkit-background-clip: text;
+    background-image: url("../images/imageList/image.png");
+    background-position: 0 0;
+  }
+
+  @keyframes back {
+    100% {
+      background-position: 200rem 0;
+    }
+  }
+
+  /* Splide */
+  .splide__pagination {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .splide__pagination__page {
+    width: 10px;
+    height: 10px;
+    background-color: #fff;
+    border-radius: 50%;
+    cursor: pointer;
+    opacity: 0.5;
+    transition: opacity 0.3s ease;
+  }
+
+  .splide__pagination__page.is-active {
+    opacity: 1;
+    background-color: #ff6a00;
   }
 }

@@ -1,7 +1,6 @@
 import MotionWrapper from "@/app/_components/MotionWrapper";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import Image from "next/image";
-import Link from "next/link";
 import data from "../../data.json";
 
 const Luxury = () => {
@@ -12,7 +11,7 @@ const Luxury = () => {
       <MotionWrapper className="grid lg:grid-cols-2 gap-6 grid-cols-1">
         {luxury.map((view) => (
           <div key={view.id}>
-            <Link href="#!" className="relative group/view cursor-pointer">
+            <div className="relative group/view cursor-pointer">
               <AspectRatio
                 ratio={8 / 10}
                 className="bg-muted overflow-hidden overlay sm:ratio-[16/9] md:ratio-[16/9] lg:ratio-[8/10]"
@@ -30,7 +29,7 @@ const Luxury = () => {
                   {view.description}
                 </p>
               </div>
-            </Link>
+            </div>
           </div>
         ))}
       </MotionWrapper>
