@@ -56,7 +56,7 @@ const BookingRooms = () => {
               <div className="flex gap-6 mt-6">
                 {room.quantity < 4 && (
                   <span className="text-size-base text-red-400">
-                    Only 2 rooms left
+                    Only {room.quantity} rooms left
                   </span>
                 )}
                 <span className="text-size-base">{room.typeBed}</span>
