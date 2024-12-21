@@ -1,11 +1,10 @@
 import MotionWrapper from "@/app/_components/MotionWrapper";
 import Splide from "@splidejs/splide";
 import "@splidejs/splide/dist/css/themes/splide-default.min.css";
-import Link from "next/link";
 import { useEffect } from "react";
 import { ParallaxBanner } from "react-scroll-parallax";
 
-const RoomsImages = () => {
+const RestaurantsSplide = () => {
   useEffect(() => {
     new Splide(".splide", {
       type: "loop",
@@ -17,7 +16,7 @@ const RoomsImages = () => {
   }, []);
 
   return (
-    <section id="spaWellnes" className="text-black padding-main">
+    <section id="spaWellnes" className="text-third padding-main">
       <MotionWrapper>
         <div className="splide">
           <div className="w-full h-full relative">
@@ -83,4 +82,4 @@ const RoomsImages = () => {
   );
 };
 
-export default RoomsImages;
+export default RestaurantsSplide;

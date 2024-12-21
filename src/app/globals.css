@@ -108,7 +108,7 @@ body {
   }
   /* Padding */
   .padding-main {
-    @apply xl:px-28 md:px-10 sm:px-6 px-3;
+    @apply 2xl:px-40 lg:px-28 md:px-10 sm:px-6 px-3;
   }
   .pd-high {
     @apply lg:h-[180px] md:h-[96px] h-[64px];
@@ -124,6 +124,10 @@ body {
 
   .animation-normal {
     @apply transition duration-500 ease-in-out;
+  }
+
+  .animation-fast {
+    @apply transition duration-300 ease-in-out;
   }
 
   /* Text */
@@ -159,6 +163,10 @@ body {
     @apply lg:text-lg md:text-base text-sm;
   }
 
+  .text-size-base {
+    @apply lg:text-base text-sm;
+  }
+
   /* Rombo animate */
   .rb-modal-animate {
     @apply motion-scale-in-[0.5] motion-translate-x-in-[-25%] motion-translate-y-in-[25%] motion-opacity-in-[0%] motion-rotate-in-[-10deg] motion-blur-in-[5px] motion-duration-[0.35s] motion-duration-[0.53s]/scale motion-duration-[0.53s]/translate motion-duration-[0.63s]/rotate;
@@ -173,6 +181,11 @@ body {
 
   .rb-focus-in {
     @apply motion-scale-in-[0.5] motion-rotate-in-[-10deg] motion-blur-in-[10px] motion-delay-[0.75s]/rotate motion-delay-[0.75s]/blur;
+  }
+
+  /* Link */
+  .link-under {
+    @apply text-third underline underline-offset-8 text-size-2xl decoration-gray-200 hover:decoration-secondary animation-fast;
   }
 }
 

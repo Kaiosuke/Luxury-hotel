@@ -1,21 +1,19 @@
+import data from "@/app/data.json";
+import { Button } from "@/components/ui/button";
 import { AspectRatio } from "@radix-ui/react-aspect-ratio";
 import Image from "next/image";
-import data from "@/app/data.json";
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { useState } from "react";
 
+import MotionWrapper from "@/app/_components/MotionWrapper";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import MotionWrapper from "@/app/_components/MotionWrapper";
 
 const RoomList = () => {
   const { rooms } = data;
@@ -23,7 +21,7 @@ const RoomList = () => {
   const [position, setPosition] = useState("Dreamer");
 
   return (
-    <section className="text-third padding-main relative">
+    <section id="restaurants" className="text-third padding-main relative">
       <MotionWrapper>
         <div className="bg-secondary w-fit lg:hidden block">
           <DropdownMenu>
@@ -101,7 +99,7 @@ const RoomList = () => {
                     </div>
                     <div className="flex-[1_0_auto] lg:max-w-[30%] max-w-[40%] md:block hidden">
                       <ul className="flex flex-col gap-4">
-                        {room.features.map((feature, index) => (
+                        {room.quickDes.map((feature, index) => (
                           <li key={index}>{feature}</li>
                         ))}
                       </ul>

@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { HiMiniXMark } from "react-icons/hi2";
 import { RxHamburgerMenu } from "react-icons/rx";
 import data from "../../data.json";
+import useDetectScroll from "@smakss/react-scroll-direction";
 
 const Header = () => {
   const { pages, features } = data;
@@ -15,6 +16,8 @@ const Header = () => {
   );
 
   const [isScrolled, setIsScrolled] = useState(false);
+
+  const { scrollDir } = useDetectScroll();
 
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
@@ -35,17 +38,22 @@ const Header = () => {
 
   return (
     <header
-      className={`text-primary fixed w-full z-[9999] 
-        ${isScrolled && !openMenu ? "bg-white" : ""} 
+      className={`text-primary fixed w-full z-[9999] animation-slow
+        ${isScrolled ? "bg-primary" : "bg-transparent"} 
+        ${
+          isScrolled && scrollDir === "down"
+            ? "translate-y-[-1000px]"
+            : "translate-y-[0]"
+        }
         `}
     >
       <div
         className={`flex justify-between items-center md:px-10 py-4 sm:px-6 px-3 relative z-[2] `}
       >
         <div
-          className={`text-sm lg:block hidden animation-slow ${
+          className={`text-sm lg:block hidden animation-normal ${
             isScrolled && "text-black"
-          } ${openMenu ? "opacity-0 invisible" : "opacity-100 visible"}`}
+          } ${openMenu ? "opacity-0 " : "opacity-100"}`}
         >
           <span>
             Grand Luxe <br />
@@ -53,8 +61,8 @@ const Header = () => {
           </span>
         </div>
         <div
-          className={`${
-            openMenu ? "opacity-0 invisible" : "opacity-100 visible"
+          className={`animation-normal ${
+            openMenu ? "opacity-0" : "opacity-100"
           }`}
         >
           <Link href="/home" className="md:text-2xl text-xl">
