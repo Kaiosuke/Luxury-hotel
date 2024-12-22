@@ -196,6 +196,7 @@
         "https://d321ocj5nbe62c.cloudfront.net/imageRepo/2/0/187/589/145/Dreamer_terrace_P.jpg",
         "https://d321ocj5nbe62c.cloudfront.net/imageRepo/7/0/167/385/779/04_AGUAS-DE-IBIZA-2023-052-baja_(1)_P.jpg"
       ],
+      "map": "https://aguasdeibiza.com/wp-content/uploads/2018/12/plano_dreamer.svg",
       "detailFeatures": [
         "King bed",
         "Coffee/Tea maker",
@@ -267,6 +268,7 @@
         "https://d321ocj5nbe62c.cloudfront.net/imageRepo/2/0/187/589/530/Deluxe_4_P.jpg",
         "https://d321ocj5nbe62c.cloudfront.net/imageRepo/2/0/187/589/586/Deluxe_1_P.jpg"
       ],
+      "map": "https://aguasdeibiza.com/wp-content/uploads/2018/12/plano_dreamer.svg",
       "detailFeatures": [
         "King bed",
         "Coffee/Tea maker",
@@ -337,6 +339,7 @@
         "https://d321ocj5nbe62c.cloudfront.net/imageRepo/7/0/111/661/890/PRINT-Aguas-de-Ibiza-Room-2019-6_P.jpg",
         "https://d321ocj5nbe62c.cloudfront.net/imageRepo/7/0/111/661/916/PRINT-Aguas-de-Ibiza-Room-2019-20_P.jpg"
       ],
+      "map": "https://aguasdeibiza.com/wp-content/uploads/2019/03/plano_premier.svg",
       "detailFeatures": [
         "Balcony/Lanai/Terrace",
         "Coffee/Tea maker",
@@ -403,6 +406,7 @@
         "https://d321ocj5nbe62c.cloudfront.net/imageRepo/7/0/111/661/862/PRINT-Aguas-de-Ibiza-Room-2019-2_P.jpg",
         "https://d321ocj5nbe62c.cloudfront.net/imageRepo/7/0/111/661/916/PRINT-Aguas-de-Ibiza-Room-2019-20_P.jpg"
       ],
+      "map": "https://aguasdeibiza.com/wp-content/uploads/2019/03/plano_premier.svg",
       "detailFeatures": [
         "Balcony/Lanai/Terrace",
         "Coffee/Tea maker",
@@ -478,6 +482,7 @@
         "https://d321ocj5nbe62c.cloudfront.net/imageRepo/7/0/167/454/829/02_AGUAS-DE-IBIZA-2023-179-baja_P.jpg",
         "https://d321ocj5nbe62c.cloudfront.net/imageRepo/6/0/87/689/11/Bathroom_Corner_Suite_230_P.jpg"
       ],
+      "map": "https://aguasdeibiza.com/wp-content/uploads/2018/12/plano_corner-suite.svg",
       "detailFeatures": [
         "Balcony/Lanai/Terrace",
         "Coffee/Tea maker",
@@ -550,6 +555,7 @@
         "https://d321ocj5nbe62c.cloudfront.net/imageRepo/7/0/162/958/51/JS-2023-082-baja_P.jpg",
         "https://d321ocj5nbe62c.cloudfront.net/imageRepo/7/0/167/931/637/04_AGUAS-DE-IBIZA-2023-073-baja_(2)_P.jpg"
       ],
+      "map": "https://aguasdeibiza.com/wp-content/uploads/2018/12/plano_corner-suite.svg",
       "detailFeatures": [
         "King bed",
         "Twin bed",
@@ -628,5 +634,10 @@
         }
       ]
     }
+  ],
+  "images": [
+    "https://d321ocj5nbe62c.cloudfront.net/imageRepo/2/0/187/589/548/Deluxe_6_P.jpg",
+    "https://d321ocj5nbe62c.cloudfront.net/imageRepo/2/0/187/589/530/Deluxe_4_P.jpg",
+    "https://d321ocj5nbe62c.cloudfront.net/imageRepo/2/0/187/589/586/Deluxe_1_P.jpg"
   ]
 }

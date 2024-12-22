@@ -2,7 +2,7 @@
 import BookingHero from "./BookingHero";
 import BookingList from "./BookingList";
 
-const Booking = () => {
+const page = () => {
   return (
     <>
       <BookingHero />
@@ -12,4 +12,4 @@ const Booking = () => {
   );
 };
 
-export default Booking;
+export default page;

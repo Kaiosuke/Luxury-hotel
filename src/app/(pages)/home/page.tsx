@@ -2,8 +2,8 @@
 import TitleNormal from "@/app/_components/contentTitle/TitleNormal";
 import TitleXL from "@/app/_components/contentTitle/TitleXL";
 import HeroImage from "@/app/_components/HeroImage";
+import ThumbnailImage from "@/app/_components/ThumbnailImage";
 import Link from "next/link";
-import { ParallaxBanner } from "react-scroll-parallax";
 import Album from "./Album";
 import Luxury from "./Luxury";
 import Offers from "./Offers";
@@ -11,7 +11,7 @@ import Restaurants from "./Restaurants";
 import Rooms from "./Rooms";
 import SpaWellnessSection from "./SpaWellness";
 
-const Home = () => {
+const page = () => {
   return (
     <>
       <HeroImage
@@ -78,25 +78,14 @@ const Home = () => {
       <div className="pd-medium" />
       <Offers />
       <div className="pd-medium" />
-      <div className="relative overlay">
-        <ParallaxBanner
-          layers={[
-            {
-              image:
-                "https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-              speed: -20,
-            },
-          ]}
-          className="aspect-[16/9]"
-        />
-        <div className="absolute inset-0 flex items-center justify-center z-[10]">
-          <Link href="#!" className="text-size-4xl underline text-white">
-            See all offers
-          </Link>
-        </div>
-      </div>
+      <ThumbnailImage
+        image="https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+        title="Beach"
+        link="#!"
+        linkContent="See all offers"
+      />
     </>
   );
 };
 
-export default Home;
+export default page;

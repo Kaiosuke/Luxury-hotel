@@ -4,6 +4,7 @@ import { ParallaxProvider } from "react-scroll-parallax";
 import Footer from "../_components/footer/Footer";
 import Header from "../_components/header/Header";
 import AppProvider from "@/provider/AppProvider";
+import Circle from "../_components/Circle";
 
 const Layout: React.FC<{ children: ReactNode }> = ({ children }) => {
   return (
@@ -11,6 +12,7 @@ const Layout: React.FC<{ children: ReactNode }> = ({ children }) => {
       <AppProvider>
         <Header />
         {children}
+        <Circle />
         <Footer />
       </AppProvider>
     </ParallaxProvider>
