@@ -2,15 +2,10 @@ import TitleNormal from "@/app/_components/contentTitle/TitleNormal";
 import TitleXL from "@/app/_components/contentTitle/TitleXL";
 import MotionWrapper from "@/app/_components/MotionWrapper";
 import SplideImage from "@/app/_components/SplideImage";
-import ThumbnailImage from "@/app/_components/ThumbnailImage";
 import { IRooms } from "@/interfaces";
 import { ParallaxBanner } from "react-scroll-parallax";
 
-import data from "@/app/data.json";
-
 const RoomDetail = ({ room }: { room: IRooms }) => {
-  const { images } = data;
-
   return (
     <section className="padding-main text-third">
       <div className="grid sm:grid-cols-2 gap-6 grid-cols-1">
@@ -64,10 +59,6 @@ const RoomDetail = ({ room }: { room: IRooms }) => {
       />
       <div className="pd-medium" />
       <TitleNormal title={room.description} />
-      <div className="pd-medium" />
-      <ThumbnailImage image={room.map} title={room.title} />
-      <div className="pd-high" />
-      <TitleNormal title="We have many other luxury rooms for you." />
     </section>
   );
 };

@@ -1,16 +1,18 @@
 "use client";
+import TitleNormal from "@/app/_components/contentTitle/TitleNormal";
 import HeroImage from "@/app/_components/HeroImage";
+import SplideList from "@/app/_components/SplideList";
+import ThumbnailImage from "@/app/_components/ThumbnailImage";
 import data from "@/app/data.json";
 import { IRooms } from "@/interfaces";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import RoomDetail from "./RoomDetail";
-import SplideList from "@/app/_components/SplideList";
 
 const page = () => {
   const { id } = useParams();
   const { rooms } = data;
-  const [currentRoom, setCurrentRoom] = useState<IRooms | null>(rooms[1]);
+  const [currentRoom, setCurrentRoom] = useState<IRooms | null>(null);
 
   useEffect(() => {
     if (id) {
@@ -33,9 +35,19 @@ const page = () => {
       />
       <div className="pd-high" />
       <RoomDetail room={currentRoom} />
+      <div className="pd-medium" />
+      <ThumbnailImage image={currentRoom.map} title={currentRoom.title} />
       <div className="pd-high" />
-
-      <SplideList dataList={rooms} />
+      <TitleNormal title="We have many other luxury rooms for you." />
+      <div className="pd-medium" />
+      <section className="padding-main">
+        <SplideList
+          dataList={rooms}
+          id={currentRoom.id}
+          splideClass="roomList"
+        />
+      </section>
+      <div className="pd-high" />
     </>
   );
 };

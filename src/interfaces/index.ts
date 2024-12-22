@@ -1,5 +1,5 @@
 interface IRooms {
-  id?: number;
+  id: number;
   thumbnail: string;
   title: string;
   quantity?: number;
