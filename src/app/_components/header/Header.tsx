@@ -49,8 +49,8 @@ const Header = () => {
           <HeaderSubPages />
           <div>
             <Link
-              href="#!"
-              className="link-under text-primary hover:decoration-primary"
+              href="/auth"
+              className="link-under text-primary hover:text-primary-textOpacity hover:decoration-primary-textOpacity"
             >
               Sign In
             </Link>

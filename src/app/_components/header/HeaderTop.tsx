@@ -17,6 +17,7 @@ import { CiUser } from "react-icons/ci";
 import { FaSignOutAlt } from "react-icons/fa";
 import { FaGithub } from "react-icons/fa6";
 import { FiShoppingCart } from "react-icons/fi";
+import { MdOutlineDashboard } from "react-icons/md";
 
 const HeaderTop = ({
   isScrolled,
@@ -56,7 +57,7 @@ const HeaderTop = ({
           className={`text-size-lg animation-normal ${
             isScrolled &&
             !openMenu &&
-            "border-third text-third hover:border-white"
+            "border-third text-third hover:border-primary hover:bg-secondary"
           } ${openMenu ? "hover:bg-primary hover:text-secondary" : ""}`}
         >
           Book now
@@ -65,22 +66,29 @@ const HeaderTop = ({
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <div
-                className={`text-size-4xl animation-normal cursor-pointer ${
-                  isScrolled && !openMenu && "text-third hover:text-secondary"
-                } ${openMenu && " hover:text-primary-foreground"}`}
+                className={`text-size-4xl animation-normal cursor-pointer hover:opacity-50 ${
+                  isScrolled && !openMenu && "text-third"
+                } `}
               >
                 <CiUser />
               </div>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-60 mt-2 bg-secondary text-primary">
-              <DropdownMenuLabel className="text-xl">
-                My Account
+              <DropdownMenuLabel className="text-xl flex gap-2">
+                Admin:
+                <span>Trong Le</span>
               </DropdownMenuLabel>
               <div className="line-1 my-2 bg-primary" />
               <DropdownMenuSeparator />
               <DropdownMenuGroup className="hover:bg-secondary hover:text-primary">
                 <DropdownMenuItem className="text-lg cursor-pointer">
                   <Link href="#!">Profile</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem className="text-lg cursor-pointer">
+                  <Link href="/admin">Dash Board</Link>
+                  <DropdownMenuShortcut>
+                    <MdOutlineDashboard className="text-lg" />
+                  </DropdownMenuShortcut>
                 </DropdownMenuItem>
                 <DropdownMenuItem className="text-lg cursor-pointer">
                   <Link href="#!">Cart</Link>
@@ -111,16 +119,16 @@ const HeaderTop = ({
         </div>
         {openMenu ? (
           <HiMiniXMark
-            className={`md:text-4xl text-2xl cursor-pointer animation-fast  ${
-              isScrolled && !openMenu && "hover:text-secondary"
-            } ${openMenu && "hover:text-primary-foreground"}`}
+            className={`text-size-4xl animation-normal cursor-pointer hover:opacity-50 ${
+              isScrolled && !openMenu && "text-third"
+            } `}
             onClick={() => setOpenMenu(!openMenu)}
           />
         ) : (
           <RxHamburgerMenu
-            className={`md:text-4xl text-2xl cursor-pointer animation-fast ${
-              isScrolled && "text-third hover:text-secondary"
-            }`}
+            className={`text-size-4xl animation-normal cursor-pointer hover:opacity-50 ${
+              isScrolled && !openMenu && "text-third"
+            } `}
             onClick={() => setOpenMenu(!openMenu)}
           />
         )}
