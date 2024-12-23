@@ -21,9 +21,9 @@ body {
   --popover: #ffffff;
   --popover-foreground: #0a0a0a; */
   --primary: #fff;
-  --primary-foreground: #ffffff33;
+  --primary-foreground: #ffffff7b;
   --secondary: #94b2bb;
-  --secondary-foreground: #94b2bb;
+  --secondary-foreground: #94b2bbb5;
   --third: #202020;
   --third-foreground: #202020;
   /* --muted: #f4f4f4;
@@ -80,21 +80,21 @@ body {
 } */
 
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 0px;
 }
-
+/* 
 ::-webkit-scrollbar-track {
   background-color: #f1f1f1;
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #888;
+  background-color: var(--secondary);
   border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: #555;
-}
+  background-color: var(--secondary-foreground);
+} */
 
 @layer components {
   /* Over lay */
@@ -218,7 +218,7 @@ body {
     animation: back 20s linear infinite;
     -webkit-text-stroke: 1px #fff;
     -webkit-background-clip: text;
-    background-image: url("../images/imageList/image.png");
+    background-image: url("../styles/images/image.png");
     background-position: 0 0;
   }
 

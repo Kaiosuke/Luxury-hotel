@@ -8,11 +8,7 @@ const SpaWellnessSection = () => {
   return (
     <section id="spaWellnes" className="text-black padding-main">
       <div className="lg:w-3/4 lg:h-5/6 w-full h-full relative">
-        <SplideImage
-          images={images}
-          title="spaWellnes"
-          splideClass="spaWellnes"
-        />
+        <SplideImage images={images} splideClass="spaWellnes" />
         <div className="absolute -right-[220px] top-1/2 -translate-y-1/2 hidden lg:block">
           <div className="w-[400px]">
             <span className="text-white">Spa & Wellnes</span>

@@ -52,11 +52,7 @@ const RoomDetail = ({ room }: { room: IRooms }) => {
       <div className="pd-medium" />
       <TitleXL title="For the most inventive souls" />
       <div className="pd-medium" />
-      <SplideImage
-        images={room.images}
-        title={room.title}
-        splideClass="roomDetail"
-      />
+      <SplideImage images={room.images} splideClass="roomDetail" />
       <div className="pd-medium" />
       <TitleNormal title={room.description} />
     </section>

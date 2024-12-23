@@ -6,11 +6,9 @@ import { ParallaxBanner } from "react-scroll-parallax";
 
 const SplideImage = ({
   images,
-  title,
   splideClass,
 }: {
   images: string[];
-  title: string;
   splideClass: string;
 }) => {
   useEffect(() => {
@@ -39,7 +37,7 @@ const SplideImage = ({
                         children: (
                           <img
                             src={image}
-                            alt={title}
+                            alt="default"
                             className="w-full h-full object-cover"
                           />
                         ),

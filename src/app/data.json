@@ -1,10 +1,10 @@
 {
-  "pages": [
+  "mainPages": [
     {
       "id": 1,
       "title": "The Hotel",
       "image": "https://q-xx.bstatic.com/xdata/images/hotel/max500/559584698.jpg?k=fbf75d6c59888fe8d14eb99064b0af4ceea2258632178345751d8e2fa6e843c7&o=",
-      "href": "/home"
+      "href": "/the-hotel"
     },
     {
       "id": 2,
@@ -43,7 +43,7 @@
       "href": "#!"
     }
   ],
-  "features": [
+  "subPages": [
     {
       "id": 1,
       "title": "Blog"
@@ -633,6 +633,28 @@
           "link": "https://aguasdeibiza.com/wp-content/uploads/2024/06/Carta-2024_WEB.pdf"
         }
       ]
+    }
+  ],
+  "theHotels": [
+    {
+      "id": 1,
+      "title": "Eco-luxury",
+      "thumbnail": "https://aguasdeibiza.com/wp-content/uploads/2019/09/Aguasdeibiza-2019-135-PISCINA-ALTA-1200x1600.jpg",
+      "description": [
+        "The new conceptual eco-luxury of a 5 star hotel in Ibiza. A dream made true on Santa Eulalia. A seashell for reconnecting with your energy. And to balance body and mind. In a perfect location for also exploring the wonders of Ibiza, like all the lovely turquoise beaches, or the stunning interior green landscapes.",
+        "This project has been recognized as the most environmentally friendly boutique hotel in this island. Thanks to using smart building automation and systems for saving water and energy. A 5 star hotel that advocates working with suppliers that share its eco-luxury philosophy."
+      ],
+      "shortDes": "Aguas the Ibiza"
+    },
+    {
+      "id": 2,
+      "title": "The advantages of staying eco-friendly",
+      "thumbnail": "https://aguasdeibiza.com/wp-content/uploads/2019/09/Aguasdeibiza-2019-173-TERRAZAS-ALTA-1200x1600.jpg",
+      "description": [
+        "Aguas de Ibiza brings an innovative an ambitious eco-friendly concept to your stay in a 5 star hotel. Expect the latest technology and photovoltaic rails, the use of smart building automation and systems for saving water and energy.",
+        "In addition to it, our company policy advocates working with environmentally savvy suppliers to offer sustainable stays in the island while enjoying the comforts of a real luxury boutique hotel."
+      ],
+      "shortDes": "For luxury-seekers"
     }
   ],
   "images": [

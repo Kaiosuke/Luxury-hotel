@@ -20,11 +20,7 @@ const page = () => {
       <TitleNormal title="Aguas de Ibiza luxury restaurants offer a signature cuisine with a strong essence of our much admired Mediterranean cuisine." />
       <div className="pd-high" />
       <section id="restaurants" className="text-third padding-main">
-        <SplideImage
-          images={images}
-          title="restaurants"
-          splideClass="restaurants"
-        />
+        <SplideImage images={images} splideClass="restaurants" />
       </section>
       <div className="pd-medium" />
       <RestaurantList />

@@ -6,7 +6,7 @@ import { Photo, ColumnsPhotoAlbum } from "react-photo-album";
 import "react-photo-album/columns.css";
 
 import StyledLink from "../../_components/StyledLink/StyledLink";
-import allPhotos from "@/images/photos";
+import allPhotos from "@/styles/photos";
 import MotionWrapper from "@/app/_components/MotionWrapper";
 
 import Fullscreen from "yet-another-react-lightbox/plugins/fullscreen";

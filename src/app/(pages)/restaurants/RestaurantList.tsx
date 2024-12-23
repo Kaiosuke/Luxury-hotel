@@ -2,6 +2,7 @@ import data from "@/app/data.json";
 
 import TitleXL from "@/app/_components/contentTitle/TitleXL";
 import Link from "next/link";
+import MotionWrapper from "@/app/_components/MotionWrapper";
 
 const RestaurantList = () => {
   const { restaurants } = data;
@@ -15,14 +16,14 @@ const RestaurantList = () => {
               res.id % 2 === 0 ? "md:flex-row-reverse" : ""
             }`}
           >
-            <div className="flex-[1_0_auto] md:max-w-[50%] maw-w-[100%]">
+            <MotionWrapper className="flex-[1_0_auto] md:max-w-[50%] maw-w-[100%]">
               <img
                 src={res.thumbnail}
                 alt={res.shortTitle}
                 className="w-full h-full object-cover aspect-[3/4]"
               />
-            </div>
-            <div className="flex-[1_0_auto] md:max-w-[40%] maw-w-[100%]">
+            </MotionWrapper>
+            <MotionWrapper className="flex-[1_0_auto] md:max-w-[40%] maw-w-[100%]">
               <span className="text-size-base">{res.shortDes}</span>
               <h2 className="text-size-6xl my-10">{res.shortTitle}</h2>
               <p>{res.description}</p>
@@ -33,7 +34,7 @@ const RestaurantList = () => {
                   </Link>
                 ))}
               </div>
-            </div>
+            </MotionWrapper>
           </div>
           <div className="pd-high" />
           <TitleXL title={res.title} />

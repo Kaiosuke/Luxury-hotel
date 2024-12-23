@@ -18,11 +18,7 @@ const Rooms = () => {
       />
       <div className="pd-high" />
       <section id="rooms" className="text-black padding-main">
-        <SplideImage
-          images={images}
-          title="roomSection"
-          splideClass="roomSection"
-        />
+        <SplideImage images={images} splideClass="roomSection" />
       </section>
       <div className="pd-high" />
       <TitleXL title="Full of light and overlooking the Mediterranean" />

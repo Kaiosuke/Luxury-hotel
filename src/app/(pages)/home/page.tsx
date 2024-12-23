@@ -10,6 +10,7 @@ import Offers from "./Offers";
 import Restaurants from "./Restaurants";
 import Rooms from "./Rooms";
 import SpaWellnessSection from "./SpaWellness";
+import MotionWrapper from "@/app/_components/MotionWrapper";
 
 const page = () => {
   return (
@@ -53,11 +54,13 @@ const page = () => {
       <Luxury />
       <div className="pd-medium" />
       <div className="pd-medium" />
-      <div className="text-center">
-        <Link href="#!" className="text-size-4xl underline">
-          Navigate the joys of staying at Aguas de Ibiza
-        </Link>
-      </div>
+      <MotionWrapper>
+        <div className="text-center">
+          <Link href="#!" className="text-size-4xl underline">
+            Navigate the joys of staying at Aguas de Ibiza
+          </Link>
+        </div>
+      </MotionWrapper>
       <div className="pd-medium" />
       <div className="pd-medium" />
       <div className="pd-high" />

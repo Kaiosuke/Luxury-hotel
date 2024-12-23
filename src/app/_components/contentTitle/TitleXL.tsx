@@ -23,7 +23,7 @@ const TitleXL = ({
             <Link
               key={index}
               href={value.href}
-              className="text-size-2xl block underline"
+              className="text-size-2xl block underline underline-offset-8"
             >
               {value.content}
             </Link>
