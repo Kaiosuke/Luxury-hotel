@@ -5,8 +5,9 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar";
 import AppSidebar from "./AdminSideBar";
+import { ReactNode } from "react";
 
-function layoutAdmin() {
+function layoutAdmin({ children }: { children: ReactNode }) {
   return (
     <SidebarProvider>
       <AppSidebar />
@@ -17,7 +18,7 @@ function layoutAdmin() {
             <Separator orientation="vertical" className="mr-2 h-4" />
           </div>
         </header>
-        <main className="flex flex-1 flex-col gap-4 p-4 pt-0"></main>
+        <main className="flex flex-1 flex-col gap-4 p-4 pt-0">{children}</main>
       </SidebarInset>
     </SidebarProvider>
   );

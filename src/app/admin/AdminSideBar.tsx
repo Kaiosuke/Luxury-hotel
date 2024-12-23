@@ -1,18 +1,17 @@
 "use client";
+import React from "react";
 
-import * as React from "react";
 import {
-  AudioWaveform,
   BookOpen,
   Bot,
-  Command,
   Frame,
-  GalleryVerticalEnd,
   Map,
   PieChart,
   Settings2,
+  User,
   SquareTerminal,
 } from "lucide-react";
+import { IoRestaurantOutline } from "react-icons/io5";
 
 import {
   Sidebar,
@@ -21,10 +20,12 @@ import {
   SidebarHeader,
   SidebarRail,
 } from "@/components/ui/sidebar";
+import { MdMeetingRoom, MdOutlineDashboard } from "react-icons/md";
 import NavMain from "./NavMain";
-import NavProjects from "./users/NavProject";
-import TeamSwitcher from "./TeamSwitcher";
 import NavUser from "./NavUser";
+import NavProjects from "./users/NavProject";
+import Link from "next/link";
+import HeadDashBoard from "./HeadDashBoard";
 
 const data = {
   user: {
@@ -33,52 +34,32 @@ const data = {
     avatar:
       "https://vcdn1-giaitri.vnecdn.net/2022/09/23/-2181-1663929656.jpg?w=0&h=0&q=100&dpr=2&fit=crop&s=wvx3Xd9YNeLA-9IvhcFllw",
   },
-  teams: [
-    {
-      name: "Acme Inc",
-      logo: GalleryVerticalEnd,
-      plan: "Enterprise",
-    },
-    {
-      name: "Acme Corp.",
-      logo: AudioWaveform,
-      plan: "Startup",
-    },
-    {
-      name: "Evil Corp.",
-      logo: Command,
-      plan: "Free",
-    },
-  ],
+
   navMain: [
     {
-      title: "Playground",
-      url: "#",
-      icon: SquareTerminal,
+      title: "Users",
+      url: "",
+      icon: User,
       isActive: true,
       items: [
         {
-          title: "History",
-          url: "#",
+          title: "User List",
+          url: "/admin/users",
         },
         {
-          title: "Starred",
-          url: "#",
-        },
-        {
-          title: "Settings",
+          title: "Profile",
           url: "#",
         },
       ],
     },
     {
-      title: "Models",
+      title: "Rooms",
       url: "#",
-      icon: Bot,
+      icon: MdMeetingRoom,
       items: [
         {
-          title: "Genesis",
-          url: "#",
+          title: "Room List",
+          url: "/admin/rooms",
         },
         {
           title: "Explorer",
@@ -91,9 +72,9 @@ const data = {
       ],
     },
     {
-      title: "Documentation",
+      title: "Restaurants",
       url: "#",
-      icon: BookOpen,
+      icon: IoRestaurantOutline,
       items: [
         {
           title: "Introduction",
@@ -160,7 +141,7 @@ function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
-        <TeamSwitcher teams={data.teams} />
+        <HeadDashBoard />
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
