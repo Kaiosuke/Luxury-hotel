@@ -10,6 +10,7 @@ interface IRoom {
   typeBed?: string;
   sleeps?: number;
   types?: {
+    idType: string;
     typeName: string;
     extensions: string[];
     price: number;

@@ -9,6 +9,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { TabsContent } from "@/components/ui/tabs";
+import Link from "next/link";
 import { useState } from "react";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 
@@ -20,7 +21,7 @@ const Login = () => {
       value="login"
       className="backdrop-blur motion-translate-x-in-[-95%] motion-translate-y-in-[0%] sm:p-auto p-0"
     >
-      <Card>
+      <Card className="bg-transparent text-primary">
         <CardContent>
           <CardHeader>
             <CardTitle className="text-center md:text-2xl text-xl">
@@ -57,6 +58,13 @@ const Login = () => {
                   {showPassword ? <FaRegEye /> : <FaRegEyeSlash />}
                 </span>
               </div>
+
+              <Link
+                href="#!"
+                className="text-sm underline underline-offset-2 italic hover:text-primary-textOpacity"
+              >
+                Forgot your password?
+              </Link>
             </CardContent>
             <CardFooter className="mt-4">
               <Button variant={"four"}>Signin</Button>

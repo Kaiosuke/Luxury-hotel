@@ -7,13 +7,14 @@ import { BannerLayer, ParallaxBanner } from "react-scroll-parallax";
 import BookingCalendar from "./BookingCalendar";
 
 interface IHeroImage {
+  isBook?: boolean;
   image: string;
   title: string;
   linkContext: string;
   link?: string;
 }
 
-const HeroImage = ({ image, title, linkContext, link }: IHeroImage) => {
+const HeroImage = ({ image, title, linkContext, link, isBook }: IHeroImage) => {
   const background: BannerLayer = {
     image: image,
     translateY: [0, 10],
@@ -53,8 +54,7 @@ const HeroImage = ({ image, title, linkContext, link }: IHeroImage) => {
           layers={[background, headline]}
           className="h-screen bg-gray-900"
         />
-
-        <BookingCalendar />
+        {!isBook && <BookingCalendar />}
       </div>
     </section>
   );

@@ -173,18 +173,21 @@
       "sleeps": 3,
       "types": [
         {
+          "idType": "type1",
           "typeName": "Early Booking - Best Rate",
           "extensions": ["Deposit Required"],
           "price": 280,
           "typeDescription": "Room only. Rate includes spa access and WiFi. Touristic Tax not included. Full prepayment is required at time of booking and it is not refundable in case of cancellation or modification."
         },
         {
+          "idType": "type2",
           "typeName": "Early Booking with Breakfast - Best Rate",
           "extensions": ["Deposit Required", "Breakfast Included"],
           "price": 320,
           "typeDescription": "Rate includes breakfast, spa access and WiFi. Touristic Tax not included. Full prepayment is required at time of booking and it is not refundable in case of cancellation or modification."
         },
         {
+          "idType": "type3",
           "typeName": "Early Booking",
           "extensions": ["Deposit Required"],
           "price": 240,
@@ -244,12 +247,14 @@
       "sleeps": 3,
       "types": [
         {
+          "idType": "type1",
           "typeName": "Early Booking - Best Rate",
           "extensions": ["Deposit Required"],
           "price": 290,
           "typeDescription": "Room only. Rate includes spa access and WiFi. Touristic Tax not included. Full prepayment is required at time of booking and it is not refundable in case of cancellation or modification."
         },
         {
+          "idType": "type2",
           "typeName": "Early Booking with Breakfast - Best Rate",
           "extensions": ["Deposit Required", "Breakfast Included"],
 
@@ -257,6 +262,7 @@
           "typeDescription": "Rate includes breakfast, spa access and WiFi. Touristic Tax not included. Full prepayment is required at time of booking and it is not refundable in case of cancellation or modification."
         },
         {
+          "idType": "type3",
           "typeName": "Early Booking",
           "extensions": ["Deposit Required"],
           "price": 250,
@@ -316,18 +322,21 @@
       "sleeps": 2,
       "types": [
         {
+          "idType": "type1",
           "typeName": "Early Booking - Best Rate",
           "extensions": ["Deposit Required"],
           "price": 320,
           "typeDescription": "Room only. Rate includes spa access and WiFi. Touristic Tax not included. Full prepayment is required at time of booking and it is not refundable in case of cancellation or modification."
         },
         {
+          "idType": "type2",
           "typeName": "Early Booking with Breakfast - Best Rate",
           "extensions": ["Deposit Required", "Breakfast Included"],
           "price": 360,
           "typeDescription": "Rate includes breakfast, spa access and WiFi. Touristic Tax not included. Full prepayment is required at time of booking and it is not refundable in case of cancellation or modification."
         },
         {
+          "idType": "type3",
           "typeName": "Early Booking",
           "price": 280,
           "extensions": ["Deposit Required"],
@@ -383,18 +392,21 @@
       "sleeps": 2,
       "types": [
         {
+          "idType": "type1",
           "typeName": "Early Booking - Best Rate",
           "price": 330,
           "extensions": ["Deposit Required"],
           "typeDescription": "Room only. Rate includes spa access and WiFi. Touristic Tax not included. Full prepayment is required at time of booking and it is not refundable in case of cancellation or modification."
         },
         {
+          "idType": "type2",
           "typeName": "Early Booking with Breakfast - Best Rate",
           "price": 370,
           "extensions": ["Deposit Required", "Breakfast Included"],
           "typeDescription": "Rate includes breakfast, spa access and WiFi. Touristic Tax not included. Full prepayment is required at time of booking and it is not refundable in case of cancellation or modification."
         },
         {
+          "idType": "type3",
           "typeName": "Early Booking",
           "price": 290,
           "extensions": ["Deposit Required"],
@@ -459,18 +471,21 @@
       "sleeps": 4,
       "types": [
         {
+          "idType": "type1",
           "typeName": "Early Booking - Best Rate",
           "price": 340,
           "extensions": ["Deposit Required"],
           "typeDescription": "Room only. Rate includes spa access and WiFi. Touristic Tax not included. Full prepayment is required at time of booking and it is not refundable in case of cancellation or modification."
         },
         {
+          "idType": "type2",
           "typeName": "Early Booking with Breakfast - Best Rate",
           "price": 380,
           "extensions": ["Deposit Required", "Breakfast Included"],
           "typeDescription": "Rate includes breakfast, spa access and WiFi. Touristic Tax not included. Full prepayment is required at time of booking and it is not refundable in case of cancellation or modification."
         },
         {
+          "idType": "type3",
           "typeName": "Early Booking",
           "price": 300,
           "extensions": ["Deposit Required"],
@@ -532,18 +547,21 @@
       "sleeps": 4,
       "types": [
         {
+          "idType": "type1",
           "typeName": "Early Booking - Best Rate",
           "price": 400,
           "extensions": ["Deposit Required"],
           "typeDescription": "Room only. Rate includes spa access and WiFi. Touristic Tax not included. Full prepayment is required at time of booking and it is not refundable in case of cancellation or modification."
         },
         {
+          "idType": "type2",
           "typeName": "Early Booking with Breakfast - Best Rate",
           "price": 460,
           "extensions": ["Deposit Required", "Breakfast Included"],
           "typeDescription": "Rate includes breakfast, spa access and WiFi. Touristic Tax not included. Full prepayment is required at time of booking and it is not refundable in case of cancellation or modification."
         },
         {
+          "idType": "type3",
           "typeName": "Early Booking",
           "price": 340,
           "extensions": ["Deposit Required"],

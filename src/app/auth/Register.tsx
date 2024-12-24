@@ -21,7 +21,7 @@ const Register = () => {
       value="register"
       className="backdrop-blur motion-translate-x-in-[95%] motion-translate-y-in-[0%] sm:p-auto p-0"
     >
-      <Card>
+      <Card className="bg-transparent text-primary">
         <CardContent>
           <CardHeader>
             <CardTitle className="text-center md:text-2xl text-xl">
@@ -56,7 +56,7 @@ const Register = () => {
               </span>
             </div>
             <div className="space-y-1 relative">
-              <Label htmlFor="confirm">Password</Label>
+              <Label htmlFor="confirm">Confirm Password</Label>
               <span className="text-red-500 ml-10"></span>
               <Input
                 id="confirm"

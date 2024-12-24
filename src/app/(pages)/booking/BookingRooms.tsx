@@ -1,3 +1,4 @@
+import MotionWrapper from "@/app/_components/MotionWrapper";
 import data from "@/app/data.json";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Button } from "@/components/ui/button";
@@ -32,7 +33,10 @@ const BookingRooms = () => {
   return (
     <>
       {rooms.map((room) => (
-        <div className="border border-third p-4 mt-6" key={room.id}>
+        <MotionWrapper
+          className="border border-third rounded-lg p-4 mt-6"
+          key={room.id}
+        >
           <div className="flex lg:gap-6 md:gap-4 md:flex-row flex-col">
             <div className="flex-[1_0_auto] md:max-w-[30%] max-w-[100%]">
               <AspectRatio ratio={4 / 3} className="bg-muted">
@@ -67,13 +71,13 @@ const BookingRooms = () => {
                 <p>{room.shortDes}</p>
               </div>
               <Button variant={"third"} className="mt-6">
-                <Link href="#!">Rooms Detail</Link>
+                <Link href={`/rooms/${room.id}`}>Rooms Detail</Link>
               </Button>
 
-              <div className="line-1" />
               <div>
                 {room.types.map((type, index) => (
                   <div key={index}>
+                    <div className="line-1" />
                     <div className="flex md:gap-6 md:flex-row flex-col">
                       <div className="flex-[1_0_auto] md:max-w-[60%] 2xl:max-w-[70%]  max-w-[100%]">
                         <h3 className="text-size-lg underline hover:decoration-secondary">
@@ -112,13 +116,12 @@ const BookingRooms = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="line-1" />
                   </div>
                 ))}
               </div>
             </div>
           </div>
-        </div>
+        </MotionWrapper>
       ))}
     </>
   );

@@ -14,12 +14,12 @@ body {
   font-optical-sizing: auto;
 }
 :root {
-  /* --background: #ffffff;
+  --background: #ffffff;
   --foreground: #0a0a0a;
   --card: #ffffff;
   --card-foreground: #0a0a0a;
   --popover: #ffffff;
-  --popover-foreground: #0a0a0a; */
+  --popover-foreground: #0a0a0a;
   --primary: #fff;
   --primary-foreground: rgba(255, 255, 255, 0.1);
   --primary-text-opacity: rgba(255, 255, 255, 0.7);
@@ -27,21 +27,21 @@ body {
   --secondary-foreground: #94b2bbb5;
   --third: #202020;
   --third-foreground: #202020;
-  /* --muted: #f4f4f4;
-  --muted-foreground: #757575; */
+  --muted: #f4f4f4;
+  --muted-foreground: #757575;
   --accent: #ffffff33;
   --accent-foreground: #fff;
-  /* --destructive: #d10000;
+  --destructive: #d10000;
   --destructive-foreground: #fafafa;
   --border: #e5e5e5;
   --input: #e5e5e5;
-  --ring: #0a0a0a; */
+  --ring: #202020;
   --chart-1: #d10000;
   --chart-2: #2abf82;
   --chart-3: #3a7b94;
   --chart-4: #a6d567;
-  /* --chart-5: #f2db5a;
-  --radius: 0.5rem; */
+  --chart-5: #f2db5a;
+  --radius: 0.5rem;
 }
 
 /* .dark {

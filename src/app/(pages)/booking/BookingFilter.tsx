@@ -23,6 +23,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Slider } from "@/components/ui/slider";
 import { useState } from "react";
 import { FaAngleDown } from "react-icons/fa6";
+import MotionWrapper from "@/app/_components/MotionWrapper";
 
 const BookingFilter = () => {
   const [price, setPrice] = useState(120);
@@ -40,38 +41,38 @@ const BookingFilter = () => {
   };
 
   return (
-    <div className="flex items-center sm:gap-6 gap-2">
+    <MotionWrapper className="flex items-center sm:gap-6 gap-2">
       <Select>
-        <SelectTrigger className="w-[180px] md:py-6">
+        <SelectTrigger className="w-[180px] md:py-6 border-secondary">
           <SelectValue
             placeholder="View By"
             className="lg:text-xl"
           ></SelectValue>
         </SelectTrigger>
         <SelectContent className="bg-secondary">
-          <SelectItem value="room" className="lg:text-xl">
+          <SelectItem value="room" className="lg:text-xl text-primary">
             Rooms
           </SelectItem>
-          <SelectItem value="rate" className="lg:text-xl">
+          <SelectItem value="rate" className="lg:text-xl text-primary">
             rate
           </SelectItem>
         </SelectContent>
       </Select>
       <Select>
-        <SelectTrigger className="w-[180px] md:py-6">
+        <SelectTrigger className="w-[180px] md:py-6 border-secondary">
           <SelectValue
             placeholder="Sort By"
             className="lg:text-xl"
           ></SelectValue>
         </SelectTrigger>
         <SelectContent className="bg-secondary">
-          <SelectItem value="recommended" className="lg:text-xl">
+          <SelectItem value="recommended" className="lg:text-xl text-primary">
             Recommended
           </SelectItem>
-          <SelectItem value="Lowest Price" className="lg:text-xl">
+          <SelectItem value="Lowest Price" className="lg:text-xl text-primary">
             Lowest Price
           </SelectItem>
-          <SelectItem value="Highest Price" className="lg:text-xl">
+          <SelectItem value="Highest Price" className="lg:text-xl text-primary">
             Highest Price
           </SelectItem>
         </SelectContent>
@@ -267,7 +268,7 @@ const BookingFilter = () => {
           </DialogFooter>
         </DialogContent>
       </Dialog>
-    </div>
+    </MotionWrapper>
   );
 };
 

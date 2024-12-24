@@ -113,17 +113,17 @@ const page = () => {
           </Link>
         </div>
         <Particles id="tsparticles" options={options} />
-        <Tabs defaultValue="login" className="w-[600px] z-[2] text-primary">
-          <TabsList className="grid w-full grid-cols-2 gap-4">
+        <Tabs defaultValue="login" className="w-[600px] z-[2] ">
+          <TabsList className="grid w-full grid-cols-2 gap-4 bg-transparent">
             <TabsTrigger
               value="login"
-              className="md:text-xl text-lg backdrop-blur animation-normal opacity-50 data-[state=active]:opacity-100 hover:opacity-100"
+              className="md:text-xl text-lg backdrop-blur data-[state=active]:bg-transparent data-[state=active]:text-primary"
             >
               Login
             </TabsTrigger>
             <TabsTrigger
               value="register"
-              className="md:text-xl text-lg backdrop-blur animation-normal opacity-50 data-[state=active]:opacity-100 hover:opacity-100"
+              className="md:text-xl text-lg backdrop-blur data-[state=active]:bg-transparent data-[state=active]:text-primary"
             >
               Register
             </TabsTrigger>

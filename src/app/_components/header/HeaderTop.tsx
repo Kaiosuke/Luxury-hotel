@@ -78,42 +78,49 @@ const HeaderTop = ({
                 Admin:
                 <span>Trong Le</span>
               </DropdownMenuLabel>
-              <div className="line-1 my-2 bg-primary" />
               <DropdownMenuSeparator />
-              <DropdownMenuGroup className="hover:bg-secondary hover:text-primary">
-                <DropdownMenuItem className="text-lg cursor-pointer">
-                  <Link href="#!">Profile</Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem className="text-lg cursor-pointer">
-                  <Link href="/admin">Dash Board</Link>
-                  <DropdownMenuShortcut>
-                    <MdOutlineDashboard className="text-lg" />
-                  </DropdownMenuShortcut>
-                </DropdownMenuItem>
-                <DropdownMenuItem className="text-lg cursor-pointer">
-                  <Link href="#!">Cart</Link>
-                  <DropdownMenuShortcut className="relative">
-                    <FiShoppingCart className="text-lg" />
-                    <span className="w-5 h-5 flex items-center justify-center absolute -top-3 -right-3 bg-primary text-secondary rounded-full">
-                      12
-                    </span>
-                  </DropdownMenuShortcut>
-                </DropdownMenuItem>
+              <DropdownMenuGroup>
+                <Link href="#!">
+                  <DropdownMenuItem className="text-lg cursor-pointer hover:bg-primary hover:text-secondary">
+                    Profile
+                  </DropdownMenuItem>
+                </Link>
+                <Link href="/admin">
+                  <DropdownMenuItem className="text-lg cursor-pointer hover:bg-primary hover:text-secondary">
+                    Dash Board
+                    <DropdownMenuShortcut>
+                      <MdOutlineDashboard className="text-lg" />
+                    </DropdownMenuShortcut>
+                  </DropdownMenuItem>
+                </Link>
+                <Link href="/cart">
+                  <DropdownMenuItem className="text-lg cursor-pointer hover:bg-primary hover:text-secondary">
+                    Cart
+                    <DropdownMenuShortcut className="relative">
+                      <FiShoppingCart className="text-lg" />
+                      <span className="w-5 h-5 flex items-center justify-center absolute -top-3 -right-3 bg-primary text-secondary rounded-full">
+                        12
+                      </span>
+                    </DropdownMenuShortcut>
+                  </DropdownMenuItem>
+                </Link>
               </DropdownMenuGroup>
-
-              <DropdownMenuItem className="text-lg cursor-pointer">
-                <Link href="#!">GitHub</Link>
-                <DropdownMenuShortcut>
-                  <FaGithub className="text-lg" />
-                </DropdownMenuShortcut>
-              </DropdownMenuItem>
-
-              <DropdownMenuItem className="text-lg cursor-pointer">
-                <Link href="#!">Log out</Link>
-                <DropdownMenuShortcut>
-                  <FaSignOutAlt className="text-lg" />
-                </DropdownMenuShortcut>
-              </DropdownMenuItem>
+              <Link href="#!">
+                <DropdownMenuItem className="text-lg cursor-pointer">
+                  GitHub
+                  <DropdownMenuShortcut>
+                    <FaGithub className="text-lg" />
+                  </DropdownMenuShortcut>
+                </DropdownMenuItem>
+              </Link>
+              <Link href="#!">
+                <DropdownMenuItem className="text-lg cursor-pointer">
+                  Log out
+                  <DropdownMenuShortcut>
+                    <FaSignOutAlt className="text-lg" />
+                  </DropdownMenuShortcut>
+                </DropdownMenuItem>
+              </Link>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
