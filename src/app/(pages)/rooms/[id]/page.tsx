@@ -4,7 +4,7 @@ import HeroImage from "@/app/_components/HeroImage";
 import SplideList from "@/app/_components/SplideList";
 import ThumbnailImage from "@/app/_components/ThumbnailImage";
 import data from "@/app/data.json";
-import { IRooms } from "@/interfaces";
+import { IRoom } from "@/interfaces";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import RoomDetail from "./RoomDetail";
@@ -12,7 +12,7 @@ import RoomDetail from "./RoomDetail";
 const page = () => {
   const { id } = useParams();
   const { rooms } = data;
-  const [currentRoom, setCurrentRoom] = useState<IRooms | null>(null);
+  const [currentRoom, setCurrentRoom] = useState<IRoom | null>(null);
 
   useEffect(() => {
     if (id) {

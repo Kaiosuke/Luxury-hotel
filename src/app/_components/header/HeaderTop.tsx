@@ -119,14 +119,14 @@ const HeaderTop = ({
         </div>
         {openMenu ? (
           <HiMiniXMark
-            className={`text-size-4xl animation-normal cursor-pointer hover:opacity-50 ${
+            className={`text-size-4xl cursor-pointer hover:opacity-50 ${
               isScrolled && !openMenu && "text-third"
             } `}
             onClick={() => setOpenMenu(!openMenu)}
           />
         ) : (
           <RxHamburgerMenu
-            className={`text-size-4xl animation-normal cursor-pointer hover:opacity-50 ${
+            className={`text-size-4xl cursor-pointer hover:opacity-50 ${
               isScrolled && !openMenu && "text-third"
             } `}
             onClick={() => setOpenMenu(!openMenu)}

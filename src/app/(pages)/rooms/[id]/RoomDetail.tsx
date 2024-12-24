@@ -2,10 +2,10 @@ import TitleNormal from "@/app/_components/contentTitle/TitleNormal";
 import TitleXL from "@/app/_components/contentTitle/TitleXL";
 import MotionWrapper from "@/app/_components/MotionWrapper";
 import SplideImage from "@/app/_components/SplideImage";
-import { IRooms } from "@/interfaces";
+import { IRoom } from "@/interfaces";
 import { ParallaxBanner } from "react-scroll-parallax";
 
-const RoomDetail = ({ room }: { room: IRooms }) => {
+const RoomDetail = ({ room }: { room: IRoom }) => {
   return (
     <section className="padding-main text-third">
       <div className="grid sm:grid-cols-2 gap-6 grid-cols-1">

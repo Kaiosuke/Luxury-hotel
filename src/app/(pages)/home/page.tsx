@@ -12,7 +12,7 @@ import Rooms from "./Rooms";
 import SpaWellnessSection from "./SpaWellness";
 import MotionWrapper from "@/app/_components/MotionWrapper";
 
-const page = () => {
+const Home = () => {
   return (
     <>
       <HeroImage
@@ -91,4 +91,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Home;

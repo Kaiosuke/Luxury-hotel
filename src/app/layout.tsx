@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ParallaxProvider } from "react-scroll-parallax";
+import Layout from "./(pages)/layout";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

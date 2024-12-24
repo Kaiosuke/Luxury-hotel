@@ -1,5 +1,5 @@
 import { AspectRatio } from "@/components/ui/aspect-ratio";
-import { IRooms } from "@/interfaces";
+import { IRoom } from "@/interfaces";
 import Splide from "@splidejs/splide";
 import "@splidejs/splide/dist/css/themes/splide-default.min.css";
 import Image from "next/image";
@@ -12,7 +12,7 @@ const SplideList = ({
   id,
   splideClass,
 }: {
-  dataList: IRooms[];
+  dataList: IRoom[];
   id: number;
   splideClass: string;
 }) => {

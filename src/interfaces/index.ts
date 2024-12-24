@@ -1,4 +1,4 @@
-interface IRooms {
+interface IRoom {
   id: number;
   thumbnail: string;
   title: string;
@@ -22,4 +22,11 @@ interface IRooms {
   detailDes?: string;
 }
 
-export type { IRooms };
+interface IForm {
+  id?: string | null;
+  open: boolean;
+  type?: string;
+  onClose: (value: boolean) => void;
+}
+
+export type { IRoom, IForm };

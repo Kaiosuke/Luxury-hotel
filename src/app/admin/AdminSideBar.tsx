@@ -1,16 +1,7 @@
 "use client";
 import React from "react";
 
-import {
-  BookOpen,
-  Bot,
-  Frame,
-  Map,
-  PieChart,
-  Settings2,
-  User,
-  SquareTerminal,
-} from "lucide-react";
+import { Frame, Map, PieChart, Settings2, User } from "lucide-react";
 import { IoRestaurantOutline } from "react-icons/io5";
 
 import {
@@ -20,12 +11,11 @@ import {
   SidebarHeader,
   SidebarRail,
 } from "@/components/ui/sidebar";
-import { MdMeetingRoom, MdOutlineDashboard } from "react-icons/md";
-import NavMain from "./NavMain";
-import NavUser from "./NavUser";
-import NavProjects from "./users/NavProject";
-import Link from "next/link";
+import { MdMeetingRoom } from "react-icons/md";
 import HeadDashBoard from "./HeadDashBoard";
+import NavMain from "./NavMain";
+import NavProjects from "./NavProject";
+import NavUser from "./NavUser";
 
 const data = {
   user: {
