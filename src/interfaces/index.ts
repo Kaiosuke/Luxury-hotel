@@ -23,6 +23,15 @@ interface IRoom {
   detailDes?: string;
 }
 
+interface IUser {
+  id: string;
+  userName: string;
+  email: string;
+  role: "CEO" | "ADMIN" | "User";
+  password?: string;
+  confirm?: string;
+}
+
 interface IForm {
   id?: string | null;
   open: boolean;
@@ -30,4 +39,4 @@ interface IForm {
   onClose: (value: boolean) => void;
 }
 
-export type { IRoom, IForm };
+export type { IRoom, IUser, IForm };
