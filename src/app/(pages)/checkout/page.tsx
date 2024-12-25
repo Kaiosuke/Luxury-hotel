@@ -1,10 +1,9 @@
 import HeroImage from "@/app/_components/HeroImage";
 import React from "react";
 import data from "@/app/data.json";
-import CartList from "./CartList";
 import { Button } from "@/components/ui/button";
 import PriceDetail from "@/app/_components/PriceDetail";
-import Link from "next/link";
+import CheckoutInfo from "./CheckoutInfo";
 
 const page = () => {
   const { rooms } = data;
@@ -21,14 +20,12 @@ const page = () => {
       <section className="padding-main">
         <div className="flex lg:flex-row flex-col gap-4">
           <div className="flex-[1_0_auto] lg:max-w-[70%] p-4 max-w-[100%]">
-            <h2 className="text-size-3xl">YourCart: 2 Items</h2>
+            <h2 className="text-size-3xl">Checkout</h2>
             <div className="flex flex-col gap-4 mt-4">
-              {rooms.map((room) => (
-                <CartList key={room.id} room={room} />
-              ))}
+              <CheckoutInfo />
             </div>
           </div>
-          <div className="lg:max-w-[30%] max-w-[100%] p-4 border border-secondary rounded-lg h-fit">
+          <div className="lg:max-w-[30%] max-w-[100%] p-4 border border-secondary rounded-lg">
             <h2 className="text-size-3xl">Price Details</h2>
             <div className="h-[680px] overflow-auto">
               <div className="flex flex-col gap-4 mt-4">
@@ -47,9 +44,6 @@ const page = () => {
               </div>
               <Button variant={"secondary"} className="w-full">
                 Add more Room
-              </Button>
-              <Button variant={"third"} className="w-full mt-2">
-                <Link href="/checkout"> Checkout</Link>
               </Button>
             </div>
           </div>

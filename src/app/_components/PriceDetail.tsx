@@ -1,3 +1,4 @@
+"use client";
 import { IRoom } from "@/interfaces";
 import React from "react";
 
