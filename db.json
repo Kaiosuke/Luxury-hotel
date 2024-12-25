@@ -1,0 +1,405 @@
+{
+  "rooms": [
+    {
+      "id": "1",
+      "thumbnail": "https://aguasdeibiza.com/wp-content/uploads/2024/12/aguas-de-ibiza-11-2024-S-1004_web.jpg",
+      "title": "Dreamer",
+      "price": 100,
+      "quantity": 12,
+      "available": 10,
+      "description": "Calling all lovers of the Feng Shui principles to enter these interiors made of natural elements for their most intimate and pleasant experience. Lose yourself in your privacy while the sun lights up the iridescent tiles recreating seashells… and enter your most magical dreams.",
+      "quickDes": [
+        "34 – 40 sqm (inc. terrace)",
+        "Pillow menu",
+        "Terrace",
+        "Twin beds or King size bed",
+        "Bathtub",
+        "Unlimited access to spa",
+        "It is located on the 1st , 2nd and 3rd floor. Subject to availability"
+      ],
+      "features": [
+        "Air Conditioning",
+        "Desk or Workplace",
+        "Free Wifi",
+        "Bathtub",
+        "Safe in Room"
+      ],
+      "square": "34 to 40 sqm",
+      "typeBed": "1 King bed",
+      "sleeps": 3,
+      "images": [
+        "https://d321ocj5nbe62c.cloudfront.net/imageRepo/2/0/187/589/209/Dreamer_1_P.jpg",
+        "https://d321ocj5nbe62c.cloudfront.net/imageRepo/2/0/187/589/145/Dreamer_terrace_P.jpg",
+        "https://d321ocj5nbe62c.cloudfront.net/imageRepo/7/0/167/385/779/04_AGUAS-DE-IBIZA-2023-052-baja_(1)_P.jpg"
+      ],
+      "map": "https://aguasdeibiza.com/wp-content/uploads/2018/12/plano_dreamer.svg",
+      "detailFeatures": [
+        "King bed",
+        "Coffee/Tea maker",
+        "High speed internet connection",
+        "Bathroom amenities",
+        "Hairdryer",
+        "TV",
+        "Slippers",
+        "Speaker phone",
+        "Television",
+        "Data port",
+        "Telephone",
+        "Minibar",
+        "Bathrobe",
+        "Remote control television"
+      ],
+      "shortDes": "Dreamer, King or Twin beds, mountain or city view terrace, sofa bed, ac, free WiFi, bath, hairdryer, satellite TV, safe, minibar, tea and coffee maker. Size: 34-40 sqm / 365-430 sqft",
+      "detailDes": "Dreamer welcomes all lovers of Feng Shui principles as designed this space with natural elements for a unique reconnection experience. Room features King or Twin beds, mountain or city view terrace, sofa bed, air conditioning, complimentary WiFi access, bathroom with bath, hairdryer, satellite TV, safe, minibar, tea and coffee maker. Size: 34 to 40 square metres / 365 to 430 square feet. It is located on the first, second and third floors. Location subject to availability."
+    },
+    {
+      "id": "2",
+      "thumbnail": "https://aguasdeibiza.com/wp-content/uploads/2019/01/aguas-de-ibiza-11-2024-S-1019.jpg",
+      "title": "Deluxe",
+      "price": 140,
+      "quantity": 14,
+      "available": 8,
+      "description": "The mysterious principles of Feng Shui open up to the views of Santa Eulalia. Inside this Deluxe space, the most natural elements have gathered from the bathroom itself to the beautiful Ibiza marine views at the open terrace. The essence of the Mediterranean soul.",
+      "quickDes": [
+        "35 sqm (inc. terrace)",
+        "Bathtub",
+        "Unlimited access to spa",
+        "Pool view",
+        "Pillow menu",
+        "Double beds",
+        "Terrace",
+        "It is located on 1st, 2nd and 3rd floor. Subject to availability"
+      ],
+      "features": [
+        "Air Conditioning",
+        "Desk or Workplace",
+        "Free Wifi",
+        "Bathtub",
+        "Safe in Room"
+      ],
+      "square": "35 sqm",
+      "typeBed": "1 King bed",
+      "sleeps": 3,
+      "images": [
+        "https://d321ocj5nbe62c.cloudfront.net/imageRepo/2/0/187/589/548/Deluxe_6_P.jpg",
+        "https://d321ocj5nbe62c.cloudfront.net/imageRepo/2/0/187/589/530/Deluxe_4_P.jpg",
+        "https://d321ocj5nbe62c.cloudfront.net/imageRepo/2/0/187/589/586/Deluxe_1_P.jpg"
+      ],
+      "map": "https://aguasdeibiza.com/wp-content/uploads/2018/12/plano_dreamer.svg",
+      "detailFeatures": [
+        "King bed",
+        "Coffee/Tea maker",
+        "High speed internet connection",
+        "Bathroom amenities",
+        "Hairdryer",
+        "TV",
+        "Slippers",
+        "Speaker phone",
+        "Television",
+        "Data port",
+        "Telephone",
+        "Minibar",
+        "Bathrobe",
+        "Remote control television"
+      ],
+      "shortDes": "Deluxe, King or Twin beds, pool and garden view terrace, sofa bed, ac, free WiFi, bath, hairdryer, satellite TV, safe, minibar, tea and coffee maker. Size: 35 sqm / 376 sqft",
+      "detailDes": "Contemporary Mediterranean-style room designed under Feng Shui principles. Deluxe is designed with natural elements from its bath in natural stone and iridescent tiles, to its terrace oriented to views over the pool and garden. Room features King or Twin beds, sofa bed, air conditioning, complimentary WiFi access, hairdryer, satellite TV, safe, minibar, tea and coffee maker. Size: 35 square metres / 376 square feet. It is located on the first, second and third floor. Location subject to availability."
+    },
+    {
+      "id": "3",
+      "thumbnail": "https://aguasdeibiza.com/wp-content/uploads/2019/01/2861F1D5-2517-4343-9240-AF3D6557292F.jpg",
+      "title": "Premier",
+      "price": 180,
+      "quantity": 16,
+      "available": 10,
+      "description": "An Ibiza style room with a natural set of design details to add up to a king size bed and a large private terrace. Contemporary elements like copper and limestone on the wall, or stone pebble floors in its large bathroom, together with two independent washbasins, a bathtub and a separate shower make this space more than a necessity: it’s a magnificent amenity in itself.",
+      "quickDes": [
+        "34 – 40 sqm (inc. terrace)",
+        "Twin beds",
+        "Shower and tub",
+        "Pillow menu",
+        "Unlimited access to spa",
+        "Terrace",
+        "Coffee and tea point",
+        "It is located on 1st, 2nd, 3rd and 4th floor. Subject to availability."
+      ],
+      "features": [
+        "Separate Shower",
+        "Air Conditioning",
+        "Desk or Workplace",
+        "Free Wifi",
+        "Bathtub"
+      ],
+      "square": "34 to 40 sqm",
+      "typeBed": "2 Twin beds",
+      "sleeps": 2,
+      "images": [
+        "https://d321ocj5nbe62c.cloudfront.net/imageRepo/7/0/111/661/862/PRINT-Aguas-de-Ibiza-Room-2019-2_P.jpg",
+        "https://d321ocj5nbe62c.cloudfront.net/imageRepo/7/0/111/661/890/PRINT-Aguas-de-Ibiza-Room-2019-6_P.jpg",
+        "https://d321ocj5nbe62c.cloudfront.net/imageRepo/7/0/111/661/916/PRINT-Aguas-de-Ibiza-Room-2019-20_P.jpg"
+      ],
+      "map": "https://aguasdeibiza.com/wp-content/uploads/2019/03/plano_premier.svg",
+      "detailFeatures": [
+        "Balcony/Lanai/Terrace",
+        "Coffee/Tea maker",
+        "High speed internet connection",
+        "Bathroom amenities",
+        "TV",
+        "Telephone",
+        "Minibar",
+        "Safe",
+        "Bathrobe"
+      ],
+      "shortDes": "Premier, Twin beds, city view terrace, ac, free WiFi, bath and separate shower, hairdryer, satellite TV, safe, minibar, tea and coffee maker. Size: 34-40 sqm / 365-430 sqft",
+      "detailDes": "Premier in Ibizan style with a natural set of design details and a large private terrace with city view. With contemporary elements such as copper details and limestone piece on the wall, or boulder floors in its huge bathroom with bath and separate shower. Room features Twin beds, air conditioning, complimentary WiFi access, hairdryer, satellite TV, safe, minibar, tea and coffee maker. Size: 34 to 40 square metres /365 to 430 square feet.It is located on the first, second, third and fourth floor. Location subject to availability."
+    },
+    {
+      "id": "4",
+      "thumbnail": "https://aguasdeibiza.com/wp-content/uploads/2023/09/AGUAS-DE-IBIZA-2023-029-baja.jpg",
+      "title": "Premier Bay",
+      "price": 220,
+      "quantity": 10,
+      "available": 6,
+      "description": "Exclusive designed room with views of the sea and the port of Santa Eulalia. In addition to its unique views of the bay of Santa Eulalia from its private terrace, it has a natural set of design details typical of a Premier room with a king size bed, separate washbasins, bathtub and separate shower. Copper and limestone details on the wall and a pebble floor in the spacious bathroom make this room type a luxurious experience.",
+      "quickDes": [
+        "34 – 40 sqm (terrace inc.)",
+        "Sea views",
+        "Shower and tub",
+        "Unlimited access to spa",
+        "Twin beds",
+        "Private terrace",
+        "Pillow menu",
+        "Coffee & tea point",
+        "It is located on the 2nd, 3rd and 4th floor. Subject to availability."
+      ],
+      "features": [
+        "Separate Shower",
+        "Air Conditioning",
+        "Desk or Workplace",
+        "Free Wifi",
+        "Bathtub"
+      ],
+      "square": "34 to 40 sqm",
+      "typeBed": "2 Twin beds",
+      "sleeps": 2,
+      "images": [
+        "https://d321ocj5nbe62c.cloudfront.net/imageRepo/7/0/165/802/495/AGUAS-DE-IBIZA-2023-029-baja_P.jpg",
+        "https://d321ocj5nbe62c.cloudfront.net/imageRepo/7/0/111/661/862/PRINT-Aguas-de-Ibiza-Room-2019-2_P.jpg",
+        "https://d321ocj5nbe62c.cloudfront.net/imageRepo/7/0/111/661/916/PRINT-Aguas-de-Ibiza-Room-2019-20_P.jpg"
+      ],
+      "map": "https://aguasdeibiza.com/wp-content/uploads/2019/03/plano_premier.svg",
+      "detailFeatures": [
+        "Balcony/Lanai/Terrace",
+        "Coffee/Tea maker",
+        "High speed internet connection",
+        "Bathroom amenities",
+        "Hairdryer",
+        "Wake-up calls",
+        "TV",
+        "Slippers",
+        "Television",
+        "Telephone",
+        "Minibar",
+        "Maid service",
+        "Bathroom telephone",
+        "Bidet",
+        "Cable television",
+        "Safe",
+        "Direct dial phone number",
+        "Smoke detectors",
+        "Satellite television"
+      ],
+      "shortDes": "Premier Bay, Twin beds, sea and port view terrace, ac, free WiFi, bath and separate shower, hairdryer, satellite TV, safe, minibar, tea and coffee maker. Size: 34-40 sqm / 365-430 sqft",
+      "detailDes": "Premier Bay is uniquely designed room overlooks the sea and the port of Santa Eulalia from its private terrace. Room features Twins beds, pebbled floor bathroom with bath and separate shower and toilet, air conditioning, complimentary WiFi access, hairdryer, satellite TV, safe, minibar, tea and coffee maker. Size: 34 to 40 square metres /365 to 430 square feet. It is located on the second, third and fourth floor. Location subject to availability."
+    },
+    {
+      "id": "5",
+      "thumbnail": "https://aguasdeibiza.com/wp-content/uploads/2023/10/01_AGUAS-DE-IBIZA-2023-156-baja_r.jpg",
+      "title": "Conner Suite",
+      "price": 260,
+      "quantity": 14,
+      "available": 10,
+      "description": "The unique room at the corner is a favorite for the large geometric windows with 180º views to the mountains or the pool. To extra treat the eyes while spending time in a pure and warm, island white decoration. Before indulging to a bath in the big round soaking bathtub. Pure magic.",
+      "quickDes": [
+        "64 – 87 sqm (inc. terrace)",
+        "Twin beds",
+        "Pillow menu",
+        "Sun terrace",
+        "Unlimited access to spa",
+        "Shower and tub",
+        "City view",
+        "It is located on the 1st, 2nd and 3rd floor. Subject to availability."
+      ],
+      "features": [
+        "Air Conditioning",
+        "Desk or Workplace",
+        "Free Wifi",
+        "Bathtub",
+        "Safe in Room"
+      ],
+      "square": "64 to 87 sqm",
+      "typeBed": "2 Twin beds",
+      "sleeps": 4,
+      "images": [
+        "https://d321ocj5nbe62c.cloudfront.net/imageRepo/7/0/167/454/845/01_AGUAS-DE-IBIZA-2023-156-baja_r_P.jpg",
+        "https://d321ocj5nbe62c.cloudfront.net/imageRepo/7/0/167/454/829/02_AGUAS-DE-IBIZA-2023-179-baja_P.jpg",
+        "https://d321ocj5nbe62c.cloudfront.net/imageRepo/6/0/87/689/11/Bathroom_Corner_Suite_230_P.jpg"
+      ],
+      "map": "https://aguasdeibiza.com/wp-content/uploads/2018/12/plano_corner-suite.svg",
+      "detailFeatures": [
+        "Balcony/Lanai/Terrace",
+        "Coffee/Tea maker",
+        "High speed internet connection",
+        "Bathroom amenities",
+        "Hairdryer",
+        "TV",
+        "Slippers",
+        "Speaker phone",
+        "Television",
+        "Data port",
+        "Telephone",
+        "Minibar",
+        "Sitting area",
+        "Bathrobe",
+        "Remote control television"
+      ],
+
+      "shortDes": "Corner Suite, Twin beds, mountain or pool view terrace, living room, ac, free WiFi, bath, separate shower, hairdryer, satellite TV, safe, minibar, tea and coffee maker. Size: 64-87 sqm / 636-936 sqft.",
+      "detailDes": "A unique Corner Suite with large geometric windows with 180º views of the mountains or the pool. Suite is designed with warm, white, purely Ibizan decoration while taking a relaxing bath in the large round bathtub on the terrace. Suite has Twin beds, living room, air conditioning, complimentary WiFi access, hairdryer, satellite TV, safe, minibar, tea and coffee maker. Size: 64 to 87 square metres / 636 to 936 square feet. It is located on the first, second and third floor. Location subject to availability."
+    },
+    {
+      "id": "6",
+      "thumbnail": "https://aguasdeibiza.com/wp-content/uploads/2023/09/AGUAS-DE-IBIZA-2023-081-baja.jpg",
+      "title": "Junior Suite Sea View",
+      "price": 300,
+      "quantity": 8,
+      "available": 2,
+      "description": "When the idea of a perfect marine retreat includes unbeatable sea sights, this is the perfect choice. A big and bright room with views of Formentera Island and its pristine waters, combined with a beautiful modern furniture. So that your eyes dive through the Mediterranean without leaving the room.",
+      "quickDes": [
+        "38 – 45 sqm (inc. terrace)",
+        "Double beds/King size bed",
+        "Shower and tub",
+        "Pillow menu",
+        "Unlimited access to spa",
+        "Private terrace",
+        "Sea view",
+        "It is located on the 2nd and 3rd floor. Subject to availability."
+      ],
+      "features": [
+        "Air Conditioning",
+        "Desk or Workplace",
+        "Free Wifi",
+        "Bathtub",
+        "Safe in Room"
+      ],
+      "square": "38 to 45 sqm",
+      "typeBed": "1 King bed",
+      "sleeps": 4,
+      "images": [
+        "https://d321ocj5nbe62c.cloudfront.net/imageRepo/7/0/167/386/39/01_AGUAS-DE-IBIZA-2023-081-baja_P.jpg",
+        "https://d321ocj5nbe62c.cloudfront.net/imageRepo/7/0/162/958/51/JS-2023-082-baja_P.jpg",
+        "https://d321ocj5nbe62c.cloudfront.net/imageRepo/7/0/167/931/637/04_AGUAS-DE-IBIZA-2023-073-baja_(2)_P.jpg"
+      ],
+      "map": "https://aguasdeibiza.com/wp-content/uploads/2018/12/plano_corner-suite.svg",
+      "detailFeatures": [
+        "King bed",
+        "Twin bed",
+        "Balcony/Lanai/Terrace",
+        "Coffee/Tea maker",
+        "High speed internet connection",
+        "Bathroom amenities",
+        "Hairdryer",
+        "TV",
+        "Slippers",
+        "Speaker phone",
+        "Television",
+        "Data port",
+        "Telephone",
+        "Minibar",
+        "Sitting area",
+        "Bathrobe",
+        "Remote control television"
+      ],
+      "shortDes": "Junior Suite Sea View, King or Twin beds, sea view terrace, ac, free WiFi, bath and separate shower, hairdryer, satellite TV, safe, minibar, tea and coffee maker. Size: 38-45 sqm / 409-484 sqft",
+      "detailDes": "Junior Suite Sea View features a large and bright room overlooking the island of Formentera and its crystal clear waters, combined with beautiful modern furniture. Suite features King or Twin beds, living room, bathroom with bath and separate shower, air conditioning, complimentary WiFi access, hairdryer, satellite TV, safe, minibar, tea and coffee maker. Size: 38 to 45 square metres / 409 to 484 square feet. It is located on the second and third floors. Location subject to availability."
+    }
+  ],
+  "typeRooms": [
+    {
+      "id": "1",
+      "typeName": "Early Booking - Best Rate",
+      "price": 200,
+      "extensions": ["Deposit Required"],
+      "typeDescription": "Room only. Rate includes spa access and WiFi. Touristic Tax not included. Full prepayment is required at time of booking and it is not refundable in case of cancellation or modification."
+    },
+    {
+      "id": "2",
+      "typeName": "Early Booking with Breakfast - Best Rate",
+      "price": 220,
+      "extensions": ["Deposit Required", "Breakfast Included"],
+      "typeDescription": "Rate includes breakfast, spa access and WiFi. Touristic Tax not included. Full prepayment is required at time of booking and it is not refundable in case of cancellation or modification."
+    },
+    {
+      "id": "3",
+      "typeName": "Early Booking",
+      "price": 260,
+      "extensions": ["Deposit Required"],
+      "typeDescription": "Rate is room only and includes spa access and WiFi. Touristic Tax not included. The credit card used to make the reservation will be requested upon arrival."
+    }
+  ],
+  "users": [
+    {
+      "id": "1",
+      "username": "Kaio",
+      "email": "Kaio@gmail.com",
+      "password": "123456",
+      "confirm": "123456",
+      "role": "ceo"
+    },
+    {
+      "id": "2",
+      "username": "TrongLe2",
+      "email": "TrongLe2@gmail.com",
+      "password": "123456",
+      "confirm": "123456",
+      "role": "admin"
+    },
+    {
+      "id": "3",
+      "username": "TrongLe3",
+      "email": "TrongLe2@gmail.com",
+      "password": "123456",
+      "confirm": "123456",
+      "role": "user"
+    }
+  ],
+  "bookings": [
+    {
+      "id": "1",
+      "userId": "3",
+      "roomId": "1",
+      "typeId": "1",
+      "checkIn": "2024-12-25",
+      "checkOut": "2024-12-28",
+      "status": "pending"
+    },
+    {
+      "id": "2",
+      "userId": "2",
+      "roomId": "1",
+      "typeId": "2",
+      "checkIn": "2024-12-26",
+      "checkOut": "2024-12-28",
+      "status": "confirmed"
+    },
+    {
+      "id": "2",
+      "userId": "3",
+      "roomId": "3",
+      "typeId": "3",
+      "checkIn": "2024-12-27",
+      "checkOut": "2024-12-28",
+      "status": "confirmed"
+    }
+  ]
+}

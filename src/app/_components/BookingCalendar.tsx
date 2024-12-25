@@ -11,18 +11,20 @@ import { useToast } from "@/hooks/use-toast";
 import useAppContext from "@/hooks/useAppContext";
 import { cn } from "@/lib/utils";
 import { format, isBefore } from "date-fns";
+import { useRouter } from "next/navigation";
 import { FaChevronDown } from "react-icons/fa6";
 
 const BookingCalendar = ({ isShow }: { isShow?: boolean }) => {
   const { dateCheckIn, dateCheckOut, setDateCheckIn, setDateCheckOut } =
     useAppContext();
+  const router = useRouter();
   const { toast } = useToast();
 
   const today = new Date();
 
   const handleGetData = () => {
     if (dateCheckIn && dateCheckOut) {
-      console.log(1);
+      router.push("/booking");
     } else {
       toast({
         variant: "destructive",

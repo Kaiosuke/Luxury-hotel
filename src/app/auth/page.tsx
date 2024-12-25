@@ -1,27 +1,14 @@
 "use client";
 
-import React from "react";
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { type ISourceOptions } from "@tsparticles/engine";
 import Particles, { initParticlesEngine } from "@tsparticles/react";
 import { loadSlim } from "@tsparticles/slim";
-import { useEffect, useMemo, useState } from "react";
-import { FaLongArrowAltLeft, FaRegEye } from "react-icons/fa";
-import Register from "./Register";
-import Login from "./Login";
 import Link from "next/link";
+import { useEffect, useMemo, useState } from "react";
+import { FaLongArrowAltLeft } from "react-icons/fa";
+import Login from "./Login";
+import Register from "./Register";
 
 const page = () => {
   const [init, setInit] = useState(false);
@@ -102,7 +89,7 @@ const page = () => {
 
   if (init) {
     return (
-      <div className="w-screen h-screen flex pt-52 justify-center bg-[url('https://media.publit.io/file/Philippines-night-G.png')]">
+      <div className="w-screen h-screen flex pt-40 justify-center bg-[url('https://media.publit.io/file/Philippines-night-G.png')]">
         <div className="fixed top-10 left-10">
           <Link
             href="/home"

@@ -22,12 +22,17 @@ interface IRoom {
   shortDes?: string;
   detailDes?: string;
 }
+enum ERole {
+  ceo = "ceo",
+  admin = "admin",
+  user = "user",
+}
 
 interface IUser {
-  id: string;
-  userName: string;
+  id?: string;
+  username: string;
   email: string;
-  role: "CEO" | "ADMIN" | "User";
+  role: ERole;
   password?: string;
   confirm?: string;
 }
@@ -39,4 +44,5 @@ interface IForm {
   onClose: (value: boolean) => void;
 }
 
-export type { IRoom, IUser, IForm };
+export { ERole };
+export type { IForm, IRoom, IUser };

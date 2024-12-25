@@ -14,17 +14,17 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
-import { subscribeForm } from "@/schemas";
+import { SubscribeSchema } from "@/schemas";
 
 const Footer = () => {
-  const form = useForm<z.infer<typeof subscribeForm>>({
-    resolver: zodResolver(subscribeForm),
+  const form = useForm<z.infer<typeof SubscribeSchema>>({
+    resolver: zodResolver(SubscribeSchema),
     defaultValues: {
       username: "",
       email: "",
     },
   });
-  function onSubmit(values: z.infer<typeof subscribeForm>) {
+  function onSubmit(values: z.infer<typeof SubscribeSchema>) {
     console.log(values);
   }
 
