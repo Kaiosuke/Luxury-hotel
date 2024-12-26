@@ -40,7 +40,7 @@ const Register = () => {
               Register
             </CardTitle>
           </CardHeader>
-          <form onSubmit={handleSubmit((data) => handleGetData(data))}>
+          <form onSubmit={handleSubmit(handleGetData)}>
             <CardContent className="space-y-6">
               <div className="space-y-1">
                 <Label htmlFor="username">Name</Label>
@@ -50,7 +50,7 @@ const Register = () => {
                   {...register("username")}
                   autoComplete="username"
                 />
-                <span className="text-red-500 text-base">
+                <span className="text-red-500 text-sm">
                   {formState.errors?.username?.message}
                 </span>
               </div>
@@ -62,7 +62,7 @@ const Register = () => {
                   {...register("email")}
                   autoComplete="email"
                 />
-                <span className="text-red-500 text-base">
+                <span className="text-red-500 text-sm">
                   {formState.errors?.email?.message}
                 </span>
               </div>
@@ -83,7 +83,7 @@ const Register = () => {
                     {showPassword ? <FaRegEye /> : <FaRegEyeSlash />}
                   </span>
                 </div>
-                <span className="text-red-500 text-base">
+                <span className="text-red-500 text-sm">
                   {formState.errors?.password?.message}
                 </span>
               </div>
@@ -104,7 +104,7 @@ const Register = () => {
                     {confirm ? <FaRegEye /> : <FaRegEyeSlash />}
                   </span>
                 </div>
-                <span className="text-red-500 text-base">
+                <span className="text-red-500 text-sm">
                   {formState.errors?.confirm?.message}
                 </span>
               </div>

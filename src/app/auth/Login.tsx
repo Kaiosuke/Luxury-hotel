@@ -9,12 +9,35 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { TabsContent } from "@/components/ui/tabs";
+import { IUser } from "@/interfaces";
+import { LoginSchema } from "@/schemas";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
+
+  const { register, handleSubmit, formState } = useForm<IUser>({
+    resolver: zodResolver(LoginSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
+
+  const handleLogin = async (data: IUser) => {
+    const { email, password } = data;
+    const res = await signIn("credentials", {
+      email,
+      password,
+      redirectTo: "/",
+    });
+    console.log(res);
+  };
 
   return (
     <TabsContent
@@ -28,34 +51,40 @@ const Login = () => {
               Login
             </CardTitle>
           </CardHeader>
-          <form>
+          <form onSubmit={handleSubmit(handleLogin)}>
             <CardContent className="space-y-6">
               <div className="space-y-1">
                 <Label htmlFor="email">Email</Label>
-                <span className="text-red-500 ml-10"></span>
                 <Input
                   id="email"
                   type="email"
-                  name="email"
                   placeholder=". . ."
+                  autoComplete="email"
+                  {...register("email")}
                 />
-                <span className="text-red-500"></span>
+                <span className="text-red-500 text-sm">
+                  {formState.errors?.email?.message}
+                </span>
               </div>
-              <div className="space-y-1 relative">
+              <div className="space-y-1">
                 <Label htmlFor="password">Password</Label>
-                <span className="text-red-500 ml-10"></span>
-                <Input
-                  id="password"
-                  type={`${showPassword ? "text" : "password"}`}
-                  name="password"
-                  placeholder=". . ."
-                  className="relative"
-                />
-                <span
-                  className="absolute top-8 right-2 cursor-pointer text-lg"
-                  onClick={() => setShowPassword(!showPassword)}
-                >
-                  {showPassword ? <FaRegEye /> : <FaRegEyeSlash />}
+                <div className="relative">
+                  <Input
+                    id="password"
+                    type={`${showPassword ? "text" : "password"}`}
+                    placeholder=". . ."
+                    autoComplete="password"
+                    {...register("password")}
+                  />
+                  <span
+                    className="absolute top-1/2 -translate-y-1/2 right-2 cursor-pointer text-lg"
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    {showPassword ? <FaRegEye /> : <FaRegEyeSlash />}
+                  </span>
+                </div>
+                <span className="text-red-500 text-sm">
+                  {formState.errors?.password?.message}
                 </span>
               </div>
 

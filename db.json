@@ -263,7 +263,6 @@
         "Bathrobe",
         "Remote control television"
       ],
-
       "shortDes": "Corner Suite, Twin beds, mountain or pool view terrace, living room, ac, free WiFi, bath, separate shower, hairdryer, satellite TV, safe, minibar, tea and coffee maker. Size: 64-87 sqm / 636-936 sqft.",
       "detailDes": "A unique Corner Suite with large geometric windows with 180º views of the mountains or the pool. Suite is designed with warm, white, purely Ibizan decoration while taking a relaxing bath in the large round bathtub on the terrace. Suite has Twin beds, living room, air conditioning, complimentary WiFi access, hairdryer, satellite TV, safe, minibar, tea and coffee maker. Size: 64 to 87 square metres / 636 to 936 square feet. It is located on the first, second and third floor. Location subject to availability."
     },
@@ -329,21 +328,28 @@
       "id": "1",
       "typeName": "Early Booking - Best Rate",
       "price": 200,
-      "extensions": ["Deposit Required"],
+      "extensions": [
+        "Deposit Required"
+      ],
       "typeDescription": "Room only. Rate includes spa access and WiFi. Touristic Tax not included. Full prepayment is required at time of booking and it is not refundable in case of cancellation or modification."
     },
     {
       "id": "2",
       "typeName": "Early Booking with Breakfast - Best Rate",
       "price": 220,
-      "extensions": ["Deposit Required", "Breakfast Included"],
+      "extensions": [
+        "Deposit Required",
+        "Breakfast Included"
+      ],
       "typeDescription": "Rate includes breakfast, spa access and WiFi. Touristic Tax not included. Full prepayment is required at time of booking and it is not refundable in case of cancellation or modification."
     },
     {
       "id": "3",
       "typeName": "Early Booking",
       "price": 260,
-      "extensions": ["Deposit Required"],
+      "extensions": [
+        "Deposit Required"
+      ],
       "typeDescription": "Rate is room only and includes spa access and WiFi. Touristic Tax not included. The credit card used to make the reservation will be requested upon arrival."
     }
   ],
@@ -351,7 +357,7 @@
     {
       "id": "1",
       "username": "Kaio",
-      "email": "Kaio@gmail.com",
+      "email": "trongleele@gmail.com",
       "password": "123456",
       "confirm": "123456",
       "role": "ceo"
@@ -371,6 +377,23 @@
       "password": "123456",
       "confirm": "123456",
       "role": "user"
+    },
+    {
+      "id": "QTS7hdV"
+    },
+    {
+      "id": "lB8sZvN"
+    },
+    {
+      "id": "k8OTwUd"
+    },
+    {
+      "id": "29qLrVz"
+    },
+    {
+      "email": "trongleele@gmail.com",
+      "password": "123456",
+      "id": "4Q_o7ix"
     }
   ],
   "bookings": [

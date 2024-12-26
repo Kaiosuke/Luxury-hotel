@@ -32,7 +32,7 @@ interface IUser {
   id?: string;
   username: string;
   email: string;
-  role: ERole;
+  role?: ERole;
   password?: string;
   confirm?: string;
 }

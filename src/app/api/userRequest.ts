@@ -1,7 +1,7 @@
 import { IUser } from "@/interfaces";
-import { createAsyncThunk } from "./../../node_modules/@reduxjs/toolkit/src/createAsyncThunk";
-import instanceLocal from "./instances";
 import { AxiosError } from "axios";
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import instanceLocal from "./instances";
 
 const getAllUser = createAsyncThunk<IUser>("user/getAllUser", async () => {
   try {
