@@ -12,11 +12,11 @@ import { TabsContent } from "@/components/ui/tabs";
 import { IUser } from "@/interfaces";
 import { LoginSchema } from "@/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
+import { signIn } from "next-auth/react";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -31,12 +31,11 @@ const Login = () => {
 
   const handleLogin = async (data: IUser) => {
     const { email, password } = data;
-    const res = await signIn("credentials", {
+    await signIn("credentials", {
       email,
       password,
       redirectTo: "/",
     });
-    console.log(res);
   };
 
   return (

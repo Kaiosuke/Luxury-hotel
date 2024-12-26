@@ -18,6 +18,7 @@ import { FaSignOutAlt } from "react-icons/fa";
 import { FaGithub } from "react-icons/fa6";
 import { FiShoppingCart } from "react-icons/fi";
 import { MdOutlineDashboard } from "react-icons/md";
+import { signOut, useSession } from "next-auth/react";
 
 const HeaderTop = ({
   isScrolled,
@@ -28,6 +29,13 @@ const HeaderTop = ({
   openMenu: boolean;
   setOpenMenu: (value: boolean) => void;
 }) => {
+  const { data: session } = useSession();
+  console.log(session);
+
+  const handleSigOut = () => {
+    signOut();
+  };
+
   return (
     <div
       className={`flex justify-between items-center md:px-10 py-4 sm:px-6 px-3 relative z-[2] `}
@@ -113,14 +121,16 @@ const HeaderTop = ({
                   </DropdownMenuShortcut>
                 </DropdownMenuItem>
               </Link>
-              <Link href="#!">
-                <DropdownMenuItem className="text-lg cursor-pointer">
-                  Log out
-                  <DropdownMenuShortcut>
-                    <FaSignOutAlt className="text-lg" />
-                  </DropdownMenuShortcut>
-                </DropdownMenuItem>
-              </Link>
+
+              <DropdownMenuItem
+                className="text-lg cursor-pointer"
+                onClick={handleSigOut}
+              >
+                Log out
+                <DropdownMenuShortcut>
+                  <FaSignOutAlt className="text-lg" />
+                </DropdownMenuShortcut>
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>

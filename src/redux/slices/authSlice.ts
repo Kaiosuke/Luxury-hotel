@@ -1,3 +1,4 @@
+import { loginUser, registerUser } from "@/app/api/authRequest";
 import { IUser } from "@/interfaces";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
@@ -18,35 +19,38 @@ const authSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (build) => {
-    // build.addCase(login.pending, (state) => {
-    //   state.loading = true;
-    // });
-    // build.addCase(login.fulfilled, (state, action: PayloadAction<IUser>) => {
-    //   state.loading = false;
-    //   state.currentUser = action.payload;
-    //   state.error = undefined;
-    // });
-    // build.addCase(
-    //   login.rejected,
-    //   (state, action: PayloadAction<string | undefined>) => {
-    //     state.loading = false;
-    //     state.error = action.payload;
-    //   }
-    // );
-    // build.addCase(register.pending, (state) => {
-    //   state.loading = true;
-    // });
-    // build.addCase(register.fulfilled, (state) => {
-    //   state.loading = false;
-    //   state.error = undefined;
-    // });
-    // build.addCase(
-    //   register.rejected,
-    //   (state, action: PayloadAction<string | undefined>) => {
-    //     state.loading = false;
-    //     state.error = action.payload;
-    //   }
-    // );
+    build.addCase(loginUser.pending, (state) => {
+      state.loading = true;
+    });
+    build.addCase(
+      loginUser.fulfilled,
+      (state, action: PayloadAction<IUser>) => {
+        state.loading = false;
+        state.currentUser = action.payload;
+        state.error = undefined;
+      }
+    );
+    build.addCase(
+      loginUser.rejected,
+      (state, action: PayloadAction<string | undefined>) => {
+        state.loading = false;
+        state.error = action.payload;
+      }
+    );
+    build.addCase(registerUser.pending, (state) => {
+      state.loading = true;
+    });
+    build.addCase(registerUser.fulfilled, (state) => {
+      state.loading = false;
+      state.error = undefined;
+    });
+    build.addCase(
+      registerUser.rejected,
+      (state, action: PayloadAction<string | undefined>) => {
+        state.loading = false;
+        state.error = action.payload;
+      }
+    );
   },
 });
 

@@ -17,13 +17,11 @@ const Layout: React.FC<{ children: ReactNode }> = ({ children }) => {
   });
   return (
     <ParallaxProvider>
-      <AppProvider>
-        <Header />
-        <motion.div className="progress-bar z-[9999]" style={{ scaleX }} />
-        {children}
-        <Circle />
-        <Footer />
-      </AppProvider>
+      <Header />
+      <motion.div className="progress-bar z-[9999]" style={{ scaleX }} />
+      {children}
+      <Circle />
+      <Footer />
     </ParallaxProvider>
   );
 };

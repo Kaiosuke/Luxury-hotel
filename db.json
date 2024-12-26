@@ -1,4 +1,45 @@
 {
+  "users": [
+    {
+      "id": "1",
+      "username": "Kaio",
+      "email": "trongleele@gmail.com",
+      "password": "123456",
+      "confirm": "123456",
+      "role": "ceo"
+    },
+    {
+      "id": "2",
+      "username": "TrongLe2",
+      "email": "TrongLe2@gmail.com",
+      "password": "123456",
+      "confirm": "123456",
+      "role": "admin"
+    },
+    {
+      "id": "3",
+      "username": "TrongLe2",
+      "email": "trongleele2@gmail.com",
+      "password": "trongle2001",
+      "confirm": "trongle2001",
+      "role": "user"
+    },
+    {
+      "username": "trongleele2@gmail.com",
+      "password": "trongle2001",
+      "id": "5-e59Lz"
+    },
+    {
+      "username": "trongleele2@gmail.com",
+      "password": "trongle2001",
+      "id": "hUy3poH"
+    },
+    {
+      "username": "trongleele2@gmail.com",
+      "password": "trongle2001",
+      "id": "P3byDZt"
+    }
+  ],
   "rooms": [
     {
       "id": "1",
@@ -351,49 +392,6 @@
         "Deposit Required"
       ],
       "typeDescription": "Rate is room only and includes spa access and WiFi. Touristic Tax not included. The credit card used to make the reservation will be requested upon arrival."
-    }
-  ],
-  "users": [
-    {
-      "id": "1",
-      "username": "Kaio",
-      "email": "trongleele@gmail.com",
-      "password": "123456",
-      "confirm": "123456",
-      "role": "ceo"
-    },
-    {
-      "id": "2",
-      "username": "TrongLe2",
-      "email": "TrongLe2@gmail.com",
-      "password": "123456",
-      "confirm": "123456",
-      "role": "admin"
-    },
-    {
-      "id": "3",
-      "username": "TrongLe3",
-      "email": "TrongLe2@gmail.com",
-      "password": "123456",
-      "confirm": "123456",
-      "role": "user"
-    },
-    {
-      "id": "QTS7hdV"
-    },
-    {
-      "id": "lB8sZvN"
-    },
-    {
-      "id": "k8OTwUd"
-    },
-    {
-      "id": "29qLrVz"
-    },
-    {
-      "email": "trongleele@gmail.com",
-      "password": "123456",
-      "id": "4Q_o7ix"
     }
   ],
   "bookings": [

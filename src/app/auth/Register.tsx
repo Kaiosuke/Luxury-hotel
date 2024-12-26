@@ -4,11 +4,13 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { TabsContent } from "@/components/ui/tabs";
 import { ERole, IUser } from "@/interfaces";
+import { useAppDispatch } from "@/redux/store";
 import { RegisterSchema } from "@/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
+import { registerUser } from "../api/authRequest";
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -24,9 +26,10 @@ const Register = () => {
       confirm: "",
     },
   });
+  const dispatch = useAppDispatch();
 
-  const handleGetData = (data: IUser) => {
-    (async () => {})();
+  const handleGetData = async (data: IUser) => {
+    const res = await dispatch(registerUser(data));
   };
   return (
     <TabsContent

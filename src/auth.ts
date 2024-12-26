@@ -1,7 +1,20 @@
-import NextAuth from "next-auth";
+import NextAuth, { DefaultSession } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import instanceLocal from "./app/api/instances";
-import axios from "axios";
+import { IUser } from "./interfaces";
+
+declare module "next-auth" {
+  interface Session {
+    user: {
+      userId: string;
+      role: string;
+    } & DefaultSession["user"];
+  }
+
+  interface User {
+    role: string;
+  }
+}
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
@@ -18,13 +31,15 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
               password: credentials?.password,
             },
           });
-          console.log(res.data);
-          const user = res.data[0];
-          if (res.status === 200 && user) {
-            return user;
+          const user: IUser = res.data[0];
+          console.log(user);
+          if (user) {
+            return { id: user.id, username: user.username };
+          } else {
+            return null;
           }
         } catch (error) {
-          console.error("Login error:", error);
+          console.error("Error during authorization", error);
           return null;
         }
       },
@@ -32,5 +47,17 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   ],
   pages: {
     signIn: "/auth",
+  },
+  callbacks: {
+    session({ session, token, user }) {
+      return {
+        ...session,
+        user: {
+          ...session.user,
+          // userId: user.id,
+          // role: user.role,
+        },
+      };
+    },
   },
 });
