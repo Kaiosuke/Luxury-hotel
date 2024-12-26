@@ -13,12 +13,14 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { loginUser } from "@/redux/slices/authSlice";
+import { useAppDispatch } from "@/redux/store";
+import { signOut } from "next-auth/react";
 import { CiUser } from "react-icons/ci";
 import { FaSignOutAlt } from "react-icons/fa";
 import { FaGithub } from "react-icons/fa6";
 import { FiShoppingCart } from "react-icons/fi";
 import { MdOutlineDashboard } from "react-icons/md";
-import { signOut, useSession } from "next-auth/react";
 
 const HeaderTop = ({
   isScrolled,
@@ -29,11 +31,11 @@ const HeaderTop = ({
   openMenu: boolean;
   setOpenMenu: (value: boolean) => void;
 }) => {
-  const { data: session } = useSession();
-  console.log(session);
+  const dispatch = useAppDispatch();
 
   const handleSigOut = () => {
     signOut();
+    dispatch(loginUser(null));
   };
 
   return (
@@ -83,8 +85,7 @@ const HeaderTop = ({
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-60 mt-2 bg-secondary text-primary">
               <DropdownMenuLabel className="text-xl flex gap-2">
-                Admin:
-                <span>Trong Le</span>
+                hello
               </DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuGroup>

@@ -33,8 +33,15 @@ interface IUser {
   username: string;
   email: string;
   role?: ERole;
-  password?: string;
+  password: string;
   confirm?: string;
+  accessToken?: string;
+}
+
+interface IAuthState {
+  loading: boolean;
+  currentUser: IUser | null;
+  error: null | string;
 }
 
 interface IForm {
@@ -45,4 +52,4 @@ interface IForm {
 }
 
 export { ERole };
-export type { IForm, IRoom, IUser };
+export type { IForm, IRoom, IAuthState, IUser };

@@ -1,10 +1,9 @@
 "use client";
 import React, { ReactNode } from "react";
 import { ParallaxProvider } from "react-scroll-parallax";
+import Circle from "../_components/Circle";
 import Footer from "../_components/footer/Footer";
 import Header from "../_components/header/Header";
-import AppProvider from "@/provider/AppProvider";
-import Circle from "../_components/Circle";
 
 import { motion, useScroll, useSpring } from "framer-motion";
 

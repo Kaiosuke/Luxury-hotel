@@ -1,18 +1,26 @@
-import NextAuth, { DefaultSession } from "next-auth";
+import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import instanceLocal from "./app/api/instances";
 import { IUser } from "./interfaces";
+import { InvalidEmailPasswordError } from "./utils/errors";
 
 declare module "next-auth" {
   interface Session {
     user: {
-      userId: string;
-      role: string;
-    } & DefaultSession["user"];
+      id: string;
+      email: string;
+      name: string;
+      role: "ceo" | "admin" | "user";
+    };
+    token: JWT;
+    accessToken?: string;
   }
 
-  interface User {
-    role: string;
+  interface JWT {
+    id: string;
+    email: string;
+    name: string;
+    accessToken?: string;
   }
 }
 
@@ -24,24 +32,17 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         password: {},
       },
       async authorize(credentials) {
-        try {
-          const res = await instanceLocal.get("users", {
-            params: {
-              email: credentials?.email,
-              password: credentials?.password,
-            },
-          });
-          const user: IUser = res.data[0];
-          console.log(user);
-          if (user) {
-            return { id: user.id, username: user.username };
-          } else {
-            return null;
-          }
-        } catch (error) {
-          console.error("Error during authorization", error);
-          return null;
+        const res = await instanceLocal.get("users", {
+          params: {
+            email: credentials?.email,
+            password: credentials?.password,
+          },
+        });
+        const user: IUser = res.data[0];
+        if (!user) {
+          throw new InvalidEmailPasswordError();
         }
+        return user;
       },
     }),
   ],
@@ -49,15 +50,19 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     signIn: "/auth",
   },
   callbacks: {
-    session({ session, token, user }) {
-      return {
-        ...session,
-        user: {
-          ...session.user,
-          // userId: user.id,
-          // role: user.role,
-        },
-      };
+    async jwt({ token, user }) {
+      if (user) {
+        token.user = user as IUser;
+      }
+      return token;
     },
+
+    async session({ session, token }) {
+      (session.user as unknown) = token.user;
+      return session;
+    },
+  },
+  session: {
+    strategy: "jwt",
   },
 });

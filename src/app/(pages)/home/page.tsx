@@ -2,6 +2,7 @@
 import TitleNormal from "@/app/_components/contentTitle/TitleNormal";
 import TitleXL from "@/app/_components/contentTitle/TitleXL";
 import HeroImage from "@/app/_components/HeroImage";
+import MotionWrapper from "@/app/_components/MotionWrapper";
 import ThumbnailImage from "@/app/_components/ThumbnailImage";
 import Link from "next/link";
 import Album from "./Album";
@@ -10,7 +11,6 @@ import Offers from "./Offers";
 import Restaurants from "./Restaurants";
 import Rooms from "./Rooms";
 import SpaWellnessSection from "./SpaWellness";
-import MotionWrapper from "@/app/_components/MotionWrapper";
 
 const Home = () => {
   return (

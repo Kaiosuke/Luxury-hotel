@@ -10,7 +10,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
-import { registerUser } from "../api/authRequest";
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -29,7 +28,7 @@ const Register = () => {
   const dispatch = useAppDispatch();
 
   const handleGetData = async (data: IUser) => {
-    const res = await dispatch(registerUser(data));
+    // const res = await dispatch(registerUser(data));
   };
   return (
     <TabsContent

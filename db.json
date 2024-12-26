@@ -23,21 +23,6 @@
       "password": "trongle2001",
       "confirm": "trongle2001",
       "role": "user"
-    },
-    {
-      "username": "trongleele2@gmail.com",
-      "password": "trongle2001",
-      "id": "5-e59Lz"
-    },
-    {
-      "username": "trongleele2@gmail.com",
-      "password": "trongle2001",
-      "id": "hUy3poH"
-    },
-    {
-      "username": "trongleele2@gmail.com",
-      "password": "trongle2001",
-      "id": "P3byDZt"
     }
   ],
   "rooms": [
@@ -369,28 +354,21 @@
       "id": "1",
       "typeName": "Early Booking - Best Rate",
       "price": 200,
-      "extensions": [
-        "Deposit Required"
-      ],
+      "extensions": ["Deposit Required"],
       "typeDescription": "Room only. Rate includes spa access and WiFi. Touristic Tax not included. Full prepayment is required at time of booking and it is not refundable in case of cancellation or modification."
     },
     {
       "id": "2",
       "typeName": "Early Booking with Breakfast - Best Rate",
       "price": 220,
-      "extensions": [
-        "Deposit Required",
-        "Breakfast Included"
-      ],
+      "extensions": ["Deposit Required", "Breakfast Included"],
       "typeDescription": "Rate includes breakfast, spa access and WiFi. Touristic Tax not included. Full prepayment is required at time of booking and it is not refundable in case of cancellation or modification."
     },
     {
       "id": "3",
       "typeName": "Early Booking",
       "price": 260,
-      "extensions": [
-        "Deposit Required"
-      ],
+      "extensions": ["Deposit Required"],
       "typeDescription": "Rate is room only and includes spa access and WiFi. Touristic Tax not included. The credit card used to make the reservation will be requested upon arrival."
     }
   ],

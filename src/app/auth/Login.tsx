@@ -10,13 +10,17 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { TabsContent } from "@/components/ui/tabs";
 import { IUser } from "@/interfaces";
+import { loginUser } from "@/redux/slices/authSlice";
+import { useAppDispatch } from "@/redux/store";
 import { LoginSchema } from "@/schemas";
+import { authenticate } from "@/utils/action";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { getSession } from "next-auth/react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
-import { signIn } from "next-auth/react";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -29,13 +33,23 @@ const Login = () => {
     },
   });
 
+  const router = useRouter();
+
+  const dispatch = useAppDispatch();
+
   const handleLogin = async (data: IUser) => {
     const { email, password } = data;
-    await signIn("credentials", {
+    const res: { error: string; code: number } = await authenticate(
       email,
-      password,
-      redirectTo: "/",
-    });
+      password
+    );
+    if (res.error) {
+      alert(res.error);
+    } else {
+      const session = await getSession();
+      dispatch(loginUser(session?.user));
+      router.push("/");
+    }
   };
 
   return (
