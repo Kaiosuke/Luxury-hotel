@@ -25,14 +25,13 @@
       "role": "user"
     }
   ],
-  "rooms": [
+  "typeRooms": [
     {
       "id": "1",
       "thumbnail": "https://aguasdeibiza.com/wp-content/uploads/2024/12/aguas-de-ibiza-11-2024-S-1004_web.jpg",
       "title": "Dreamer",
       "price": 100,
       "quantity": 12,
-      "available": 10,
       "description": "Calling all lovers of the Feng Shui principles to enter these interiors made of natural elements for their most intimate and pleasant experience. Lose yourself in your privacy while the sun lights up the iridescent tiles recreating seashells… and enter your most magical dreams.",
       "quickDes": [
         "34 – 40 sqm (inc. terrace)",
@@ -83,8 +82,7 @@
       "thumbnail": "https://aguasdeibiza.com/wp-content/uploads/2019/01/aguas-de-ibiza-11-2024-S-1019.jpg",
       "title": "Deluxe",
       "price": 140,
-      "quantity": 14,
-      "available": 8,
+      "quantity": 11,
       "description": "The mysterious principles of Feng Shui open up to the views of Santa Eulalia. Inside this Deluxe space, the most natural elements have gathered from the bathroom itself to the beautiful Ibiza marine views at the open terrace. The essence of the Mediterranean soul.",
       "quickDes": [
         "35 sqm (inc. terrace)",
@@ -136,8 +134,7 @@
       "thumbnail": "https://aguasdeibiza.com/wp-content/uploads/2019/01/2861F1D5-2517-4343-9240-AF3D6557292F.jpg",
       "title": "Premier",
       "price": 180,
-      "quantity": 16,
-      "available": 10,
+      "quantity": 14,
       "description": "An Ibiza style room with a natural set of design details to add up to a king size bed and a large private terrace. Contemporary elements like copper and limestone on the wall, or stone pebble floors in its large bathroom, together with two independent washbasins, a bathtub and a separate shower make this space more than a necessity: it’s a magnificent amenity in itself.",
       "quickDes": [
         "34 – 40 sqm (inc. terrace)",
@@ -184,8 +181,7 @@
       "thumbnail": "https://aguasdeibiza.com/wp-content/uploads/2023/09/AGUAS-DE-IBIZA-2023-029-baja.jpg",
       "title": "Premier Bay",
       "price": 220,
-      "quantity": 10,
-      "available": 6,
+      "quantity": 9,
       "description": "Exclusive designed room with views of the sea and the port of Santa Eulalia. In addition to its unique views of the bay of Santa Eulalia from its private terrace, it has a natural set of design details typical of a Premier room with a king size bed, separate washbasins, bathtub and separate shower. Copper and limestone details on the wall and a pebble floor in the spacious bathroom make this room type a luxurious experience.",
       "quickDes": [
         "34 – 40 sqm (terrace inc.)",
@@ -243,8 +239,7 @@
       "thumbnail": "https://aguasdeibiza.com/wp-content/uploads/2023/10/01_AGUAS-DE-IBIZA-2023-156-baja_r.jpg",
       "title": "Conner Suite",
       "price": 260,
-      "quantity": 14,
-      "available": 10,
+      "quantity": 15,
       "description": "The unique room at the corner is a favorite for the large geometric windows with 180º views to the mountains or the pool. To extra treat the eyes while spending time in a pure and warm, island white decoration. Before indulging to a bath in the big round soaking bathtub. Pure magic.",
       "quickDes": [
         "64 – 87 sqm (inc. terrace)",
@@ -298,7 +293,6 @@
       "title": "Junior Suite Sea View",
       "price": 300,
       "quantity": 8,
-      "available": 2,
       "description": "When the idea of a perfect marine retreat includes unbeatable sea sights, this is the perfect choice. A big and bright room with views of Formentera Island and its pristine waters, combined with a beautiful modern furniture. So that your eyes dive through the Mediterranean without leaving the room.",
       "quickDes": [
         "38 – 45 sqm (inc. terrace)",
@@ -349,7 +343,547 @@
       "detailDes": "Junior Suite Sea View features a large and bright room overlooking the island of Formentera and its crystal clear waters, combined with beautiful modern furniture. Suite features King or Twin beds, living room, bathroom with bath and separate shower, air conditioning, complimentary WiFi access, hairdryer, satellite TV, safe, minibar, tea and coffee maker. Size: 38 to 45 square metres / 409 to 484 square feet. It is located on the second and third floors. Location subject to availability."
     }
   ],
-  "typeRooms": [
+  "rooms": [
+    {
+      "id": "201",
+      "roomTypeId": "1",
+      "roomNumber": "201",
+      "floor": 2,
+      "status": "available",
+      "bookedDates": []
+    },
+    {
+      "id": "202",
+      "roomTypeId": "1",
+      "roomNumber": "202",
+      "floor": 2,
+      "status": "booked",
+      "bookedDates": [{ "from": "2024-12-20", "to": "2024-12-25" }]
+    },
+    {
+      "id": "203",
+      "roomTypeId": "1",
+      "roomNumber": "203",
+      "floor": 2,
+      "status": "available",
+      "bookedDates": []
+    },
+    {
+      "id": "204",
+      "roomTypeId": "1",
+      "roomNumber": "204",
+      "floor": 2,
+      "status": "maintenance",
+      "bookedDates": []
+    },
+    {
+      "id": "205",
+      "roomTypeId": "1",
+      "roomNumber": "205",
+      "floor": 2,
+      "status": "booked",
+      "bookedDates": [{ "from": "2024-12-22", "to": "2024-12-26" }]
+    },
+    {
+      "id": "206",
+      "roomTypeId": "1",
+      "roomNumber": "206",
+      "floor": 2,
+      "status": "available",
+      "bookedDates": []
+    },
+    {
+      "id": "207",
+      "roomTypeId": "1",
+      "roomNumber": "207",
+      "floor": 2,
+      "status": "available",
+      "bookedDates": []
+    },
+    {
+      "id": "208",
+      "roomTypeId": "1",
+      "roomNumber": "208",
+      "floor": 2,
+      "status": "booked",
+      "bookedDates": [
+        { "from": "2024-12-18", "to": "2024-12-20" },
+        { "from": "2024-12-27", "to": "2024-12-30" }
+      ]
+    },
+    {
+      "id": "209",
+      "roomTypeId": "1",
+      "roomNumber": "209",
+      "floor": 2,
+      "status": "available",
+      "bookedDates": []
+    },
+    {
+      "id": "210",
+      "roomTypeId": "1",
+      "roomNumber": "210",
+      "floor": 2,
+      "status": "maintenance",
+      "bookedDates": []
+    },
+    {
+      "id": "211",
+      "roomTypeId": "1",
+      "roomNumber": "211",
+      "floor": 2,
+      "status": "booked",
+      "bookedDates": [{ "from": "2024-12-23", "to": "2024-12-28" }]
+    },
+    {
+      "id": "212",
+      "roomTypeId": "1",
+      "roomNumber": "212",
+      "floor": 2,
+      "status": "available",
+      "bookedDates": []
+    },
+
+    {
+      "id": "301",
+      "roomTypeId": "2",
+      "roomNumber": "301",
+      "floor": 3,
+      "status": "available",
+      "bookedDates": []
+    },
+    {
+      "id": "302",
+      "roomTypeId": "2",
+      "roomNumber": "302",
+      "floor": 3,
+      "status": "booked",
+      "bookedDates": [{ "from": "2024-12-21", "to": "2024-12-25" }]
+    },
+    {
+      "id": "303",
+      "roomTypeId": "2",
+      "roomNumber": "303",
+      "floor": 3,
+      "status": "available",
+      "bookedDates": []
+    },
+    {
+      "id": "304",
+      "roomTypeId": "2",
+      "roomNumber": "304",
+      "floor": 3,
+      "status": "maintenance",
+      "bookedDates": []
+    },
+    {
+      "id": "305",
+      "roomTypeId": "2",
+      "roomNumber": "305",
+      "floor": 3,
+      "status": "booked",
+      "bookedDates": [{ "from": "2024-12-24", "to": "2024-12-29" }]
+    },
+    {
+      "id": "306",
+      "roomTypeId": "2",
+      "roomNumber": "306",
+      "floor": 3,
+      "status": "available",
+      "bookedDates": []
+    },
+    {
+      "id": "307",
+      "roomTypeId": "2",
+      "roomNumber": "307",
+      "floor": 3,
+      "status": "available",
+      "bookedDates": []
+    },
+    {
+      "id": "308",
+      "roomTypeId": "2",
+      "roomNumber": "308",
+      "floor": 3,
+      "status": "booked",
+      "bookedDates": [
+        { "from": "2024-12-18", "to": "2024-12-20" },
+        { "from": "2024-12-26", "to": "2024-12-31" }
+      ]
+    },
+    {
+      "id": "309",
+      "roomTypeId": "2",
+      "roomNumber": "309",
+      "floor": 3,
+      "status": "available",
+      "bookedDates": []
+    },
+    {
+      "id": "310",
+      "roomTypeId": "2",
+      "roomNumber": "310",
+      "floor": 3,
+      "status": "maintenance",
+      "bookedDates": []
+    },
+    {
+      "id": "311",
+      "roomTypeId": "2",
+      "roomNumber": "311",
+      "floor": 3,
+      "status": "booked",
+      "bookedDates": [{ "from": "2024-12-23", "to": "2024-12-27" }]
+    },
+
+    {
+      "id": "401",
+      "roomTypeId": "3",
+      "roomNumber": "401",
+      "floor": 4,
+      "status": "available",
+      "bookedDates": []
+    },
+    {
+      "id": "402",
+      "roomTypeId": "3",
+      "roomNumber": "402",
+      "floor": 4,
+      "status": "booked",
+      "bookedDates": [{ "from": "2024-12-23", "to": "2024-12-26" }]
+    },
+    {
+      "id": "403",
+      "roomTypeId": "3",
+      "roomNumber": "403",
+      "floor": 4,
+      "status": "available",
+      "bookedDates": []
+    },
+    {
+      "id": "404",
+      "roomTypeId": "3",
+      "roomNumber": "404",
+      "floor": 4,
+      "status": "maintenance",
+      "bookedDates": []
+    },
+    {
+      "id": "405",
+      "roomTypeId": "3",
+      "roomNumber": "405",
+      "floor": 4,
+      "status": "booked",
+      "bookedDates": [{ "from": "2024-12-22", "to": "2024-12-28" }]
+    },
+    {
+      "id": "406",
+      "roomTypeId": "3",
+      "roomNumber": "406",
+      "floor": 4,
+      "status": "available",
+      "bookedDates": []
+    },
+    {
+      "id": "407",
+      "roomTypeId": "3",
+      "roomNumber": "407",
+      "floor": 4,
+      "status": "booked",
+      "bookedDates": [{ "from": "2024-12-20", "to": "2024-12-24" }]
+    },
+    {
+      "id": "408",
+      "roomTypeId": "3",
+      "roomNumber": "408",
+      "floor": 4,
+      "status": "available",
+      "bookedDates": []
+    },
+    {
+      "id": "409",
+      "roomTypeId": "3",
+      "roomNumber": "409",
+      "floor": 4,
+      "status": "maintenance",
+      "bookedDates": []
+    },
+    {
+      "id": "410",
+      "roomTypeId": "3",
+      "roomNumber": "410",
+      "floor": 4,
+      "status": "available",
+      "bookedDates": []
+    },
+    {
+      "id": "411",
+      "roomTypeId": "3",
+      "roomNumber": "411",
+      "floor": 4,
+      "status": "booked",
+      "bookedDates": [{ "from": "2024-12-26", "to": "2024-12-30" }]
+    },
+    {
+      "id": "412",
+      "roomTypeId": "3",
+      "roomNumber": "412",
+      "floor": 4,
+      "status": "available",
+      "bookedDates": []
+    },
+    {
+      "id": "413",
+      "roomTypeId": "3",
+      "roomNumber": "413",
+      "floor": 4,
+      "status": "booked",
+      "bookedDates": [{ "from": "2024-12-21", "to": "2024-12-27" }]
+    },
+    {
+      "id": "414",
+      "roomTypeId": "3",
+      "roomNumber": "414",
+      "floor": 4,
+      "status": "available",
+      "bookedDates": []
+    },
+
+    {
+      "id": "501",
+      "roomTypeId": "4",
+      "roomNumber": "501",
+      "floor": 5,
+      "status": "available",
+      "bookedDates": []
+    },
+    {
+      "id": "502",
+      "roomTypeId": "4",
+      "roomNumber": "502",
+      "floor": 5,
+      "status": "booked",
+      "bookedDates": [{ "from": "2024-12-25", "to": "2024-12-30" }]
+    },
+    {
+      "id": "503",
+      "roomTypeId": "4",
+      "roomNumber": "503",
+      "floor": 5,
+      "status": "available",
+      "bookedDates": []
+    },
+    {
+      "id": "504",
+      "roomTypeId": "4",
+      "roomNumber": "504",
+      "floor": 5,
+      "status": "maintenance",
+      "bookedDates": []
+    },
+    {
+      "id": "505",
+      "roomTypeId": "4",
+      "roomNumber": "505",
+      "floor": 5,
+      "status": "booked",
+      "bookedDates": [{ "from": "2024-12-27", "to": "2024-12-31" }]
+    },
+    {
+      "id": "506",
+      "roomTypeId": "4",
+      "roomNumber": "506",
+      "floor": 5,
+      "status": "available",
+      "bookedDates": []
+    },
+    {
+      "id": "507",
+      "roomTypeId": "4",
+      "roomNumber": "507",
+      "floor": 5,
+      "status": "available",
+      "bookedDates": []
+    },
+    {
+      "id": "508",
+      "roomTypeId": "4",
+      "roomNumber": "508",
+      "floor": 5,
+      "status": "booked",
+      "bookedDates": [{ "from": "2024-12-23", "to": "2024-12-25" }]
+    },
+    {
+      "id": "509",
+      "roomTypeId": "4",
+      "roomNumber": "509",
+      "floor": 5,
+      "status": "available",
+      "bookedDates": []
+    },
+    {
+      "id": "510",
+      "roomTypeId": "4",
+      "roomNumber": "510",
+      "floor": 5,
+      "status": "maintenance",
+      "bookedDates": []
+    },
+    {
+      "id": "511",
+      "roomTypeId": "4",
+      "roomNumber": "511",
+      "floor": 5,
+      "status": "available",
+      "bookedDates": []
+    },
+    {
+      "id": "601",
+      "roomTypeId": "5",
+      "roomNumber": "601",
+      "floor": 6,
+      "status": "available",
+      "bookedDates": []
+    },
+    {
+      "id": "602",
+      "roomTypeId": "5",
+      "roomNumber": "602",
+      "floor": 6,
+      "status": "booked",
+      "bookedDates": [{ "from": "2024-12-20", "to": "2024-12-26" }]
+    },
+    {
+      "id": "603",
+      "roomTypeId": "5",
+      "roomNumber": "603",
+      "floor": 6,
+      "status": "available",
+      "bookedDates": []
+    },
+    {
+      "id": "604",
+      "roomTypeId": "5",
+      "roomNumber": "604",
+      "floor": 6,
+      "status": "maintenance",
+      "bookedDates": []
+    },
+    {
+      "id": "605",
+      "roomTypeId": "5",
+      "roomNumber": "605",
+      "floor": 6,
+      "status": "available",
+      "bookedDates": []
+    },
+    {
+      "id": "606",
+      "roomTypeId": "5",
+      "roomNumber": "606",
+      "floor": 6,
+      "status": "booked",
+      "bookedDates": [{ "from": "2024-12-21", "to": "2024-12-28" }]
+    },
+    {
+      "id": "607",
+      "roomTypeId": "5",
+      "roomNumber": "607",
+      "floor": 6,
+      "status": "available",
+      "bookedDates": []
+    },
+    {
+      "id": "608",
+      "roomTypeId": "5",
+      "roomNumber": "608",
+      "floor": 6,
+      "status": "available",
+      "bookedDates": []
+    },
+    {
+      "id": "609",
+      "roomTypeId": "5",
+      "roomNumber": "609",
+      "floor": 6,
+      "status": "available",
+      "bookedDates": []
+    },
+    {
+      "id": "610",
+      "roomTypeId": "5",
+      "roomNumber": "610",
+      "floor": 6,
+      "status": "booked",
+      "bookedDates": [{ "from": "2024-12-25", "to": "2024-12-30" }]
+    },
+
+    {
+      "id": "101",
+      "roomTypeId": "6",
+      "roomNumber": "101",
+      "floor": 1,
+      "status": "available",
+      "bookedDates": []
+    },
+    {
+      "id": "102",
+      "roomTypeId": "6",
+      "roomNumber": "102",
+      "floor": 1,
+      "status": "booked",
+      "bookedDates": [{ "from": "2024-12-22", "to": "2024-12-27" }]
+    },
+    {
+      "id": "103",
+      "roomTypeId": "6",
+      "roomNumber": "103",
+      "floor": 1,
+      "status": "available",
+      "bookedDates": []
+    },
+    {
+      "id": "104",
+      "roomTypeId": "6",
+      "roomNumber": "104",
+      "floor": 1,
+      "status": "maintenance",
+      "bookedDates": []
+    },
+    {
+      "id": "105",
+      "roomTypeId": "6",
+      "roomNumber": "105",
+      "floor": 1,
+      "status": "available",
+      "bookedDates": []
+    },
+    {
+      "id": "106",
+      "roomTypeId": "6",
+      "roomNumber": "106",
+      "floor": 1,
+      "status": "booked",
+      "bookedDates": [{ "from": "2024-12-21", "to": "2024-12-25" }]
+    },
+    {
+      "id": "107",
+      "roomTypeId": "6",
+      "roomNumber": "107",
+      "floor": 1,
+      "status": "available",
+      "bookedDates": []
+    },
+    {
+      "id": "108",
+      "roomTypeId": "6",
+      "roomNumber": "108",
+      "floor": 1,
+      "status": "available",
+      "bookedDates": []
+    }
+  ],
+  "options": [
     {
       "id": "1",
       "typeName": "Early Booking - Best Rate",

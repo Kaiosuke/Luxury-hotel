@@ -21,6 +21,8 @@ import { FaSignOutAlt } from "react-icons/fa";
 import { FaGithub } from "react-icons/fa6";
 import { FiShoppingCart } from "react-icons/fi";
 import { MdOutlineDashboard } from "react-icons/md";
+import { useSelector } from "react-redux";
+import { authSelector } from "@/redux/selectors/authSelector";
 
 const HeaderTop = ({
   isScrolled,
@@ -32,6 +34,8 @@ const HeaderTop = ({
   setOpenMenu: (value: boolean) => void;
 }) => {
   const dispatch = useAppDispatch();
+
+  const { currentUser } = useSelector(authSelector);
 
   const handleSigOut = () => {
     signOut();
@@ -73,67 +77,76 @@ const HeaderTop = ({
           Book now
         </Button>
         <div>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <div
-                className={`text-size-4xl animation-normal cursor-pointer hover:opacity-50 ${
-                  isScrolled && !openMenu && "text-third"
-                } `}
-              >
-                <CiUser />
-              </div>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-60 mt-2 bg-secondary text-primary">
-              <DropdownMenuLabel className="text-xl flex gap-2">
-                hello
-              </DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuGroup>
+          {currentUser && (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <div
+                  className={`text-size-4xl animation-normal cursor-pointer hover:opacity-50 ${
+                    isScrolled && !openMenu && "text-third"
+                  } `}
+                >
+                  <CiUser />
+                </div>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-60 mt-2 bg-secondary text-primary">
+                <DropdownMenuLabel className="text-xl flex gap-2">
+                  {currentUser.role === "ceo" && <div>Hi Boss:</div>}
+                  {currentUser.role === "admin" && <div>Hi Admin:</div>}
+                  <span>{currentUser.username}</span>
+                </DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuGroup>
+                  <Link href="#!">
+                    <DropdownMenuItem className="text-lg cursor-pointer hover:bg-primary hover:text-secondary">
+                      Profile
+                    </DropdownMenuItem>
+                  </Link>
+                  {currentUser?.role !== "user" && (
+                    <Link href="/admin">
+                      <DropdownMenuItem className="text-lg cursor-pointer hover:bg-primary hover:text-secondary">
+                        Dash Board
+                        <DropdownMenuShortcut>
+                          <MdOutlineDashboard className="text-lg" />
+                        </DropdownMenuShortcut>
+                      </DropdownMenuItem>
+                    </Link>
+                  )}
+                  {currentUser && (
+                    <Link href="/cart">
+                      <DropdownMenuItem className="text-lg cursor-pointer hover:bg-primary hover:text-secondary">
+                        Cart
+                        <DropdownMenuShortcut className="relative">
+                          <FiShoppingCart className="text-lg" />
+                          <span className="w-5 h-5 flex items-center justify-center absolute -top-3 -right-3 bg-primary text-secondary rounded-full">
+                            12
+                          </span>
+                        </DropdownMenuShortcut>
+                      </DropdownMenuItem>
+                    </Link>
+                  )}
+                </DropdownMenuGroup>
                 <Link href="#!">
                   <DropdownMenuItem className="text-lg cursor-pointer hover:bg-primary hover:text-secondary">
-                    Profile
-                  </DropdownMenuItem>
-                </Link>
-                <Link href="/admin">
-                  <DropdownMenuItem className="text-lg cursor-pointer hover:bg-primary hover:text-secondary">
-                    Dash Board
+                    GitHub
                     <DropdownMenuShortcut>
-                      <MdOutlineDashboard className="text-lg" />
+                      <FaGithub className="text-lg" />
                     </DropdownMenuShortcut>
                   </DropdownMenuItem>
                 </Link>
-                <Link href="/cart">
-                  <DropdownMenuItem className="text-lg cursor-pointer hover:bg-primary hover:text-secondary">
-                    Cart
-                    <DropdownMenuShortcut className="relative">
-                      <FiShoppingCart className="text-lg" />
-                      <span className="w-5 h-5 flex items-center justify-center absolute -top-3 -right-3 bg-primary text-secondary rounded-full">
-                        12
-                      </span>
+                {currentUser && (
+                  <DropdownMenuItem
+                    className="text-lg cursor-pointer hover:bg-primary hover:text-secondary"
+                    onClick={handleSigOut}
+                  >
+                    Log out
+                    <DropdownMenuShortcut>
+                      <FaSignOutAlt className="text-lg" />
                     </DropdownMenuShortcut>
                   </DropdownMenuItem>
-                </Link>
-              </DropdownMenuGroup>
-              <Link href="#!">
-                <DropdownMenuItem className="text-lg cursor-pointer">
-                  GitHub
-                  <DropdownMenuShortcut>
-                    <FaGithub className="text-lg" />
-                  </DropdownMenuShortcut>
-                </DropdownMenuItem>
-              </Link>
-
-              <DropdownMenuItem
-                className="text-lg cursor-pointer"
-                onClick={handleSigOut}
-              >
-                Log out
-                <DropdownMenuShortcut>
-                  <FaSignOutAlt className="text-lg" />
-                </DropdownMenuShortcut>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+                )}
+              </DropdownMenuContent>
+            </DropdownMenu>
+          )}
         </div>
         {openMenu ? (
           <HiMiniXMark

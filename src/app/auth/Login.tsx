@@ -13,7 +13,7 @@ import { IUser } from "@/interfaces";
 import { loginUser } from "@/redux/slices/authSlice";
 import { useAppDispatch } from "@/redux/store";
 import { LoginSchema } from "@/schemas";
-import { authenticate } from "@/utils/action";
+import { authenticate } from "@/utils/nextAuth/action";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { getSession } from "next-auth/react";
 import Link from "next/link";

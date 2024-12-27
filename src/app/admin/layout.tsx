@@ -1,13 +1,35 @@
+"use client";
 import { Separator } from "@/components/ui/separator";
 import {
   SidebarInset,
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
+
+import { ReactNode, useEffect } from "react";
+import { useSelector } from "react-redux";
 import AppSidebar from "./AdminSideBar";
-import { ReactNode } from "react";
+import { useRouter } from "next/navigation";
+import { authSelector } from "@/redux/selectors/authSelector";
 
 function layoutAdmin({ children }: { children: ReactNode }) {
+  const { currentUser } = useSelector(authSelector);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!currentUser || currentUser.role === "user") {
+      router.push("/");
+    }
+  }, [router, currentUser]);
+
+  if (!currentUser) {
+    return <p>Loading...</p>;
+  }
+
+  if (currentUser.role === "user") {
+    return null;
+  }
+
   return (
     <SidebarProvider>
       <AppSidebar />

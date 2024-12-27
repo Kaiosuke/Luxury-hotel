@@ -2,7 +2,7 @@ import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import instanceLocal from "./app/api/instances";
 import { IUser } from "./interfaces";
-import { InvalidEmailPasswordError } from "./utils/errors";
+import { InvalidEmailPasswordError } from "./utils/nextAuth/errors";
 
 declare module "next-auth" {
   interface Session {

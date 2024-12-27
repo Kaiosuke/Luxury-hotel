@@ -5,6 +5,8 @@ import { useEffect, useState } from "react";
 import HeaderMainPages from "./HeaderMainPages";
 import HeaderSubPages from "./HeaderSubPages";
 import HeaderTop from "./HeaderTop";
+import { useSelector } from "react-redux";
+import { authSelector } from "@/redux/selectors/authSelector";
 
 const Header = () => {
   const [openMenu, setOpenMenu] = useState(false);
@@ -22,6 +24,8 @@ const Header = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
+  const { currentUser } = useSelector(authSelector);
 
   return (
     <header
@@ -47,14 +51,16 @@ const Header = () => {
         <div className="grid lg:grid-cols-5 md:grid-cols-3 grid-cols-1 gap-4">
           <HeaderMainPages openMenu={openMenu} setOpenMenu={setOpenMenu} />
           <HeaderSubPages />
-          <div>
-            <Link
-              href="/auth"
-              className="link-under text-primary hover:text-primary-textOpacity hover:decoration-primary-textOpacity"
-            >
-              Sign In
-            </Link>
-          </div>
+          {!currentUser && (
+            <div>
+              <Link
+                href="/auth"
+                className="link-under text-primary hover:text-primary-textOpacity hover:decoration-primary-textOpacity"
+              >
+                Sign In
+              </Link>
+            </div>
+          )}
         </div>
       </div>
     </header>

@@ -4,7 +4,7 @@ import { signIn } from "@/auth";
 export async function authenticate(email: string, password: string) {
   try {
     const r = await signIn("credentials", {
-      username: email,
+      email: email,
       password: password,
       //   callbackUrl: "/",
       redirect: false,
