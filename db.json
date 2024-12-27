@@ -25,7 +25,7 @@
       "role": "user"
     }
   ],
-  "typeRooms": [
+  "roomTypes": [
     {
       "id": "1",
       "thumbnail": "https://aguasdeibiza.com/wp-content/uploads/2024/12/aguas-de-ibiza-11-2024-S-1004_web.jpg",

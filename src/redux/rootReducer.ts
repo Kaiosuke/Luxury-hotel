@@ -1,8 +1,9 @@
 import { combineReducers } from "redux";
-import authSlice from "./slices/authSlice";
+import { authSlice, roomTypesSlice } from "./slices";
 
 const rootReducer = combineReducers({
   authSlice: authSlice,
+  roomTypesSlice: roomTypesSlice,
 });
 
 export default rootReducer;

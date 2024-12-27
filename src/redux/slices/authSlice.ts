@@ -1,5 +1,11 @@
-import { IAuthState } from "@/interfaces";
+import { IUser } from "@/interfaces";
 import { createSlice } from "@reduxjs/toolkit";
+
+export interface IAuthState {
+  loading: boolean;
+  currentUser: IUser | null;
+  error: null | string;
+}
 
 const initialState: IAuthState = {
   currentUser: null,

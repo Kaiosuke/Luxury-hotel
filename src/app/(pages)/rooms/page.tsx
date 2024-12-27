@@ -4,10 +4,38 @@ import TitleXL from "@/app/_components/contentTitle/TitleXL";
 import HeroImage from "@/app/_components/HeroImage";
 import SplideImage from "@/app/_components/SplideImage";
 import data from "@/app/data.json";
-import RoomList from "./RoomList";
+import Rooms from "./Rooms";
+import { useSelector } from "react-redux";
+import { roomTypesSelector } from "@/redux/selectors/roomTypesSelector";
+import { IRoomTypes } from "@/interfaces";
+import { useAppDispatch } from "@/redux/store";
+import { useEffect } from "react";
+import { getAllRoomType } from "@/app/api/roomTypesRequest";
+import LoadingPage from "@/app/_components/LoadingPage";
 
-const Rooms = () => {
-  const { images } = data;
+const page = () => {
+  const { roomTypes, loading, error } = useSelector(roomTypesSelector);
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    (async () => {
+      await dispatch(getAllRoomType());
+    })();
+  }, []);
+
+  const handleRenderImage = (dataList: IRoomTypes[]) => {
+    return dataList.map((data) => data.thumbnail);
+  };
+
+  if (loading) {
+    return <LoadingPage />;
+  }
+
+  if (error) {
+    return error;
+  }
+
   return (
     <>
       <HeroImage
@@ -17,13 +45,19 @@ const Rooms = () => {
         link="#rooms"
       />
       <div className="pd-high" />
-      <section id="rooms" className="text-black padding-main">
-        <SplideImage images={images} splideClass="roomSection" />
-      </section>
+      {roomTypes && (
+        <section id="rooms" className="text-black padding-main">
+          <SplideImage
+            images={handleRenderImage(roomTypes)}
+            splideClass="roomSection"
+          />
+        </section>
+      )}
+
       <div className="pd-high" />
       <TitleXL title="Full of light and overlooking the Mediterranean" />
       <div className="pd-high" />
-      <RoomList />
+      <Rooms />
       <div className="pd-high" />
       <TitleNormal title="Our surroundings affect energetic, physical and mental balance, which is why at Aguas de Ibiza all the architectural elements and all the furniture are arranged seeking harmony in the space. The seashell on the ceiling is a characteristic feature of our rooms. According to Feng Shui, a seashell above the bed eliminates bad energy." />
       <div className="pd-high" />
@@ -31,4 +65,4 @@ const Rooms = () => {
   );
 };
 
-export default Rooms;
+export default page;

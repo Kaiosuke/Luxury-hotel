@@ -1,27 +1,30 @@
-interface IRoom {
-  id: number;
+interface IRoomTypes {
+  id: string;
   thumbnail: string;
   title: string;
-  quantity?: number;
+  price: number;
+  quantity: number;
   description: string;
-  quickDes?: string[];
-  features?: string[];
-  square?: string;
-  typeBed?: string;
-  sleeps?: number;
-  types?: {
-    idType: string;
-    typeName: string;
-    extensions: string[];
-    price: number;
-    typeDescription: string;
-  }[];
+  quickDes: string[];
+  features: string[];
+  square: string;
+  typeBed: string;
+  sleeps: 3;
   images: string[];
   map: string;
-  detailFeatures?: string[];
-  shortDes?: string;
-  detailDes?: string;
+  detailFeatures: string[];
+  shortDes: string;
+  detailDes: string;
 }
+interface IRooms {
+  id: string;
+  roomTypeId: string;
+  roomNumber: string;
+  floor: number;
+  status: string;
+  bookedDates: string[];
+}
+
 enum ERole {
   ceo = "ceo",
   admin = "admin",
@@ -38,12 +41,6 @@ interface IUser {
   accessToken?: string;
 }
 
-interface IAuthState {
-  loading: boolean;
-  currentUser: IUser | null;
-  error: null | string;
-}
-
 interface IForm {
   id?: string | null;
   open: boolean;
@@ -52,4 +49,4 @@ interface IForm {
 }
 
 export { ERole };
-export type { IForm, IRoom, IAuthState, IUser };
+export type { IRooms, IRoomTypes, IUser, IForm };
