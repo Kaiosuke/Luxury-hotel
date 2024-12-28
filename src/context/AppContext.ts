@@ -4,10 +4,10 @@ import { createContext } from "react";
 export type TAppContext = {
   showBowNow: boolean;
   setShowBookNow: (value: boolean) => void;
-  dateCheckIn: Date | undefined;
-  setDateCheckIn: (value: any) => void;
-  dateCheckOut: Date | undefined;
-  setDateCheckOut: (value: any) => void;
+  checkIn: Date | undefined;
+  setCheckIn: (value: any) => void;
+  checkOut: Date | undefined;
+  setCheckOut: (value: any) => void;
 };
 
 const AppContext = createContext<TAppContext | undefined>(undefined);

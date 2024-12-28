@@ -15,17 +15,17 @@ import { useRouter } from "next/navigation";
 import { FaChevronDown } from "react-icons/fa6";
 
 const BookingCalendar = ({ isShow }: { isShow?: boolean }) => {
-  const { dateCheckIn, dateCheckOut, setDateCheckIn, setDateCheckOut } =
-    useAppContext();
+  const { checkIn, checkOut, setCheckIn, setCheckOut } = useAppContext();
   const router = useRouter();
   const { toast } = useToast();
 
   const today = new Date();
 
   const handleGetData = () => {
-    if (dateCheckIn && dateCheckOut) {
+    if (checkIn && checkOut) {
       router.push("/booking");
     } else {
+      console.log(1);
       toast({
         variant: "destructive",
         title: "Uh oh! Something went wrong.",
@@ -53,11 +53,11 @@ const BookingCalendar = ({ isShow }: { isShow?: boolean }) => {
                   `sm:w-[240px] justify-start text-left font-normal sm:h-full hover:text-third h-[60%] 
                   ${isShow ? "border-secondary text-third" : "border-none"}
                   `,
-                  !dateCheckIn && "text-muted-foreground"
+                  !checkIn && "text-muted-foreground"
                 )}
               >
-                {dateCheckIn ? (
-                  format(dateCheckIn, "PPP")
+                {checkIn ? (
+                  format(checkIn, "PPP")
                 ) : (
                   <div
                     className={`flex items-center text-primary gap-2  
@@ -72,8 +72,8 @@ const BookingCalendar = ({ isShow }: { isShow?: boolean }) => {
             <PopoverContent className="w-auto p-0 bg-primary" align="start">
               <Calendar
                 mode="single"
-                selected={dateCheckIn}
-                onSelect={setDateCheckIn}
+                selected={checkIn}
+                onSelect={setCheckIn}
                 initialFocus
                 disabled={(date) => isBefore(date, today)}
               />
@@ -87,11 +87,11 @@ const BookingCalendar = ({ isShow }: { isShow?: boolean }) => {
                   `sm:w-[240px] justify-start text-left font-normal sm:h-full hover:text-third h-[60%] 
                      ${isShow ? "border-secondary text-third" : "border-none"}
                   `,
-                  !dateCheckOut && "text-muted-foreground"
+                  !checkOut && "text-muted-foreground"
                 )}
               >
-                {dateCheckOut ? (
-                  format(dateCheckOut, "PPP")
+                {checkOut ? (
+                  format(checkOut, "PPP")
                 ) : (
                   <div
                     className={`flex items-center text-primary gap-2  
@@ -109,8 +109,8 @@ const BookingCalendar = ({ isShow }: { isShow?: boolean }) => {
             >
               <Calendar
                 mode="single"
-                selected={dateCheckOut}
-                onSelect={setDateCheckOut}
+                selected={checkOut}
+                onSelect={setCheckOut}
                 disabled={(date) => isBefore(date, today)}
                 initialFocus
               />

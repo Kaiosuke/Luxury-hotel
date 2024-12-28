@@ -1,5 +1,6 @@
 import { AspectRatio } from "@/components/ui/aspect-ratio";
-import { IRoom } from "@/interfaces";
+
+import { IRoomTypes } from "@/interfaces";
 import Splide from "@splidejs/splide";
 import "@splidejs/splide/dist/css/themes/splide-default.min.css";
 import Image from "next/image";
@@ -12,8 +13,8 @@ const SplideList = ({
   id,
   splideClass,
 }: {
-  dataList: IRoom[];
-  id: number;
+  dataList: IRoomTypes[];
+  id: string;
   splideClass: string;
 }) => {
   useEffect(() => {
@@ -24,7 +25,7 @@ const SplideList = ({
       autoplay: true,
       interval: 3000,
       perPage: 3,
-      gap: "20px",
+      gap: "24px",
       breakpoints: {
         1024: {
           perPage: 2,
@@ -43,7 +44,7 @@ const SplideList = ({
       <div className={`splide ${splideClass}`}>
         <div className="w-full h-full relative">
           <div className="splide__track">
-            <ul className="splide__list gap-4 ">
+            <ul className="splide__list">
               {dataList
                 .filter((data) => data.id !== id)
                 .map((data) => (

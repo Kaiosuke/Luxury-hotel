@@ -1,6 +1,6 @@
 "use client";
 import HeroImage from "@/app/_components/HeroImage";
-import BookingList from "./BookingList";
+import Booking from "./Booking";
 
 const page = () => {
   return (
@@ -13,7 +13,7 @@ const page = () => {
         isBook={true}
       />
       <div className="pd-medium" />
-      <BookingList />
+      <Booking />
       <div className="pd-medium" />
     </>
   );

@@ -1,9 +1,8 @@
 "use client";
 import MotionWrapper from "@/app/_components/MotionWrapper";
-import { Skeleton } from "@/components/ui/skeleton";
 import Splide from "@splidejs/splide";
 import "@splidejs/splide/dist/css/themes/splide-default.min.css";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { ParallaxBanner } from "react-scroll-parallax";
 
 const SplideImage = ({
@@ -13,8 +12,6 @@ const SplideImage = ({
   images: string[];
   splideClass: string;
 }) => {
-  const [loading, setLoading] = useState(true);
-
   useEffect(() => {
     if (splideClass) {
       new Splide(`.${splideClass}`, {
@@ -43,12 +40,7 @@ const SplideImage = ({
                             <img
                               src={image}
                               alt="default"
-                              onLoad={() => setLoading(false)}
-                              className={`w-full h-full object-cover ${
-                                loading && (
-                                  <Skeleton className="h-[125px] w-[250px] rounded-xl" />
-                                )
-                              }`}
+                              className={`w-full h-full object-cover`}
                             />
                           ),
                           speed: -10,

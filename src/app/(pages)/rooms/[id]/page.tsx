@@ -3,51 +3,67 @@ import TitleNormal from "@/app/_components/contentTitle/TitleNormal";
 import HeroImage from "@/app/_components/HeroImage";
 import SplideList from "@/app/_components/SplideList";
 import ThumbnailImage from "@/app/_components/ThumbnailImage";
-import data from "@/app/data.json";
-import { IRoom } from "@/interfaces";
+
+import LoadingPage from "@/app/_components/LoadingPage";
+import { getRoomType } from "@/app/api/roomTypesRequest";
+import { roomTypesSelector } from "@/redux/selectors/roomTypesSelector";
+import { useAppDispatch } from "@/redux/store";
 import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
 import RoomDetail from "./RoomDetail";
 
 const page = () => {
-  const { id } = useParams();
-  const { rooms } = data;
-  const [currentRoom, setCurrentRoom] = useState<IRoom | null>(null);
+  const { id }: { id: string } = useParams();
+
+  const { roomType, roomTypes, loading, error } =
+    useSelector(roomTypesSelector);
+
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (id) {
-      const room = rooms.find((room) => room.id === +id) || null;
-      setCurrentRoom(room);
+      dispatch(getRoomType(id));
     }
-  }, []);
+  }, [dispatch]);
 
-  if (!currentRoom) {
-    return <div className="text-center">Loading</div>;
+  if (loading) {
+    return <LoadingPage />;
+  }
+
+  if (error) {
+    return error;
   }
 
   return (
     <>
-      <HeroImage
-        image={currentRoom.thumbnail}
-        title={`${currentRoom.title} - Soulful Mediterranean style`}
-        linkContext="Book this room now"
-        link="#!"
-      />
-      <div className="pd-high" />
-      <RoomDetail room={currentRoom} />
-      <div className="pd-medium" />
-      <ThumbnailImage image={currentRoom.map} title={currentRoom.title} />
-      <div className="pd-high" />
-      <TitleNormal title="We have many other luxury rooms for you." />
-      <div className="pd-medium" />
-      <section className="padding-main">
-        <SplideList
-          dataList={rooms}
-          id={currentRoom.id}
-          splideClass="roomList"
-        />
-      </section>
-      <div className="pd-high" />
+      {roomType && (
+        <>
+          <HeroImage
+            image={roomType.thumbnail}
+            title={`${roomType.title} - Soulful Mediterranean style`}
+            linkContext="Book this room now"
+            link="#roomDetail"
+          />
+          <div className="pd-high" />
+          <RoomDetail room={roomType} />
+          <div className="pd-medium" />
+          <ThumbnailImage image={roomType.map} title={roomType.title} />
+          <div className="pd-high" />
+          <TitleNormal title="We have many other luxury rooms for you." />
+          <div className="pd-medium" />
+          {roomTypes && (
+            <section className="padding-main">
+              <SplideList
+                dataList={roomTypes}
+                id={roomType.id}
+                splideClass="roomList"
+              />
+            </section>
+          )}
+          <div className="pd-high" />
+        </>
+      )}
     </>
   );
 };

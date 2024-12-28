@@ -1,4 +1,5 @@
 interface IRoomTypes {
+  types: any;
   id: string;
   thumbnail: string;
   title: string;
@@ -22,7 +23,15 @@ interface IRooms {
   roomNumber: string;
   floor: number;
   status: string;
-  bookedDates: string[];
+  bookedDates: { from: string; to: string }[];
+}
+
+interface IOptions {
+  id: string;
+  typeName: string;
+  price: number;
+  extensions: string[];
+  typeDescription: string;
 }
 
 enum ERole {
@@ -49,4 +58,4 @@ interface IForm {
 }
 
 export { ERole };
-export type { IRooms, IRoomTypes, IUser, IForm };
+export type { IRooms, IRoomTypes, IUser, IForm, IOptions };

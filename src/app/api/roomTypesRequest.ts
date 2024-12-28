@@ -21,7 +21,7 @@ const getAllRoomType = createAsyncThunk<
 
 const getRoomType = createAsyncThunk<
   IRoomTypes,
-  { id: number },
+  string,
   { rejectValue: string }
 >("roomTypes/getRoomType", async (id, { rejectWithValue }) => {
   try {
