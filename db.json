@@ -32,6 +32,9 @@
       "title": "Dreamer",
       "price": 100,
       "quantity": 12,
+      "rate": 4.4,
+      "category": "normal",
+      "view": "mountain",
       "description": "Calling all lovers of the Feng Shui principles to enter these interiors made of natural elements for their most intimate and pleasant experience. Lose yourself in your privacy while the sun lights up the iridescent tiles recreating seashells… and enter your most magical dreams.",
       "quickDes": [
         "34 – 40 sqm (inc. terrace)",
@@ -83,6 +86,9 @@
       "title": "Deluxe",
       "price": 140,
       "quantity": 11,
+      "rate": 4.6,
+      "category": "normal",
+      "view": "pool",
       "description": "The mysterious principles of Feng Shui open up to the views of Santa Eulalia. Inside this Deluxe space, the most natural elements have gathered from the bathroom itself to the beautiful Ibiza marine views at the open terrace. The essence of the Mediterranean soul.",
       "quickDes": [
         "35 sqm (inc. terrace)",
@@ -135,6 +141,9 @@
       "title": "Premier",
       "price": 180,
       "quantity": 14,
+      "rate": 4.8,
+      "category": "primary",
+      "view": "mountain",
       "description": "An Ibiza style room with a natural set of design details to add up to a king size bed and a large private terrace. Contemporary elements like copper and limestone on the wall, or stone pebble floors in its large bathroom, together with two independent washbasins, a bathtub and a separate shower make this space more than a necessity: it’s a magnificent amenity in itself.",
       "quickDes": [
         "34 – 40 sqm (inc. terrace)",
@@ -182,6 +191,9 @@
       "title": "Premier Bay",
       "price": 220,
       "quantity": 9,
+      "rate": 4.7,
+      "category": "primary",
+      "view": "sea",
       "description": "Exclusive designed room with views of the sea and the port of Santa Eulalia. In addition to its unique views of the bay of Santa Eulalia from its private terrace, it has a natural set of design details typical of a Premier room with a king size bed, separate washbasins, bathtub and separate shower. Copper and limestone details on the wall and a pebble floor in the spacious bathroom make this room type a luxurious experience.",
       "quickDes": [
         "34 – 40 sqm (terrace inc.)",
@@ -240,6 +252,9 @@
       "title": "Conner Suite",
       "price": 260,
       "quantity": 15,
+      "rate": 4.5,
+      "category": "vip",
+      "view": "pool",
       "description": "The unique room at the corner is a favorite for the large geometric windows with 180º views to the mountains or the pool. To extra treat the eyes while spending time in a pure and warm, island white decoration. Before indulging to a bath in the big round soaking bathtub. Pure magic.",
       "quickDes": [
         "64 – 87 sqm (inc. terrace)",
@@ -293,6 +308,9 @@
       "title": "Junior Suite Sea View",
       "price": 300,
       "quantity": 8,
+      "rate": 4.9,
+      "category": "vip",
+      "view": "sea",
       "description": "When the idea of a perfect marine retreat includes unbeatable sea sights, this is the perfect choice. A big and bright room with views of Formentera Island and its pristine waters, combined with a beautiful modern furniture. So that your eyes dive through the Mediterranean without leaving the room.",
       "quickDes": [
         "38 – 45 sqm (inc. terrace)",

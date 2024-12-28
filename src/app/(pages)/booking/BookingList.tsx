@@ -1,8 +1,5 @@
-import LoadingPage from "@/app/_components/LoadingPage";
 import MotionWrapper from "@/app/_components/MotionWrapper";
-import { getAllOption } from "@/app/api/optionsRequest";
-import { getAllRoom } from "@/app/api/roomsRequest";
-import { getAllRoomType } from "@/app/api/roomTypesRequest";
+
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Button } from "@/components/ui/button";
 import { ToastAction } from "@/components/ui/toast";
@@ -12,10 +9,8 @@ import { IRooms } from "@/interfaces";
 import { optionsSelector } from "@/redux/selectors/optionsSelector";
 import { roomSelector } from "@/redux/selectors/roomsSelector";
 import { roomTypesSelector } from "@/redux/selectors/roomTypesSelector";
-import { useAppDispatch } from "@/redux/store";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect } from "react";
 import { BsCreditCard2BackFill, BsFillSafe2Fill } from "react-icons/bs";
 import { FaTemperatureHigh, FaWifi } from "react-icons/fa6";
 import { LuLamp } from "react-icons/lu";
@@ -46,18 +41,12 @@ const BookingList = () => {
     );
   };
 
-  const { rooms, loading, error } = useSelector(roomSelector);
+  const { checkIn, checkOut } = useAppContext();
+  const { rooms } = useSelector(roomSelector);
   const { roomTypes } = useSelector(roomTypesSelector);
   const { options } = useSelector(optionsSelector);
-  const { checkIn, checkOut } = useAppContext();
-  const dispatch = useAppDispatch();
-  const { toast } = useToast();
 
-  useEffect(() => {
-    dispatch(getAllRoom());
-    dispatch(getAllRoomType());
-    dispatch(getAllOption());
-  }, []);
+  const { toast } = useToast();
 
   const isRoomAvailable = (bookedDates: BookedDate[]) => {
     return !bookedDates.some((booking) => {
@@ -76,7 +65,6 @@ const BookingList = () => {
   const bookRoom = () => {
     if (checkIn && checkOut) {
     } else {
-      console.log(1);
       toast({
         variant: "destructive",
         title: "Uh oh! Something went wrong.",
@@ -104,25 +92,19 @@ const BookingList = () => {
 
     return quantityRoom.length;
   };
-  function calculateDays() {
+
+  const calculateDays = () => {
     if (checkIn && checkOut) {
       const timeDifference = checkOut.getTime() - checkIn.getTime();
       return timeDifference / (1000 * 60 * 60 * 24);
     }
     return 1;
-  }
+  };
 
   const handleOriginalPrice = (price: number) => {
     return price + price * 0.1;
   };
 
-  if (loading) {
-    return <LoadingPage />;
-  }
-
-  if (error) {
-    return error;
-  }
   return (
     <>
       {roomTypes && (

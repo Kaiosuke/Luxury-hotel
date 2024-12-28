@@ -1,4 +1,5 @@
 "use client";
+import { Toaster } from "@/components/ui/toaster";
 import AppContext from "@/context/AppContext";
 import React, { ReactNode, useState } from "react";
 
@@ -19,6 +20,7 @@ const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
       }}
     >
       {children}
+      <Toaster />
     </AppContext.Provider>
   );
 };

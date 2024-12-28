@@ -11,28 +11,57 @@ import { useToast } from "@/hooks/use-toast";
 import useAppContext from "@/hooks/useAppContext";
 import { cn } from "@/lib/utils";
 import { format, isBefore } from "date-fns";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { useState } from "react";
 import { FaChevronDown } from "react-icons/fa6";
 
 const BookingCalendar = ({ isShow }: { isShow?: boolean }) => {
-  const { checkIn, checkOut, setCheckIn, setCheckOut } = useAppContext();
+  const { checkIn, setCheckIn, checkOut, setCheckOut } = useAppContext();
+  const [dateCheckIn, setDateCheckIn] = useState<Date | undefined>(checkIn);
+  const [dateCheckOut, setDateCheckOut] = useState<Date | undefined>(checkOut);
+
   const router = useRouter();
+  const pathname = usePathname();
   const { toast } = useToast();
 
   const today = new Date();
-
   const handleGetData = () => {
-    if (checkIn && checkOut) {
-      router.push("/booking");
-    } else {
-      console.log(1);
-      toast({
+    if (!dateCheckIn || !dateCheckOut) {
+      setCheckIn(undefined);
+      setCheckOut(undefined);
+      return toast({
         variant: "destructive",
-        title: "Uh oh! Something went wrong.",
+        title: "Oh No!",
         description: "Please select check-in and check-out date",
         action: <ToastAction altText="Try again">Try again</ToastAction>,
       });
     }
+
+    if (dateCheckOut <= dateCheckIn) {
+      return toast({
+        variant: "destructive",
+        title: "Oh No!",
+        description:
+          "Check-out date cannot be less than or equal to check-in date",
+        action: <ToastAction altText="Try again">Try again</ToastAction>,
+      });
+    }
+
+    const timeDifference =
+      (dateCheckOut.getTime() - dateCheckIn.getTime()) / (1000 * 60 * 60 * 24);
+
+    if (timeDifference > 31) {
+      return toast({
+        variant: "destructive",
+        title: "Oh No!",
+        description: "You can only book up to 30 days in advance",
+        action: <ToastAction altText="Try again">Try again</ToastAction>,
+      });
+    }
+
+    setCheckIn(dateCheckIn);
+    setCheckOut(dateCheckOut);
+    if (!pathname.includes("/booking")) router.push("/booking");
   };
 
   return (
@@ -43,7 +72,7 @@ const BookingCalendar = ({ isShow }: { isShow?: boolean }) => {
           : "text-primary xl:px-28 md:px-10 px-6 absolute bottom-0 w-full lg:block border-t border-white hidden"
       }`}
     >
-      <div className="flex justify-between sm:flex-row flex-col">
+      <div className="flex justify-between xl:flex-row flex-col">
         <div className="h-20 flex gap-4">
           <Popover>
             <PopoverTrigger asChild>
@@ -53,11 +82,11 @@ const BookingCalendar = ({ isShow }: { isShow?: boolean }) => {
                   `sm:w-[240px] justify-start text-left font-normal sm:h-full hover:text-third h-[60%] 
                   ${isShow ? "border-secondary text-third" : "border-none"}
                   `,
-                  !checkIn && "text-muted-foreground"
+                  !dateCheckIn && "text-muted-foreground"
                 )}
               >
-                {checkIn ? (
-                  format(checkIn, "PPP")
+                {dateCheckIn ? (
+                  format(dateCheckIn, "PPP")
                 ) : (
                   <div
                     className={`flex items-center text-primary gap-2  
@@ -72,8 +101,8 @@ const BookingCalendar = ({ isShow }: { isShow?: boolean }) => {
             <PopoverContent className="w-auto p-0 bg-primary" align="start">
               <Calendar
                 mode="single"
-                selected={checkIn}
-                onSelect={setCheckIn}
+                selected={dateCheckIn}
+                onSelect={setDateCheckIn}
                 initialFocus
                 disabled={(date) => isBefore(date, today)}
               />
@@ -87,11 +116,11 @@ const BookingCalendar = ({ isShow }: { isShow?: boolean }) => {
                   `sm:w-[240px] justify-start text-left font-normal sm:h-full hover:text-third h-[60%] 
                      ${isShow ? "border-secondary text-third" : "border-none"}
                   `,
-                  !checkOut && "text-muted-foreground"
+                  !dateCheckOut && "text-muted-foreground"
                 )}
               >
-                {checkOut ? (
-                  format(checkOut, "PPP")
+                {dateCheckOut ? (
+                  format(dateCheckOut, "PPP")
                 ) : (
                   <div
                     className={`flex items-center text-primary gap-2  
@@ -109,8 +138,8 @@ const BookingCalendar = ({ isShow }: { isShow?: boolean }) => {
             >
               <Calendar
                 mode="single"
-                selected={checkOut}
-                onSelect={setCheckOut}
+                selected={dateCheckOut}
+                onSelect={setDateCheckOut}
                 disabled={(date) => isBefore(date, today)}
                 initialFocus
               />
@@ -120,7 +149,7 @@ const BookingCalendar = ({ isShow }: { isShow?: boolean }) => {
         <div className="h-20 text-left">
           <Button
             variant="outline"
-            className={`sm:h-full h-[60%] mt-4 sm:mt-0  ${
+            className={`sm:h-full h-[60%] mt-4 xl:mt-0  ${
               isShow
                 ? "border-secondary text-third hover:text-third"
                 : "text-primary border-none"

@@ -6,6 +6,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
+import MotionWrapper from "@/app/_components/MotionWrapper";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
@@ -17,29 +18,11 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Slider } from "@/components/ui/slider";
-import { useState } from "react";
 import { FaAngleDown } from "react-icons/fa6";
-import MotionWrapper from "@/app/_components/MotionWrapper";
 
 const BookingFilter = () => {
-  const [price, setPrice] = useState(120);
-
-  const handleSliderChange = (value: number[]) => {
-    setPrice(value[0]);
-  };
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = +e.target.value;
-
-    if (value >= 0 && value <= 400) {
-      setPrice(value);
-    }
-  };
-
   return (
     <MotionWrapper className="flex items-center sm:gap-6 gap-2">
       <Select>
@@ -231,31 +214,6 @@ const BookingFilter = () => {
                 >
                   Vip
                 </label>
-              </div>
-            </div>
-            <div className="mt-4">
-              <h3 className="text-size-xl">Price (avg/night)</h3>
-              <div className="flex items-center space-x-2">
-                <Slider
-                  defaultValue={[price]}
-                  max={400}
-                  step={10}
-                  onValueChange={handleSliderChange}
-                  className="bg-red-200"
-                />
-              </div>
-              <div className=" mt-4 w-full">
-                <div className="flex items-center w-full gap-2">
-                  <Input
-                    type="number"
-                    className="w-full"
-                    value={price}
-                    onChange={(e) => setPrice(+e.target.value)}
-                    placeholder="Price"
-                  />
-                  To
-                  <Input type="number" placeholder="460" readOnly />
-                </div>
               </div>
             </div>
           </div>

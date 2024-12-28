@@ -1,8 +1,30 @@
 "use client";
+import { useEffect } from "react";
 import HeroImage from "@/app/_components/HeroImage";
 import Booking from "./Booking";
+import { getAllOption } from "@/app/api/optionsRequest";
+import { getAllRoom } from "@/app/api/roomsRequest";
+import { getAllRoomType } from "@/app/api/roomTypesRequest";
+import { useAppDispatch } from "@/redux/store";
+import { useSelector } from "react-redux";
+import { roomSelector } from "@/redux/selectors/roomsSelector";
+import LoadingPage from "@/app/_components/LoadingPage";
 
 const page = () => {
+  const { loading, error } = useSelector(roomSelector);
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(getAllRoom());
+    dispatch(getAllRoomType());
+    dispatch(getAllOption());
+  }, []);
+  if (loading) {
+    return <LoadingPage />;
+  }
+
+  if (error) {
+    return error;
+  }
   return (
     <>
       <HeroImage
@@ -13,6 +35,7 @@ const page = () => {
         isBook={true}
       />
       <div className="pd-medium" />
+
       <Booking />
       <div className="pd-medium" />
     </>

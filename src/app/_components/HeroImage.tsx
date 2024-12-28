@@ -17,7 +17,7 @@ interface IHeroImage {
 const HeroImage = ({ image, title, linkContext, link, isBook }: IHeroImage) => {
   const background: BannerLayer = {
     image: image,
-    translateY: [0, 10],
+    translateY: [0, 0],
     opacity: [1, 0.3],
     className: "overlay",
     scale: [1.05, 1, "easeOutCubic"],
@@ -25,7 +25,7 @@ const HeroImage = ({ image, title, linkContext, link, isBook }: IHeroImage) => {
   };
 
   const headline: BannerLayer = {
-    translateY: [0, 30],
+    translateY: [0, 0],
     scale: [1, 1.05, "easeOutCubic"],
     shouldAlwaysCompleteAnimation: true,
     expanded: false,
