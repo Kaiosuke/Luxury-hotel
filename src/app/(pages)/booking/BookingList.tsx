@@ -66,7 +66,7 @@ const BookingList = () => {
       ? useAvailableRooms({ rooms, checkIn, checkOut })
       : [];
 
-  const getQuantityAvailableRoom = (id: string) => {
+  const getQuantityAvailableRoom = (id: string): number => {
     if (!availableRooms) {
       return 0;
     }
@@ -76,7 +76,7 @@ const BookingList = () => {
     return quantityRoom.length;
   };
 
-  const calculateDays = () => {
+  const calculateDays = (): number => {
     if (checkIn && checkOut) {
       const timeDifference = checkOut.getTime() - checkIn.getTime();
       return timeDifference / (1000 * 60 * 60 * 24);
@@ -84,7 +84,7 @@ const BookingList = () => {
     return 1;
   };
 
-  const handleOriginalPrice = (price: number) => {
+  const handleOriginalPrice = (price: number): number => {
     return price + price * 0.1;
   };
 
