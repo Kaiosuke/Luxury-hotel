@@ -20,11 +20,13 @@ const Booking = () => {
           {checkIn && checkOut ? (
             <BookingList />
           ) : (
-            <div className="mt-10">
-              <h3 className="text-size-3xl">
-                Please select check-in and check-out
-              </h3>
-            </div>
+            <MotionWrapper>
+              <div className="mt-10">
+                <h3 className="text-size-3xl">
+                  Please select check-in and check-out
+                </h3>
+              </div>
+            </MotionWrapper>
           )}
         </div>
         <div className="flex-[1_0_auto] max-w-[30%] lg:block hidden">

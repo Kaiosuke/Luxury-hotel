@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { ToastAction } from "@/components/ui/toast";
 import { useToast } from "@/hooks/use-toast";
 import useAppContext from "@/hooks/useAppContext";
+import useAvailableRooms from "@/hooks/useAvailableRooms";
 import { IRooms } from "@/interfaces";
 import { optionsSelector } from "@/redux/selectors/optionsSelector";
 import { roomSelector } from "@/redux/selectors/roomsSelector";
@@ -48,20 +49,6 @@ const BookingList = () => {
 
   const { toast } = useToast();
 
-  const isRoomAvailable = (bookedDates: BookedDate[]) => {
-    return !bookedDates.some((booking) => {
-      const bookedFrom = new Date(booking.from);
-      const bookedTo = new Date(booking.to);
-      if (checkIn && checkOut) {
-        return (
-          (checkIn >= bookedFrom && checkIn <= bookedTo) ||
-          (checkOut >= bookedFrom && checkOut <= bookedTo) ||
-          (checkIn <= bookedFrom && checkOut >= bookedTo)
-        );
-      }
-    });
-  };
-
   const bookRoom = () => {
     if (checkIn && checkOut) {
     } else {
@@ -74,13 +61,10 @@ const BookingList = () => {
     }
   };
 
-  const getAvailableRooms = (rooms: IRooms[]): IRooms[] => {
-    return rooms.filter(
-      (room) => room.status === "available" && isRoomAvailable(room.bookedDates)
-    );
-  };
-
-  const availableRooms = rooms && getAvailableRooms(rooms);
+  const availableRooms: IRooms[] =
+    rooms && checkIn && checkOut
+      ? useAvailableRooms({ rooms, checkIn, checkOut })
+      : [];
 
   const getQuantityAvailableRoom = (id: string) => {
     if (!availableRooms) {
@@ -89,7 +73,6 @@ const BookingList = () => {
     const quantityRoom = availableRooms.filter(
       (room) => room.roomTypeId === id
     );
-
     return quantityRoom.length;
   };
 
