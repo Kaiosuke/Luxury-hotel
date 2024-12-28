@@ -15,7 +15,13 @@ import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import { FaChevronDown } from "react-icons/fa6";
 
-const BookingCalendar = ({ isShow }: { isShow?: boolean }) => {
+const BookingCalendar = ({
+  isShow,
+  color,
+}: {
+  isShow?: boolean;
+  color: string;
+}) => {
   const { checkIn, setCheckIn, checkOut, setCheckOut } = useAppContext();
   const [dateCheckIn, setDateCheckIn] = useState<Date | undefined>(checkIn);
   const [dateCheckOut, setDateCheckOut] = useState<Date | undefined>(checkOut);
@@ -79,8 +85,10 @@ const BookingCalendar = ({ isShow }: { isShow?: boolean }) => {
               <Button
                 variant={"outline"}
                 className={cn(
-                  `sm:w-[240px] justify-start text-left font-normal sm:h-full hover:text-third h-[60%] 
-                  ${isShow ? "border-secondary text-third" : "border-none"}
+                  `sm:w-[240px] justify-start text-left font-normal sm:h-full hover:${color} h-[60%] 
+                  ${isShow ? `border-secondary ${color}` : "border-none"}
+
+                  
                   `,
                   !dateCheckIn && "text-muted-foreground"
                 )}
@@ -90,7 +98,7 @@ const BookingCalendar = ({ isShow }: { isShow?: boolean }) => {
                 ) : (
                   <div
                     className={`flex items-center text-primary gap-2  
-                      ${isShow && "text-third"}`}
+                      ${isShow && `${color}`}`}
                   >
                     <span className="text-size-xl">Check-in</span>
                     <FaChevronDown />
@@ -113,8 +121,8 @@ const BookingCalendar = ({ isShow }: { isShow?: boolean }) => {
               <Button
                 variant={"outline"}
                 className={cn(
-                  `sm:w-[240px] justify-start text-left font-normal sm:h-full hover:text-third h-[60%] 
-                     ${isShow ? "border-secondary text-third" : "border-none"}
+                  `sm:w-[240px] justify-start text-left font-normal sm:h-full hover:${color} h-[60%] 
+                     ${isShow ? `border-secondary ${color}` : "border-none"}
                   `,
                   !dateCheckOut && "text-muted-foreground"
                 )}
@@ -124,7 +132,7 @@ const BookingCalendar = ({ isShow }: { isShow?: boolean }) => {
                 ) : (
                   <div
                     className={`flex items-center text-primary gap-2  
-                      ${isShow && "text-third"}`}
+                      ${isShow && `${color}`}`}
                   >
                     <span className="text-size-xl"> Check-out </span>
                     <FaChevronDown />
@@ -151,7 +159,7 @@ const BookingCalendar = ({ isShow }: { isShow?: boolean }) => {
             variant="outline"
             className={`sm:h-full h-[60%] mt-4 xl:mt-0  ${
               isShow
-                ? "border-secondary text-third hover:text-third"
+                ? `border-secondary ${color} hover:${color}`
                 : "text-primary border-none"
             }`}
             onClick={handleGetData}

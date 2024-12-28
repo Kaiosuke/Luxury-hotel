@@ -1,6 +1,16 @@
 import { IRoomsState } from "../slices/roomsSlice";
 import { RootState } from "../store";
 
-const roomSelector = (state: RootState): IRoomsState => state.roomsSlice;
+interface IFilter {
+  rate: string;
+  sortPrice: string;
+  views: string[];
+  features: string[];
+  categories: string[];
+}
 
-export { roomSelector };
+const roomSelector = (state: RootState): IRoomsState => state.roomsSlice;
+const roomFilterSelector = (state: RootState): IFilter =>
+  state.roomsSlice.filters;
+
+export { roomSelector, roomFilterSelector };

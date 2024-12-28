@@ -18,11 +18,6 @@ import { LuLamp } from "react-icons/lu";
 import { MdEmojiFoodBeverage, MdOutlineBathtub } from "react-icons/md";
 import { useSelector } from "react-redux";
 
-interface BookedDate {
-  from: string;
-  to: string;
-}
-
 const BookingList = () => {
   const filterIconFeature = (value: string) => {
     return value.includes("Conditioning") ? (

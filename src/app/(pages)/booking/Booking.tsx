@@ -13,7 +13,7 @@ const Booking = () => {
       <div className="flex gap-6">
         <div className="flex-[1_0_auto] lg:max-w-[70%] max-w-[100%] gap-10">
           <MotionWrapper>
-            <BookingCalendar isShow />
+            <BookingCalendar isShow color="text-third" />
             <h1 className="text-size-5xl mt-20 mb-10">Select Next Room</h1>
           </MotionWrapper>
           <BookingFilter />

@@ -10,9 +10,7 @@ import { authSelector } from "@/redux/selectors/authSelector";
 
 const Header = () => {
   const [openMenu, setOpenMenu] = useState(false);
-
   const [isScrolled, setIsScrolled] = useState(false);
-
   const { scrollDir } = useDetectScroll();
 
   useEffect(() => {
@@ -45,7 +43,9 @@ const Header = () => {
       />
       <div
         className={`bg-secondary lg:pl-32 lg:pr-20 lg:py-28 fixed top-0 sm:pl-20 sm:pr-16 sm: py-10 px-10 h-screen rb-top-animate animation-slow overflow-y-auto scrollbar-none ${
-          openMenu ? "translate-y-[0px]" : "translate-y-[-1000px]"
+          openMenu
+            ? "translate-y-[0px] opacity-100"
+            : "translate-y-[-1000px] opacity-0"
         }`}
       >
         <div className="grid lg:grid-cols-5 md:grid-cols-3 grid-cols-1 gap-4">

@@ -7,6 +7,7 @@ import {
 } from "@/components/ui/select";
 
 import MotionWrapper from "@/app/_components/MotionWrapper";
+import data from "@/app/data.json";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
@@ -18,14 +19,37 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { roomFilterSelector } from "@/redux/selectors/roomsSelector";
 import { FaAngleDown } from "react-icons/fa6";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  filterByRate,
+  filterBySortPrice,
+  filterByViews,
+} from "@/redux/slices/roomsSlice";
+import { useState } from "react";
 
 const BookingFilter = () => {
+  const { viewList, featureList } = data;
+
+  const dispatch = useDispatch();
+
+  const { rate, sortPrice, views } = useSelector(roomFilterSelector);
+
+  const handleFilterByRate = (value: string) => {
+    dispatch(filterByRate(value));
+  };
+
+  const handleFilterBySort = (value: string) => {
+    dispatch(filterBySortPrice(value));
+  };
+  const handleFilterByViews = (value: string) => {
+    dispatch(filterByViews(value));
+  };
+
   return (
-    <MotionWrapper className="flex items-center sm:gap-6 gap-2">
-      <Select>
+    <MotionWrapper className="flex items-center sm:gap-4 gap-2">
+      <Select onValueChange={handleFilterByRate}>
         <SelectTrigger className="w-[180px] md:py-6 border-secondary">
           <SelectValue
             placeholder="View By"
@@ -41,10 +65,11 @@ const BookingFilter = () => {
           </SelectItem>
         </SelectContent>
       </Select>
-      <Select>
-        <SelectTrigger className="w-[180px] md:py-6 border-secondary">
+
+      <Select onValueChange={handleFilterBySort}>
+        <SelectTrigger className="w-[200px] md:py-6 border-secondary">
           <SelectValue
-            placeholder="Sort By"
+            placeholder="Sort By Price"
             className="lg:text-xl"
           ></SelectValue>
         </SelectTrigger>
@@ -52,10 +77,10 @@ const BookingFilter = () => {
           <SelectItem value="recommended" className="lg:text-xl text-primary">
             Recommended
           </SelectItem>
-          <SelectItem value="Lowest Price" className="lg:text-xl text-primary">
+          <SelectItem value="low" className="lg:text-xl text-primary">
             Lowest Price
           </SelectItem>
-          <SelectItem value="Highest Price" className="lg:text-xl text-primary">
+          <SelectItem value="high" className="lg:text-xl text-primary">
             Highest Price
           </SelectItem>
         </SelectContent>
@@ -72,155 +97,44 @@ const BookingFilter = () => {
             <DialogTitle className="md:text-2xl">Filters</DialogTitle>
           </DialogHeader>
           <div className="grid sm:grid-cols-2 grid-cols-1 items-start w-full">
-            <RadioGroup defaultValue="comfortable">
-              <h3 className="text-size-xl">Display</h3>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="comfortable" id="rView1" />
-                <Label htmlFor="rView1" className="md:text-lg cursor-pointer">
-                  View By Rooms
-                </Label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="compact" id="rView2" />
-                <Label htmlFor="rView2" className="md:text-lg">
-                  View By Rates
-                </Label>
-              </div>
-            </RadioGroup>
-            <RadioGroup defaultValue="Recommended">
-              <h3 className="text-size-xl">Sort by</h3>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="Recommended" id="rSort1" />
-                <Label htmlFor="rSort1" className="md:text-lg cursor-pointer">
-                  Recommended
-                </Label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="Lowest Price" id="rSort2" />
-                <Label htmlFor="rSort2" className="md:text-lg">
-                  Lowest Price
-                </Label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value=" Highest Price" id="rSort3" />
-                <Label htmlFor="rSort3" className="md:text-lg">
-                  Highest Price
-                </Label>
-              </div>
-            </RadioGroup>
             <div className="mt-4">
               <h3 className="text-size-xl">View</h3>
-              <div className="flex items-center space-x-2">
-                <Checkbox id="terms" className="text-secondary" />
-                <label
-                  htmlFor="terms"
-                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 md:text-lg cursor-pointer"
-                >
-                  Mountain View
-                </label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <Checkbox id="terms2" className="text-secondary" />
-                <label
-                  htmlFor="terms2"
-                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 md:text-lg cursor-pointer"
-                >
-                  Pool view
-                </label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <Checkbox id="terms3" className="text-secondary" />
-                <label
-                  htmlFor="terms3"
-                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 md:text-lg cursor-pointer"
-                >
-                  Sea view
-                </label>
-              </div>
+              {viewList.map((view) => (
+                <div key={view.id} className="flex items-center space-x-2">
+                  <Checkbox
+                    id={view.id}
+                    className="text-secondary"
+                    checked={views.includes(view.title)}
+                    onCheckedChange={() => handleFilterByViews(view.title)}
+                  />
+                  <label
+                    htmlFor={view.id}
+                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 md:text-lg cursor-pointer"
+                  >
+                    {view.title}
+                  </label>
+                </div>
+              ))}
             </div>
             <div className="mt-4">
               <h3 className="text-size-xl">Features</h3>
-              <div className="flex items-center space-x-2">
-                <Checkbox id="terms4" className="text-secondary" />
-                <label
-                  htmlFor="terms4"
-                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 md:text-lg cursor-pointer"
-                >
-                  Air conditioning
-                </label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <Checkbox id="terms5" className="text-secondary" />
-                <label
-                  htmlFor="terms5"
-                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 md:text-lg cursor-pointer"
-                >
-                  TV
-                </label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <Checkbox id="terms6" className="text-secondary" />
-                <label
-                  htmlFor="terms6"
-                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 md:text-lg cursor-pointer"
-                >
-                  Balcony/Lanai/Terrace
-                </label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <Checkbox id="terms7" className="text-secondary" />
-                <label
-                  htmlFor="terms7"
-                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 md:text-lg cursor-pointer"
-                >
-                  Bathrobe
-                </label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <Checkbox id="terms8" className="text-secondary" />
-                <label
-                  htmlFor="terms8"
-                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 md:text-lg cursor-pointer"
-                >
-                  Bathroom amenities
-                </label>
-              </div>
-            </div>
-            <div className="mt-4">
-              <h3 className="text-size-xl">Room Category</h3>
-              <div className="flex items-center space-x-2">
-                <Checkbox id="terms9" className="text-secondary" />
-                <label
-                  htmlFor="terms9"
-                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 md:text-lg cursor-pointer"
-                >
-                  Normal
-                </label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <Checkbox id="terms10" className="text-secondary" />
-                <label
-                  htmlFor="terms10"
-                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 md:text-lg cursor-pointer"
-                >
-                  Primary
-                </label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <Checkbox id="terms11" className="text-secondary" />
-                <label
-                  htmlFor="terms11"
-                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 md:text-lg cursor-pointer"
-                >
-                  Vip
-                </label>
-              </div>
+              {featureList.map((feature, index) => (
+                <div key={index} className="flex items-center space-x-2">
+                  <Checkbox id="terms4" className="text-secondary" />
+                  <label
+                    htmlFor="terms4"
+                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 md:text-lg cursor-pointer"
+                  >
+                    {feature}
+                  </label>
+                </div>
+              ))}
             </div>
           </div>
           <DialogFooter className="sm:justify-center">
             <DialogClose asChild>
               <Button type="reset" variant="secondary">
-                Save
+                Close
               </Button>
             </DialogClose>
           </DialogFooter>

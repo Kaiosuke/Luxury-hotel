@@ -5,12 +5,12 @@ import Link from "next/link";
 import data from "../../data.json";
 
 const Rooms = () => {
-  const { views } = data;
+  const { viewList } = data;
 
   return (
     <section className="padding-main text-white">
       <div className="grid lg:grid-cols-3 gap-6 grid-cols-1">
-        {views.map((view) => (
+        {viewList.map((view) => (
           <MotionWrapper key={view.id}>
             <Link href="#!" className="relative group/view cursor-pointer">
               <AspectRatio

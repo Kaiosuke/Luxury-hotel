@@ -54,7 +54,7 @@ const HeroImage = ({ image, title, linkContext, link, isBook }: IHeroImage) => {
           layers={[background, headline]}
           className="h-screen bg-gray-900"
         />
-        {!isBook && <BookingCalendar />}
+        {!isBook && <BookingCalendar color="text-primary" />}
       </div>
     </section>
   );

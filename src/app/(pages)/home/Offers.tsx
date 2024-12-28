@@ -1,4 +1,3 @@
-import BookingCalendar from "@/app/_components/BookingCalendar";
 import BookNow from "@/app/_components/BookNow";
 import MotionWrapper from "@/app/_components/MotionWrapper";
 import data from "@/app/data.json";

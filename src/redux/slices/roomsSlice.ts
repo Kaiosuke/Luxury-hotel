@@ -5,6 +5,13 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 export interface IRoomsState {
   rooms: IRooms[] | null;
   room: IRooms | null;
+  filters: {
+    rate: string;
+    sortPrice: string;
+    views: string[];
+    features: string[];
+    categories: string[];
+  };
   loading: boolean;
   error: null | string | undefined;
 }
@@ -12,6 +19,13 @@ export interface IRoomsState {
 const initialState: IRoomsState = {
   rooms: null,
   room: null,
+  filters: {
+    rate: "rooms",
+    sortPrice: "recommended",
+    views: [],
+    features: [],
+    categories: [],
+  },
   loading: false,
   error: null,
 };
@@ -31,7 +45,32 @@ const setError = (
 const roomsSlice = createSlice({
   name: "roomTypes",
   initialState,
-  reducers: {},
+  reducers: {
+    filterByRate(state, action: PayloadAction<string>) {
+      state.filters.rate = action.payload;
+    },
+    filterBySortPrice(state, action: PayloadAction<string>) {
+      state.filters.sortPrice = action.payload;
+    },
+    filterByViews(state, action: PayloadAction<string>) {
+      const view = state.filters.views.includes(action.payload);
+      if (view) {
+        state.filters.views = state.filters.views.filter(
+          (view) => view !== action.payload
+        );
+      } else {
+        state.filters.views = [...state.filters.views, action.payload];
+      }
+      console.log(state.filters.views);
+      // state.filters.views = action.payload;
+    },
+    filterByFeatures(state, action: PayloadAction<string[]>) {
+      state.filters.features = action.payload;
+    },
+    filterByCategories(state, action: PayloadAction<string[]>) {
+      state.filters.categories = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(getAllRoom.pending, setLoading);
     builder.addCase(
@@ -55,3 +94,11 @@ const roomsSlice = createSlice({
 });
 
 export default roomsSlice.reducer;
+
+export const {
+  filterByRate,
+  filterBySortPrice,
+  filterByViews,
+  filterByFeatures,
+  filterByCategories,
+} = roomsSlice.actions;
