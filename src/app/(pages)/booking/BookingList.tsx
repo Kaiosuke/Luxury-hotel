@@ -9,7 +9,10 @@ import useAvailableRooms from "@/hooks/useAvailableRooms";
 import { IRooms } from "@/interfaces";
 import { optionsSelector } from "@/redux/selectors/optionsSelector";
 import { roomSelector } from "@/redux/selectors/roomsSelector";
-import { roomTypesSelector } from "@/redux/selectors/roomTypesSelector";
+import {
+  roomTypesRemainingSelector,
+  roomTypesSelector,
+} from "@/redux/selectors/roomTypesSelector";
 import Image from "next/image";
 import Link from "next/link";
 import { BsCreditCard2BackFill, BsFillSafe2Fill } from "react-icons/bs";
@@ -39,7 +42,7 @@ const BookingList = () => {
 
   const { checkIn, checkOut } = useAppContext();
   const { rooms } = useSelector(roomSelector);
-  const { roomTypes } = useSelector(roomTypesSelector);
+  const dataList = useSelector(roomTypesRemainingSelector);
   const { options } = useSelector(optionsSelector);
 
   const { toast } = useToast();
@@ -85,9 +88,9 @@ const BookingList = () => {
 
   return (
     <>
-      {roomTypes && (
+      {dataList.length ? (
         <>
-          {roomTypes.map((room) => (
+          {dataList.map((room) => (
             <MotionWrapper
               className="border border-third rounded-lg p-4 mt-6"
               key={room.id}
@@ -198,6 +201,10 @@ const BookingList = () => {
             </MotionWrapper>
           ))}
         </>
+      ) : (
+        <div className="mt-10">
+          <span className="text-size-3xl">No available rooms found</span>
+        </div>
       )}
     </>
   );

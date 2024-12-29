@@ -19,63 +19,63 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { roomFilterSelector } from "@/redux/selectors/roomsSelector";
+
+import { roomTypesFilterSelector } from "@/redux/selectors/roomTypesSelector";
+import {
+  filterByCategories,
+  filterByFeatures,
+  filterBySort,
+  filterByViews,
+} from "@/redux/slices/roomTypesSlice";
 import { FaAngleDown } from "react-icons/fa6";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  filterByRate,
-  filterBySortPrice,
-  filterByViews,
-} from "@/redux/slices/roomsSlice";
-import { useState } from "react";
 
 const BookingFilter = () => {
-  const { viewList, featureList } = data;
+  const { viewList, featureList, categoryList } = data;
 
   const dispatch = useDispatch();
 
-  const { rate, sortPrice, views } = useSelector(roomFilterSelector);
-
-  const handleFilterByRate = (value: string) => {
-    dispatch(filterByRate(value));
-  };
+  const { sort, views, categories, features } = useSelector(
+    roomTypesFilterSelector
+  );
 
   const handleFilterBySort = (value: string) => {
-    dispatch(filterBySortPrice(value));
+    dispatch(filterBySort(value));
   };
+
   const handleFilterByViews = (value: string) => {
     dispatch(filterByViews(value));
   };
 
+  const handleFilterByCategories = (value: string) => {
+    dispatch(filterByCategories(value));
+  };
+
+  const handleFilterByFeatures = (value: string) => {
+    dispatch(filterByFeatures(value));
+  };
+
+  const handleReset = () => {
+    dispatch(filterByViews(null));
+    dispatch(filterByCategories(null));
+    dispatch(filterByFeatures(null));
+  };
+
   return (
     <MotionWrapper className="flex items-center sm:gap-4 gap-2">
-      <Select onValueChange={handleFilterByRate}>
-        <SelectTrigger className="w-[180px] md:py-6 border-secondary">
-          <SelectValue
-            placeholder="View By"
-            className="lg:text-xl"
-          ></SelectValue>
-        </SelectTrigger>
-        <SelectContent className="bg-secondary">
-          <SelectItem value="room" className="lg:text-xl text-primary">
-            Rooms
-          </SelectItem>
-          <SelectItem value="rate" className="lg:text-xl text-primary">
-            rate
-          </SelectItem>
-        </SelectContent>
-      </Select>
-
       <Select onValueChange={handleFilterBySort}>
-        <SelectTrigger className="w-[200px] md:py-6 border-secondary">
+        <SelectTrigger className="w-[220px] md:py-6 border-secondary">
           <SelectValue
-            placeholder="Sort By Price"
+            placeholder={`View By ${sort}`}
             className="lg:text-xl"
           ></SelectValue>
         </SelectTrigger>
         <SelectContent className="bg-secondary">
           <SelectItem value="recommended" className="lg:text-xl text-primary">
             Recommended
+          </SelectItem>
+          <SelectItem value="rate" className="lg:text-xl text-primary">
+            rate
           </SelectItem>
           <SelectItem value="low" className="lg:text-xl text-primary">
             Lowest Price
@@ -98,40 +98,74 @@ const BookingFilter = () => {
           </DialogHeader>
           <div className="grid sm:grid-cols-2 grid-cols-1 items-start w-full">
             <div className="mt-4">
-              <h3 className="text-size-xl">View</h3>
-              {viewList.map((view) => (
-                <div key={view.id} className="flex items-center space-x-2">
-                  <Checkbox
-                    id={view.id}
-                    className="text-secondary"
-                    checked={views.includes(view.title)}
-                    onCheckedChange={() => handleFilterByViews(view.title)}
-                  />
-                  <label
-                    htmlFor={view.id}
-                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 md:text-lg cursor-pointer"
-                  >
-                    {view.title}
-                  </label>
-                </div>
-              ))}
+              <div>
+                <h3 className="text-size-xl">View</h3>
+                {viewList.map((view) => (
+                  <div key={view.id} className="flex items-center space-x-2">
+                    <Checkbox
+                      id={view.id}
+                      className="text-secondary"
+                      checked={views.includes(view.title)}
+                      onCheckedChange={() => handleFilterByViews(view.title)}
+                    />
+                    <label
+                      htmlFor={view.id}
+                      className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 md:text-lg cursor-pointer"
+                    >
+                      {view.title}
+                    </label>
+                  </div>
+                ))}
+              </div>
+              <div>
+                <h3 className="text-size-xl mt-4">Category</h3>
+                {categoryList.map((cate) => (
+                  <div key={cate.id} className="flex items-center space-x-2">
+                    <Checkbox
+                      id={cate.id}
+                      className="text-secondary"
+                      checked={categories.includes(cate.title)}
+                      onCheckedChange={() =>
+                        handleFilterByCategories(cate.title)
+                      }
+                    />
+                    <label
+                      htmlFor={cate.id}
+                      className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 md:text-lg cursor-pointer"
+                    >
+                      {cate.title}
+                    </label>
+                  </div>
+                ))}
+              </div>
             </div>
             <div className="mt-4">
               <h3 className="text-size-xl">Features</h3>
-              {featureList.map((feature, index) => (
-                <div key={index} className="flex items-center space-x-2">
-                  <Checkbox id="terms4" className="text-secondary" />
+              {featureList.map((feature) => (
+                <div key={feature.id} className="flex items-center space-x-2">
+                  <Checkbox
+                    id={feature.id}
+                    className="text-secondary"
+                    checked={features.includes(feature.title)}
+                    onCheckedChange={() =>
+                      handleFilterByFeatures(feature.title)
+                    }
+                  />
                   <label
-                    htmlFor="terms4"
+                    htmlFor={feature.id}
                     className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 md:text-lg cursor-pointer"
                   >
-                    {feature}
+                    {feature.title}
                   </label>
                 </div>
               ))}
             </div>
           </div>
           <DialogFooter className="sm:justify-center">
+            <Button type="reset" variant="secondary" onClick={handleReset}>
+              Reset
+            </Button>
+            <DialogClose asChild></DialogClose>
             <DialogClose asChild>
               <Button type="reset" variant="secondary">
                 Close

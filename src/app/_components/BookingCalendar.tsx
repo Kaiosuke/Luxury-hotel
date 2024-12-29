@@ -67,6 +67,11 @@ const BookingCalendar = ({
 
     setCheckIn(dateCheckIn);
     setCheckOut(dateCheckOut);
+    toast({
+      variant: "success",
+      title: "Success",
+      description: "Search success",
+    });
     if (!pathname.includes("/booking")) router.push("/booking");
   };
 

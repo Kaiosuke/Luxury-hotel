@@ -5,6 +5,9 @@ interface IRoomTypes {
   title: string;
   price: number;
   quantity: number;
+  rate: number;
+  category: string;
+  view: string;
   description: string;
   quickDes: string[];
   features: string[];

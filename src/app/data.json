@@ -79,19 +79,19 @@
   ],
   "viewList": [
     {
-      "id": "1",
+      "id": "view1",
       "title": "Mountain",
       "image": "https://aguasdeibiza.com/wp-content/uploads/2019/09/Aguasdeibiza-2019-070-HABITACIONES-ALTA-edit.jpg",
       "description": "An Ibiza style room with a natural set of design details to add up to a king size bed and a large private terrace. Contemporary elements like copper and limestone, or pebble stone floor in its large bathroom, a bathtub and a separate shower make this space is a magnificent amenity in itself."
     },
     {
-      "id": "2",
+      "id": "view2",
       "title": "Pool",
       "image": "https://aguasdeibiza.com/wp-content/uploads/2023/09/AGUAS-DE-IBIZA-2023-080-baja-1200x900.jpg",
       "description": "When the idea of a perfect marine retreat includes unbeatable sea sights, this is the perfect choice. A big and bright room with views of Formentera Island and its pristine waters, combined with a beautiful modern furniture."
     },
     {
-      "id": "3",
+      "id": "view3",
       "title": "Sea",
       "image": "https://aguasdeibiza.com/wp-content/uploads/2023/07/C9SV-2023-004-baja-1200x675.jpg",
       "description": "Floor-to-ceiling windows with an uninterrupted view of the Mediterranean and Santa Eulalia bay. A living room of your own, a big bed and bathroom including a vanity top with a double sink, bathtub and independent shower. The most memorable experience for the eyes and the mind."
@@ -229,28 +229,104 @@
     "https://d321ocj5nbe62c.cloudfront.net/imageRepo/2/0/187/589/530/Deluxe_4_P.jpg",
     "https://d321ocj5nbe62c.cloudfront.net/imageRepo/2/0/187/589/586/Deluxe_1_P.jpg"
   ],
-
   "featureList": [
-    "King bed",
-    "Coffee/Tea maker",
-    "Bathroom amenities",
-    "Hairdryer",
-    "TV",
-    "Slippers",
-    "Speaker phone",
-    "Television",
-    "Data port",
-    "Telephone",
-    "Minibar",
-    "Bathrobe",
-    "Safe",
-    "Wake-up calls",
-    "Maid service",
-    "Bathroom telephone",
-    "Bidet",
-    "Cable television",
-    "Smoke detectors",
-    "Sitting area",
-    "Twin bed"
+    {
+      "id": "feature1",
+      "title": "King bed"
+    },
+    {
+      "id": "feature2",
+      "title": "Coffee/Tea maker"
+    },
+    {
+      "id": "feature3",
+      "title": "Bathroom amenities"
+    },
+    {
+      "id": "feature4",
+      "title": "Hairdryer"
+    },
+    {
+      "id": "feature5",
+      "title": "TV"
+    },
+    {
+      "id": "feature6",
+      "title": "Slippers"
+    },
+    {
+      "id": "feature7",
+      "title": "Speaker phone"
+    },
+    {
+      "id": "feature8",
+      "title": "Television"
+    },
+    {
+      "id": "feature9",
+      "title": "Data port"
+    },
+    {
+      "id": "feature10",
+      "title": "Telephone"
+    },
+    {
+      "id": "feature11",
+      "title": "Minibar"
+    },
+    {
+      "id": "feature12",
+      "title": "Bathrobe"
+    },
+    {
+      "id": "feature13",
+      "title": "Safe"
+    },
+    {
+      "id": "feature14",
+      "title": "Wake-up calls"
+    },
+    {
+      "id": "feature15",
+      "title": "Maid service"
+    },
+    {
+      "id": "feature16",
+      "title": "Bathroom telephone"
+    },
+    {
+      "id": "feature17",
+      "title": "Bidet"
+    },
+    {
+      "id": "feature18",
+      "title": "Cable television"
+    },
+    {
+      "id": "feature19",
+      "title": "Smoke detectors"
+    },
+    {
+      "id": "feature20",
+      "title": "Sitting area"
+    },
+    {
+      "id": "feature21",
+      "title": "Twin bed"
+    }
+  ],
+  "categoryList": [
+    {
+      "id": "cate1",
+      "title": "Normal"
+    },
+    {
+      "id": "cate2",
+      "title": "Premium"
+    },
+    {
+      "id": "cate3",
+      "title": "Vip"
+    }
   ]
 }

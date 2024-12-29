@@ -22,9 +22,9 @@ const Booking = () => {
           ) : (
             <MotionWrapper>
               <div className="mt-10">
-                <h3 className="text-size-3xl">
+                <span className="text-size-3xl">
                   Please select check-in and check-out
-                </h3>
+                </span>
               </div>
             </MotionWrapper>
           )}
