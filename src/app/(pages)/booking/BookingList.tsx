@@ -1,18 +1,16 @@
 import MotionWrapper from "@/app/_components/MotionWrapper";
-
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Button } from "@/components/ui/button";
 import { ToastAction } from "@/components/ui/toast";
 import { useToast } from "@/hooks/use-toast";
 import useAppContext from "@/hooks/useAppContext";
 import useAvailableRooms from "@/hooks/useAvailableRooms";
-import { IRooms } from "@/interfaces";
+import { IRoom } from "@/interfaces";
+import { authSelector } from "@/redux/selectors/authSelector";
 import { optionsSelector } from "@/redux/selectors/optionsSelector";
 import { roomSelector } from "@/redux/selectors/roomsSelector";
-import {
-  roomTypesRemainingSelector,
-  roomTypesSelector,
-} from "@/redux/selectors/roomTypesSelector";
+import { roomTypesRemainingSelector } from "@/redux/selectors/roomTypesSelector";
+import { formatMoney } from "@/utils/helpers";
 import Image from "next/image";
 import Link from "next/link";
 import { BsCreditCard2BackFill, BsFillSafe2Fill } from "react-icons/bs";
@@ -41,25 +39,14 @@ const BookingList = () => {
   };
 
   const { checkIn, checkOut } = useAppContext();
+  const { currentUser } = useSelector(authSelector);
   const { rooms } = useSelector(roomSelector);
   const dataList = useSelector(roomTypesRemainingSelector);
   const { options } = useSelector(optionsSelector);
 
   const { toast } = useToast();
 
-  const bookRoom = () => {
-    if (checkIn && checkOut) {
-    } else {
-      toast({
-        variant: "destructive",
-        title: "Uh oh! Something went wrong.",
-        description: "Please select check-in and check-out date",
-        action: <ToastAction altText="Try again">Try again</ToastAction>,
-      });
-    }
-  };
-
-  const availableRooms: IRooms[] =
+  const availableRooms: IRoom[] =
     rooms && checkIn && checkOut
       ? useAvailableRooms({ rooms, checkIn, checkOut })
       : [];
@@ -86,6 +73,28 @@ const BookingList = () => {
     return price + price * 0.1;
   };
 
+  const bookRoom = () => {
+    if (!currentUser)
+      return toast({
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        description: "Please login to book a room",
+        action: (
+          <ToastAction altText="Try again">
+            <Link href="/auth">Login Now</Link>
+          </ToastAction>
+        ),
+      });
+    if (checkIn && checkOut) {
+    } else {
+      toast({
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        description: "Please select check-in and check-out date",
+        action: <ToastAction altText="Try again">Try again</ToastAction>,
+      });
+    }
+  };
   return (
     <>
       {dataList.length ? (
@@ -114,7 +123,9 @@ const BookingList = () => {
                   </ul>
                 </div>
                 <div className="flex-[1_0_auto] md:max-w-[70%] max-w-[100%]">
-                  <h2 className="text-size-4xl md:mt-0 mt-4">{room.title}</h2>
+                  <h2 className="text-size-4xl md:mt-0 mt-4 font-medium">
+                    {room.title}
+                  </h2>
                   <div className="flex gap-6 mt-6">
                     {getQuantityAvailableRoom(room.id) < 8 ? (
                       <span className="text-size-base text-red-400">
@@ -142,7 +153,7 @@ const BookingList = () => {
                         {options.map((option, index) => (
                           <div key={index}>
                             <div className="line-1" />
-                            <div className="flex md:gap-6 md:flex-row flex-col">
+                            <div className="flex xl:gap-6 md:gap-4 md:flex-row flex-col">
                               <div className="flex-[1_0_auto] md:max-w-[60%] 2xl:max-w-[70%]  max-w-[100%]">
                                 <h3 className="text-size-lg underline hover:decoration-secondary">
                                   <Link href="#!">{option.typeName}</Link>
@@ -165,25 +176,26 @@ const BookingList = () => {
                                 </p>
                               </div>
                               <div className="md:max-w-[40%] 2xl:max-w-[30%] max-w-[100%] md:mt-0 mt-4">
-                                <div className="flex gap-1 items-center">
-                                  <span className="line-through opacity-60">
-                                    {handleOriginalPrice(
-                                      option.price + room.price
-                                    ) * calculateDays()}
+                                <div className="flex flex-col">
+                                  <span className="text-xl font-semibold">
+                                    {formatMoney(
+                                      (option.price + room.price) *
+                                        calculateDays()
+                                    )}
                                   </span>
-                                  <span className="text-2xl">
-                                    $
-                                    {(option.price + room.price) *
-                                      calculateDays()}
+                                  <span className="line-through opacity-60">
+                                    {formatMoney(
+                                      handleOriginalPrice(
+                                        option.price + room.price
+                                      ) * calculateDays()
+                                    )}
                                   </span>
                                 </div>
-                                <div className="flex mt-2 md:flex-col md:mt-0">
-                                  <span>
-                                    Total for {calculateDays()} nights
-                                  </span>
+                                <div className="flex mt-2 flex-col md:mt-0">
+                                  <div>Total for {calculateDays()} nights</div>
                                   <Button
                                     variant={"secondary"}
-                                    className="md:mt-4 ml-auto"
+                                    className="mt-4 w-fit"
                                     onClick={() => bookRoom()}
                                   >
                                     Book now

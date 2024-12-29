@@ -1,9 +1,9 @@
 import { DropdownMenuRadioItem } from "@/components/ui/dropdown-menu";
-import { IRoomTypes } from "@/interfaces";
+import { IRoomType } from "@/interfaces";
 import React from "react";
 
 interface IRoomTitleMb {
-  room: IRoomTypes;
+  room: IRoomType;
   setSelectID: (value: string) => void;
 }
 

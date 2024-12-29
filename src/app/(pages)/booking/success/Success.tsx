@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
 const Success = () => {
-  const { rooms } = data;
+  // const { rooms } = data;
 
   return (
     <div className="border border-secondary rounded-lg p-4 text-third">
@@ -19,7 +19,7 @@ const Success = () => {
         <div>+34971319991</div>
         <div>info@aguasdeibiza.com</div>
       </div>
-      {rooms.map((room) => (
+      {/* {rooms.map((room) => (
         <div
           key={room.id}
           className="border border-secondary rounded-lg p-4 text-third mt-10"
@@ -74,7 +74,7 @@ const Success = () => {
             </div>
           </div>
         </div>
-      ))}
+      ))} */}
       <div className="mt-10">
         <span className="text-size-xl font-semibold">Policies:</span>
         <div className="bg-secondary text-primary mt-2">

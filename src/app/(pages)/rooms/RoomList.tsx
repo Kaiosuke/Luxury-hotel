@@ -1,13 +1,13 @@
 import MotionWrapper from "@/app/_components/MotionWrapper";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Button } from "@/components/ui/button";
-import { IRoomTypes } from "@/interfaces";
+import { IRoomType } from "@/interfaces";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
 interface IRoomList {
-  room: IRoomTypes;
+  room: IRoomType;
 }
 
 const RoomList = ({ room }: IRoomList) => {

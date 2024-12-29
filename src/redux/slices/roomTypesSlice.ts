@@ -1,10 +1,10 @@
 import { getAllRoomType, getRoomType } from "@/app/api/roomTypesRequest";
-import { IRoomTypes } from "@/interfaces";
+import { IRoomType } from "@/interfaces";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface IRoomTypeState {
-  roomTypes: IRoomTypes[] | null;
-  roomType: IRoomTypes | null;
+  roomTypes: IRoomType[] | null;
+  roomType: IRoomType | null;
   filters: {
     sort: string;
     views: string[];
@@ -97,7 +97,7 @@ const roomTypesSlice = createSlice({
     builder.addCase(getAllRoomType.pending, setLoading);
     builder.addCase(
       getAllRoomType.fulfilled,
-      (state, action: PayloadAction<IRoomTypes[]>) => {
+      (state, action: PayloadAction<IRoomType[]>) => {
         state.loading = false;
         state.roomTypes = action.payload;
       }
@@ -107,7 +107,7 @@ const roomTypesSlice = createSlice({
     builder.addCase(getRoomType.pending, setLoading);
     builder.addCase(
       getRoomType.fulfilled,
-      (state, action: PayloadAction<IRoomTypes>) => {
+      (state, action: PayloadAction<IRoomType>) => {
         state.loading = false;
         state.roomType = action.payload;
       }

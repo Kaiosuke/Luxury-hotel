@@ -1,6 +1,6 @@
-import { IOptionsState } from "../slices/optionsSlice";
+import { IOptionState } from "../slices/optionsSlice";
 import { RootState } from "../store";
 
-const optionsSelector = (state: RootState): IOptionsState => state.optionsSlice;
+const optionsSelector = (state: RootState): IOptionState => state.optionsSlice;
 
 export { optionsSelector };

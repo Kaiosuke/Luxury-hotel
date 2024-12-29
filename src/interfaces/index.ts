@@ -1,4 +1,13 @@
-interface IRoomTypes {
+interface IUser {
+  id?: string;
+  username: string;
+  email: string;
+  role?: ERole;
+  password: string;
+  confirm?: string;
+}
+
+interface IRoomType {
   types: any;
   id: string;
   thumbnail: string;
@@ -20,7 +29,8 @@ interface IRoomTypes {
   shortDes: string;
   detailDes: string;
 }
-interface IRooms {
+
+interface IRoom {
   id: string;
   roomTypeId: string;
   roomNumber: string;
@@ -29,7 +39,17 @@ interface IRooms {
   bookedDates: { from: string; to: string }[];
 }
 
-interface IOptions {
+interface ICart {
+  id: string;
+  userId: string;
+  roomTypeId: string;
+  roomId: string;
+  day: string;
+  price: number;
+  bookedDates: { from: string; to: string }[];
+}
+
+interface IOption {
   id: string;
   typeName: string;
   price: number;
@@ -43,16 +63,6 @@ enum ERole {
   user = "user",
 }
 
-interface IUser {
-  id?: string;
-  username: string;
-  email: string;
-  role?: ERole;
-  password: string;
-  confirm?: string;
-  accessToken?: string;
-}
-
 interface IForm {
   id?: string | null;
   open: boolean;
@@ -61,4 +71,4 @@ interface IForm {
 }
 
 export { ERole };
-export type { IRooms, IRoomTypes, IUser, IForm, IOptions };
+export type { IRoom, IRoomType, IUser, IForm, IOption, ICart };

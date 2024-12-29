@@ -7,7 +7,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
 
 const ReviewCheckout = () => {
-  const { rooms } = data;
+  // const { rooms } = data;
 
   return (
     <div className="border border-secondary rounded-lg p-4 text-third">
@@ -18,7 +18,7 @@ const ReviewCheckout = () => {
         <div>+34971319991</div>
         <div>info@aguasdeibiza.com</div>
       </div>
-      {rooms.map((room) => (
+      {/* {rooms.map((room) => (
         <div
           key={room.id}
           className="border border-secondary rounded-lg p-4 text-third mt-10"
@@ -73,7 +73,7 @@ const ReviewCheckout = () => {
             </div>
           </div>
         </div>
-      ))}
+      ))} */}
       <div className="mt-10">
         <span className="text-size-xl font-semibold">Policies:</span>
         <div className="bg-secondary text-primary mt-2">

@@ -1,9 +1,9 @@
 import MotionWrapper from "@/app/_components/MotionWrapper";
-import { IRoomTypes } from "@/interfaces";
+import { IRoomType } from "@/interfaces";
 import React from "react";
 
 interface IRoomTitlePc {
-  room: IRoomTypes;
+  room: IRoomType;
   selectID: string;
   setSelectID: (value: string) => void;
 }

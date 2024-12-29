@@ -6,7 +6,7 @@ import React from "react";
 const CartList = ({ room }: { room: IRoom }) => {
   return (
     <div className="border border-secondary rounded-lg p-4 text-third">
-      <div className="flex md:flex-row flex-col gap-4 items-start">
+      {/* <div className="flex md:flex-row flex-col gap-4 items-start">
         <div className="flex-[1_0_auto] lg:max-w-[30%] sm:w-[320px] w-[100%]">
           <AspectRatio ratio={16 / 9} className="bg-muted">
             <Image
@@ -55,7 +55,7 @@ const CartList = ({ room }: { room: IRoom }) => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

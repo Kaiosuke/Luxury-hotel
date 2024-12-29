@@ -1,9 +1,9 @@
-import { IRooms, IRoomTypes } from "@/interfaces";
+import { IRoom } from "@/interfaces";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import instanceLocal from "./instances";
 
-const getAllRoom = createAsyncThunk<IRooms[], void, { rejectValue: string }>(
+const getAllRoom = createAsyncThunk<IRoom[], void, { rejectValue: string }>(
   "rooms/getAllRoom",
   async (_, { rejectWithValue }) => {
     try {
@@ -18,7 +18,7 @@ const getAllRoom = createAsyncThunk<IRooms[], void, { rejectValue: string }>(
   }
 );
 
-const getRoom = createAsyncThunk<IRooms, string, { rejectValue: string }>(
+const getRoom = createAsyncThunk<IRoom, string, { rejectValue: string }>(
   "rooms/getRoom",
   async (id, { rejectWithValue }) => {
     try {

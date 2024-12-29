@@ -7,11 +7,11 @@ import data from "@/app/data.json";
 import Rooms from "./Rooms";
 import { useSelector } from "react-redux";
 import { roomTypesSelector } from "@/redux/selectors/roomTypesSelector";
-import { IRoomTypes } from "@/interfaces";
 import { useAppDispatch } from "@/redux/store";
 import { useEffect } from "react";
 import { getAllRoomType } from "@/app/api/roomTypesRequest";
 import LoadingPage from "@/app/_components/LoadingPage";
+import { IRoomType } from "@/interfaces";
 
 const page = () => {
   const { roomTypes, loading, error } = useSelector(roomTypesSelector);
@@ -24,7 +24,7 @@ const page = () => {
     })();
   }, []);
 
-  const handleRenderImage = (dataList: IRoomTypes[]) => {
+  const handleRenderImage = (dataList: IRoomType[]) => {
     return dataList.map((data) => data.thumbnail);
   };
 

@@ -31,7 +31,7 @@ const roomTypesRemainingSelector = createSelector(
           : true;
 
         const matchesFeatures = filter.features.length
-          ? room.detailFeatures.some((feature) =>
+          ? room.detailFeatures.some((feature: string) =>
               filter.features.includes(feature)
             )
           : true;

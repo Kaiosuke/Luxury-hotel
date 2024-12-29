@@ -1,6 +1,6 @@
-import { IRoomsState } from "../slices/roomsSlice";
+import { IRoomState } from "../slices/roomsSlice";
 import { RootState } from "../store";
 
-const roomSelector = (state: RootState): IRoomsState => state.roomsSlice;
+const roomSelector = (state: RootState): IRoomState => state.roomsSlice;
 
 export { roomSelector };

@@ -28,6 +28,7 @@ const Register = () => {
   const dispatch = useAppDispatch();
 
   const handleGetData = async (data: IUser) => {
+    console.log(data);
     // const res = await dispatch(registerUser(data));
   };
   return (

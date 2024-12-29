@@ -1,27 +1,27 @@
 import { getAllRoom, getRoom } from "@/app/api/roomsRequest";
-import { IRooms } from "@/interfaces";
+import { IRoom } from "@/interfaces";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-export interface IRoomsState {
-  rooms: IRooms[] | null;
-  room: IRooms | null;
+export interface IRoomState {
+  rooms: IRoom[] | null;
+  room: IRoom | null;
   loading: boolean;
   error: null | string | undefined;
 }
 
-const initialState: IRoomsState = {
+const initialState: IRoomState = {
   rooms: null,
   room: null,
   loading: false,
   error: null,
 };
 
-const setLoading = (state: IRoomsState) => {
+const setLoading = (state: IRoomState) => {
   state.loading = true;
 };
 
 const setError = (
-  state: IRoomsState,
+  state: IRoomState,
   action: PayloadAction<string | undefined>
 ) => {
   state.loading = false;
@@ -36,7 +36,7 @@ const roomsSlice = createSlice({
     builder.addCase(getAllRoom.pending, setLoading);
     builder.addCase(
       getAllRoom.fulfilled,
-      (state, action: PayloadAction<IRooms[]>) => {
+      (state, action: PayloadAction<IRoom[]>) => {
         state.loading = false;
         state.rooms = action.payload;
       }
@@ -45,7 +45,7 @@ const roomsSlice = createSlice({
     builder.addCase(getRoom.pending, setLoading);
     builder.addCase(
       getRoom.fulfilled,
-      (state, action: PayloadAction<IRooms>) => {
+      (state, action: PayloadAction<IRoom>) => {
         state.loading = false;
         state.room = action.payload;
       }

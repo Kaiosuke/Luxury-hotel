@@ -1,27 +1,27 @@
 import { getAllOption, getOption } from "@/app/api/optionsRequest";
-import { IOptions } from "@/interfaces";
+import { IOption } from "@/interfaces";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-export interface IOptionsState {
-  options: IOptions[] | null;
-  option: IOptions | null;
+export interface IOptionState {
+  options: IOption[] | null;
+  option: IOption | null;
   loading: boolean;
   error: null | string | undefined;
 }
 
-const initialState: IOptionsState = {
+const initialState: IOptionState = {
   options: null,
   option: null,
   loading: false,
   error: null,
 };
 
-const setLoading = (state: IOptionsState) => {
+const setLoading = (state: IOptionState) => {
   state.loading = true;
 };
 
 const setError = (
-  state: IOptionsState,
+  state: IOptionState,
   action: PayloadAction<string | undefined>
 ) => {
   state.loading = false;
@@ -36,7 +36,7 @@ const optionsSlice = createSlice({
     builder.addCase(getAllOption.pending, setLoading);
     builder.addCase(
       getAllOption.fulfilled,
-      (state, action: PayloadAction<IOptions[]>) => {
+      (state, action: PayloadAction<IOption[]>) => {
         state.loading = false;
         state.options = action.payload;
       }
@@ -46,7 +46,7 @@ const optionsSlice = createSlice({
     builder.addCase(getOption.pending, setLoading);
     builder.addCase(
       getOption.fulfilled,
-      (state, action: PayloadAction<IOptions>) => {
+      (state, action: PayloadAction<IOption>) => {
         state.loading = false;
         state.option = action.payload;
       }

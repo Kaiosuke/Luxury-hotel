@@ -6,7 +6,7 @@ import ReviewCheckout from "./ReviewCheckout";
 import Extension from "@/app/_components/Extension";
 
 const page = () => {
-  const { rooms } = data;
+  // const { rooms } = data;
   return (
     <>
       <HeroImage
@@ -16,7 +16,7 @@ const page = () => {
         linkContext="A Five Star Grand Luxe Hotel to get inspired"
         isBook={true}
       />
-      <div className="pd-medium" />
+      {/* <div className="pd-medium" />
       <section className="padding-main">
         <div className="flex lg:flex-row flex-col gap-4">
           <div className="flex-[1_0_auto] lg:max-w-[70%] p-4 max-w-[100%]">
@@ -54,7 +54,7 @@ const page = () => {
           </div>
         </div>
       </section>
-      <div className="pd-medium" />
+      <div className="pd-medium" /> */}
     </>
   );
 };
