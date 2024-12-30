@@ -61,7 +61,6 @@ const Login = () => {
         variant: "success",
         title: "success",
         description: `Login success`,
-        action: <ToastAction altText="Try again">Try again</ToastAction>,
       });
     }
   };

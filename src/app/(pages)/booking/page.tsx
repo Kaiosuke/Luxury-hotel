@@ -36,7 +36,6 @@ const page = () => {
         isBook={true}
       />
       <div className="pd-medium" />
-
       <Booking />
       <div className="pd-medium" />
     </>

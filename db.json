@@ -1035,28 +1035,21 @@
       "id": "1",
       "title": "Early Booking - Best Rate",
       "price": 200,
-      "extensions": [
-        "Deposit Required"
-      ],
+      "extensions": ["Deposit Required"],
       "typeDescription": "Room only. Rate includes spa access and WiFi. Touristic Tax not included. Full prepayment is required at time of booking and it is not refundable in case of cancellation or modification."
     },
     {
       "id": "2",
       "title": "Early Booking with Breakfast - Best Rate",
       "price": 220,
-      "extensions": [
-        "Deposit Required",
-        "Breakfast Included"
-      ],
+      "extensions": ["Deposit Required", "Breakfast Included"],
       "typeDescription": "Rate includes breakfast, spa access and WiFi. Touristic Tax not included. Full prepayment is required at time of booking and it is not refundable in case of cancellation or modification."
     },
     {
       "id": "3",
       "title": "Early Booking",
       "price": 260,
-      "extensions": [
-        "Deposit Required"
-      ],
+      "extensions": ["Deposit Required"],
       "typeDescription": "Rate is room only and includes spa access and WiFi. Touristic Tax not included. The credit card used to make the reservation will be requested upon arrival."
     }
   ],
@@ -1065,140 +1058,11 @@
     {
       "userId": "1",
       "roomTypeId": "3",
-      "optionId": "1",
-      "price": 418,
-      "totalPrice": 1254,
-      "day": 3,
-      "bookedDates": {
-        "from": "2024-12-31T17:00:00.000Z",
-        "to": "2025-01-03T17:00:00.000Z"
-      },
-      "id": "dX9RYVU"
-    },
-    {
-      "userId": "1",
-      "roomTypeId": "3",
-      "optionId": "1",
-      "price": 418,
-      "totalPrice": 1254,
-      "day": 3,
-      "bookedDates": {
-        "from": "2024-12-31T17:00:00.000Z",
-        "to": "2025-01-03T17:00:00.000Z"
-      },
-      "id": "J-zQJgI"
-    },
-    {
-      "userId": "1",
-      "roomTypeId": "3",
-      "optionId": "1",
-      "price": 418,
-      "totalPrice": 836,
-      "day": 2,
-      "bookedDates": {
-        "from": "2024-12-30T17:00:00.000Z",
-        "to": "2025-01-01T17:00:00.000Z"
-      },
-      "id": "uj18is_"
-    },
-    {
-      "userId": "1",
-      "roomTypeId": "3",
-      "optionId": "1",
-      "price": 418,
-      "totalPrice": 836,
-      "day": 2,
-      "bookedDates": {
-        "from": "2024-12-31T17:00:00.000Z",
-        "to": "2025-01-02T17:00:00.000Z"
-      },
-      "id": "OzLB6p_"
-    },
-    {
-      "userId": "1",
-      "roomTypeId": "3",
-      "optionId": "1",
-      "price": 418,
-      "totalPrice": 836,
-      "day": 2,
-      "bookedDates": {
-        "from": "2024-12-31T17:00:00.000Z",
-        "to": "2025-01-02T17:00:00.000Z"
-      },
-      "id": "t_S-j0J"
-    },
-    {
-      "userId": "1",
-      "roomTypeId": "3",
-      "optionId": "1",
-      "price": 418,
-      "totalPrice": 836,
-      "day": 2,
-      "bookedDates": {
-        "from": "2024-12-31T17:00:00.000Z",
-        "to": "2025-01-02T17:00:00.000Z"
-      },
-      "id": "sz5uCb2"
-    },
-    {
-      "userId": "1",
-      "roomTypeId": "3",
-      "optionId": "1",
-      "price": 418,
-      "totalPrice": 418,
-      "day": 1,
-      "bookedDates": {
-        "from": "2024-12-31T17:00:00.000Z",
-        "to": "2025-01-01T17:00:00.000Z"
-      },
-      "id": "EyBTHnM"
-    },
-    {
-      "userId": "1",
-      "roomTypeId": "3",
-      "optionId": "1",
-      "price": 418,
-      "totalPrice": 418,
-      "day": 1,
-      "bookedDates": {
-        "from": "2024-12-31T17:00:00.000Z",
-        "to": "2025-01-01T17:00:00.000Z"
-      },
-      "id": "i6V_yJC"
-    },
-    {
-      "userId": "1",
-      "roomTypeId": "3",
-      "optionId": "2",
-      "price": 440,
-      "totalPrice": 440,
-      "day": 1,
-      "bookedDates": {
-        "from": "2024-12-31T17:00:00.000Z",
-        "to": "2025-01-01T17:00:00.000Z"
-      },
-      "id": "yzLYUfF"
-    },
-    {
-      "userId": "1",
-      "roomTypeId": "3",
-      "optionId": "1",
-      "price": 418,
-      "totalPrice": 418,
-      "day": 1,
-      "bookedDates": {
-        "from": "2025-01-01T17:00:00.000Z",
-        "to": "2025-01-02T17:00:00.000Z"
-      },
-      "id": "O1oY3nf"
-    },
-    {
-      "userId": "1",
-      "roomTypeId": "3",
       "optionId": "3",
       "price": 484,
       "totalPrice": 484,
       "day": 1,
+      "status": "pending",
       "bookedDates": {
         "from": "2025-01-01T17:00:00.000Z",
         "to": "2025-01-02T17:00:00.000Z"
@@ -1212,11 +1076,40 @@
       "price": 462,
       "totalPrice": 462,
       "day": 1,
+      "status": "pending",
       "bookedDates": {
         "from": "2025-01-01T17:00:00.000Z",
         "to": "2025-01-02T17:00:00.000Z"
       },
       "id": "n8scywy"
+    },
+    {
+      "userId": "1",
+      "roomTypeId": "1",
+      "optionId": "2",
+      "price": 352,
+      "totalPrice": 1056,
+      "day": 3,
+      "status": "pending",
+      "bookedDates": {
+        "from": "2024-12-30T17:00:00.000Z",
+        "to": "2025-01-02T17:00:00.000Z"
+      },
+      "id": "L0MOGj-"
+    },
+    {
+      "userId": "1",
+      "roomTypeId": "1",
+      "optionId": "1",
+      "price": 330,
+      "totalPrice": 1320,
+      "day": 4,
+      "status": "pending",
+      "bookedDates": {
+        "from": "2024-12-30T17:00:00.000Z",
+        "to": "2025-01-03T17:00:00.000Z"
+      },
+      "id": "pHEtlVS"
     }
   ]
 }

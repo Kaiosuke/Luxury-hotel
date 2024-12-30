@@ -1,3 +1,8 @@
+enum ERole {
+  ceo = "ceo",
+  admin = "admin",
+  user = "user",
+}
 interface IUser {
   id: string;
   username: string;
@@ -39,13 +44,20 @@ interface IRoom {
   bookedDates: { from: Date; to: Date }[];
 }
 
+enum ECart {
+  pending = "pending",
+  booked = "booked",
+  confirm = "confirm",
+}
+
 interface ICart {
   id: string;
   userId: string;
   roomTypeId: string;
   optionId: string;
   roomId?: string;
-  day: string;
+  day: number;
+  status: ECart;
   price: number;
   totalPrice: number;
   bookedDates: { from: Date; to: Date };
@@ -57,12 +69,6 @@ interface IOption {
   price: number;
   extensions: string[];
   typeDescription: string;
-}
-
-enum ERole {
-  ceo = "ceo",
-  admin = "admin",
-  user = "user",
 }
 
 interface IForm {

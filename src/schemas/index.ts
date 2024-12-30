@@ -31,4 +31,13 @@ const RegisterSchema = z
     path: ["confirm"],
   });
 
-export { SubscribeSchema, LoginSchema, RegisterSchema };
+const CheckOutSchema = z.object({
+  username: z.string().min(2, "Username must be at least 2 characters."),
+  phoneNumber: z.number().min(8, "Phone number minimum 8 characters"),
+  country: z.string().min(1, "Please select country"),
+  address: z.string().min(4, "Please fill in address"),
+  city: z.string().min(1, "Please fill city"),
+  reservation: z.string().optional(),
+});
+
+export { SubscribeSchema, LoginSchema, RegisterSchema, CheckOutSchema };

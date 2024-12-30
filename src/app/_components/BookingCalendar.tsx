@@ -83,7 +83,11 @@ const BookingCalendar = ({
           : "text-primary xl:px-28 md:px-10 px-6 absolute bottom-0 w-full lg:block border-t border-white hidden"
       }`}
     >
-      <div className="flex justify-between xl:flex-row flex-col">
+      <div
+        className={`flex justify-between ${
+          isShow ? "xl:flex-row flex-col" : "flex-row"
+        } `}
+      >
         <div className="h-20 flex gap-4">
           <Popover>
             <PopoverTrigger asChild>
@@ -162,9 +166,9 @@ const BookingCalendar = ({
         <div className="h-20 text-left">
           <Button
             variant="outline"
-            className={`sm:h-full h-[60%] mt-4 xl:mt-0  ${
+            className={`sm:h-full h-[60%] ${
               isShow
-                ? `border-secondary ${color} hover:${color}`
+                ? `border-secondary ${color} mt-4 xl:mt-0 hover:${color}`
                 : "text-primary border-none"
             }`}
             onClick={handleGetData}

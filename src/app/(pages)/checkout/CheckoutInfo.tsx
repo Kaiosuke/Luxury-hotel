@@ -1,4 +1,3 @@
-import React from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -18,8 +17,23 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
+import { CheckOutSchema } from "@/schemas";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 
 const CheckoutInfo = () => {
+  const { register, handleSubmit } = useForm({
+    resolver: zodResolver(CheckOutSchema),
+    defaultValues: {
+      username: "",
+      phoneNumber: "",
+      country: "",
+      address: "",
+      city: "",
+      reservation: "",
+    },
+  });
+
   return (
     <div className="border border-secondary rounded-lg p-4 text-third">
       <form>

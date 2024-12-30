@@ -2,27 +2,32 @@
 
 import DeleteRoom from "@/app/_components/booking/DeleteRoom";
 import HeroImage from "@/app/_components/HeroImage";
-import { getAllCart } from "@/app/api/cartsRequest";
+import PriceDetail from "@/app/_components/PriceDetail";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { authSelector } from "@/redux/selectors/authSelector";
 import { cartsSelector } from "@/redux/selectors/cartsSelector";
-import { useAppDispatch } from "@/redux/store";
+import { formatMoney, sumMoney } from "@/utils/helpers";
 import { ToastAction } from "@radix-ui/react-toast";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import CartList from "./CartList";
+import { useRouter } from "next/navigation";
 
 const page = () => {
   const [showDelete, setShowDelete] = useState(false);
+
   const { currentUser } = useSelector(authSelector);
-  const { carts } = useSelector(cartsSelector);
   const { toast } = useToast();
-  const dispatch = useAppDispatch();
+
+  const router = useRouter();
 
   if (!currentUser) {
-    return toast({
+    useEffect(() => {
+      return router.push("/");
+    }, []);
+    toast({
       variant: "destructive",
       title: "Uh oh! Something went wrong.",
       description: "Please login to book a room",
@@ -34,9 +39,7 @@ const page = () => {
     });
   }
 
-  useEffect(() => {
-    dispatch(getAllCart(currentUser.id));
-  }, []);
+  const { carts } = useSelector(cartsSelector);
 
   return (
     <>
@@ -66,11 +69,11 @@ const page = () => {
           <div className="lg:max-w-[30%] max-w-[100%] p-4 border border-secondary rounded-lg h-fit">
             <h2 className="text-size-3xl">Price Details</h2>
             <div className="h-[680px] overflow-auto">
-              {/* <div className="flex flex-col gap-4 mt-4">
+              <div className="flex flex-col gap-4 mt-4">
                 {carts.map((cart, index) => (
                   <PriceDetail key={cart.id} cart={cart} index={index + 1} />
                 ))}
-              </div> */}
+              </div>
             </div>
             <div className="mt-4 w-full">
               <div className="mt-4 flex justify-between">
@@ -78,10 +81,12 @@ const page = () => {
                   <div className="text-size-2xl font-medium">Total</div>
                   <div>Including taxes and fees</div>
                 </div>
-                <span className="text-size-xl font-bold ">$26,101.69</span>
+                <span className="text-size-xl font-bold ">
+                  {formatMoney(sumMoney(carts))}
+                </span>
               </div>
               <Button variant={"secondary"} className="w-full">
-                Add more Room
+                <Link href="/booking">Add more Room</Link>
               </Button>
               <Button variant={"third"} className="w-full mt-2">
                 <Link href="/checkout"> Checkout</Link>

@@ -23,6 +23,9 @@ import { FiShoppingCart } from "react-icons/fi";
 import { MdOutlineDashboard } from "react-icons/md";
 import { useSelector } from "react-redux";
 import { authSelector } from "@/redux/selectors/authSelector";
+import { useEffect } from "react";
+import { getAllCart } from "@/app/api/cartsRequest";
+import { cartsSelector } from "@/redux/selectors/cartsSelector";
 
 const HeaderTop = ({
   isScrolled,
@@ -36,6 +39,11 @@ const HeaderTop = ({
   const dispatch = useAppDispatch();
 
   const { currentUser } = useSelector(authSelector);
+  const { carts } = useSelector(cartsSelector);
+
+  useEffect(() => {
+    currentUser && dispatch(getAllCart(currentUser.id));
+  }, []);
 
   const handleSigOut = () => {
     signOut();
@@ -118,7 +126,7 @@ const HeaderTop = ({
                         <DropdownMenuShortcut className="relative">
                           <FiShoppingCart className="text-lg" />
                           <span className="w-5 h-5 flex items-center justify-center absolute -top-3 -right-3 bg-primary text-secondary rounded-full">
-                            12
+                            {carts.length}
                           </span>
                         </DropdownMenuShortcut>
                       </DropdownMenuItem>

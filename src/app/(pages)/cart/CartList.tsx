@@ -65,12 +65,12 @@ const CartList = ({ cart, showDelete, setShowDelete }: ICartList) => {
                         <div>{option.title}</div>
                         <span>{formatMoney(option.price)} average / night</span>
                         <span>
-                          {convertDate(cart.bookedDates.from)}-
+                          {convertDate(cart.bookedDates.from)} -{" "}
                           {convertDate(cart.bookedDates.to)}
                         </span>
                       </div>
                     )}
-                    <div className="gap-2 mt-6 lg:flex hidden">
+                    <div className="gap-2 mt-4 lg:flex hidden">
                       <span
                         className="underline cursor-pointer hover:text-secondary animation-fast underline-offset-2"
                         onClick={handleDeleCart}

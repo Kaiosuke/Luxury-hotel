@@ -1,3 +1,5 @@
+import { ICart } from "@/interfaces";
+
 const formatMoney = (money: number): string => {
   return money.toLocaleString("en-US", {
     style: "currency",
@@ -10,4 +12,10 @@ const convertDate = (time: Date): string => {
   return date.toDateString();
 };
 
-export { formatMoney, convertDate };
+const sumMoney = (data: ICart[]) => {
+  return data.reduce((prev, cur) => {
+    return prev + cur.totalPrice;
+  }, 0);
+};
+
+export { formatMoney, convertDate, sumMoney };
