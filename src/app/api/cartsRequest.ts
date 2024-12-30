@@ -1,13 +1,13 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import instanceLocal from "./instances";
-import { ICarts } from "@/interfaces";
+import { ICart } from "@/interfaces";
 
-const getAllCart = createAsyncThunk<ICarts[], void, { rejectValue: string }>(
+const getAllCart = createAsyncThunk<ICart[], string, { rejectValue: string }>(
   "carts/getAllCart",
-  async (_, { rejectWithValue }) => {
+  async (userId, { rejectWithValue }) => {
     try {
-      const res = await instanceLocal.get("carts");
+      const res = await instanceLocal.get(`carts?userId=${userId}`);
       return res.data;
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -18,7 +18,7 @@ const getAllCart = createAsyncThunk<ICarts[], void, { rejectValue: string }>(
   }
 );
 
-const getCart = createAsyncThunk<ICarts, string, { rejectValue: string }>(
+const getCart = createAsyncThunk<ICart, string, { rejectValue: string }>(
   "carts/getCart",
   async (id, { rejectWithValue }) => {
     try {
@@ -33,11 +33,11 @@ const getCart = createAsyncThunk<ICarts, string, { rejectValue: string }>(
   }
 );
 
-const addCart = createAsyncThunk<ICarts, ICarts, { rejectValue: string }>(
+const addCart = createAsyncThunk<any, any, { rejectValue: string }>(
   "carts/addCart",
-  async (user, { rejectWithValue }) => {
+  async (cart, { rejectWithValue }) => {
     try {
-      const res = await instanceLocal.post(`carts`, user);
+      const res = await instanceLocal.post(`carts`, cart);
       return res.data;
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -49,8 +49,8 @@ const addCart = createAsyncThunk<ICarts, ICarts, { rejectValue: string }>(
 );
 
 const updateCart = createAsyncThunk<
-  ICarts,
-  { id: string; user: ICarts },
+  ICart,
+  { id: string; user: ICart },
   { rejectValue: string }
 >("carts/updateCart", async ({ id, user }, { rejectWithValue }) => {
   try {
@@ -68,8 +68,8 @@ const deleteCart = createAsyncThunk<string, string, { rejectValue: string }>(
   "carts/deleteCart",
   async (id, { rejectWithValue }) => {
     try {
-      const res = await instanceLocal.delete(`carts/${id}`);
-      return res.data.id;
+      await instanceLocal.delete(`carts/${id}`);
+      return id;
     } catch (error) {
       if (axios.isAxiosError(error)) {
         return rejectWithValue(error.response?.data?.message);

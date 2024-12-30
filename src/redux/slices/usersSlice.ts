@@ -2,31 +2,33 @@ import {
   addUser,
   deleteUser,
   getAllUser,
+  getUserByEmail,
   updateUser,
 } from "@/app/api/usersRequest";
 import { IUser } from "@/interfaces";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-export interface IUsersState {
+export interface IUserState {
   users: IUser[] | [];
   loading: boolean;
   error: null | string | undefined;
 }
 
-const initialState: IUsersState = {
+const initialState: IUserState = {
   users: [],
   loading: false,
   error: null,
 };
 
-const setLoading = (state: IUsersState) => {
+const setLoading = (state: IUserState) => {
   state.loading = true;
 };
 
 const setError = (
-  state: IUsersState,
+  state: IUserState,
   action: PayloadAction<string | undefined>
 ) => {
+  console.log(action.payload);
   state.loading = false;
   state.error = action.payload;
 };
@@ -45,6 +47,12 @@ const usersSlice = createSlice({
       }
     );
     builder.addCase(getAllUser.rejected, setError);
+
+    builder.addCase(getUserByEmail.pending, setLoading);
+    builder.addCase(getUserByEmail.fulfilled, (state) => {
+      state.loading = false;
+    });
+    builder.addCase(getUserByEmail.rejected, setError);
 
     builder.addCase(addUser.pending, setLoading);
     builder.addCase(

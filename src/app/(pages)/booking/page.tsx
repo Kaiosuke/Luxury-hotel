@@ -1,18 +1,19 @@
 "use client";
-import { useEffect } from "react";
 import HeroImage from "@/app/_components/HeroImage";
-import Booking from "./Booking";
+import LoadingPage from "@/app/_components/LoadingPage";
 import { getAllOption } from "@/app/api/optionsRequest";
 import { getAllRoom } from "@/app/api/roomsRequest";
 import { getAllRoomType } from "@/app/api/roomTypesRequest";
-import { useAppDispatch } from "@/redux/store";
-import { useSelector } from "react-redux";
 import { roomSelector } from "@/redux/selectors/roomsSelector";
-import LoadingPage from "@/app/_components/LoadingPage";
+import { useAppDispatch } from "@/redux/store";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import Booking from "./Booking";
 
 const page = () => {
   const { loading, error } = useSelector(roomSelector);
   const dispatch = useAppDispatch();
+
   useEffect(() => {
     dispatch(getAllRoom());
     dispatch(getAllRoomType());

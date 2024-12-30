@@ -5,6 +5,7 @@ import React, { ReactNode, useState } from "react";
 
 const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [showBowNow, setShowBookNow] = useState(false);
+  const [cartId, setCartId] = useState<string | null>(null);
   const [checkIn, setCheckIn] = useState<Date>();
   const [checkOut, setCheckOut] = useState<Date>();
 
@@ -13,6 +14,8 @@ const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
       value={{
         showBowNow,
         setShowBookNow,
+        cartId,
+        setCartId,
         checkIn,
         setCheckIn,
         checkOut,

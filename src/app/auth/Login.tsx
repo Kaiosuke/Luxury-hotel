@@ -9,12 +9,14 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { TabsContent } from "@/components/ui/tabs";
+import { useToast } from "@/hooks/use-toast";
 import { IUser } from "@/interfaces";
 import { loginUser } from "@/redux/slices/authSlice";
 import { useAppDispatch } from "@/redux/store";
 import { LoginSchema } from "@/schemas";
 import { authenticate } from "@/utils/nextAuth/action";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { ToastAction } from "@radix-ui/react-toast";
 import { getSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -34,6 +36,7 @@ const Login = () => {
   });
 
   const router = useRouter();
+  const { toast } = useToast();
 
   const dispatch = useAppDispatch();
 
@@ -44,11 +47,22 @@ const Login = () => {
       password
     );
     if (res.error) {
-      alert(res.error);
+      return toast({
+        variant: "destructive",
+        title: "Oh No!",
+        description: `${res.error}`,
+        action: <ToastAction altText="Try again">Try again</ToastAction>,
+      });
     } else {
       const session = await getSession();
       dispatch(loginUser(session?.user));
       router.push("/");
+      return toast({
+        variant: "success",
+        title: "success",
+        description: `Login success`,
+        action: <ToastAction altText="Try again">Try again</ToastAction>,
+      });
     }
   };
 

@@ -1,5 +1,5 @@
 interface IUser {
-  id?: string;
+  id: string;
   username: string;
   email: string;
   role?: ERole;
@@ -36,22 +36,24 @@ interface IRoom {
   roomNumber: string;
   floor: number;
   status: string;
-  bookedDates: { from: string; to: string }[];
+  bookedDates: { from: Date; to: Date }[];
 }
 
 interface ICart {
   id: string;
   userId: string;
   roomTypeId: string;
-  roomId: string;
+  optionId: string;
+  roomId?: string;
   day: string;
   price: number;
-  bookedDates: { from: string; to: string }[];
+  totalPrice: number;
+  bookedDates: { from: Date; to: Date };
 }
 
 interface IOption {
   id: string;
-  typeName: string;
+  title: string;
   price: number;
   extensions: string[];
   typeDescription: string;

@@ -1,4 +1,5 @@
 import MotionWrapper from "@/app/_components/MotionWrapper";
+import { addCart } from "@/app/api/cartsRequest";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Button } from "@/components/ui/button";
 import { ToastAction } from "@/components/ui/toast";
@@ -10,6 +11,7 @@ import { authSelector } from "@/redux/selectors/authSelector";
 import { optionsSelector } from "@/redux/selectors/optionsSelector";
 import { roomSelector } from "@/redux/selectors/roomsSelector";
 import { roomTypesRemainingSelector } from "@/redux/selectors/roomTypesSelector";
+import { useAppDispatch } from "@/redux/store";
 import { formatMoney } from "@/utils/helpers";
 import Image from "next/image";
 import Link from "next/link";
@@ -37,14 +39,14 @@ const BookingList = () => {
       <BsFillSafe2Fill />
     );
   };
-
   const { checkIn, checkOut } = useAppContext();
   const { currentUser } = useSelector(authSelector);
   const { rooms } = useSelector(roomSelector);
-  const dataList = useSelector(roomTypesRemainingSelector);
+  const roomList = useSelector(roomTypesRemainingSelector);
   const { options } = useSelector(optionsSelector);
 
   const { toast } = useToast();
+  const dispatch = useAppDispatch();
 
   const availableRooms: IRoom[] =
     rooms && checkIn && checkOut
@@ -73,7 +75,17 @@ const BookingList = () => {
     return price + price * 0.1;
   };
 
-  const bookRoom = () => {
+  const bookRoom = ({
+    roomTypeId,
+    optionId,
+    price,
+    totalPrice,
+  }: {
+    roomTypeId: string;
+    optionId: string;
+    price: number;
+    totalPrice: number;
+  }) => {
     if (!currentUser)
       return toast({
         variant: "destructive",
@@ -85,9 +97,26 @@ const BookingList = () => {
           </ToastAction>
         ),
       });
+
     if (checkIn && checkOut) {
+      const newBooking = {
+        userId: currentUser.id,
+        roomTypeId,
+        optionId,
+        price,
+        totalPrice,
+        day: calculateDays(),
+        bookedDates: { from: checkIn, to: checkOut },
+      };
+      dispatch(addCart(newBooking));
+      return toast({
+        variant: "success",
+        title: "success",
+        description: "Booking has been added to cart",
+        action: <ToastAction altText="Try again">Try again</ToastAction>,
+      });
     } else {
-      toast({
+      return toast({
         variant: "destructive",
         title: "Uh oh! Something went wrong.",
         description: "Please select check-in and check-out date",
@@ -97,9 +126,9 @@ const BookingList = () => {
   };
   return (
     <>
-      {dataList.length ? (
+      {roomList.length ? (
         <>
-          {dataList.map((room) => (
+          {roomList.map((room) => (
             <MotionWrapper
               className="border border-third rounded-lg p-4 mt-6"
               key={room.id}
@@ -156,7 +185,7 @@ const BookingList = () => {
                             <div className="flex xl:gap-6 md:gap-4 md:flex-row flex-col">
                               <div className="flex-[1_0_auto] md:max-w-[60%] 2xl:max-w-[70%]  max-w-[100%]">
                                 <h3 className="text-size-lg underline hover:decoration-secondary">
-                                  <Link href="#!">{option.typeName}</Link>
+                                  <Link href="#!">{option.title}</Link>
                                 </h3>
                                 <div className="flex flex-col gap-1 mt-2">
                                   {option.extensions.map((ex, index) => (
@@ -196,7 +225,19 @@ const BookingList = () => {
                                   <Button
                                     variant={"secondary"}
                                     className="mt-4 w-fit"
-                                    onClick={() => bookRoom()}
+                                    onClick={() =>
+                                      bookRoom({
+                                        roomTypeId: room.id,
+                                        optionId: option.id,
+                                        price: handleOriginalPrice(
+                                          option.price + room.price
+                                        ),
+                                        totalPrice:
+                                          handleOriginalPrice(
+                                            option.price + room.price
+                                          ) * calculateDays(),
+                                      })
+                                    }
                                   >
                                     Book now
                                   </Button>

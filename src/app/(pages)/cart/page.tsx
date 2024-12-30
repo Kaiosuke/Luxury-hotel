@@ -1,13 +1,43 @@
+"use client";
+
+import DeleteRoom from "@/app/_components/booking/DeleteRoom";
 import HeroImage from "@/app/_components/HeroImage";
-import React from "react";
-import data from "@/app/data.json";
-import CartList from "./CartList";
+import { getAllCart } from "@/app/api/cartsRequest";
 import { Button } from "@/components/ui/button";
-import PriceDetail from "@/app/_components/PriceDetail";
+import { useToast } from "@/hooks/use-toast";
+import { authSelector } from "@/redux/selectors/authSelector";
+import { cartsSelector } from "@/redux/selectors/cartsSelector";
+import { useAppDispatch } from "@/redux/store";
+import { ToastAction } from "@radix-ui/react-toast";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import CartList from "./CartList";
 
 const page = () => {
-  // const { rooms } = data;
+  const [showDelete, setShowDelete] = useState(false);
+  const { currentUser } = useSelector(authSelector);
+  const { carts } = useSelector(cartsSelector);
+  const { toast } = useToast();
+  const dispatch = useAppDispatch();
+
+  if (!currentUser) {
+    return toast({
+      variant: "destructive",
+      title: "Uh oh! Something went wrong.",
+      description: "Please login to book a room",
+      action: (
+        <ToastAction altText="Try again">
+          <Link href="/auth">Login Now</Link>
+        </ToastAction>
+      ),
+    });
+  }
+
+  useEffect(() => {
+    dispatch(getAllCart(currentUser.id));
+  }, []);
+
   return (
     <>
       <HeroImage
@@ -17,25 +47,30 @@ const page = () => {
         linkContext="A Five Star Grand Luxe Hotel to get inspired"
         isBook={true}
       />
-      {/* <div className="pd-medium" />
+      <div className="pd-medium" />
       <section className="padding-main">
         <div className="flex lg:flex-row flex-col gap-4">
           <div className="flex-[1_0_auto] lg:max-w-[70%] p-4 max-w-[100%]">
-            <h2 className="text-size-3xl">YourCart: 2 Items</h2>
+            <h2 className="text-size-3xl">YourCart: {carts.length} Items</h2>
             <div className="flex flex-col gap-4 mt-4">
-              {rooms.map((room) => (
-                <CartList key={room.id} room={room} />
+              {carts.map((cart) => (
+                <CartList
+                  key={cart.id}
+                  cart={cart}
+                  showDelete={showDelete}
+                  setShowDelete={setShowDelete}
+                />
               ))}
             </div>
           </div>
           <div className="lg:max-w-[30%] max-w-[100%] p-4 border border-secondary rounded-lg h-fit">
             <h2 className="text-size-3xl">Price Details</h2>
             <div className="h-[680px] overflow-auto">
-              <div className="flex flex-col gap-4 mt-4">
-                {rooms.map((room, index) => (
-                  <PriceDetail key={room.id} room={room} index={index + 1} />
+              {/* <div className="flex flex-col gap-4 mt-4">
+                {carts.map((cart, index) => (
+                  <PriceDetail key={cart.id} cart={cart} index={index + 1} />
                 ))}
-              </div>
+              </div> */}
             </div>
             <div className="mt-4 w-full">
               <div className="mt-4 flex justify-between">
@@ -55,7 +90,10 @@ const page = () => {
           </div>
         </div>
       </section>
-      <div className="pd-medium" /> */}
+      <div className="pd-medium" />
+      {showDelete && (
+        <DeleteRoom showDelete={showDelete} setShowDelete={setShowDelete} />
+      )}
     </>
   );
 };

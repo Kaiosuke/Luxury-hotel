@@ -3,19 +3,22 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { TabsContent } from "@/components/ui/tabs";
+import { useToast } from "@/hooks/use-toast";
 import { ERole, IUser } from "@/interfaces";
 import { useAppDispatch } from "@/redux/store";
 import { RegisterSchema } from "@/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { ToastAction } from "@radix-ui/react-toast";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
+import { addUser, getUserByEmail } from "../api/usersRequest";
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [confirm, setConfirm] = useState(false);
 
-  const { handleSubmit, formState, register } = useForm<IUser>({
+  const { handleSubmit, formState, register, reset } = useForm<IUser>({
     resolver: zodResolver(RegisterSchema),
     defaultValues: {
       username: "",
@@ -27,9 +30,32 @@ const Register = () => {
   });
   const dispatch = useAppDispatch();
 
+  const { toast } = useToast();
+
   const handleGetData = async (data: IUser) => {
-    console.log(data);
-    // const res = await dispatch(registerUser(data));
+    const existUser = await dispatch(getUserByEmail(data.email)).unwrap();
+    if (existUser) {
+      return toast({
+        variant: "destructive",
+        title: "Oh No!",
+        description: "Email already exists",
+        action: <ToastAction altText="Try again">Try again</ToastAction>,
+      });
+    }
+    const newUser = {
+      username: data.username,
+      email: data.email,
+      password: data.password,
+      role: data.role,
+    };
+
+    await dispatch(addUser(newUser)).unwrap();
+    reset();
+    return toast({
+      variant: "success",
+      title: "success",
+      description: "Account registration successful",
+    });
   };
   return (
     <TabsContent

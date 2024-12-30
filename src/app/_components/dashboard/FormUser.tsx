@@ -54,10 +54,10 @@ function FormUser({ open, onClose, id }: IForm) {
               </SelectTrigger>
               <SelectContent
                 className="bg-sidebar-four text-sidebar-primary "
-                defaultValue="User"
+                defaultValue="user"
               >
-                <SelectItem value="ADMIN">ADMIN</SelectItem>
-                <SelectItem value="User">User</SelectItem>
+                <SelectItem value="admin">ADMIN</SelectItem>
+                <SelectItem value="user">User</SelectItem>
               </SelectContent>
             </Select>
           </div>

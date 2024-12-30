@@ -5,4 +5,9 @@ const formatMoney = (money: number): string => {
   });
 };
 
-export { formatMoney };
+const convertDate = (time: Date): string => {
+  const date = new Date(time);
+  return date.toDateString();
+};
+
+export { formatMoney, convertDate };
