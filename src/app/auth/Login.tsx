@@ -42,10 +42,9 @@ const Login = () => {
 
   const handleLogin = async (data: IUser) => {
     const { email, password } = data;
-    const res: { error: string; code: number } = await authenticate(
-      email,
-      password
-    );
+
+    const res: { error: string; code: number } =
+      email && password && (await authenticate(email, password));
     if (res.error) {
       return toast({
         variant: "destructive",

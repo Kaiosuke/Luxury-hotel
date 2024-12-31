@@ -21,7 +21,7 @@ const Home = () => {
   const { currentUser } = useSelector(authSelector);
   const dispatch = useAppDispatch();
   useEffect(() => {
-    currentUser && dispatch(getAllCart(currentUser.id));
+    currentUser && currentUser.id && dispatch(getAllCart(currentUser.id));
   }, []);
 
   return (

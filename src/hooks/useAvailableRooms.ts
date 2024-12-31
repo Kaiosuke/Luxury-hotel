@@ -7,8 +7,8 @@ interface IAvailableRooms {
 }
 
 interface BookedDate {
-  from: string;
-  to: string;
+  from: Date;
+  to: Date;
 }
 
 const useAvailableRooms = ({
