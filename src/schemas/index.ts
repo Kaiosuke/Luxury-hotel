@@ -31,13 +31,18 @@ const RegisterSchema = z
     path: ["confirm"],
   });
 
+const phoneRegex = new RegExp(/^(\+?[1-9][0-9]{1,14}|[0-9]{10,15})$/);
+
 const CheckOutSchema = z.object({
   username: z.string().min(2, "Username must be at least 2 characters."),
-  phoneNumber: z.number().min(8, "Phone number minimum 8 characters"),
-  country: z.string().min(1, "Please select country"),
+  phoneNumber: z
+    .string()
+    .regex(phoneRegex, "Invalid phone number!")
+    .min(6, "Phone number must be at least 6 characters.")
+    .max(11, "Phone number cannot be larger than 11 characters"),
+  country: z.string().optional(),
   address: z.string().min(4, "Please fill in address"),
   city: z.string().min(1, "Please fill city"),
-  reservation: z.string().optional(),
 });
 
 export { SubscribeSchema, LoginSchema, RegisterSchema, CheckOutSchema };

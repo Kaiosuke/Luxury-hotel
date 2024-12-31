@@ -1,7 +1,8 @@
 import { getOption } from "@/app/api/optionsRequest";
+import { getRoom } from "@/app/api/roomsRequest";
 import { getRoomType } from "@/app/api/roomTypesRequest";
 import useAppContext from "@/hooks/useAppContext";
-import { ICart, IOption, IRoomType } from "@/interfaces";
+import { ICart, IOption, IRoom, IRoomType } from "@/interfaces";
 import { useAppDispatch } from "@/redux/store";
 import { convertDate, formatMoney } from "@/utils/helpers";
 import { AspectRatio } from "@radix-ui/react-aspect-ratio";
@@ -16,6 +17,7 @@ interface ICartList {
 
 const CartList = ({ cart, showDelete, setShowDelete }: ICartList) => {
   const [roomType, setRoomType] = useState<IRoomType | null>(null);
+  const [room, setRoom] = useState<IRoom | null>(null);
   const [option, setOption] = useState<IOption | null>(null);
 
   const { setCartId } = useAppContext();
@@ -28,6 +30,10 @@ const CartList = ({ cart, showDelete, setShowDelete }: ICartList) => {
         getRoomType(cart.roomTypeId)
       ).unwrap();
       setRoomType(findRoomType);
+
+      const findRoom = await disPatch(getRoom(cart.roomId)).unwrap();
+      setRoom(findRoom);
+
       const findOption = await disPatch(getOption(cart.optionId)).unwrap();
       setOption(findOption);
     })();
@@ -63,6 +69,7 @@ const CartList = ({ cart, showDelete, setShowDelete }: ICartList) => {
                     {option && (
                       <div className="flex flex-col mt-1">
                         <div>{option.title}</div>
+                        <div>Room: {room?.roomNumber}</div>
                         <span>{formatMoney(option.price)} average / night</span>
                         <span>
                           {convertDate(cart.bookedDates.from)} -{" "}

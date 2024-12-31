@@ -50,11 +50,11 @@ const addCart = createAsyncThunk<any, any, { rejectValue: string }>(
 
 const updateCart = createAsyncThunk<
   ICart,
-  { id: string; user: ICart },
+  { id: string; cart: ICart },
   { rejectValue: string }
->("carts/updateCart", async ({ id, user }, { rejectWithValue }) => {
+>("carts/updateCart", async ({ id, cart }, { rejectWithValue }) => {
   try {
-    const res = await instanceLocal.patch(`carts/${id}`, user);
+    const res = await instanceLocal.patch(`carts/${id}`, cart);
     return res.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {

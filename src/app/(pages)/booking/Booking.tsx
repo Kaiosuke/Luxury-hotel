@@ -4,9 +4,13 @@ import MotionWrapper from "@/app/_components/MotionWrapper";
 import BookingFilter from "./BookingFilter";
 import BookingList from "./BookingList";
 import useAppContext from "@/hooks/useAppContext";
+import { roomTypesRemainingSelector } from "@/redux/selectors/roomTypesSelector";
+import { useSelector } from "react-redux";
+import RoomList from "../rooms/RoomList";
 
 const Booking = () => {
   const { checkIn, checkOut } = useAppContext();
+  const roomTypeList = useSelector(roomTypesRemainingSelector);
 
   return (
     <section className="text-third padding-main min-h-screen">
@@ -18,7 +22,19 @@ const Booking = () => {
           </MotionWrapper>
           <BookingFilter />
           {checkIn && checkOut ? (
-            <BookingList />
+            <>
+              {roomTypeList.length ? (
+                roomTypeList.map((roomType) => (
+                  <BookingList key={roomType.id} roomType={roomType} />
+                ))
+              ) : (
+                <div className="mt-10">
+                  <span className="text-size-3xl">
+                    No available rooms found
+                  </span>
+                </div>
+              )}
+            </>
           ) : (
             <MotionWrapper>
               <div className="mt-10">

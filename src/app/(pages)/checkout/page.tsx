@@ -1,35 +1,32 @@
 "use client";
 
 import HeroImage from "@/app/_components/HeroImage";
+import LoadingPage from "@/app/_components/LoadingPage";
 import PriceDetail from "@/app/_components/PriceDetail";
 import { Button } from "@/components/ui/button";
-import { cartsSelector } from "@/redux/selectors/cartsSelector";
+import { authSelector } from "@/redux/selectors/authSelector";
+import { cartUserRemainingSelector } from "@/redux/selectors/cartsSelector";
+import { formatMoney, sumMoney } from "@/utils/helpers";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import CheckoutInfo from "./CheckoutInfo";
-import { formatMoney, sumMoney } from "@/utils/helpers";
-import { authSelector } from "@/redux/selectors/authSelector";
-import { useToast } from "@/hooks/use-toast";
-import { ToastAction } from "@radix-ui/react-toast";
-import Link from "next/link";
 
 const page = () => {
-  const { carts } = useSelector(cartsSelector);
+  const { carts } = useSelector(cartUserRemainingSelector);
 
   const { currentUser } = useSelector(authSelector);
 
-  const { toast } = useToast();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!currentUser) {
+      router.push("/");
+    }
+  }, []);
 
   if (!currentUser) {
-    return toast({
-      variant: "destructive",
-      title: "Uh oh! Something went wrong.",
-      description: "Please login to book a room",
-      action: (
-        <ToastAction altText="Try again">
-          <Link href="/auth">Login Now</Link>
-        </ToastAction>
-      ),
-    });
+    return <LoadingPage />;
   }
 
   return (

@@ -14,11 +14,19 @@ import { useForm } from "react-hook-form";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { addUser, getUserByEmail } from "../api/usersRequest";
 
+interface IFormUser {
+  username: string;
+  email: string;
+  role: ERole;
+  password: string;
+  confirm: string;
+}
+
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [confirm, setConfirm] = useState(false);
 
-  const { handleSubmit, formState, register, reset } = useForm<IUser>({
+  const { handleSubmit, formState, register, reset } = useForm<IFormUser>({
     resolver: zodResolver(RegisterSchema),
     defaultValues: {
       username: "",
@@ -32,7 +40,7 @@ const Register = () => {
 
   const { toast } = useToast();
 
-  const handleGetData = async (data: IUser) => {
+  const handleGetData = async (data: IFormUser) => {
     const existUser = await dispatch(getUserByEmail(data.email)).unwrap();
     if (existUser) {
       return toast({
@@ -43,10 +51,11 @@ const Register = () => {
       });
     }
     const newUser = {
-      username: data.username,
-      email: data.email,
-      password: data.password,
-      role: data.role,
+      ...data,
+      phoneNumber: "",
+      country: "",
+      address: "",
+      city: "",
     };
 
     await dispatch(addUser(newUser)).unwrap();

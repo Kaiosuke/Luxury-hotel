@@ -4,12 +4,15 @@ enum ERole {
   user = "user",
 }
 interface IUser {
-  id: string;
+  id?: string;
   username: string;
-  email: string;
+  email?: string;
   role?: ERole;
-  password: string;
-  confirm?: string;
+  password?: string;
+  phoneNumber: string;
+  country: string;
+  address: string;
+  city: string;
 }
 
 interface IRoomType {
@@ -44,7 +47,7 @@ interface IRoom {
   bookedDates: { from: Date; to: Date }[];
 }
 
-enum ECart {
+export enum ECart {
   pending = "pending",
   booked = "booked",
   confirm = "confirm",
@@ -55,11 +58,12 @@ interface ICart {
   userId: string;
   roomTypeId: string;
   optionId: string;
-  roomId?: string;
+  roomId: string;
   day: number;
   status: ECart;
   price: number;
   totalPrice: number;
+  reservation?: string;
   bookedDates: { from: Date; to: Date };
 }
 

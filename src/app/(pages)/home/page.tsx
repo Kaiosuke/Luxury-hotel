@@ -11,8 +11,19 @@ import Offers from "./Offers";
 import Restaurants from "./Restaurants";
 import Rooms from "./Rooms";
 import SpaWellnessSection from "./SpaWellness";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { authSelector } from "@/redux/selectors/authSelector";
+import { useAppDispatch } from "@/redux/store";
+import { getAllCart } from "@/app/api/cartsRequest";
 
 const Home = () => {
+  const { currentUser } = useSelector(authSelector);
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    currentUser && dispatch(getAllCart(currentUser.id));
+  }, []);
+
   return (
     <>
       <HeroImage

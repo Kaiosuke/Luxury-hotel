@@ -1,10 +1,11 @@
 "use client";
-import { ICart, IOption, IRoomType } from "@/interfaces";
+import { ICart, IOption, IRoom, IRoomType } from "@/interfaces";
 import { useAppDispatch } from "@/redux/store";
 import { convertDate, formatMoney } from "@/utils/helpers";
 import { useEffect, useState } from "react";
 import { getOption } from "../api/optionsRequest";
 import { getRoomType } from "../api/roomTypesRequest";
+import { getRoom } from "../api/roomsRequest";
 
 interface IPriceDetail {
   cart: ICart;
@@ -13,6 +14,7 @@ interface IPriceDetail {
 
 const PriceDetail = ({ cart, index }: IPriceDetail) => {
   const [roomType, setRoomType] = useState<IRoomType | null>(null);
+  const [room, setRoom] = useState<IRoom | null>(null);
   const [option, setOption] = useState<IOption | null>(null);
 
   const disPatch = useAppDispatch();
@@ -23,6 +25,10 @@ const PriceDetail = ({ cart, index }: IPriceDetail) => {
         getRoomType(cart.roomTypeId)
       ).unwrap();
       setRoomType(findRoomType);
+
+      const findRoom = await disPatch(getRoom(cart.roomId)).unwrap();
+      setRoom(findRoom);
+
       const findOption = await disPatch(getOption(cart.optionId)).unwrap();
       setOption(findOption);
     })();
@@ -40,6 +46,7 @@ const PriceDetail = ({ cart, index }: IPriceDetail) => {
           {formatMoney(cart.totalPrice)}
         </span>
       </div>
+      <div>Room: {room?.roomNumber}</div>
       <span className="underline underline-offset-2 animation-fast cursor-pointer hover:text-secondary text-base">
         {cart.day} {cart.day === 1 ? "Night stay" : "Nights stay"}
       </span>

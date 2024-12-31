@@ -13,6 +13,8 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { authSelector } from "@/redux/selectors/authSelector";
+import { cartUserRemainingSelector } from "@/redux/selectors/cartsSelector";
 import { loginUser } from "@/redux/slices/authSlice";
 import { useAppDispatch } from "@/redux/store";
 import { signOut } from "next-auth/react";
@@ -22,10 +24,6 @@ import { FaGithub } from "react-icons/fa6";
 import { FiShoppingCart } from "react-icons/fi";
 import { MdOutlineDashboard } from "react-icons/md";
 import { useSelector } from "react-redux";
-import { authSelector } from "@/redux/selectors/authSelector";
-import { useEffect } from "react";
-import { getAllCart } from "@/app/api/cartsRequest";
-import { cartsSelector } from "@/redux/selectors/cartsSelector";
 
 const HeaderTop = ({
   isScrolled,
@@ -39,11 +37,7 @@ const HeaderTop = ({
   const dispatch = useAppDispatch();
 
   const { currentUser } = useSelector(authSelector);
-  const { carts } = useSelector(cartsSelector);
-
-  useEffect(() => {
-    currentUser && dispatch(getAllCart(currentUser.id));
-  }, []);
+  const { carts } = useSelector(cartUserRemainingSelector);
 
   const handleSigOut = () => {
     signOut();

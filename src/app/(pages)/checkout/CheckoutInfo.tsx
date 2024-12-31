@@ -10,6 +10,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
+import { updateUser } from "@/app/api/usersRequest";
 import {
   Accordion,
   AccordionContent,
@@ -17,12 +18,24 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
+import { ECart, ICart, IUser } from "@/interfaces";
+import { authSelector } from "@/redux/selectors/authSelector";
+import { updateCurrentUser } from "@/redux/slices/authSlice";
+import { useAppDispatch } from "@/redux/store";
 import { CheckOutSchema } from "@/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useSelector } from "react-redux";
+import { cartUserRemainingSelector } from "@/redux/selectors/cartsSelector";
+import { updateCart } from "@/app/api/cartsRequest";
+import LoadingPage from "@/app/_components/LoadingPage";
 
 const CheckoutInfo = () => {
-  const { register, handleSubmit } = useForm({
+  const [country, setCountry] = useState("VN");
+  const { currentUser } = useSelector(authSelector);
+  const { register, formState, handleSubmit, reset } = useForm({
     resolver: zodResolver(CheckOutSchema),
     defaultValues: {
       username: "",
@@ -30,13 +43,62 @@ const CheckoutInfo = () => {
       country: "",
       address: "",
       city: "",
-      reservation: "",
     },
   });
+  const { carts } = useSelector(cartUserRemainingSelector);
+
+  const dispatch = useAppDispatch();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!carts.length) {
+      router.push("/");
+    }
+  }, []);
+
+  if (!carts.length) {
+    return <LoadingPage />;
+  }
+
+  useEffect(() => {
+    if (currentUser) {
+      reset({
+        username: currentUser.username,
+        phoneNumber: currentUser.phoneNumber,
+        country: currentUser.country,
+        address: currentUser.address,
+        city: currentUser.city,
+      });
+    }
+  }, []);
+
+  const handleGetData = (data: IUser) => {
+    const newData = {
+      ...currentUser,
+      ...data,
+      country,
+    };
+
+    if (currentUser && currentUser.id) {
+      dispatch(updateUser({ id: currentUser.id, user: newData }));
+      dispatch(updateCurrentUser(newData));
+
+      carts.forEach((cart) => {
+        const newCart: ICart = {
+          ...cart,
+          status: ECart.booked,
+        };
+
+        currentUser.id && dispatch(updateCart({ id: cart.id, cart: newCart }));
+      });
+    }
+
+    router.push("/booking/success");
+  };
 
   return (
     <div className="border border-secondary rounded-lg p-4 text-third">
-      <form>
+      <form onSubmit={handleSubmit((data) => handleGetData(data))}>
         <div>
           <div className="grid md:grid-cols-2 grid-cols-1 gap-4">
             <div>
@@ -45,58 +107,89 @@ const CheckoutInfo = () => {
               <Input
                 id="email"
                 type="email"
-                name="email"
                 disabled
-                placeholder="Trongle"
+                placeholder={currentUser?.email}
               />
               <span className="text-red-500"></span>
             </div>
             <div>
-              <Label htmlFor="email">UserName</Label>
+              <Label htmlFor="username">UserName</Label>
               <span className="text-red-500 ml-10"></span>
-              <Input id="email" type="email" name="email" placeholder=". . ." />
-              <span className="text-red-500"></span>
+              <Input
+                id="username"
+                type="text"
+                placeholder=". . ."
+                {...register("username")}
+              />
+              <span className="text-red-500">
+                {formState.errors.username?.message}
+              </span>
             </div>
             <div className="w-full">
-              <Label htmlFor="email">Phone Number</Label>
+              <Label htmlFor="phoneNumber">Phone Number</Label>
               <span className="text-red-500 ml-10"></span>
-              <Input id="email" type="email" name="email" placeholder=". . ." />
-              <span className="text-red-500"></span>
+              <Input
+                id="phoneNumber"
+                type="text"
+                placeholder=". . ."
+                {...register("phoneNumber")}
+              />
+              <span className="text-red-500">
+                {formState.errors.phoneNumber?.message}
+              </span>
             </div>
           </div>
           <div className="w-full mt-10">
-            <Select>
+            <Select
+              value={country}
+              onValueChange={(value) => setCountry(value)}
+              {...register("country")}
+            >
               <SelectTrigger className="w-[50%]">
                 <SelectValue placeholder="Country" className="text-sm" />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
                   <SelectLabel>Fruits</SelectLabel>
-                  <SelectItem value="apple" className="focus:bg-secondary">
+                  <SelectItem value="VN" className="focus:bg-secondary">
                     VietNam
                   </SelectItem>
-                  <SelectItem value="banana" className="focus:bg-secondary">
+                  <SelectItem value="USA" className="focus:bg-secondary">
                     American
                   </SelectItem>
-                  <SelectItem value="blueberry" className="focus:bg-secondary">
+                  <SelectItem value="UK" className="focus:bg-secondary">
                     England
                   </SelectItem>
                 </SelectGroup>
               </SelectContent>
             </Select>
           </div>
-          <div className="grid md:grid-cols-2 grid-cols-1 gap-4">
+          <div className="grid md:grid-cols-2 grid-cols-1 gap-4 mt-2">
             <div>
-              <Label htmlFor="email">Address</Label>
+              <Label htmlFor="address">Address</Label>
               <span className="text-red-500 ml-10"></span>
-              <Input id="email" type="email" name="email" placeholder=". . ." />
-              <span className="text-red-500"></span>
+              <Input
+                id="address"
+                type="text"
+                placeholder=". . ."
+                {...register("address")}
+              />
+              <span className="text-red-500">
+                {formState.errors.address?.message}
+              </span>
             </div>
             <div>
-              <Label htmlFor="email">City</Label>
+              <Label htmlFor="city">City</Label>
               <span className="text-red-500 ml-10"></span>
-              <Input id="email" type="email" name="email" placeholder=". . ." />
-              <span className="text-red-500"></span>
+              <Input
+                id="city"
+                type="text"
+                placeholder=". . ."
+                {...register("city")}
+              />
+              <span className="text-red-500">
+                {formState.errors.city?.message}
+              </span>
             </div>
           </div>
           <div className="mt-10">
@@ -106,12 +199,7 @@ const CheckoutInfo = () => {
                   Reservation Details
                 </AccordionTrigger>
                 <AccordionContent>
-                  <Input
-                    id="email"
-                    type="email"
-                    name="email"
-                    placeholder=". . ."
-                  />
+                  <Input id="reservation" type="text" placeholder=". . ." />
                 </AccordionContent>
               </AccordionItem>
             </Accordion>

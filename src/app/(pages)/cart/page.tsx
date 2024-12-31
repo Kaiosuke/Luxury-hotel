@@ -2,44 +2,36 @@
 
 import DeleteRoom from "@/app/_components/booking/DeleteRoom";
 import HeroImage from "@/app/_components/HeroImage";
+import LoadingPage from "@/app/_components/LoadingPage";
 import PriceDetail from "@/app/_components/PriceDetail";
 import { Button } from "@/components/ui/button";
-import { useToast } from "@/hooks/use-toast";
 import { authSelector } from "@/redux/selectors/authSelector";
-import { cartsSelector } from "@/redux/selectors/cartsSelector";
 import { formatMoney, sumMoney } from "@/utils/helpers";
-import { ToastAction } from "@radix-ui/react-toast";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import CartList from "./CartList";
-import { useRouter } from "next/navigation";
+import { cartUserRemainingSelector } from "@/redux/selectors/cartsSelector";
 
 const page = () => {
   const [showDelete, setShowDelete] = useState(false);
 
   const { currentUser } = useSelector(authSelector);
-  const { toast } = useToast();
+
+  const { carts } = useSelector(cartUserRemainingSelector);
 
   const router = useRouter();
 
-  if (!currentUser) {
-    useEffect(() => {
-      return router.push("/");
-    }, []);
-    toast({
-      variant: "destructive",
-      title: "Uh oh! Something went wrong.",
-      description: "Please login to book a room",
-      action: (
-        <ToastAction altText="Try again">
-          <Link href="/auth">Login Now</Link>
-        </ToastAction>
-      ),
-    });
-  }
+  useEffect(() => {
+    if (!currentUser) {
+      router.push("/");
+    }
+  }, []);
 
-  const { carts } = useSelector(cartsSelector);
+  if (!currentUser) {
+    return <LoadingPage />;
+  }
 
   return (
     <>
@@ -55,6 +47,16 @@ const page = () => {
         <div className="flex lg:flex-row flex-col gap-4">
           <div className="flex-[1_0_auto] lg:max-w-[70%] p-4 max-w-[100%]">
             <h2 className="text-size-3xl">YourCart: {carts.length} Items</h2>
+            {!carts.length && (
+              <div className="mt-10">
+                <Link
+                  href="/booking"
+                  className="font-size-2xl font-medium underline"
+                >
+                  Booking Now
+                </Link>
+              </div>
+            )}
             <div className="flex flex-col gap-4 mt-4">
               {carts.map((cart) => (
                 <CartList
@@ -88,7 +90,11 @@ const page = () => {
               <Button variant={"secondary"} className="w-full">
                 <Link href="/booking">Add more Room</Link>
               </Button>
-              <Button variant={"third"} className="w-full mt-2">
+              <Button
+                variant={"third"}
+                className="w-full mt-2"
+                disabled={!carts.length}
+              >
                 <Link href="/checkout"> Checkout</Link>
               </Button>
             </div>
