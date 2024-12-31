@@ -1,12 +1,33 @@
+"use client";
 import Extension from "@/app/_components/Extension";
 import HeroImage from "@/app/_components/HeroImage";
 import PriceDetail from "@/app/_components/PriceDetail";
-import data from "@/app/data.json";
+
 import Success from "./Success";
 import Image from "next/image";
+import { useSelector } from "react-redux";
+import { cartsSelector } from "@/redux/selectors/cartsSelector";
+import { authSelector } from "@/redux/selectors/authSelector";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import LoadingPage from "@/app/_components/LoadingPage";
+import { formatMoney, sumMoney } from "@/utils/helpers";
 
 const page = () => {
-  // const { rooms } = data;
+  const { currentUser } = useSelector(authSelector);
+  const { cartsSuccess } = useSelector(cartsSelector);
+
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!currentUser || !cartsSuccess.length) {
+      router.push("/");
+    }
+  }, []);
+  console.log(cartsSuccess);
+  if (!currentUser) {
+    return <LoadingPage />;
+  }
   return (
     <>
       <HeroImage
@@ -16,7 +37,7 @@ const page = () => {
         linkContext="A Five Star Grand Luxe Hotel to get inspired"
         isBook={true}
       />
-      {/* <div className="pd-medium" />
+      <div className="pd-medium" />
       <section className="padding-main">
         <div className="flex lg:flex-row flex-col gap-4">
           <div className="flex-[1_0_auto] lg:max-w-[70%] p-4 max-w-[100%]">
@@ -47,9 +68,14 @@ const page = () => {
               <h2 className="text-size-3xl">Price Details</h2>
               <div className="h-[680px] overflow-auto">
                 <div className="flex flex-col gap-4 mt-4">
-                  {rooms.map((room, index) => (
-                    <PriceDetail key={room.id} room={room} index={index + 1} />
-                  ))}
+                  {cartsSuccess.length &&
+                    cartsSuccess.map((cart, index) => (
+                      <PriceDetail
+                        key={cart.id}
+                        cart={cart}
+                        index={index + 1}
+                      />
+                    ))}
                 </div>
               </div>
               <div className="mt-4 w-full">
@@ -58,7 +84,9 @@ const page = () => {
                     <div className="text-size-2xl font-medium">Total</div>
                     <div>Including taxes and fees</div>
                   </div>
-                  <span className="text-size-xl font-bold ">$26,101.69</span>
+                  <span className="text-size-xl font-bold ">
+                    {formatMoney(sumMoney(cartsSuccess))}
+                  </span>
                 </div>
               </div>
             </div>
@@ -68,7 +96,7 @@ const page = () => {
           </div>
         </div>
       </section>
-      <div className="pd-medium" /> */}
+      <div className="pd-medium" />
     </>
   );
 };

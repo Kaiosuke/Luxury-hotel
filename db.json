@@ -25,7 +25,7 @@
       "id": "2"
     },
     {
-      "username": "TrongLe3",
+      "username": "Trong Le3",
       "email": "trongleele3@gmail.com",
       "role": "user",
       "password": "lehuutrong",
@@ -1066,7 +1066,7 @@
         "from": "2024-12-31T17:00:00.000Z",
         "to": "2025-01-02T17:00:00.000Z"
       },
-      "id": 1
+      "id": "1"
     },
     {
       "userId": "1",
@@ -1081,74 +1081,44 @@
         "from": "2024-12-31T17:00:00.000Z",
         "to": "2025-01-02T17:00:00.000Z"
       },
-      "id": 2
+      "id": "2"
     },
     {
       "userId": "3",
-      "roomTypeId": "5",
+      "roomTypeId": "1",
       "optionId": "1",
-      "roomId": "602",
+      "roomId": "203",
       "status": "booked",
-      "price": 506,
-      "totalPrice": 1518,
-      "day": 3,
-      "bookedDates": {
-        "from": "2024-12-31T17:00:00.000Z",
-        "to": "2025-01-03T17:00:00.000Z"
-      },
-      "id": 3
-    },
-    {
-      "userId": "3",
-      "roomTypeId": "6",
-      "optionId": "1",
-      "roomId": "107",
-      "status": "booked",
-      "price": 550,
-      "totalPrice": 1100,
+      "price": 330,
+      "totalPrice": 660,
       "day": 2,
       "bookedDates": {
         "from": "2024-12-31T17:00:00.000Z",
         "to": "2025-01-02T17:00:00.000Z"
       },
-      "id": 4
+      "id": "V6sWKWN"
     },
     {
       "userId": "3",
-      "roomTypeId": "5",
+      "roomTypeId": "2",
       "optionId": "1",
-      "roomId": "609",
-      "status": "confirm",
-      "price": 506,
-      "totalPrice": 1518,
-      "day": 3,
-      "bookedDates": {
-        "from": "2024-12-31T17:00:00.000Z",
-        "to": "2025-01-03T17:00:00.000Z"
-      },
-      "id": 5
-    },
-    {
-      "userId": "3",
-      "roomTypeId": "5",
-      "optionId": "1",
-      "roomId": "602",
+      "roomId": "305",
       "status": "booked",
-      "price": 506,
-      "totalPrice": 1518,
-      "day": 3,
+      "price": 374,
+      "totalPrice": 748,
+      "day": 2,
       "bookedDates": {
         "from": "2024-12-31T17:00:00.000Z",
-        "to": "2025-01-03T17:00:00.000Z"
+        "to": "2025-01-02T17:00:00.000Z"
       },
-      "id": 6
+      "id": "K85Ux91"
     },
     {
       "userId": "3",
       "roomTypeId": "1",
       "optionId": "1",
       "roomId": "205",
-      "status": "pending",
+      "status": "booked",
       "price": 330,
       "totalPrice": 990,
       "day": 3,
@@ -1156,7 +1126,52 @@
         "from": "2024-12-31T17:00:00.000Z",
         "to": "2025-01-03T17:00:00.000Z"
       },
-      "id": 7
+      "id": "fwB_bvo"
+    },
+    {
+      "userId": "3",
+      "roomTypeId": "2",
+      "optionId": "1",
+      "roomId": "302",
+      "status": "booked",
+      "price": 374,
+      "totalPrice": 1122,
+      "day": 3,
+      "bookedDates": {
+        "from": "2024-12-31T17:00:00.000Z",
+        "to": "2025-01-03T17:00:00.000Z"
+      },
+      "id": "X8BO7r0"
+    },
+    {
+      "userId": "3",
+      "roomTypeId": "3",
+      "optionId": "1",
+      "roomId": "408",
+      "status": "booked",
+      "price": 418,
+      "totalPrice": 1254,
+      "day": 3,
+      "bookedDates": {
+        "from": "2024-12-31T17:00:00.000Z",
+        "to": "2025-01-03T17:00:00.000Z"
+      },
+      "id": "0zW-6v6"
+    },
+    {
+      "userId": "3",
+      "roomTypeId": "4",
+      "optionId": "1",
+      "roomId": "505",
+      "status": "booked",
+      "price": 462,
+      "totalPrice": 1386,
+      "day": 3,
+      "bookedDates": {
+        "from": "2024-12-31T17:00:00.000Z",
+        "to": "2025-01-03T17:00:00.000Z"
+      },
+      "id": "Sgs2HXz"
     }
   ]
 }

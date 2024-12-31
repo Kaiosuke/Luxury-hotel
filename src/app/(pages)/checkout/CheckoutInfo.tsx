@@ -31,6 +31,7 @@ import { useSelector } from "react-redux";
 import { cartUserRemainingSelector } from "@/redux/selectors/cartsSelector";
 import { updateCart } from "@/app/api/cartsRequest";
 import LoadingPage from "@/app/_components/LoadingPage";
+import { addCartSuccess } from "@/redux/slices/cartsSlice";
 
 const CheckoutInfo = () => {
   const [country, setCountry] = useState("VN");
@@ -72,27 +73,25 @@ const CheckoutInfo = () => {
     }
   }, []);
 
-  const handleGetData = (data: IUser) => {
+  const handleGetData = async (data: IUser) => {
+    if (!currentUser || !currentUser.id) return;
     const newData = {
       ...currentUser,
       ...data,
       country,
     };
 
-    if (currentUser && currentUser.id) {
-      dispatch(updateUser({ id: currentUser.id, user: newData }));
-      dispatch(updateCurrentUser(newData));
+    dispatch(updateUser({ id: currentUser.id, user: newData }));
+    dispatch(updateCurrentUser(newData));
 
-      carts.forEach((cart) => {
-        const newCart: ICart = {
-          ...cart,
-          status: ECart.booked,
-        };
-
-        currentUser.id && dispatch(updateCart({ id: cart.id, cart: newCart }));
-      });
-    }
-
+    dispatch(addCartSuccess(carts));
+    carts.map((cart) => {
+      const updatedCart: ICart = {
+        ...cart,
+        status: ECart.booked,
+      };
+      dispatch(updateCart({ id: cart.id, cart: updatedCart }));
+    });
     router.push("/booking/success");
   };
 

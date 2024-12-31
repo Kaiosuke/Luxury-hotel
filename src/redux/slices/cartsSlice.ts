@@ -9,12 +9,14 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface ICartState {
   carts: ICart[] | [];
+  cartsSuccess: ICart[] | [];
   loading: boolean;
   error: null | string | undefined;
 }
 
 const initialState: ICartState = {
   carts: [],
+  cartsSuccess: [],
   loading: false,
   error: null,
 };
@@ -34,7 +36,11 @@ const setError = (
 const cartsSlice = createSlice({
   name: "carts",
   initialState,
-  reducers: {},
+  reducers: {
+    addCartSuccess(state, action) {
+      state.cartsSuccess = action.payload;
+    },
+  },
   extraReducers(builder) {
     builder.addCase(getAllCart.pending, setLoading);
     builder.addCase(
@@ -81,3 +87,4 @@ const cartsSlice = createSlice({
 });
 
 export default cartsSlice.reducer;
+export const { addCartSuccess } = cartsSlice.actions;

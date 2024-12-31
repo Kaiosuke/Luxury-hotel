@@ -1,80 +1,47 @@
-import { AspectRatio } from "@/components/ui/aspect-ratio";
-import Image from "next/image";
-import React from "react";
-import data from "@/app/data.json";
-import { FaCcVisa } from "react-icons/fa";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
+import { authSelector } from "@/redux/selectors/authSelector";
+import { cartsSelector } from "@/redux/selectors/cartsSelector";
 import Link from "next/link";
+import { FaCcVisa } from "react-icons/fa";
+import { useSelector } from "react-redux";
+import CartSuccessList from "./CartSuccessList";
 
 const Success = () => {
-  // const { rooms } = data;
+  const { currentUser } = useSelector(authSelector);
+  const { cartsSuccess } = useSelector(cartsSelector);
 
   return (
     <div className="border border-secondary rounded-lg p-4 text-third">
       <h3 className="text-size-xl">Reservation Details</h3>
-      <div className="mt-4">
-        <div className="font-semibold">Aguas de Ibiza Grand Luxe Hotel</div>
-        <div>Salvador Camacho 14, Santa Eulalia del Rio Ibiza, 07840</div>
-        <div>+34971319991</div>
-        <div>info@aguasdeibiza.com</div>
-      </div>
-      {/* {rooms.map((room) => (
-        <div
-          key={room.id}
-          className="border border-secondary rounded-lg p-4 text-third mt-10"
-        >
-          <div className="flex md:flex-row flex-col gap-4 items-start">
-            <div className="flex-[1_0_auto] lg:max-w-[30%] sm:w-[320px] w-[100%]">
-              <AspectRatio ratio={16 / 9} className="bg-muted">
-                <Image
-                  src={room.thumbnail}
-                  alt={room.title}
-                  fill
-                  className="h-full w-full rounded-md object-cover"
-                />
-              </AspectRatio>
-            </div>
-            <div className="flex-[1_0_auto] md:max-w-[70%] max-w-[100%]">
-              <div className="flex lg:flex-row flex-col justify-between">
-                <div>
-                  <h3 className="text-size-lg font-medium">{room.title}</h3>
-                  {room.types
-                    ?.filter((type) => type.idType === "type1")
-                    .map((type) => (
-                      <div key={type.idType} className="flex flex-col mt-1">
-                        <div>{type.typeName}</div>
-                        <span>${type.price} average per night</span>
-                        <span>Thu, May 1 - Sun, May 25 </span>
-                        <span>1 Adult</span>
-                      </div>
-                    ))}
-                </div>
-                <div className="lg:mt-0 mt-4">
-                  <span className="text-size-lg font-bold">$6,101.69</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="line-1"></div>
-          <div>
-            <div>
-              <span className="font-semibold">Guest details</span>
+      <div className="grid grid-cols-2">
+        <div>
+          <div className="font-semibold">Aguas de Ibiza Grand Luxe Hotel</div>
+          <div>Salvador Camacho 14, Santa Eulalia del Rio Ibiza, 07840</div>
+          <div>+34971319991</div>
+          <div>info@aguasdeibiza.com</div>
+        </div>
+        <div>
+          <span className="font-semibold">Guest details</span>
 
-              <div>Trongle</div>
-              <div>trongleele@gmail.com</div>
-            </div>
-            <div className="mt-4">
-              <span className="font-semibold">Payment details</span>
-              <div className="flex gap-2 items-center">
-                <FaCcVisa className="text-size-xl" />{" "}
-                <span>Card ending 1234</span>
-              </div>
-              <div>trongleele@gmail.com</div>
-            </div>
+          <div>User Name: {currentUser?.username}</div>
+          <div>Email: {currentUser?.email}</div>
+          <div>Address: {currentUser?.address}</div>
+          <div>
+            City: {currentUser?.city} - {currentUser?.country}
           </div>
         </div>
-      ))} */}
+        <div className="mt-4">
+          <span className="font-semibold">Payment details</span>
+          <div className="flex gap-2 items-center">
+            <FaCcVisa className="text-size-xl" /> <span>Card ending 1234</span>
+          </div>
+          <div>{currentUser?.email}</div>
+        </div>
+      </div>
+      {cartsSuccess &&
+        cartsSuccess.map((cart) => (
+          <CartSuccessList key={cart.id} cart={cart} />
+        ))}
       <div className="mt-10">
         <span className="text-size-xl font-semibold">Policies:</span>
         <div className="bg-secondary text-primary mt-2">
