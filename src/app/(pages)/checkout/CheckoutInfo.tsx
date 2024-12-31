@@ -31,7 +31,7 @@ import { useSelector } from "react-redux";
 import { cartUserRemainingSelector } from "@/redux/selectors/cartsSelector";
 import { updateCart } from "@/app/api/cartsRequest";
 import LoadingPage from "@/app/_components/LoadingPage";
-import { addCartSuccess } from "@/redux/slices/cartsSlice";
+import { getRoom, updateRoom } from "@/app/api/roomsRequest";
 
 const CheckoutInfo = () => {
   const [country, setCountry] = useState("VN");
@@ -54,12 +54,9 @@ const CheckoutInfo = () => {
   useEffect(() => {
     if (!carts.length) {
       router.push("/");
+      return;
     }
-  }, []);
-
-  if (!carts.length) {
-    return <LoadingPage />;
-  }
+  }, [carts, router]);
 
   useEffect(() => {
     if (currentUser) {
@@ -73,27 +70,56 @@ const CheckoutInfo = () => {
     }
   }, []);
 
-  const handleGetData = async (data: IUser) => {
-    if (!currentUser || !currentUser.id) return;
+  const handleGetData = (data: IUser) => {
     const newData = {
       ...currentUser,
       ...data,
       country,
     };
 
-    dispatch(updateUser({ id: currentUser.id, user: newData }));
-    dispatch(updateCurrentUser(newData));
+    if (currentUser && currentUser.id) {
+      dispatch(updateUser({ id: currentUser.id, user: newData }));
+      dispatch(updateCurrentUser(newData));
 
-    dispatch(addCartSuccess(carts));
-    carts.map((cart) => {
-      const updatedCart: ICart = {
-        ...cart,
-        status: ECart.booked,
-      };
-      dispatch(updateCart({ id: cart.id, cart: updatedCart }));
-    });
+      carts.forEach((cart) => {
+        const newCart: ICart = {
+          ...cart,
+          status: ECart.booked,
+        };
+
+        currentUser.id && dispatch(updateCart({ id: cart.id, cart: newCart }));
+      });
+
+      carts.forEach((cart) => {
+        (async () => {
+          try {
+            const findRoom = await dispatch(getRoom(cart.roomId)).unwrap();
+            const updatedBookedDates = [
+              ...findRoom.bookedDates,
+              {
+                from: cart.bookedDates.from,
+                to: cart.bookedDates.to,
+              },
+            ];
+
+            await dispatch(
+              updateRoom({
+                id: cart.roomId,
+                room: { ...findRoom, bookedDates: updatedBookedDates },
+              })
+            );
+          } catch (error) {
+            console.error(`Failed to update room ${cart.roomId}:`, error);
+          }
+        })();
+      });
+    }
     router.push("/booking/success");
   };
+
+  if (!carts.length) {
+    return <LoadingPage />;
+  }
 
   return (
     <div className="border border-secondary rounded-lg p-4 text-third">

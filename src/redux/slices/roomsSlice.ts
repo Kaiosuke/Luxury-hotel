@@ -1,16 +1,22 @@
-import { getAllRoom, getRoom } from "@/app/api/roomsRequest";
+import {
+  addRoom,
+  deleteRoom,
+  getAllRoom,
+  getRoom,
+  updateRoom,
+} from "@/app/api/roomsRequest";
 import { IRoom } from "@/interfaces";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface IRoomState {
-  rooms: IRoom[] | null;
+  rooms: IRoom[] | [];
   room: IRoom | null;
   loading: boolean;
   error: null | string | undefined;
 }
 
 const initialState: IRoomState = {
-  rooms: null,
+  rooms: [],
   room: null,
   loading: false,
   error: null,
@@ -51,6 +57,38 @@ const roomsSlice = createSlice({
       }
     );
     builder.addCase(getRoom.rejected, setError);
+
+    builder.addCase(addRoom.pending, setLoading);
+    builder.addCase(
+      addRoom.fulfilled,
+      (state, action: PayloadAction<IRoom>) => {
+        state.loading = false;
+        state.rooms = [...state.rooms, action.payload];
+      }
+    );
+    builder.addCase(addRoom.rejected, setError);
+
+    builder.addCase(updateRoom.pending, setLoading);
+    builder.addCase(
+      updateRoom.fulfilled,
+      (state, action: PayloadAction<IRoom>) => {
+        state.loading = false;
+        state.rooms = state.rooms.map((room) =>
+          room.id === action.payload.id ? action.payload : room
+        );
+      }
+    );
+    builder.addCase(updateRoom.rejected, setError);
+
+    builder.addCase(deleteRoom.pending, setLoading);
+    builder.addCase(
+      deleteRoom.fulfilled,
+      (state, action: PayloadAction<string>) => {
+        state.loading = false;
+        state.rooms = state.rooms.filter((room) => room.id !== action.payload);
+      }
+    );
+    builder.addCase(deleteRoom.rejected, setError);
   },
 });
 

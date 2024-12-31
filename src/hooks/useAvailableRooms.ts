@@ -29,7 +29,6 @@ const useAvailableRooms = ({
       }
     });
   };
-
   return rooms.filter(
     (room) => room.status === "available" && isRoomAvailable(room.bookedDates)
   );

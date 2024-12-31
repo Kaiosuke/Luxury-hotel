@@ -90,13 +90,15 @@ const page = () => {
               <Button variant={"secondary"} className="w-full">
                 <Link href="/booking">Add more Room</Link>
               </Button>
-              <Button
-                variant={"third"}
-                className="w-full mt-2"
-                disabled={!carts.length}
-              >
-                <Link href="/checkout"> Checkout</Link>
-              </Button>
+              <Link href="/checkout">
+                <Button
+                  variant={"third"}
+                  className="w-full mt-2"
+                  disabled={!carts.length}
+                >
+                  Checkout
+                </Button>
+              </Link>
             </div>
           </div>
         </div>

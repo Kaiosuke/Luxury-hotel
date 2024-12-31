@@ -91,8 +91,8 @@ const deleteUser = createAsyncThunk<string, string, { rejectValue: string }>(
   "users/deleteUser",
   async (id, { rejectWithValue }) => {
     try {
-      const res = await instanceLocal.delete(`users/${id}`);
-      return res.data.id;
+      await instanceLocal.delete(`users/${id}`);
+      return id;
     } catch (error) {
       if (axios.isAxiosError(error)) {
         return rejectWithValue(error?.message);
