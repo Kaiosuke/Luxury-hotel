@@ -73,7 +73,7 @@ const UserSchema = z
 // Rooms
 
 const RoomTypesSchema = z.object({
-  thumbnail: z.string().min(1, "Cannot be left blank"),
+  thumbnail: z.any().optional(),
   title: z.string().min(2, "Title must be greater than 2 characters"),
   price: z.number().min(1, "Price greater than or equal to 1"),
   quantity: z.number().min(1, "Quantity greater than or equal to 1"),
@@ -88,7 +88,7 @@ const RoomTypesSchema = z.object({
   typeBed: z.string().min(2, "TypeBed must be greater than 2 characters"),
   sleeps: z.number().min(1, "Sleeps greater than or equal to 1"),
   // images: z.string().array().optional(),
-  map: z.string().min(1, "Cannot be left blanks"),
+  // map: z.string().min(1, "Cannot be left blanks"),
   shortDes: z.string().min(2, "ShortDes must be greater than 2 characters"),
   detailDes: z.string().min(2, "DetailDes must be greater than 2 characters"),
 });

@@ -1,4 +1,10 @@
-import { getAllRoomType, getRoomType } from "@/app/api/roomTypesRequest";
+import {
+  addRoomType,
+  deleteRoomType,
+  getAllRoomType,
+  getRoomType,
+  updateRoomType,
+} from "@/app/api/roomTypesRequest";
 import { IRoomType } from "@/interfaces";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
@@ -113,6 +119,39 @@ const roomTypesSlice = createSlice({
       }
     );
     builder.addCase(getRoomType.rejected, setError);
+    builder.addCase(addRoomType.pending, setLoading);
+    builder.addCase(
+      addRoomType.fulfilled,
+      (state, action: PayloadAction<IRoomType>) => {
+        state.loading = false;
+        state.roomTypes = [...state.roomTypes, action.payload];
+      }
+    );
+    builder.addCase(addRoomType.rejected, setError);
+
+    builder.addCase(updateRoomType.pending, setLoading);
+    builder.addCase(
+      updateRoomType.fulfilled,
+      (state, action: PayloadAction<IRoomType>) => {
+        state.loading = false;
+        state.roomTypes = state.roomTypes.map((roomType) =>
+          roomType.id === action.payload.id ? action.payload : roomType
+        );
+      }
+    );
+    builder.addCase(updateRoomType.rejected, setError);
+
+    builder.addCase(deleteRoomType.pending, setLoading);
+    builder.addCase(
+      deleteRoomType.fulfilled,
+      (state, action: PayloadAction<string>) => {
+        state.loading = false;
+        state.roomTypes = state.roomTypes.filter(
+          (roomType) => roomType.id !== action.payload
+        );
+      }
+    );
+    builder.addCase(deleteRoomType.rejected, setError);
   },
 });
 

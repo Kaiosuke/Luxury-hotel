@@ -1,4 +1,8 @@
-import { getRoomType } from "@/app/api/roomTypesRequest";
+import {
+  addRoomType,
+  getRoomType,
+  updateRoomType,
+} from "@/app/api/roomTypesRequest";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -28,6 +32,9 @@ import { useForm } from "react-hook-form";
 import { quickDesList, shortFeaturesList, featureList } from "@/app/data.json";
 import { Checkbox } from "@/components/ui/checkbox";
 import { DialogClose } from "@radix-ui/react-dialog";
+import { features } from "process";
+import { AspectRatio } from "@/components/ui/aspect-ratio";
+import Image from "next/image";
 
 function FormRoom({ open, onClose, id }: IForm) {
   const [category, setCategory] = useState("Normal");
@@ -35,6 +42,9 @@ function FormRoom({ open, onClose, id }: IForm) {
   const [quickDes, setQuickDes] = useState<string[]>([]);
   const [shortFeatures, setShortFeatures] = useState<string[]>([]);
   const [detailFeatures, setDetailFeatures] = useState<string[]>([]);
+
+  const [thumbnailUrl, setThumbnailUrl] = useState("");
+  const [thumbnailOption, setThumbnailOption] = useState("keep");
 
   const { register, formState, handleSubmit, reset } = useForm({
     resolver: zodResolver(RoomTypesSchema),
@@ -49,7 +59,7 @@ function FormRoom({ open, onClose, id }: IForm) {
       typeBed: "",
       sleeps: 0,
       // images: [""],
-      map: "",
+      // map: "",
       shortDes: "",
       detailDes: "",
     },
@@ -62,32 +72,36 @@ function FormRoom({ open, onClose, id }: IForm) {
     if (id) {
       (async () => {
         const roomType = await dispatch(getRoomType(id)).unwrap();
-        reset({
-          thumbnail: roomType.thumbnail,
-          title: roomType.title,
-          price: roomType.price,
-          quantity: roomType.quantity,
-          rate: roomType.rate,
-          description: roomType.description,
-          square: roomType.square,
-          typeBed: roomType.typeBed,
-          sleeps: roomType.sleeps,
-          // images: roomType.images,
-          map: roomType.map,
-          shortDes: roomType.shortDes,
-          detailDes: roomType.detailDes,
-        });
-        console.log(roomType.features);
-        setQuickDes(roomType.quickDes);
-        setShortFeatures(roomType.features);
-        setDetailFeatures(roomType.detailFeatures);
-        setCategory(roomType.category);
-        setView(roomType.view);
+
+        reset(roomType);
+        roomType.quickDes && setQuickDes(roomType.quickDes);
+        roomType.features && setShortFeatures(roomType.features);
+        roomType.detailFeatures && setDetailFeatures(roomType.detailFeatures);
+        roomType.category && setCategory(roomType.category);
+        roomType.view && setView(roomType.view);
+        roomType.thumbnail && setThumbnailUrl(roomType.thumbnail);
       })();
     }
   }, [id]);
 
-  const handleGetData = (data: IRoomType) => {};
+  const VITE_UPLOAD_PRESET = "kaiosuke";
+  const VITE_CLOUD_NAME = "dyjvnhq5s";
+
+  const uploadImage = async (file: string | Blob) => {
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", VITE_UPLOAD_PRESET);
+    const response = await fetch(
+      `https://api.cloudinary.com/v1_1/${VITE_CLOUD_NAME}/image/upload`,
+      {
+        method: "POST",
+        body: formData,
+      }
+    );
+    const data = await response.json();
+
+    return data.secure_url;
+  };
 
   const handleQuickDes = (value: string) => {
     const exist = quickDes.includes(value);
@@ -128,15 +142,42 @@ function FormRoom({ open, onClose, id }: IForm) {
     }
   };
 
+  const onSubmit = async (data: any) => {
+    console.log(data);
+    let updatedData = {
+      ...data,
+      quickDes,
+      features,
+      detailFeatures,
+      category,
+      view,
+    };
+    switch (thumbnailOption) {
+      case "upload":
+        if (data.thumbnail && data.thumbnail[0]) {
+          const thumbnailUrl = await uploadImage(data.thumbnail[0]);
+          updatedData = { ...updatedData, thumbnail: thumbnailUrl };
+        }
+        break;
+      default:
+    }
+    if (id) {
+      dispatch(updateRoomType({ id, roomType: updatedData }));
+    } else {
+      dispatch(addRoomType(updatedData));
+    }
+    return onClose(false);
+  };
+
   return (
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent className="lg:max-w-[1200px] sm:max-w-[600px] h-[90%] overflow-auto  bg-sidebar-four text-sidebar-primary">
         <DialogHeader>
           <DialogTitle className="md:text-2xl text-xl">
-            {id ? "Update" : "Add"} User
+            {id ? "Update" : "Add"} RoomType
           </DialogTitle>
         </DialogHeader>
-        <form onSubmit={handleSubmit((data) => handleGetData(data))}>
+        <form onSubmit={handleSubmit((data) => onSubmit(data))}>
           <div className="grid  gap-2 py-2">
             <div className="grid md:grid-cols-2 gap-4 grid-cols-1">
               <div className="">
@@ -237,7 +278,7 @@ function FormRoom({ open, onClose, id }: IForm) {
                   type="number"
                   className="mt-1"
                   placeholder=". . ."
-                  {...register("price")}
+                  {...register("price", { valueAsNumber: true })}
                 />
                 <span className="text-red-500 text-sm">
                   {formState.errors.price?.message}
@@ -252,7 +293,7 @@ function FormRoom({ open, onClose, id }: IForm) {
                   type="number"
                   className="mt-1"
                   placeholder=". . ."
-                  {...register("quantity")}
+                  {...register("quantity", { valueAsNumber: true })}
                 />
                 <span className="text-red-500 text-sm">
                   {formState.errors.quantity?.message}
@@ -282,7 +323,7 @@ function FormRoom({ open, onClose, id }: IForm) {
                   type="number"
                   className="mt-1"
                   placeholder=". . ."
-                  {...register("sleeps")}
+                  {...register("sleeps", { valueAsNumber: true })}
                 />
                 <span className="text-red-500 text-sm">
                   {formState.errors.sleeps?.message}
@@ -425,7 +466,7 @@ function FormRoom({ open, onClose, id }: IForm) {
                             }
                           />
                           <label
-                            htmlFor={"shortFeature" + feature.id}
+                            htmlFor={feature.id}
                             className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 md:text-lg cursor-pointer"
                           >
                             {feature.title}
@@ -442,10 +483,89 @@ function FormRoom({ open, onClose, id }: IForm) {
                 </Dialog>
               </div>
             </div>
-            <div className="grid md:grid-cols-2 gap-4 grid-cols-1 md:py-4"></div>
+            <div>
+              {id ? (
+                <div>
+                  <Select
+                    value={thumbnailOption}
+                    onValueChange={(value) => setThumbnailOption(value)}
+                  >
+                    <SelectTrigger className="w-fit text-sm">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent className="bg-sidebar-four text-sidebar-primary ">
+                      <SelectItem value="keep">
+                        Keep Current Thumbnail
+                      </SelectItem>
+                      <SelectItem value="upload">
+                        Upload Thumbnail from Local
+                      </SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              ) : (
+                <div>
+                  <Select
+                    value={thumbnailOption}
+                    onValueChange={(value) => setThumbnailOption(value)}
+                  >
+                    <SelectTrigger className="w-[240px] text-sm">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent className="bg-sidebar-four text-sidebar-primary ">
+                      <SelectItem value="upload">
+                        Upload Thumbnail from Local
+                      </SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              )}
+              <div className="grid md:grid-cols-2 gap-4 grid-cols-1 mt-2">
+                <div className="">
+                  {thumbnailOption === "link" && (
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="thumbnail"
+                      {...register("thumbnail")}
+                    />
+                  )}
+                  {thumbnailOption === "upload" && (
+                    <div className="grid w-full max-w-sm items-center gap-1.5 text-primary">
+                      <Input
+                        id="thumbnail"
+                        type="file"
+                        className="text-sidebar-primary"
+                        {...register("thumbnail", { required: true })}
+                      />
+                    </div>
+                  )}
+                  <div className="mt-2">
+                    {formState.errors.thumbnail?.message && (
+                      <p className="text-red-500">
+                        {formState.errors.thumbnail?.message}
+                      </p>
+                    )}
+                    {thumbnailUrl && (
+                      <AspectRatio
+                        ratio={16 / 12}
+                        className="bg-muted rounded-md"
+                      >
+                        <Image
+                          src={thumbnailUrl}
+                          alt="picture"
+                          fill
+                          className="h-full w-full rounded-md object-cover"
+                        />
+                      </AspectRatio>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
           <Button type="submit" variant={"outline"} className="text-left">
-            {id ? "Update" : "Add"} User
+            {id ? "Update" : "Add"} RoomType
           </Button>
         </form>
       </DialogContent>

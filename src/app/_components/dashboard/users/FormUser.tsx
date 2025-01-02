@@ -82,7 +82,6 @@ function FormUser({ open, onClose, id }: IForm) {
         title: "Success",
         description: "Update user success",
       });
-      return onClose(false);
     } else {
       dispatch(addUser(newData));
       toast({
@@ -90,8 +89,8 @@ function FormUser({ open, onClose, id }: IForm) {
         title: "Success",
         description: "Add user success",
       });
-      return onClose(false);
     }
+    return onClose(false);
   };
 
   return (

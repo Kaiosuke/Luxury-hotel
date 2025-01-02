@@ -371,6 +371,31 @@
       ],
       "shortDes": "Junior Suite Sea View, King or Twin beds, sea view terrace, ac, free WiFi, bath and separate shower, hairdryer, satellite TV, safe, minibar, tea and coffee maker. Size: 38-45 sqm / 409-484 sqft",
       "detailDes": "Junior Suite Sea View features a large and bright room overlooking the island of Formentera and its crystal clear waters, combined with beautiful modern furniture. Suite features King or Twin beds, living room, bathroom with bath and separate shower, air conditioning, complimentary WiFi access, hairdryer, satellite TV, safe, minibar, tea and coffee maker. Size: 38 to 45 square metres / 409 to 484 square feet. It is located on the second and third floors. Location subject to availability."
+    },
+    {
+      "thumbnail": "https://res.cloudinary.com/dyjvnhq5s/image/upload/v1735823575/wallpaperflare.com_wallpaper_1_nybavr.jpg",
+      "title": "test1",
+      "price": 1,
+      "quantity": 1,
+      "rate": 1,
+      "description": "test1",
+      "square": "test1",
+      "typeBed": "test1",
+      "sleeps": 1,
+      "shortDes": "test1",
+      "detailDes": "test1",
+      "quickDes": [
+        "It is located on 1st, 2nd, 3rd and 4th floor. Subject to availability.",
+        "It is located on 1st, 2nd and 3rd floor. Subject to availability",
+        "Double beds"
+      ],
+      "detailFeatures": [
+        "Wake-up calls",
+        "Bathrobe"
+      ],
+      "category": "Premier",
+      "view": "Pool",
+      "id": "JGBki5I"
     }
   ],
   "rooms": [
