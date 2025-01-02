@@ -87,9 +87,11 @@ const page = () => {
                   {formatMoney(sumMoney(carts))}
                 </span>
               </div>
-              <Button variant={"secondary"} className="w-full">
-                <Link href="/booking">Add more Room</Link>
-              </Button>
+              <Link href="/booking">
+                <Button variant={"secondary"} className="w-full">
+                  Add more Room
+                </Button>
+              </Link>
               <Link href="/checkout">
                 <Button
                   variant={"third"}

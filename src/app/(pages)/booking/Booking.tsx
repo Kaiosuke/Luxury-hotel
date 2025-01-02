@@ -1,16 +1,34 @@
 import BookingCalendar from "@/app/_components/BookingCalendar";
 import Extension from "@/app/_components/Extension";
 import MotionWrapper from "@/app/_components/MotionWrapper";
-import BookingFilter from "./BookingFilter";
-import BookingList from "./BookingList";
 import useAppContext from "@/hooks/useAppContext";
+import useAvailableRooms from "@/hooks/useAvailableRooms";
+import { IRoom } from "@/interfaces";
+import { roomsSelector } from "@/redux/selectors/roomsSelector";
 import { roomTypesRemainingSelector } from "@/redux/selectors/roomTypesSelector";
 import { useSelector } from "react-redux";
-import RoomList from "../rooms/RoomList";
+import BookingFilter from "./BookingFilter";
+import BookingList from "./BookingList";
 
 const Booking = () => {
   const { checkIn, checkOut } = useAppContext();
   const roomTypeList = useSelector(roomTypesRemainingSelector);
+  const { rooms } = useSelector(roomsSelector);
+
+  const availableRooms: IRoom[] =
+    rooms && checkIn && checkOut
+      ? useAvailableRooms({ rooms, checkIn, checkOut })
+      : [];
+
+  const getQuantityAvailableRoom = (id: string): number => {
+    if (!availableRooms) {
+      return 0;
+    }
+    const quantityRoom = availableRooms.filter(
+      (room) => room.roomTypeId === id
+    );
+    return quantityRoom.length;
+  };
 
   return (
     <section className="text-third padding-main min-h-screen">
@@ -24,9 +42,17 @@ const Booking = () => {
           {checkIn && checkOut ? (
             <>
               {roomTypeList.length ? (
-                roomTypeList.map((roomType) => (
-                  <BookingList key={roomType.id} roomType={roomType} />
-                ))
+                roomTypeList.map(
+                  (roomType) =>
+                    getQuantityAvailableRoom(roomType.id) > 0 && (
+                      <BookingList
+                        key={roomType.id}
+                        roomType={roomType}
+                        availableRooms={availableRooms}
+                        getQuantityAvailableRoom={getQuantityAvailableRoom}
+                      />
+                    )
+                )
               ) : (
                 <div className="mt-10">
                   <span className="text-size-3xl">

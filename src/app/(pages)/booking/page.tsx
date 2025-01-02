@@ -4,14 +4,14 @@ import LoadingPage from "@/app/_components/LoadingPage";
 import { getAllOption } from "@/app/api/optionsRequest";
 import { getAllRoom } from "@/app/api/roomsRequest";
 import { getAllRoomType } from "@/app/api/roomTypesRequest";
-import { roomSelector } from "@/redux/selectors/roomsSelector";
+import { roomsSelector } from "@/redux/selectors/roomsSelector";
 import { useAppDispatch } from "@/redux/store";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import Booking from "./Booking";
 
 const page = () => {
-  const { loading, error } = useSelector(roomSelector);
+  const { loading, error } = useSelector(roomsSelector);
   const dispatch = useAppDispatch();
 
   useEffect(() => {

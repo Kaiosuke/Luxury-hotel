@@ -19,17 +19,21 @@ import {
 } from "@/components/ui/sidebar";
 import { FaHome } from "react-icons/fa";
 import Link from "next/link";
+import { IUser } from "@/interfaces";
+import { useAppDispatch } from "@/redux/store";
+import { signOut } from "next-auth/react";
+import { loginUser } from "@/redux/slices/authSlice";
 
-function NavUser({
-  user,
-}: {
-  user: {
-    name: string;
-    email: string;
-    avatar: string;
-  };
-}) {
+function NavUser({ user }: { user: IUser }) {
   const { isMobile } = useSidebar();
+
+  const { username, email, role } = user;
+  const dispatch = useAppDispatch();
+
+  const handleSigOut = () => {
+    signOut();
+    dispatch(loginUser(null));
+  };
 
   return (
     <SidebarMenu>
@@ -41,12 +45,18 @@ function NavUser({
               className="data-[state=open]:bg-sidebar-four data-[state=open]:text-primary"
             >
               <Avatar className="h-8 w-8 rounded-lg">
-                <AvatarImage src={user.avatar} alt={user.name} />
+                <AvatarImage
+                  src="https://vcdn1-giaitri.vnecdn.net/2022/09/23/-2181-1663929656.jpg?w=0&h=0&q=100&dpr=2&fit=crop&s=wvx3Xd9YNeLA-9IvhcFllw"
+                  alt={user.username}
+                />
                 <AvatarFallback className="rounded-lg">CN</AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-semibold">{user.name}</span>
-                <span className="truncate text-xs">{user.email}</span>
+                <span className="truncate font-semibold">
+                  {role === "ceo" ? "HiBoss: " : "HiAdmin: "}
+                  {username}
+                </span>
+                <span className="truncate text-xs">{email}</span>
               </div>
               <ChevronsUpDown className="ml-auto size-4" />
             </SidebarMenuButton>
@@ -60,12 +70,15 @@ function NavUser({
             <DropdownMenuLabel className="p-0 font-normal">
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar className="h-8 w-8 rounded-lg">
-                  <AvatarImage src={user.avatar} alt={user.name} />
+                  <AvatarImage
+                    src="https://vcdn1-giaitri.vnecdn.net/2022/09/23/-2181-1663929656.jpg?w=0&h=0&q=100&dpr=2&fit=crop&s=wvx3Xd9YNeLA-9IvhcFllw"
+                    alt={username}
+                  />
                   <AvatarFallback className="rounded-lg">CN</AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-semibold">{user.name}</span>
-                  <span className="truncate text-xs">{user.email}</span>
+                  <span className="truncate font-semibold">{username}</span>
+                  <span className="truncate text-xs">{email}</span>
                 </div>
               </div>
             </DropdownMenuLabel>
@@ -86,7 +99,7 @@ function NavUser({
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem className="cursor-pointer">
+            <DropdownMenuItem className="cursor-pointer" onClick={handleSigOut}>
               <LogOut />
               Log out
             </DropdownMenuItem>

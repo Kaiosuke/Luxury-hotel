@@ -2,6 +2,7 @@ import {
   addCart,
   deleteCart,
   getAllCart,
+  getAllCartByUserId,
   updateCart,
 } from "@/app/api/cartsRequest";
 import { ICart } from "@/interfaces";
@@ -9,6 +10,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface ICartState {
   carts: ICart[] | [];
+  cartsUser: ICart[] | [];
   cartsSuccess: ICart[] | [];
   loading: boolean;
   error: null | string | undefined;
@@ -16,6 +18,7 @@ export interface ICartState {
 
 const initialState: ICartState = {
   carts: [],
+  cartsUser: [],
   cartsSuccess: [],
   loading: false,
   error: null,
@@ -51,6 +54,16 @@ const cartsSlice = createSlice({
       }
     );
     builder.addCase(getAllCart.rejected, setError);
+
+    builder.addCase(getAllCartByUserId.pending, setLoading);
+    builder.addCase(
+      getAllCartByUserId.fulfilled,
+      (state, action: PayloadAction<ICart[]>) => {
+        state.loading = false;
+        state.cartsUser = action.payload;
+      }
+    );
+    builder.addCase(getAllCartByUserId.rejected, setError);
 
     builder.addCase(addCart.pending, setLoading);
     builder.addCase(

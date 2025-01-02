@@ -6,15 +6,30 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar";
 
+import { authSelector } from "@/redux/selectors/authSelector";
+import { useAppDispatch } from "@/redux/store";
+import { useRouter } from "next/navigation";
 import { ReactNode, useEffect } from "react";
 import { useSelector } from "react-redux";
+import LoadingPage from "../_components/LoadingPage";
+import { getAllCart } from "../api/cartsRequest";
+import { getAllRoom } from "../api/roomsRequest";
+import { getAllRoomType } from "../api/roomTypesRequest";
+import { getAllUser } from "../api/usersRequest";
 import AppSidebar from "./AdminSideBar";
-import { useRouter } from "next/navigation";
-import { authSelector } from "@/redux/selectors/authSelector";
 
 function layoutAdmin({ children }: { children: ReactNode }) {
   const { currentUser } = useSelector(authSelector);
+
   const router = useRouter();
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(getAllUser());
+    dispatch(getAllRoomType());
+    dispatch(getAllRoom());
+    dispatch(getAllCart());
+  }, []);
 
   useEffect(() => {
     if (!currentUser || currentUser.role === "user") {
@@ -23,11 +38,7 @@ function layoutAdmin({ children }: { children: ReactNode }) {
   }, [router, currentUser]);
 
   if (!currentUser) {
-    return <p>Loading...</p>;
-  }
-
-  if (currentUser.role === "user") {
-    return null;
+    return <LoadingPage />;
   }
 
   return (

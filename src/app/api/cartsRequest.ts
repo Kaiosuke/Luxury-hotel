@@ -3,11 +3,11 @@ import axios from "axios";
 import instanceLocal from "./instances";
 import { ICart } from "@/interfaces";
 
-const getAllCart = createAsyncThunk<ICart[], string, { rejectValue: string }>(
+const getAllCart = createAsyncThunk<ICart[], void, { rejectValue: string }>(
   "carts/getAllCart",
-  async (userId, { rejectWithValue }) => {
+  async (_, { rejectWithValue }) => {
     try {
-      const res = await instanceLocal.get(`carts?userId=${userId}`);
+      const res = await instanceLocal.get(`carts`);
       return res.data;
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -17,6 +17,22 @@ const getAllCart = createAsyncThunk<ICart[], string, { rejectValue: string }>(
     }
   }
 );
+
+const getAllCartByUserId = createAsyncThunk<
+  ICart[],
+  string,
+  { rejectValue: string }
+>("carts/getAllCartByUserId", async (userId, { rejectWithValue }) => {
+  try {
+    const res = await instanceLocal.get(`carts?userId=${userId}`);
+    return res.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      return rejectWithValue(error.response?.data?.message);
+    }
+    return rejectWithValue("An unexpected error occurred");
+  }
+});
 
 const getCart = createAsyncThunk<ICart, string, { rejectValue: string }>(
   "carts/getCart",
@@ -79,4 +95,11 @@ const deleteCart = createAsyncThunk<string, string, { rejectValue: string }>(
   }
 );
 
-export { getAllCart, getCart, addCart, updateCart, deleteCart };
+export {
+  getAllCart,
+  getAllCartByUserId,
+  getCart,
+  addCart,
+  updateCart,
+  deleteCart,
+};

@@ -38,7 +38,7 @@ const Rooms = () => {
                 value={position}
                 onValueChange={setPosition}
               >
-                {roomTypes &&
+                {roomTypes.length &&
                   roomTypes.map((room) => (
                     <RoomTitleMb
                       key={room.id}
@@ -54,7 +54,7 @@ const Rooms = () => {
       <section className="flex justify-between lg:mt-0 mt-4">
         <div className="max-w-[30%] w-full lg:block hidden">
           <ul className="flex flex-col gap-10">
-            {roomTypes &&
+            {roomTypes.length &&
               roomTypes.map((room) => (
                 <RoomTitlePc
                   key={room.id}

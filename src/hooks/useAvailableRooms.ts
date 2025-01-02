@@ -1,6 +1,6 @@
 import { IRoom } from "@/interfaces";
 
-interface IAvailableRooms {
+interface IAvailableRoom {
   rooms: IRoom[];
   checkIn: Date;
   checkOut: Date;
@@ -15,7 +15,7 @@ const useAvailableRooms = ({
   rooms,
   checkIn,
   checkOut,
-}: IAvailableRooms): IRoom[] => {
+}: IAvailableRoom): IRoom[] => {
   const isRoomAvailable = (bookedDates: BookedDate[]): boolean => {
     return !bookedDates.some((booking) => {
       const bookedFrom = new Date(booking.from);

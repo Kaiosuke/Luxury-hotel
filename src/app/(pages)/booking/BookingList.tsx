@@ -5,11 +5,9 @@ import { Button } from "@/components/ui/button";
 import { ToastAction } from "@/components/ui/toast";
 import { useToast } from "@/hooks/use-toast";
 import useAppContext from "@/hooks/useAppContext";
-import useAvailableRooms from "@/hooks/useAvailableRooms";
-import { IRoom, IRoomType } from "@/interfaces";
+import { ICart, IRoom, IRoomType } from "@/interfaces";
 import { authSelector } from "@/redux/selectors/authSelector";
 import { optionsSelector } from "@/redux/selectors/optionsSelector";
-import { roomSelector } from "@/redux/selectors/roomsSelector";
 import { useAppDispatch } from "@/redux/store";
 import { calculateDays } from "@/utils/helpers";
 import Image from "next/image";
@@ -30,8 +28,20 @@ import {
 } from "@/components/ui/select";
 import { useRef, useState } from "react";
 import OptionRoom from "./OptionRoom";
+import { cartUserRemainingSelector } from "@/redux/selectors/cartsSelector";
+import useAvailableCarts from "@/hooks/useAvailableCarts";
 
-const BookingList = ({ roomType }: { roomType: IRoomType }) => {
+interface IBookingList {
+  roomType: IRoomType;
+  availableRooms: IRoom[];
+  getQuantityAvailableRoom: (value: string) => number;
+}
+
+const BookingList = ({
+  roomType,
+  availableRooms,
+  getQuantityAvailableRoom,
+}: IBookingList) => {
   const filterIconFeature = (value: string) => {
     return value.includes("Conditioning") ? (
       <FaTemperatureHigh />
@@ -53,28 +63,13 @@ const BookingList = ({ roomType }: { roomType: IRoomType }) => {
   const [roomId, setRoomId] = useState<string>("");
   const { checkIn, checkOut } = useAppContext();
   const { currentUser } = useSelector(authSelector);
-  const { rooms } = useSelector(roomSelector);
   const { options } = useSelector(optionsSelector);
+  const { carts } = useSelector(cartUserRemainingSelector);
 
   const roomRef = useRef<HTMLButtonElement>(null);
 
   const { toast } = useToast();
   const dispatch = useAppDispatch();
-
-  const availableRooms: IRoom[] =
-    rooms && checkIn && checkOut
-      ? useAvailableRooms({ rooms, checkIn, checkOut })
-      : [];
-
-  const getQuantityAvailableRoom = (id: string): number => {
-    if (!availableRooms) {
-      return 0;
-    }
-    const quantityRoom = availableRooms.filter(
-      (room) => room.roomTypeId === id
-    );
-    return quantityRoom.length;
-  };
 
   const filterRoom = (id: string) => {
     return availableRooms?.filter((room) => room.roomTypeId === id);
@@ -124,13 +119,29 @@ const BookingList = ({ roomType }: { roomType: IRoomType }) => {
         day: calculateDays({ checkIn, checkOut }),
         bookedDates: { from: checkIn, to: checkOut },
       };
-      dispatch(addCart(newBooking));
-      setRoomId("");
-      return toast({
-        variant: "success",
-        title: "success",
-        description: "Booking has been added to cart",
-      });
+      const availableCart =
+        carts &&
+        checkIn &&
+        checkOut &&
+        useAvailableCarts({ carts, newBooking });
+
+      if (!availableCart.length) {
+        dispatch(addCart(newBooking));
+        setRoomId("");
+        return toast({
+          variant: "success",
+          title: "success",
+          description: "Booking has been added to cart",
+        });
+      } else {
+        return toast({
+          variant: "destructive",
+          title: "Uh oh! Something went wrong.",
+          description:
+            "This room is booked, choose another room or date or another room type",
+          action: <ToastAction altText="Try again">Try again</ToastAction>,
+        });
+      }
     } else {
       return toast({
         variant: "destructive",
@@ -170,7 +181,7 @@ const BookingList = ({ roomType }: { roomType: IRoomType }) => {
               {roomType.title}
             </h2>
             <div className="flex gap-6 mt-6">
-              {getQuantityAvailableRoom(roomType.id) < 8 ? (
+              {getQuantityAvailableRoom(roomType.id) < 5 ? (
                 <span className="text-size-base text-red-400">
                   Only {getQuantityAvailableRoom(roomType.id)} rooms left
                 </span>
@@ -201,9 +212,11 @@ const BookingList = ({ roomType }: { roomType: IRoomType }) => {
               <p>{roomType.shortDes}</p>
             </div>
             <div></div>
-            <Button variant={"third"} className="mt-6">
-              <Link href={`/rooms/${roomType.id}`}>Rooms Detail</Link>
-            </Button>
+            <Link href={`/rooms/${roomType.id}`}>
+              <Button variant={"third"} className="mt-6">
+                Rooms Detail
+              </Button>
+            </Link>
             <div>
               {options &&
                 checkIn &&

@@ -45,7 +45,7 @@ const page = () => {
         link="#rooms"
       />
       <div className="pd-high" />
-      {roomTypes && (
+      {roomTypes.length && (
         <section id="rooms" className="text-black padding-main">
           <SplideImage
             images={handleRenderImage(roomTypes)}

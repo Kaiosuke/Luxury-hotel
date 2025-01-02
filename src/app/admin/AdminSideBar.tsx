@@ -16,15 +16,10 @@ import HeadDashBoard from "./HeadDashBoard";
 import NavMain from "./NavMain";
 import NavProjects from "./NavProject";
 import NavUser from "./NavUser";
+import { useSelector } from "react-redux";
+import { authSelector } from "@/redux/selectors/authSelector";
 
 const data = {
-  user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar:
-      "https://vcdn1-giaitri.vnecdn.net/2022/09/23/-2181-1663929656.jpg?w=0&h=0&q=100&dpr=2&fit=crop&s=wvx3Xd9YNeLA-9IvhcFllw",
-  },
-
   navMain: [
     {
       title: "Users",
@@ -128,6 +123,8 @@ const data = {
 };
 
 function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const { currentUser } = useSelector(authSelector);
+
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
@@ -137,9 +134,11 @@ function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavMain items={data.navMain} />
         <NavProjects projects={data.projects} />
       </SidebarContent>
-      <SidebarFooter>
-        <NavUser user={data.user} />
-      </SidebarFooter>
+      {currentUser && (
+        <SidebarFooter>
+          <NavUser user={currentUser} />
+        </SidebarFooter>
+      )}
       <SidebarRail />
     </Sidebar>
   );

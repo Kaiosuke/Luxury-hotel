@@ -1,5 +1,9 @@
 import { z } from "zod";
 
+// Regex phone number
+const phoneRegex = new RegExp(/^(\+?[1-9][0-9]{1,14}|[0-9]{10,15})$/);
+
+// Subscribe
 const SubscribeSchema = z.object({
   username: z.string().trim().min(2, {
     message: "Username must be at least 2 characters.",
@@ -7,6 +11,7 @@ const SubscribeSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
 });
 
+// Auth
 const LoginSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
   password: z
@@ -31,7 +36,7 @@ const RegisterSchema = z
     path: ["confirm"],
   });
 
-const phoneRegex = new RegExp(/^(\+?[1-9][0-9]{1,14}|[0-9]{10,15})$/);
+// Check out
 
 const CheckOutSchema = z.object({
   username: z.string().min(2, "Username must be at least 2 characters."),
@@ -45,4 +50,30 @@ const CheckOutSchema = z.object({
   city: z.string().min(1, "Please fill city"),
 });
 
-export { SubscribeSchema, LoginSchema, RegisterSchema, CheckOutSchema };
+// Users
+
+const UserSchema = z
+  .object({
+    username: z.string().min(2, "Username must be at least 2 characters."),
+    email: z.string().email({ message: "Invalid email address" }),
+    password: z
+      .string()
+      .min(6, "Password must be greater than or equal to 6 characters"),
+    phoneNumber: z.string().optional(),
+    country: z.string().optional(),
+    address: z.string().optional(),
+    city: z.string().optional(),
+    confirm: z.string(),
+  })
+  .refine((data) => data.password === data.confirm, {
+    message: "Password don't match",
+    path: ["confirm"],
+  });
+
+export {
+  SubscribeSchema,
+  LoginSchema,
+  RegisterSchema,
+  CheckOutSchema,
+  UserSchema,
+};

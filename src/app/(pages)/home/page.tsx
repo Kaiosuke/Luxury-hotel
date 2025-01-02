@@ -4,24 +4,26 @@ import TitleXL from "@/app/_components/contentTitle/TitleXL";
 import HeroImage from "@/app/_components/HeroImage";
 import MotionWrapper from "@/app/_components/MotionWrapper";
 import ThumbnailImage from "@/app/_components/ThumbnailImage";
+import { getAllCartByUserId } from "@/app/api/cartsRequest";
+import { authSelector } from "@/redux/selectors/authSelector";
+import { useAppDispatch } from "@/redux/store";
 import Link from "next/link";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
 import Album from "./Album";
 import Luxury from "./Luxury";
 import Offers from "./Offers";
 import Restaurants from "./Restaurants";
 import Rooms from "./Rooms";
 import SpaWellnessSection from "./SpaWellness";
-import { useEffect } from "react";
-import { useSelector } from "react-redux";
-import { authSelector } from "@/redux/selectors/authSelector";
-import { useAppDispatch } from "@/redux/store";
-import { getAllCart } from "@/app/api/cartsRequest";
 
 const Home = () => {
   const { currentUser } = useSelector(authSelector);
   const dispatch = useAppDispatch();
   useEffect(() => {
-    currentUser && currentUser.id && dispatch(getAllCart(currentUser.id));
+    currentUser &&
+      currentUser.id &&
+      dispatch(getAllCartByUserId(currentUser.id));
   }, []);
 
   return (

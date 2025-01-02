@@ -24,7 +24,6 @@ const page = () => {
       router.push("/");
     }
   }, []);
-  console.log(cartsSuccess);
   if (!currentUser) {
     return <LoadingPage />;
   }

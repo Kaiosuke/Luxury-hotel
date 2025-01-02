@@ -14,11 +14,18 @@ const BreadcrumbComponent = ({ page }: { page: string }) => {
     <Breadcrumb>
       <BreadcrumbList>
         <BreadcrumbItem>
-          <BreadcrumbLink href="/admin">Home</BreadcrumbLink>
+          <BreadcrumbLink
+            href="/admin"
+            className="text-sidebar-primary hover:text-sidebar-secondary"
+          >
+            Home
+          </BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbSeparator />
         <BreadcrumbItem>
-          <BreadcrumbPage>{page}</BreadcrumbPage>
+          <BreadcrumbPage className="text-sidebar-primary">
+            {page}
+          </BreadcrumbPage>
         </BreadcrumbItem>
       </BreadcrumbList>
     </Breadcrumb>

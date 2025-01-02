@@ -78,9 +78,9 @@ const Success = () => {
       </div>
 
       <div className="mt-4 text-right">
-        <Button variant={"third"}>
-          <Link href="/">Back to Homepage</Link>
-        </Button>
+        <Link href="/">
+          <Button variant={"third"}>Back to Homepage</Button>
+        </Link>
       </div>
     </div>
   );

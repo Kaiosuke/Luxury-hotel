@@ -31,5 +31,27 @@ const sumMoney = (data: ICart[]) => {
     return prev + cur.totalPrice;
   }, 0);
 };
+interface BookedDate {
+  from: Date;
+  to: Date;
+}
+interface IAvailableCart {
+  bookedDatesCart: BookedDate;
+  checkIn: Date;
+  checkOut: Date;
+}
+const availableCart = ({
+  bookedDatesCart,
+  checkIn,
+  checkOut,
+}: IAvailableCart): boolean => {
+  const dateCartFrom = bookedDatesCart.from;
+  const dateCartTo = bookedDatesCart.to;
+  return (
+    (checkIn >= dateCartFrom && checkIn <= dateCartTo) ||
+    (checkOut >= dateCartFrom && checkOut <= dateCartTo) ||
+    (checkIn <= dateCartFrom && checkOut >= dateCartTo)
+  );
+};
 
-export { formatMoney, convertDate, sumMoney, calculateDays };
+export { formatMoney, convertDate, sumMoney, calculateDays, availableCart };

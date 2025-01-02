@@ -3,6 +3,8 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 
+import FormDelete from "@/app/_components/dashboard/users/FormDelete";
+import FormUser from "@/app/_components/dashboard/users/FormUser";
 import DataTable from "@/app/_components/DataTable";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -14,61 +16,50 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import FormUser from "@/app/_components/dashboard/FormUser";
-import { IForm } from "@/interfaces";
+import { IForm, IUser } from "@/interfaces";
+import { authSelector } from "@/redux/selectors/authSelector";
+import { usersSelector } from "@/redux/selectors/usersSelector";
 import { useState } from "react";
-import FormDelete from "@/app/_components/dashboard/FormDelete";
-
-const userData: Payment[] = [
-  {
-    id: "1",
-    userName: "Kaiosuke",
-    orders: 10,
-    role: "CEO",
-    email: "ken99@yahoo.com",
-  },
-  {
-    id: "2",
-    userName: "Kaiosuke2",
-    orders: 4,
-    role: "ADMIN",
-    email: "kaio2@yahoo.com",
-  },
-  {
-    id: "3",
-    userName: "Kaiosuke3",
-    orders: 2,
-    role: "User",
-    email: "kaio3@yahoo.com",
-  },
-  {
-    id: "4",
-    userName: "trongle",
-    orders: 10,
-    role: "CEO",
-    email: "TranHungDao@gmail.com",
-  },
-];
-
-export type Payment = {
-  id: string;
-  userName: string;
-  orders: number;
-  role: "CEO" | "ADMIN" | "User";
-  email: string;
-};
+import { useSelector } from "react-redux";
+import { useAppDispatch } from "@/redux/store";
+import { getUser } from "@/app/api/usersRequest";
+import { useToast } from "@/hooks/use-toast";
+import { ToastAction } from "@radix-ui/react-toast";
 
 const UserTable = ({ open, onClose }: IForm) => {
+  const { users } = useSelector(usersSelector);
+  const { currentUser } = useSelector(authSelector);
+
   const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
   const [openFormDelete, setOpenFormDelete] = useState(false);
 
+  const dispatch = useAppDispatch();
+
+  const { toast } = useToast();
+
   const handleUpdate = (id: string) => {
-    setSelectedUserId(id);
-    onClose(true);
+    if (currentUser?.role === "admin") {
+      (async () => {
+        const user = await dispatch(getUser(id)).unwrap();
+        if (user.role === "ceo" || user.role === "admin") {
+          return toast({
+            variant: "destructive",
+            title: "Uh oh! Something went wrong.",
+            description: "you do not have permission to edit",
+            action: <ToastAction altText="Try again">Try again</ToastAction>,
+          });
+        } else {
+          setSelectedUserId(id);
+          onClose(true);
+        }
+      })();
+    } else {
+      setSelectedUserId(id);
+      onClose(true);
+    }
   };
   const handleDelete = (id: string) => {
     setSelectedUserId(id);
-    setOpenFormDelete(true);
   };
 
   const handleCloseForm = () => {
@@ -77,7 +68,7 @@ const UserTable = ({ open, onClose }: IForm) => {
     onClose(false);
   };
 
-  const userColumns: ColumnDef<Payment>[] = [
+  const userColumns: ColumnDef<IUser>[] = [
     {
       id: "select",
       header: ({ table }) => (
@@ -101,7 +92,7 @@ const UserTable = ({ open, onClose }: IForm) => {
       enableHiding: false,
     },
     {
-      accessorKey: "userName",
+      accessorKey: "username",
       header: ({ column }) => {
         return (
           <Button
@@ -115,7 +106,7 @@ const UserTable = ({ open, onClose }: IForm) => {
         );
       },
       cell: ({ row }) => (
-        <div className="lowercase">{row.getValue("userName")}</div>
+        <div className="lowercase">{row.getValue("username")}</div>
       ),
     },
     {
@@ -142,13 +133,13 @@ const UserTable = ({ open, onClose }: IForm) => {
         <div className="capitalize">{row.getValue("role")}</div>
       ),
     },
-    {
-      accessorKey: "orders",
-      header: "Orders",
-      cell: ({ row }) => (
-        <div className="capitalize">{row.getValue("orders")}</div>
-      ),
-    },
+    // {
+    //   accessorKey: "orders",
+    //   header: "Orders",
+    //   cell: ({ row }) => (
+    //     <div className="capitalize">{row.getValue("orders")}</div>
+    //   ),
+    // },
 
     {
       id: "actions",
@@ -172,13 +163,13 @@ const UserTable = ({ open, onClose }: IForm) => {
               <DropdownMenuSeparator />
               <DropdownMenuItem
                 className="cursor-pointer"
-                onClick={() => handleUpdate(id)}
+                onClick={() => id && handleUpdate(id)}
               >
                 Update
               </DropdownMenuItem>
               <DropdownMenuItem
                 className="cursor-pointer"
-                onClick={() => handleDelete(id)}
+                onClick={() => id && handleDelete(id)}
               >
                 Delete
               </DropdownMenuItem>
@@ -191,9 +182,9 @@ const UserTable = ({ open, onClose }: IForm) => {
   return (
     <>
       <DataTable
-        data={userData}
+        data={users}
         columns={userColumns}
-        filterPlaceholders="userName"
+        filterPlaceholders="username"
       />
       {open && (
         <FormUser open={open} onClose={handleCloseForm} id={selectedUserId} />

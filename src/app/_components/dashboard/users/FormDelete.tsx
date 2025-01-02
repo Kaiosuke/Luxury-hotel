@@ -10,6 +10,8 @@ import {
 import { IForm } from "@/interfaces";
 
 function FormDelete({ open, onClose, id, type }: IForm) {
+  console.log(id);
+
   return (
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-[425px]  bg-sidebar-four text-sidebar-primary">

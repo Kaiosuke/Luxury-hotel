@@ -20,7 +20,7 @@ const page = () => {
   const router = useRouter();
 
   useEffect(() => {
-    if (!currentUser) {
+    if (!currentUser || !carts.length) {
       router.push("/");
     }
   }, []);

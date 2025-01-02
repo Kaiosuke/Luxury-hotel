@@ -3,7 +3,7 @@ import { IRoomType } from "@/interfaces";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface IRoomTypeState {
-  roomTypes: IRoomType[] | null;
+  roomTypes: IRoomType[] | [];
   roomType: IRoomType | null;
   filters: {
     sort: string;
@@ -16,7 +16,7 @@ export interface IRoomTypeState {
 }
 
 const initialState: IRoomTypeState = {
-  roomTypes: null,
+  roomTypes: [],
   roomType: null,
   filters: {
     sort: "recommended",
