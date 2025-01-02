@@ -59,7 +59,6 @@ function FormUser({ open, onClose, id }: IForm) {
 
         user.role && setRole(user.role);
       })();
-    } else {
     }
   }, [id]);
 
@@ -127,6 +126,7 @@ function FormUser({ open, onClose, id }: IForm) {
                 </Label>
                 <Input
                   id="email"
+                  type="email"
                   className="mt-1"
                   placeholder=". . ."
                   {...register("email")}

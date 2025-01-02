@@ -16,7 +16,6 @@ interface IUser {
 }
 
 interface IRoomType {
-  types: any;
   id: string;
   thumbnail: string;
   title: string;
@@ -30,7 +29,7 @@ interface IRoomType {
   features: string[];
   square: string;
   typeBed: string;
-  sleeps: 3;
+  sleeps: number;
   images: string[];
   map: string;
   detailFeatures: string[];

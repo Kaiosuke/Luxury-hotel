@@ -2,7 +2,7 @@
 import React from "react";
 
 import { Frame, Map, PieChart, Settings2, User } from "lucide-react";
-import { IoRestaurantOutline } from "react-icons/io5";
+import { MdOutlineTypeSpecimen } from "react-icons/md";
 
 import {
   Sidebar,
@@ -11,13 +11,14 @@ import {
   SidebarHeader,
   SidebarRail,
 } from "@/components/ui/sidebar";
+import { authSelector } from "@/redux/selectors/authSelector";
+import { FaShoppingCart } from "react-icons/fa";
 import { MdMeetingRoom } from "react-icons/md";
+import { useSelector } from "react-redux";
 import HeadDashBoard from "./HeadDashBoard";
 import NavMain from "./NavMain";
 import NavProjects from "./NavProject";
 import NavUser from "./NavUser";
-import { useSelector } from "react-redux";
-import { authSelector } from "@/redux/selectors/authSelector";
 
 const data = {
   navMain: [
@@ -38,6 +39,21 @@ const data = {
       ],
     },
     {
+      title: "RoomTypes",
+      url: "#",
+      icon: MdOutlineTypeSpecimen,
+      items: [
+        {
+          title: "Room Type List",
+          url: "/admin/roomTypes",
+        },
+        {
+          title: "Explorer",
+          url: "#",
+        },
+      ],
+    },
+    {
       title: "Rooms",
       url: "#",
       icon: MdMeetingRoom,
@@ -47,34 +63,22 @@ const data = {
           url: "/admin/rooms",
         },
         {
-          title: "Explorer",
-          url: "#",
-        },
-        {
           title: "Quantum",
           url: "#",
         },
       ],
     },
     {
-      title: "Restaurants",
+      title: "Carts",
       url: "#",
-      icon: IoRestaurantOutline,
+      icon: FaShoppingCart,
       items: [
         {
-          title: "Introduction",
-          url: "#",
+          title: "Room List",
+          url: "/admin/carts",
         },
         {
-          title: "Get Started",
-          url: "#",
-        },
-        {
-          title: "Tutorials",
-          url: "#",
-        },
-        {
-          title: "Changelog",
+          title: "Quantum",
           url: "#",
         },
       ],

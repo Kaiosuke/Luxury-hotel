@@ -3,10 +3,10 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 
-import FormDeleteUser from "@/app/_components/dashboard/users/FormDeleteUser";
-import FormUser from "@/app/_components/dashboard/users/FormUser";
+import FormDeleteRoom from "@/app/_components/dashboard/rooms/FormDeleteRoom";
+import FormRoom from "@/app/_components/dashboard/rooms/FormRoom";
 import DataTable from "@/app/_components/DataTable";
-import { getUser } from "@/app/api/usersRequest";
+import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
@@ -18,16 +18,16 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useToast } from "@/hooks/use-toast";
-import { IForm, IUser } from "@/interfaces";
+import { IForm, IRoomType } from "@/interfaces";
 import { authSelector } from "@/redux/selectors/authSelector";
-import { usersSelector } from "@/redux/selectors/usersSelector";
+import { roomTypesSelector } from "@/redux/selectors/roomTypesSelector";
 import { useAppDispatch } from "@/redux/store";
-import { ToastAction } from "@radix-ui/react-toast";
+import Image from "next/image";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 
-const UserTable = ({ open, onClose }: IForm) => {
-  const { users } = useSelector(usersSelector);
+const RoomTypesTable = ({ open, onClose }: IForm) => {
+  const { roomTypes } = useSelector(roomTypesSelector);
   const { currentUser } = useSelector(authSelector);
 
   const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
@@ -38,58 +38,12 @@ const UserTable = ({ open, onClose }: IForm) => {
   const { toast } = useToast();
 
   const handleUpdate = (id: string) => {
-    if (currentUser?.role === "admin") {
-      (async () => {
-        const user = await dispatch(getUser(id)).unwrap();
-        if (user.role === "ceo" || user.role === "admin") {
-          return toast({
-            variant: "destructive",
-            title: "Uh oh! Something went wrong.",
-            description: "You do not have permission to edit",
-            action: <ToastAction altText="Try again">Try again</ToastAction>,
-          });
-        } else {
-          setSelectedUserId(id);
-          onClose(true);
-        }
-      })();
-    } else {
-      setSelectedUserId(id);
-      onClose(true);
-    }
+    setSelectedUserId(id);
+    onClose(true);
   };
   const handleDelete = (id: string) => {
-    if (currentUser?.role === "admin") {
-      (async () => {
-        const user = await dispatch(getUser(id)).unwrap();
-        if (user.role === "ceo" || user.role === "admin") {
-          return toast({
-            variant: "destructive",
-            title: "Uh oh! Something went wrong.",
-            description: "You do not have permission to delete",
-            action: <ToastAction altText="Try again">Try again</ToastAction>,
-          });
-        } else {
-          setSelectedUserId(id);
-          setOpenFormDelete(true);
-        }
-      })();
-    } else if (currentUser?.role === "ceo") {
-      (async () => {
-        const user = await dispatch(getUser(id)).unwrap();
-        if (user.role === "ceo") {
-          return toast({
-            variant: "destructive",
-            title: "Uh oh! Something went wrong.",
-            description: "You can't erase yourself",
-            action: <ToastAction altText="Try again">Try again</ToastAction>,
-          });
-        } else {
-          setSelectedUserId(id);
-          setOpenFormDelete(true);
-        }
-      })();
-    }
+    setSelectedUserId(id);
+    setOpenFormDelete(true);
   };
 
   const handleCloseForm = () => {
@@ -98,7 +52,7 @@ const UserTable = ({ open, onClose }: IForm) => {
     onClose(false);
   };
 
-  const userColumns: ColumnDef<IUser>[] = [
+  const roomTypeColumns: ColumnDef<IRoomType>[] = [
     {
       id: "select",
       header: ({ table }) => (
@@ -122,55 +76,114 @@ const UserTable = ({ open, onClose }: IForm) => {
       enableHiding: false,
     },
     {
-      accessorKey: "username",
+      accessorKey: "title",
       header: ({ column }) => {
         return (
-          <Button
-            variant={"ghost"}
+          <div
+            className="flex text-size-xl items-center cursor-pointer hover:text-sidebar-primary"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-            className="text-center"
           >
-            User Name
+            Title
             <ArrowUpDown />
-          </Button>
+          </div>
         );
       },
       cell: ({ row }) => (
-        <div className="lowercase">{row.getValue("username")}</div>
+        <div className="lowercase">{row.getValue("title")}</div>
       ),
     },
     {
-      accessorKey: "email",
+      accessorKey: "rate",
       header: ({ column }) => {
         return (
-          <Button
-            variant="ghost"
+          <div
+            className="flex text-size-xl items-center cursor-pointer hover:text-sidebar-primary"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            Email
+            Rate
             <ArrowUpDown />
-          </Button>
+          </div>
         );
       },
       cell: ({ row }) => (
-        <div className="lowercase">{row.getValue("email")}</div>
+        <div className="lowercase">{row.getValue("rate")}</div>
       ),
     },
     {
-      accessorKey: "role",
-      header: "Role",
+      accessorKey: "quantity",
+      header: ({ column }) => {
+        return (
+          <div
+            className="flex text-size-xl items-center cursor-pointer hover:text-sidebar-primary"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            Quantity
+            <ArrowUpDown />
+          </div>
+        );
+      },
       cell: ({ row }) => (
-        <div className="capitalize">{row.getValue("role")}</div>
+        <div className="lowercase">{row.getValue("quantity")}</div>
       ),
     },
-    // {
-    //   accessorKey: "orders",
-    //   header: "Orders",
-    //   cell: ({ row }) => (
-    //     <div className="capitalize">{row.getValue("orders")}</div>
-    //   ),
-    // },
+    {
+      accessorKey: "price",
+      header: ({ column }) => {
+        return (
+          <div
+            className="flex text-size-xl items-center cursor-pointer hover:text-sidebar-primary"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            Price basic
+            <ArrowUpDown />
+          </div>
+        );
+      },
+      cell: ({ row }) => (
+        <div className="lowercase">{row.getValue("price")}</div>
+      ),
+    },
+    {
+      accessorKey: "category",
+      header: ({ column }) => {
+        return (
+          <div
+            className="flex text-size-xl items-center cursor-pointer hover:text-sidebar-primary"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            Category
+            <ArrowUpDown />
+          </div>
+        );
+      },
+      cell: ({ row }) => (
+        <div className="lowercase">{row.getValue("category")}</div>
+      ),
+    },
 
+    {
+      accessorKey: "thumbnail",
+      header: () => {
+        return (
+          <div className="flex text-size-xl items-center cursor-pointer hover:text-sidebar-primary">
+            Thumbnail
+          </div>
+        );
+      },
+      cell: ({ row }) => {
+        const thumbnailUrl = row.getValue("thumbnail");
+        return (
+          <AspectRatio ratio={16 / 9} className="bg-muted">
+            <Image
+              src={thumbnailUrl as string}
+              alt="Photo by Drew Beamer"
+              fill
+              className="h-full w-full rounded-md object-cover"
+            />
+          </AspectRatio>
+        );
+      },
+    },
     {
       id: "actions",
       enableHiding: false,
@@ -189,7 +202,6 @@ const UserTable = ({ open, onClose }: IForm) => {
               className="bg-sidebar-four text-primary"
             >
               <DropdownMenuLabel>Actions</DropdownMenuLabel>
-
               <DropdownMenuSeparator />
               <DropdownMenuItem
                 className="cursor-pointer"
@@ -212,15 +224,15 @@ const UserTable = ({ open, onClose }: IForm) => {
   return (
     <>
       <DataTable
-        data={users}
-        columns={userColumns}
-        filterPlaceholders="username"
+        data={roomTypes}
+        columns={roomTypeColumns}
+        filterPlaceholders="title"
       />
       {open && (
-        <FormUser open={open} onClose={handleCloseForm} id={selectedUserId} />
+        <FormRoom open={open} onClose={handleCloseForm} id={selectedUserId} />
       )}
       {openFormDelete && (
-        <FormDeleteUser
+        <FormDeleteRoom
           open={openFormDelete}
           onClose={handleCloseForm}
           id={selectedUserId}
@@ -230,4 +242,4 @@ const UserTable = ({ open, onClose }: IForm) => {
   );
 };
 
-export default UserTable;
+export default RoomTypesTable;

@@ -35,39 +35,6 @@
       "address": "Ninh Giang",
       "city": "Hai Duong",
       "id": "3"
-    },
-    {
-      "username": "trongle4",
-      "email": "trongleele4@gmail.com",
-      "password": "lehuutrong",
-      "phoneNumber": "",
-      "country": "USA",
-      "address": "",
-      "city": "",
-      "role": "admin",
-      "id": "E8sm3OY"
-    },
-    {
-      "username": "trongle5",
-      "email": "trongldasdaseele@gmail.com",
-      "password": "123123",
-      "phoneNumber": "",
-      "country": "",
-      "address": "",
-      "city": "",
-      "role": "admin",
-      "id": "PbqKtZb"
-    },
-    {
-      "username": "2312312",
-      "email": "321312@gmail.com",
-      "password": "123123",
-      "phoneNumber": "",
-      "country": "",
-      "address": "",
-      "city": "",
-      "role": "user",
-      "id": "jgdbqvE"
     }
   ],
   "roomTypes": [
