@@ -373,7 +373,7 @@
       "detailDes": "Junior Suite Sea View features a large and bright room overlooking the island of Formentera and its crystal clear waters, combined with beautiful modern furniture. Suite features King or Twin beds, living room, bathroom with bath and separate shower, air conditioning, complimentary WiFi access, hairdryer, satellite TV, safe, minibar, tea and coffee maker. Size: 38 to 45 square metres / 409 to 484 square feet. It is located on the second and third floors. Location subject to availability."
     },
     {
-      "thumbnail": "https://res.cloudinary.com/dyjvnhq5s/image/upload/v1735823575/wallpaperflare.com_wallpaper_1_nybavr.jpg",
+      "thumbnail": "https://aguasdeibiza.com/wp-content/uploads/2023/09/AGUAS-DE-IBIZA-2023-081-baja.jpg",
       "title": "test1",
       "price": 1,
       "quantity": 1,
@@ -389,13 +389,19 @@
         "It is located on 1st, 2nd and 3rd floor. Subject to availability",
         "Double beds"
       ],
+      "map": "https://aguasdeibiza.com/wp-content/uploads/2018/12/plano_corner-suite.svg",
       "detailFeatures": [
         "Wake-up calls",
         "Bathrobe"
       ],
       "category": "Premier",
       "view": "Pool",
-      "id": "JGBki5I"
+      "id": "JGBki5I",
+      "images": {
+        "0": {},
+        "1": {},
+        "2": {}
+      }
     }
   ],
   "rooms": [

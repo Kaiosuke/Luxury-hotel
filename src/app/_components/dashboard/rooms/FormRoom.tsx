@@ -22,19 +22,19 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
-import { IForm, IRoomType } from "@/interfaces";
+import { IForm } from "@/interfaces";
 import { useAppDispatch } from "@/redux/store";
 import { RoomTypesSchema } from "@/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
-import { quickDesList, shortFeaturesList, featureList } from "@/app/data.json";
+import { featureList, quickDesList, shortFeaturesList } from "@/app/data.json";
 import { Checkbox } from "@/components/ui/checkbox";
 import { DialogClose } from "@radix-ui/react-dialog";
 import { features } from "process";
-import { AspectRatio } from "@/components/ui/aspect-ratio";
-import Image from "next/image";
+import { z } from "zod";
+import FormUploadImage from "./FormUploadImage";
 
 function FormRoom({ open, onClose, id }: IForm) {
   const [category, setCategory] = useState("Normal");
@@ -46,7 +46,15 @@ function FormRoom({ open, onClose, id }: IForm) {
   const [thumbnailUrl, setThumbnailUrl] = useState("");
   const [thumbnailOption, setThumbnailOption] = useState("keep");
 
-  const { register, formState, handleSubmit, reset } = useForm({
+  const [mapUrl, setMapUrl] = useState("");
+  const [mapOption, setMapOption] = useState("keep");
+
+  // const [imagesUrl, setImagesUrl] = useState<string[]>([]);
+  // const [imagesOption, setImageOption] = useState("keep");
+
+  type FormValues = z.infer<typeof RoomTypesSchema>;
+
+  const { register, formState, handleSubmit, reset } = useForm<FormValues>({
     resolver: zodResolver(RoomTypesSchema),
     defaultValues: {
       thumbnail: "",
@@ -58,8 +66,8 @@ function FormRoom({ open, onClose, id }: IForm) {
       square: "",
       typeBed: "",
       sleeps: 0,
-      // images: [""],
-      // map: "",
+      images: [],
+      map: "",
       shortDes: "",
       detailDes: "",
     },
@@ -80,6 +88,8 @@ function FormRoom({ open, onClose, id }: IForm) {
         roomType.category && setCategory(roomType.category);
         roomType.view && setView(roomType.view);
         roomType.thumbnail && setThumbnailUrl(roomType.thumbnail);
+        roomType.map && setMapUrl(roomType.map);
+        // roomType.images && setImagesUrl(roomType.images);
       })();
     }
   }, [id]);
@@ -102,6 +112,31 @@ function FormRoom({ open, onClose, id }: IForm) {
 
     return data.secure_url;
   };
+
+  // const uploadImages = async (files: FileList | null) => {
+  //   if (!files) return [];
+
+  //   const fileUrls = await Promise.all(
+  //     Array.from(files).map(async (file) => {
+  //       const formData = new FormData();
+  //       formData.append("file", file);
+  //       formData.append("upload_preset", VITE_UPLOAD_PRESET);
+
+  //       const response = await fetch(
+  //         `https://api.cloudinary.com/v1_1/${VITE_CLOUD_NAME}/image/upload`,
+  //         {
+  //           method: "POST",
+  //           body: formData,
+  //         }
+  //       );
+
+  //       const data = await response.json();
+  //       return data.secure_url;
+  //     })
+  //   );
+
+  //   return fileUrls;
+  // };
 
   const handleQuickDes = (value: string) => {
     const exist = quickDes.includes(value);
@@ -143,7 +178,6 @@ function FormRoom({ open, onClose, id }: IForm) {
   };
 
   const onSubmit = async (data: any) => {
-    console.log(data);
     let updatedData = {
       ...data,
       quickDes,
@@ -158,15 +192,38 @@ function FormRoom({ open, onClose, id }: IForm) {
           const thumbnailUrl = await uploadImage(data.thumbnail[0]);
           updatedData = { ...updatedData, thumbnail: thumbnailUrl };
         }
+
+        if (data.map && data.map[0]) {
+          const mapUrl = await uploadImage(data.map[0]);
+          updatedData = { ...updatedData, map: mapUrl };
+        }
+
+        // if (data.images) {
+        //   const imagesUrls = await uploadImages(data.images);
+        //   console.log(imagesUrls);
+        //   updatedData = { ...updatedData, images: imagesUrls };
+        // }
+
         break;
       default:
     }
     if (id) {
       dispatch(updateRoomType({ id, roomType: updatedData }));
+      toast({
+        variant: "success",
+        title: "success",
+        description: "Update success",
+      });
     } else {
       dispatch(addRoomType(updatedData));
+      toast({
+        variant: "success",
+        title: "success",
+        description: "Add has been added to cart",
+      });
     }
-    return onClose(false);
+
+    // return onClose(false);
   };
 
   return (
@@ -483,85 +540,37 @@ function FormRoom({ open, onClose, id }: IForm) {
                 </Dialog>
               </div>
             </div>
-            <div>
-              {id ? (
-                <div>
-                  <Select
-                    value={thumbnailOption}
-                    onValueChange={(value) => setThumbnailOption(value)}
-                  >
-                    <SelectTrigger className="w-fit text-sm">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent className="bg-sidebar-four text-sidebar-primary ">
-                      <SelectItem value="keep">
-                        Keep Current Thumbnail
-                      </SelectItem>
-                      <SelectItem value="upload">
-                        Upload Thumbnail from Local
-                      </SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              ) : (
-                <div>
-                  <Select
-                    value={thumbnailOption}
-                    onValueChange={(value) => setThumbnailOption(value)}
-                  >
-                    <SelectTrigger className="w-[240px] text-sm">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent className="bg-sidebar-four text-sidebar-primary ">
-                      <SelectItem value="upload">
-                        Upload Thumbnail from Local
-                      </SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              )}
-              <div className="grid md:grid-cols-2 gap-4 grid-cols-1 mt-2">
-                <div className="">
-                  {thumbnailOption === "link" && (
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="thumbnail"
-                      {...register("thumbnail")}
-                    />
-                  )}
-                  {thumbnailOption === "upload" && (
-                    <div className="grid w-full max-w-sm items-center gap-1.5 text-primary">
-                      <Input
-                        id="thumbnail"
-                        type="file"
-                        className="text-sidebar-primary"
-                        {...register("thumbnail", { required: true })}
-                      />
-                    </div>
-                  )}
-                  <div className="mt-2">
-                    {formState.errors.thumbnail?.message && (
-                      <p className="text-red-500">
-                        {formState.errors.thumbnail?.message}
-                      </p>
-                    )}
-                    {thumbnailUrl && (
-                      <AspectRatio
-                        ratio={16 / 12}
-                        className="bg-muted rounded-md"
-                      >
-                        <Image
-                          src={thumbnailUrl}
-                          alt="picture"
-                          fill
-                          className="h-full w-full rounded-md object-cover"
-                        />
-                      </AspectRatio>
-                    )}
-                  </div>
-                </div>
-              </div>
+            <div className="grid md:grid-cols-2 gap-4 grid-cols-1 mt-2">
+              <FormUploadImage<FormValues>
+                id={id}
+                title="thumbnail"
+                register={register}
+                formState={formState}
+                option={thumbnailOption}
+                setOption={setThumbnailOption}
+                url={thumbnailUrl}
+                isImages={false}
+              />
+              <FormUploadImage<FormValues>
+                id={id}
+                title="map"
+                register={register}
+                formState={formState}
+                option={mapOption}
+                setOption={setMapOption}
+                url={mapUrl}
+                isImages={false}
+              />
+              {/* <FormUploadImage<FormValues>
+                id={id}
+                title="images"
+                register={register}
+                formState={formState}
+                option={imagesOption}
+                setOption={setImageOption}
+                url={imagesUrl}
+                isImages
+              /> */}
             </div>
           </div>
           <Button type="submit" variant={"outline"} className="text-left">

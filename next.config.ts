@@ -2,7 +2,12 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   images: {
-    domains: ["aguasdeibiza.com", "images.unsplash.com", "res.cloudinary.com"],
+    domains: [
+      "aguasdeibiza.com",
+      "images.unsplash.com",
+      "res.cloudinary.com",
+      "d321ocj5nbe62c.cloudfront.net",
+    ],
   },
   async redirects() {
     return [

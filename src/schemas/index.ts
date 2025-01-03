@@ -87,8 +87,8 @@ const RoomTypesSchema = z.object({
   square: z.string().min(2, "Square must be greater than 2 characters"),
   typeBed: z.string().min(2, "TypeBed must be greater than 2 characters"),
   sleeps: z.number().min(1, "Sleeps greater than or equal to 1"),
-  // images: z.string().array().optional(),
-  // map: z.string().min(1, "Cannot be left blanks"),
+  images: z.any().optional(),
+  map: z.any().optional(),
   shortDes: z.string().min(2, "ShortDes must be greater than 2 characters"),
   detailDes: z.string().min(2, "DetailDes must be greater than 2 characters"),
 });
