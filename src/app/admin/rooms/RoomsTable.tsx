@@ -6,7 +6,8 @@ import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 import FormDeleteRoom from "@/app/_components/dashboard/rooms/FormDeleteRoom";
 import FormRoom from "@/app/_components/dashboard/rooms/FormRoom";
 import DataTable from "@/app/_components/DataTable";
-import { AspectRatio } from "@/components/ui/aspect-ratio";
+import { getRoom, updateRoom } from "@/app/api/roomsRequest";
+import { getRoomType } from "@/app/api/roomTypesRequest";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
@@ -17,33 +18,43 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { IForm, IRoom, IRoomType } from "@/interfaces";
-import { roomTypesSelector } from "@/redux/selectors/roomTypesSelector";
-import Image from "next/image";
-import { useState } from "react";
-import { useSelector } from "react-redux";
+import { IForm, IRoom } from "@/interfaces";
 import { roomsSelector } from "@/redux/selectors/roomsSelector";
+import { useAppDispatch } from "@/redux/store";
+import { format } from "date-fns";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 const RoomsTable = ({ open, onClose }: IForm) => {
   const { rooms } = useSelector(roomsSelector);
 
-  const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
+  const [selectedRoomId, setSelectedRoomId] = useState<string | null>(null);
   const [openFormDelete, setOpenFormDelete] = useState(false);
 
   const handleUpdate = (id: string) => {
-    setSelectedUserId(id);
+    setSelectedRoomId(id);
     onClose(true);
   };
   const handleDelete = (id: string) => {
-    setSelectedUserId(id);
+    setSelectedRoomId(id);
     setOpenFormDelete(true);
   };
 
   const handleCloseForm = () => {
-    setSelectedUserId(null);
+    setSelectedRoomId(null);
     setOpenFormDelete(false);
     onClose(false);
   };
+
+  const dispatch = useAppDispatch();
+
+  const handleChangeStatus = async (id: string, value: string) => {
+    const status = value === "available" ? "maintenance" : "available";
+    const findRoom = await disPatch(getRoom(id)).unwrap();
+    dispatch(updateRoom({ id, room: { ...findRoom, status } }));
+  };
+
+  const disPatch = useAppDispatch();
 
   const roomTypeColumns: ColumnDef<IRoom>[] = [
     {
@@ -76,14 +87,23 @@ const RoomsTable = ({ open, onClose }: IForm) => {
             className="flex text-size-xl items-center cursor-pointer hover:text-sidebar-primary"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            RoomType
+            Room Type
             <ArrowUpDown />
           </div>
         );
       },
-      cell: ({ row }) => (
-        <div className="lowercase">{row.getValue("roomTypeId")}</div>
-      ),
+      cell: ({ row }) => {
+        const roomTypeId = row.getValue("roomTypeId") as string;
+        const [roomTypeTitle, setRoomTypeTitle] = useState<string | null>(null);
+
+        useEffect(() => {
+          disPatch(getRoomType(roomTypeId))
+            .unwrap()
+            .then((roomType) => setRoomTypeTitle(roomType.title));
+        }, [roomTypeId]);
+
+        return <div className="lowercase">{roomTypeTitle || "Loading..."}</div>;
+      },
     },
     {
       accessorKey: "roomNumber",
@@ -104,33 +124,65 @@ const RoomsTable = ({ open, onClose }: IForm) => {
     },
     {
       accessorKey: "status",
-      header: () => {
+      header: ({ column }) => {
         return (
-          <div className="flex text-size-xl items-center cursor-pointer hover:text-sidebar-primary">
+          <div
+            className="flex text-size-xl items-center cursor-pointer hover:text-sidebar-primary"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
             Status
             <ArrowUpDown />
           </div>
         );
       },
-      cell: ({ row }) => (
-        <div className="lowercase">{row.getValue("status")}</div>
-      ),
+      cell: ({ row }) => {
+        const status = row.getValue("status") as string;
+        const id = row.original.id;
+        return (
+          <Button
+            variant={`${status === "available" ? "secondary" : "destructive"}`}
+            className="lowercase"
+            onClick={() => handleChangeStatus(id, status)}
+          >
+            {status}
+          </Button>
+        );
+      },
     },
 
-    // {
-    //   accessorKey: "bookedDates",
-    //   header: () => {
-    //     return (
-    //       <div className="flex text-size-xl items-center cursor-pointer hover:text-sidebar-primary">
-    //         bookedDates
-    //         <ArrowUpDown />
-    //       </div>
-    //     );
-    //   },
-    //   cell: ({ row }) => (
-    //     <div className="lowercase">{row.getValue("bookedDates")}</div>
-    //   ),
-    // },
+    {
+      accessorKey: "bookedDates",
+      header: () => {
+        return (
+          <div className="flex text-size-xl items-center cursor-pointer hover:text-sidebar-primary">
+            bookedDates
+          </div>
+        );
+      },
+      cell: ({ row }) => {
+        const bookedDates = row.getValue("bookedDates") as {
+          from: string;
+          to: string;
+        }[];
+        return (
+          <div className="lowercase">
+            {bookedDates.length ? (
+              <ul>
+                {bookedDates.map((date, index) => (
+                  <li key={index} className="flex gap-2">
+                    <div>{format(new Date(date.from), "dd/MM/yyyy")}</div>
+                    <span>-</span>
+                    <div>{format(new Date(date.to), "dd/MM/yyyy")}</div>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              "No dates booked"
+            )}
+          </div>
+        );
+      },
+    },
 
     {
       id: "actions",
@@ -177,13 +229,13 @@ const RoomsTable = ({ open, onClose }: IForm) => {
         filterPlaceholders="roomNumber"
       />
       {open && (
-        <FormRoom open={open} onClose={handleCloseForm} id={selectedUserId} />
+        <FormRoom open={open} onClose={handleCloseForm} id={selectedRoomId} />
       )}
       {openFormDelete && (
         <FormDeleteRoom
           open={openFormDelete}
           onClose={handleCloseForm}
-          id={selectedUserId}
+          id={selectedRoomId}
         />
       )}
     </>

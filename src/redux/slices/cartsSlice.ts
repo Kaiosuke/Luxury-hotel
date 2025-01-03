@@ -70,7 +70,7 @@ const cartsSlice = createSlice({
       addCart.fulfilled,
       (state, action: PayloadAction<ICart>) => {
         state.loading = false;
-        state.cartsUser = [...state.carts, action.payload];
+        state.cartsUser = [...state.cartsUser, action.payload];
         state.carts = [...state.carts, action.payload];
       }
     );
@@ -84,7 +84,7 @@ const cartsSlice = createSlice({
         state.carts = state.carts.map((user) =>
           user.id === action.payload.id ? action.payload : user
         );
-        state.cartsUser = state.carts.map((user) =>
+        state.cartsUser = state.cartsUser.map((user) =>
           user.id === action.payload.id ? action.payload : user
         );
       }
@@ -97,7 +97,7 @@ const cartsSlice = createSlice({
       (state, action: PayloadAction<string>) => {
         state.loading = false;
         state.carts = state.carts.filter((user) => user.id !== action.payload);
-        state.cartsUser = state.carts.filter(
+        state.cartsUser = state.cartsUser.filter(
           (user) => user.id !== action.payload
         );
       }

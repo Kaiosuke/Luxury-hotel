@@ -21,7 +21,7 @@ function FormDeleteUser({ open, onClose, id }: IForm) {
     toast({
       variant: "success",
       title: "Success",
-      description: "Delete user success",
+      description: "Delete User success",
     });
     return onClose(false);
   };

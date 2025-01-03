@@ -74,8 +74,8 @@ const data = {
       icon: FaShoppingCart,
       items: [
         {
-          title: "Room List",
-          url: "/admin/carts",
+          title: "Cart List",
+          url: "/admin/cart",
         },
         {
           title: "Quantum",

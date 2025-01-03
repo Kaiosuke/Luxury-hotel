@@ -65,7 +65,7 @@ function FormUser({ open, onClose, id }: IForm) {
   const handleGetData = (data: IUser) => {
     const newRole =
       role === "ceo" ? ERole.ceo : role === "admin" ? ERole.admin : ERole.user;
-    const newData = {
+    const newUser = {
       username: data.username,
       email: data.email,
       password: data.password,
@@ -76,18 +76,18 @@ function FormUser({ open, onClose, id }: IForm) {
       role: newRole,
     };
     if (id) {
-      dispatch(updateUser({ id, user: newData }));
+      dispatch(updateUser({ id, user: newUser }));
       toast({
         variant: "success",
         title: "Success",
-        description: "Update user success",
+        description: "Update User success",
       });
     } else {
-      dispatch(addUser(newData));
+      dispatch(addUser(newUser));
       toast({
         variant: "success",
         title: "Success",
-        description: "Add user success",
+        description: "Add User success",
       });
     }
     return onClose(false);

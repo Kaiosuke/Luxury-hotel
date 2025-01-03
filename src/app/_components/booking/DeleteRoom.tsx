@@ -1,4 +1,4 @@
-import { deleteCart } from "@/app/api/cartsRequest";
+import { deleteCart, getAllCartByUserId } from "@/app/api/cartsRequest";
 import {
   AlertDialog,
   AlertDialogContent,
@@ -9,7 +9,10 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import useAppContext from "@/hooks/useAppContext";
+import { authSelector } from "@/redux/selectors/authSelector";
 import { useAppDispatch } from "@/redux/store";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
 
 interface IDeleteForm {
   showDelete: boolean;
@@ -20,6 +23,7 @@ function DeleteRoom({ showDelete, setShowDelete }: IDeleteForm) {
   const { cartId, setCartId } = useAppContext();
 
   const dispatch = useAppDispatch();
+  const { currentUser } = useSelector(authSelector);
 
   const handleClose = () => {
     setShowDelete(false);

@@ -25,17 +25,17 @@ const page = () => {
 
   const router = useRouter();
 
+  useEffect(() => {
+    if (!currentUser) {
+      router.push("/");
+    }
+  }, []);
+
   const dispatch = useAppDispatch();
   useEffect(() => {
     currentUser &&
       currentUser.id &&
       dispatch(getAllCartByUserId(currentUser.id));
-  }, []);
-
-  useEffect(() => {
-    if (!currentUser) {
-      router.push("/");
-    }
   }, []);
 
   if (!currentUser) {

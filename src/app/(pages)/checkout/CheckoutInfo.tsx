@@ -32,7 +32,7 @@ import {
   cartsSelector,
   cartUserRemainingSelector,
 } from "@/redux/selectors/cartsSelector";
-import { getAllCart, updateCart } from "@/app/api/cartsRequest";
+import { deleteCart, getAllCart, updateCart } from "@/app/api/cartsRequest";
 import LoadingPage from "@/app/_components/LoadingPage";
 import { getRoom, updateRoom } from "@/app/api/roomsRequest";
 import { addCartSuccess } from "@/redux/slices/cartsSlice";
@@ -94,36 +94,36 @@ const CheckoutInfo = () => {
           status: ECart.booked,
         };
 
-        // currentUser.id &&
-        //   (await dispatch(updateCart({ id: cart.id, cart: newCart })));
-
-        // const { from, to } = cart.bookedDates;
+        currentUser.id &&
+          (await dispatch(updateCart({ id: cart.id, cart: newCart })));
 
         const availableCart = useAvailableCartsUsers({
           carts: carts,
           newBooking: cart,
         });
-        // console.log(carts, cartsUsers);
-        console.log(availableCart);
 
-        // const findRoom = await dispatch(getRoom(cart.roomId)).unwrap();
-        // const updatedBookedDates = [
-        //   ...findRoom.bookedDates,
-        //   {
-        //     from: cart.bookedDates.from,
-        //     to: cart.bookedDates.to,
-        //   },
-        // ];
+        const existCart = availableCart.find((data) => data.id !== cart.id);
+        if (existCart) {
+          dispatch(deleteCart(existCart.id));
+        }
+        const findRoom = await dispatch(getRoom(cart.roomId)).unwrap();
+        const updatedBookedDates = [
+          ...findRoom.bookedDates,
+          {
+            from: cart.bookedDates.from,
+            to: cart.bookedDates.to,
+          },
+        ];
 
-        // await dispatch(
-        //   updateRoom({
-        //     id: cart.roomId,
-        //     room: { ...findRoom, bookedDates: updatedBookedDates },
-        //   })
-        // );
+        await dispatch(
+          updateRoom({
+            id: cart.roomId,
+            room: { ...findRoom, bookedDates: updatedBookedDates },
+          })
+        );
       }
     }
-    // router.push("/booking/success");
+    router.push("/booking/success");
   };
 
   if (!carts.length) {

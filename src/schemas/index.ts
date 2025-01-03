@@ -93,6 +93,10 @@ const RoomTypesSchema = z.object({
   detailDes: z.string().min(2, "DetailDes must be greater than 2 characters"),
 });
 
+const RoomSchema = z.object({
+  roomNumber: z.number().min(1, "Minimum number of rooms 1"),
+});
+
 export {
   SubscribeSchema,
   LoginSchema,
@@ -100,4 +104,5 @@ export {
   CheckOutSchema,
   UserSchema,
   RoomTypesSchema,
+  RoomSchema,
 };

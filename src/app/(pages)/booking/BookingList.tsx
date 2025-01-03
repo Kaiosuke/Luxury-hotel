@@ -169,11 +169,12 @@ const BookingList = ({
               />
             </AspectRatio>
             <ul className="mt-4 flex-col gap-2 md:flex hidden">
-              {roomType.features.map((feature, index) => (
-                <li key={index} className="flex items-center gap-2">
-                  {filterIconFeature(feature)} {feature}
-                </li>
-              ))}
+              {roomType.features &&
+                roomType.features.map((feature, index) => (
+                  <li key={index} className="flex items-center gap-2">
+                    {filterIconFeature(feature)} {feature}
+                  </li>
+                ))}
             </ul>
           </div>
           <div className="flex-[1_0_auto] md:max-w-[70%] max-w-[100%]">

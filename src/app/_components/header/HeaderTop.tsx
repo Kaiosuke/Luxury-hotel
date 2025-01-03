@@ -44,8 +44,6 @@ const HeaderTop = ({
     dispatch(loginUser(null));
   };
 
-  // console.log(cartsUsers);
-
   return (
     <div
       className={`flex justify-between items-center md:px-10 py-4 sm:px-6 px-3 relative z-[2] `}

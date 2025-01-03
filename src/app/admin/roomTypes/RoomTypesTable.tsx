@@ -3,8 +3,8 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 
-import FormDeleteRoom from "@/app/_components/dashboard/rooms/FormDeleteRoom";
-import FormRoom from "@/app/_components/dashboard/rooms/FormRoom";
+import FormDeleteRoomType from "@/app/_components/dashboard/roomTypes/FormDeleteRoomType";
+import FormRoom from "@/app/_components/dashboard/roomTypes/FormRoomType";
 import DataTable from "@/app/_components/DataTable";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Button } from "@/components/ui/button";
@@ -26,20 +26,22 @@ import { useSelector } from "react-redux";
 const RoomTypesTable = ({ open, onClose }: IForm) => {
   const { roomTypes } = useSelector(roomTypesSelector);
 
-  const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
+  const [selectedRoomTypeId, setSelectedRoomTypeId] = useState<string | null>(
+    null
+  );
   const [openFormDelete, setOpenFormDelete] = useState(false);
 
   const handleUpdate = (id: string) => {
-    setSelectedUserId(id);
+    setSelectedRoomTypeId(id);
     onClose(true);
   };
   const handleDelete = (id: string) => {
-    setSelectedUserId(id);
+    setSelectedRoomTypeId(id);
     setOpenFormDelete(true);
   };
 
   const handleCloseForm = () => {
-    setSelectedUserId(null);
+    setSelectedRoomTypeId(null);
     setOpenFormDelete(false);
     onClose(false);
   };
@@ -168,7 +170,7 @@ const RoomTypesTable = ({ open, onClose }: IForm) => {
           <AspectRatio ratio={16 / 9} className="bg-muted">
             <Image
               src={thumbnailUrl as string}
-              alt="Photo by Drew Beamer"
+              alt="Photo by Kaio"
               fill
               className="h-full w-full rounded-md object-cover"
             />
@@ -221,13 +223,17 @@ const RoomTypesTable = ({ open, onClose }: IForm) => {
         filterPlaceholders="title"
       />
       {open && (
-        <FormRoom open={open} onClose={handleCloseForm} id={selectedUserId} />
+        <FormRoom
+          open={open}
+          onClose={handleCloseForm}
+          id={selectedRoomTypeId}
+        />
       )}
       {openFormDelete && (
-        <FormDeleteRoom
+        <FormDeleteRoomType
           open={openFormDelete}
           onClose={handleCloseForm}
-          id={selectedUserId}
+          id={selectedRoomTypeId}
         />
       )}
     </>

@@ -12,7 +12,7 @@ import { useToast } from "@/hooks/use-toast";
 import { IForm } from "@/interfaces";
 import { useAppDispatch } from "@/redux/store";
 
-function FormDeleteRoom({ open, onClose, id }: IForm) {
+function FormDeleteCart({ open, onClose, id }: IForm) {
   const dispatch = useAppDispatch();
   const { toast } = useToast();
 
@@ -29,9 +29,9 @@ function FormDeleteRoom({ open, onClose, id }: IForm) {
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-[425px]  bg-sidebar-four text-sidebar-primary">
         <DialogHeader>
-          <DialogTitle className="md:text-2xl text-xl">Delete Room</DialogTitle>
+          <DialogTitle className="md:text-2xl text-xl">Delete Cart</DialogTitle>
           <DialogDescription className="text-sidebar-primary">
-            Are you sure you want to delete this Room?
+            Are you sure you want to delete this Cart?
           </DialogDescription>
         </DialogHeader>
 
@@ -52,4 +52,4 @@ function FormDeleteRoom({ open, onClose, id }: IForm) {
   );
 }
 
-export default FormDeleteRoom;
+export default FormDeleteCart;
