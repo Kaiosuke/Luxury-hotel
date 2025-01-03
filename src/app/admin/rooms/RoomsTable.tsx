@@ -24,12 +24,15 @@ import { useAppDispatch } from "@/redux/store";
 import { format } from "date-fns";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { roomTypesSelector } from "@/redux/selectors/roomTypesSelector";
 
 const RoomsTable = ({ open, onClose }: IForm) => {
   const { rooms } = useSelector(roomsSelector);
 
   const [selectedRoomId, setSelectedRoomId] = useState<string | null>(null);
   const [openFormDelete, setOpenFormDelete] = useState(false);
+
+  const { roomTypes } = useSelector(roomTypesSelector);
 
   const handleUpdate = (id: string) => {
     setSelectedRoomId(id);
@@ -94,15 +97,10 @@ const RoomsTable = ({ open, onClose }: IForm) => {
       },
       cell: ({ row }) => {
         const roomTypeId = row.getValue("roomTypeId") as string;
-        const [roomTypeTitle, setRoomTypeTitle] = useState<string | null>(null);
-
-        useEffect(() => {
-          disPatch(getRoomType(roomTypeId))
-            .unwrap()
-            .then((roomType) => setRoomTypeTitle(roomType.title));
-        }, [roomTypeId]);
-
-        return <div className="lowercase">{roomTypeTitle || "Loading..."}</div>;
+        const findRoomType = roomTypes.find(
+          (roomType) => roomType.id === roomTypeId
+        );
+        return <div className="lowercase">{findRoomType?.title || "N/A"}</div>;
       },
     },
     {

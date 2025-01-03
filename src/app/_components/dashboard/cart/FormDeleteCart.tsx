@@ -1,4 +1,5 @@
-import { deleteRoom } from "@/app/api/roomsRequest";
+import { deleteCart, getCart } from "@/app/api/cartsRequest";
+import { deleteRoom, getRoom, updateRoom } from "@/app/api/roomsRequest";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -16,13 +17,29 @@ function FormDeleteCart({ open, onClose, id }: IForm) {
   const dispatch = useAppDispatch();
   const { toast } = useToast();
 
-  const handleDelete = () => {
-    id && dispatch(deleteRoom(id));
-    toast({
-      variant: "success",
-      title: "Success",
-      description: "Delete Room success",
-    });
+  const handleDelete = async () => {
+    if (id) {
+      const cart = await dispatch(getCart(id)).unwrap();
+      const room = await dispatch(getRoom(cart.roomId)).unwrap();
+      const newBookDates = room.bookedDates.filter(
+        (date) =>
+          date.from !== cart.bookedDates.from || date.to !== cart.bookedDates.to
+      );
+
+      const newRoom = {
+        ...room,
+        bookedDates: newBookDates,
+      };
+
+      await dispatch(updateRoom({ id: cart.roomId, room: newRoom }));
+
+      await dispatch(deleteCart(id));
+      toast({
+        variant: "success",
+        title: "Success",
+        description: "Delete Room success",
+      });
+    }
     return onClose(false);
   };
   return (

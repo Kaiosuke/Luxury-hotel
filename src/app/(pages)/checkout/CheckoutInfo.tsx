@@ -123,6 +123,7 @@ const CheckoutInfo = () => {
         );
       }
     }
+    dispatch(addCartSuccess(cartsUsers));
     router.push("/booking/success");
   };
 

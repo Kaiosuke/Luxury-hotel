@@ -9,13 +9,18 @@ import { useSelector } from "react-redux";
 import { cartsSelector } from "@/redux/selectors/cartsSelector";
 import { authSelector } from "@/redux/selectors/authSelector";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import LoadingPage from "@/app/_components/LoadingPage";
 import { formatMoney, sumMoney } from "@/utils/helpers";
+import { useReactToPrint } from "react-to-print";
+import { Button } from "@/components/ui/button";
 
 const page = () => {
   const { currentUser } = useSelector(authSelector);
   const { cartsSuccess } = useSelector(cartsSelector);
+
+  const contentRef = useRef<HTMLDivElement>(null);
+  const reactToPrintFn = useReactToPrint({ contentRef });
 
   const router = useRouter();
 
@@ -27,6 +32,7 @@ const page = () => {
   if (!currentUser) {
     return <LoadingPage />;
   }
+
   return (
     <>
       <HeroImage
@@ -37,7 +43,7 @@ const page = () => {
         isBook={true}
       />
       <div className="pd-medium" />
-      <section className="padding-main">
+      <section className="padding-main" ref={contentRef}>
         <div className="flex lg:flex-row flex-col gap-4">
           <div className="flex-[1_0_auto] lg:max-w-[70%] p-4 max-w-[100%]">
             <div className="border border-secondary rounded-lg p-4 text-third">
@@ -58,8 +64,14 @@ const page = () => {
                 </div>
               </div>
             </div>
+
             <div className="flex flex-col gap-4 mt-4">
               <Success />
+            </div>
+            <div className="text-right mt-4">
+              <Button variant={"third"} onClick={() => reactToPrintFn()}>
+                Print
+              </Button>
             </div>
           </div>
           <div className="lg:max-w-[30%] max-w-[100%] ">

@@ -1,7 +1,7 @@
 {
   "users": [
     {
-      "username": "Kaio12",
+      "username": "Kaio",
       "email": "trongleele@gmail.com",
       "role": "ceo",
       "password": "lehuutrong",
@@ -409,11 +409,11 @@
       "category": "Premier",
       "view": "Pool",
       "id": "JGBki5I",
-      "images": {
-        "0": {},
-        "1": {},
-        "2": {}
-      }
+      "images": [
+        "https://d321ocj5nbe62c.cloudfront.net/imageRepo/7/0/111/661/862/PRINT-Aguas-de-Ibiza-Room-2019-2_P.jpg",
+        "https://d321ocj5nbe62c.cloudfront.net/imageRepo/7/0/111/661/890/PRINT-Aguas-de-Ibiza-Room-2019-6_P.jpg",
+        "https://d321ocj5nbe62c.cloudfront.net/imageRepo/7/0/111/661/916/PRINT-Aguas-de-Ibiza-Room-2019-20_P.jpg"
+      ]
     },
     {
       "thumbnail": "https://res.cloudinary.com/dyjvnhq5s/image/upload/v1735927501/elden_ring_akmudh.jpg",
@@ -471,6 +471,10 @@
         {
           "from": "2025-01-03T17:00:00.000Z",
           "to": "2025-01-06T17:00:00.000Z"
+        },
+        {
+          "from": "2025-01-07T17:00:00.000Z",
+          "to": "2025-01-10T17:00:00.000Z"
         }
       ]
     },
@@ -488,6 +492,10 @@
         {
           "from": "2025-01-03T17:00:00.000Z",
           "to": "2025-01-04T17:00:00.000Z"
+        },
+        {
+          "from": "2025-01-07T17:00:00.000Z",
+          "to": "2025-01-21T17:00:00.000Z"
         }
       ]
     },
@@ -501,6 +509,18 @@
         {
           "from": "2025-01-03T17:00:00.000Z",
           "to": "2025-01-06T17:00:00.000Z"
+        },
+        {
+          "from": "2025-01-03T17:00:00.000Z",
+          "to": "2025-01-06T17:00:00.000Z"
+        },
+        {
+          "from": "2025-01-03T17:00:00.000Z",
+          "to": "2025-01-06T17:00:00.000Z"
+        },
+        {
+          "from": "2025-01-07T17:00:00.000Z",
+          "to": "2025-01-21T17:00:00.000Z"
         }
       ]
     },
@@ -510,7 +530,12 @@
       "roomNumber": "204",
       "floor": 2,
       "status": "available",
-      "bookedDates": []
+      "bookedDates": [
+        {
+          "from": "2025-01-09T17:00:00.000Z",
+          "to": "2025-01-19T17:00:00.000Z"
+        }
+      ]
     },
     {
       "id": "205",
@@ -530,8 +555,16 @@
       "roomTypeId": "1",
       "roomNumber": "206",
       "floor": 2,
-      "status": "available",
+      "status": "maintenance",
       "bookedDates": [
+        {
+          "from": "2025-01-03T17:00:00.000Z",
+          "to": "2025-01-06T17:00:00.000Z"
+        },
+        {
+          "from": "2025-01-03T17:00:00.000Z",
+          "to": "2025-01-06T17:00:00.000Z"
+        },
         {
           "from": "2025-01-03T17:00:00.000Z",
           "to": "2025-01-06T17:00:00.000Z"
@@ -603,6 +636,10 @@
       "floor": 3,
       "status": "available",
       "bookedDates": [
+        {
+          "from": "2025-01-03T17:00:00.000Z",
+          "to": "2025-01-06T17:00:00.000Z"
+        },
         {
           "from": "2025-01-03T17:00:00.000Z",
           "to": "2025-01-06T17:00:00.000Z"
@@ -772,7 +809,12 @@
       "roomNumber": "410",
       "floor": 4,
       "status": "available",
-      "bookedDates": []
+      "bookedDates": [
+        {
+          "from": "2025-01-19T17:00:00.000Z",
+          "to": "2025-01-22T17:00:00.000Z"
+        }
+      ]
     },
     {
       "id": "411",
@@ -787,7 +829,7 @@
       "roomTypeId": "3",
       "roomNumber": "412",
       "floor": 4,
-      "status": "available",
+      "status": "maintenance",
       "bookedDates": []
     },
     {
@@ -811,7 +853,7 @@
       "roomTypeId": "4",
       "roomNumber": "501",
       "floor": 5,
-      "status": "available",
+      "status": "maintenance",
       "bookedDates": []
     },
     {
@@ -916,7 +958,12 @@
       "roomNumber": "603",
       "floor": 6,
       "status": "available",
-      "bookedDates": []
+      "bookedDates": [
+        {
+          "from": "2025-01-19T17:00:00.000Z",
+          "to": "2025-01-22T17:00:00.000Z"
+        }
+      ]
     },
     {
       "id": "604",
@@ -956,7 +1003,12 @@
       "roomNumber": "608",
       "floor": 6,
       "status": "available",
-      "bookedDates": []
+      "bookedDates": [
+        {
+          "from": "2025-01-19T17:00:00.000Z",
+          "to": "2025-01-22T17:00:00.000Z"
+        }
+      ]
     },
     {
       "id": "609",
@@ -1048,7 +1100,7 @@
     },
     {
       "roomNumber": 321321,
-      "roomTypeId": "JGBki5I",
+      "roomTypeId": "uM8LlgH",
       "floor": 3,
       "status": "maintenance",
       "bookedDates": [],
@@ -1109,21 +1161,6 @@
         "to": "2025-01-09T17:00:00.000Z"
       },
       "id": 4
-    },
-    {
-      "userId": "1",
-      "roomTypeId": "1",
-      "optionId": "1",
-      "roomId": "201",
-      "status": "booked",
-      "price": 330,
-      "totalPrice": 990,
-      "day": 3,
-      "bookedDates": {
-        "from": "2025-01-03T17:00:00.000Z",
-        "to": "2025-01-06T17:00:00.000Z"
-      },
-      "id": 5
     },
     {
       "userId": "1",
@@ -1190,7 +1227,7 @@
       "roomTypeId": "1",
       "optionId": "1",
       "roomId": "207",
-      "status": "booked",
+      "status": "pending",
       "price": 330,
       "totalPrice": 1980,
       "day": 6,
@@ -1205,7 +1242,7 @@
       "roomTypeId": "1",
       "optionId": "1",
       "roomId": "208",
-      "status": "booked",
+      "status": "pending",
       "price": 330,
       "totalPrice": 1980,
       "day": 6,
@@ -1217,25 +1254,10 @@
     },
     {
       "userId": "1",
-      "roomTypeId": "1",
-      "optionId": "1",
-      "roomId": "212",
-      "status": "pending",
-      "price": 330,
-      "totalPrice": 660,
-      "day": 2,
-      "bookedDates": {
-        "from": "2025-01-08T17:00:00.000Z",
-        "to": "2025-01-10T17:00:00.000Z"
-      },
-      "id": 15
-    },
-    {
-      "userId": "1",
       "roomTypeId": "5",
       "optionId": "1",
       "roomId": "603",
-      "status": "pending",
+      "status": "booked",
       "price": 506,
       "totalPrice": 1518,
       "day": 3,
@@ -1250,7 +1272,7 @@
       "roomTypeId": "5",
       "optionId": "1",
       "roomId": "608",
-      "status": "pending",
+      "status": "booked",
       "price": 506,
       "totalPrice": 1518,
       "day": 3,
@@ -1265,7 +1287,7 @@
       "roomTypeId": "3",
       "optionId": "1",
       "roomId": "410",
-      "status": "pending",
+      "status": "booked",
       "price": 418,
       "totalPrice": 1254,
       "day": 3,
@@ -1274,6 +1296,66 @@
         "to": "2025-01-22T17:00:00.000Z"
       },
       "id": 18
+    },
+    {
+      "userId": "1",
+      "roomTypeId": "1",
+      "optionId": "1",
+      "roomId": "201",
+      "status": "booked",
+      "price": 330,
+      "totalPrice": 990,
+      "day": 3,
+      "bookedDates": {
+        "from": "2025-01-07T17:00:00.000Z",
+        "to": "2025-01-10T17:00:00.000Z"
+      },
+      "id": 19
+    },
+    {
+      "userId": "1",
+      "roomTypeId": "1",
+      "optionId": "1",
+      "roomId": "203",
+      "status": "booked",
+      "price": 330,
+      "totalPrice": 4620,
+      "day": 14,
+      "bookedDates": {
+        "from": "2025-01-07T17:00:00.000Z",
+        "to": "2025-01-21T17:00:00.000Z"
+      },
+      "id": 20
+    },
+    {
+      "userId": "1",
+      "roomTypeId": "1",
+      "optionId": "1",
+      "roomId": "202",
+      "status": "booked",
+      "price": 330,
+      "totalPrice": 4620,
+      "day": 14,
+      "bookedDates": {
+        "from": "2025-01-07T17:00:00.000Z",
+        "to": "2025-01-21T17:00:00.000Z"
+      },
+      "id": 21
+    },
+    {
+      "userId": "1",
+      "roomTypeId": "1",
+      "optionId": "1",
+      "roomId": "204",
+      "status": "booked",
+      "price": 330,
+      "totalPrice": 3300,
+      "day": 10,
+      "bookedDates": {
+        "from": "2025-01-09T17:00:00.000Z",
+        "to": "2025-01-19T17:00:00.000Z"
+      },
+      "id": 22
     }
   ]
 }

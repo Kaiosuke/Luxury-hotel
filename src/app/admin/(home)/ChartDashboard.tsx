@@ -16,31 +16,33 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
+
 const chartData = [
-  { month: "January", desktop: 186, mobile: 80 },
-  { month: "February", desktop: 305, mobile: 200 },
-  { month: "March", desktop: 237, mobile: 120 },
-  { month: "April", desktop: 73, mobile: 190 },
-  { month: "May", desktop: 209, mobile: 130 },
-  { month: "June", desktop: 214, mobile: 140 },
+  { month: "January", online: 12000, offline: 8000 },
+  { month: "February", online: 15000, offline: 9500 },
+  { month: "March", online: 18000, offline: 12000 },
+  { month: "April", online: 20000, offline: 13000 },
+  { month: "May", online: 22000, offline: 14000 },
+  { month: "June", online: 25000, offline: 16000 },
 ];
+
 const chartConfig = {
-  desktop: {
-    label: "Desktop",
+  online: {
+    label: "Online Sales",
     color: "var(--chart-1)",
   },
-  mobile: {
-    label: "Mobile",
+  offline: {
+    label: "Offline Sales",
     color: "var(--chart-2)",
   },
 } satisfies ChartConfig;
 
-function ChartDashboard() {
+function SalesChartDashboard() {
   return (
     <div>
       <Card className="rounded-xl border-none bg-sidebar-four text-sidebar-primary">
         <CardHeader>
-          <CardTitle>Bar Chart - Multiple</CardTitle>
+          <CardTitle>Monthly Sales Chart</CardTitle>
           <CardDescription>January - June 2024</CardDescription>
         </CardHeader>
         <CardContent>
@@ -58,17 +60,17 @@ function ChartDashboard() {
                 cursor={false}
                 content={<ChartTooltipContent indicator="dashed" />}
               />
-              <Bar dataKey="desktop" fill="var(--color-desktop)" radius={4} />
-              <Bar dataKey="mobile" fill="var(--color-mobile)" radius={4} />
+              <Bar dataKey="online" fill="var(--color-online)" radius={4} />
+              <Bar dataKey="offline" fill="var(--color-offline)" radius={4} />
             </BarChart>
           </ChartContainer>
         </CardContent>
         <CardFooter className="flex-col items-start gap-2 text-sm">
           <div className="flex gap-2 font-medium leading-none">
-            Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
+            Trending up by 12% this month <TrendingUp className="h-4 w-4" />
           </div>
           <div className="leading-none text-muted-foreground">
-            Showing total visitors for the last 6 months
+            Showing total sales for the last 6 months
           </div>
         </CardFooter>
       </Card>
@@ -76,4 +78,4 @@ function ChartDashboard() {
   );
 }
 
-export default ChartDashboard;
+export default SalesChartDashboard;

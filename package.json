@@ -58,6 +58,7 @@
     "react-redux": "^9.2.0",
     "react-resizable-panels": "^2.1.7",
     "react-scroll-parallax": "^3.4.5",
+    "react-to-print": "^3.0.4",
     "recharts": "^2.15.0",
     "redux": "^5.0.1",
     "redux-persist": "^6.0.0",

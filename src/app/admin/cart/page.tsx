@@ -44,12 +44,6 @@ const page = () => {
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
-        <div>
-          <Button variant={"secondary"} onClick={() => setOpenForm(true)}>
-            <FaPlus />
-            Add RoomType
-          </Button>
-        </div>
       </div>
       <div className="mt-6">
         <CartsTable open={openForm} onClose={setOpenForm} />

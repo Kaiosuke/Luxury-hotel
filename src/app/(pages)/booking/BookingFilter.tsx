@@ -75,7 +75,7 @@ const BookingFilter = () => {
             Recommended
           </SelectItem>
           <SelectItem value="rate" className="lg:text-xl text-primary">
-            rate
+            Rate
           </SelectItem>
           <SelectItem value="low" className="lg:text-xl text-primary">
             Lowest Price

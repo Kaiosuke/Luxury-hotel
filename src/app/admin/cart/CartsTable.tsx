@@ -3,14 +3,10 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 
-import FormDeleteRoom from "@/app/_components/dashboard/rooms/FormDeleteRoom";
+import FormDeleteCart from "@/app/_components/dashboard/cart/FormDeleteCart";
 import FormRoom from "@/app/_components/dashboard/rooms/FormRoom";
 import DataTable from "@/app/_components/DataTable";
-import { getCart, updateCart } from "@/app/api/cartsRequest";
-import { getOption } from "@/app/api/optionsRequest";
-import { getRoom } from "@/app/api/roomsRequest";
-import { getRoomType } from "@/app/api/roomTypesRequest";
-import { getUser } from "@/app/api/usersRequest";
+import { updateCart } from "@/app/api/cartsRequest";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
@@ -28,14 +24,17 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useToast } from "@/hooks/use-toast";
 import { ECart, IForm } from "@/interfaces";
 import { cartsSelector } from "@/redux/selectors/cartsSelector";
+import { optionsSelector } from "@/redux/selectors/optionsSelector";
+import { roomsSelector } from "@/redux/selectors/roomsSelector";
+import { roomTypesSelector } from "@/redux/selectors/roomTypesSelector";
+import { usersSelector } from "@/redux/selectors/usersSelector";
 import { useAppDispatch } from "@/redux/store";
 import { format } from "date-fns";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import FormDeleteCart from "@/app/_components/dashboard/cart/FormDeleteCart";
-import { useToast } from "@/hooks/use-toast";
 
 const CartsTable = ({ open, onClose }: IForm) => {
   const { carts } = useSelector(cartsSelector);
@@ -44,6 +43,11 @@ const CartsTable = ({ open, onClose }: IForm) => {
   const [openFormDelete, setOpenFormDelete] = useState(false);
 
   const { toast } = useToast();
+
+  const { users } = useSelector(usersSelector);
+  const { roomTypes } = useSelector(roomTypesSelector);
+  const { rooms } = useSelector(roomsSelector);
+  const { options } = useSelector(optionsSelector);
 
   const handleDelete = (id: string) => {
     setSelectedCartId(id);
@@ -96,15 +100,8 @@ const CartsTable = ({ open, onClose }: IForm) => {
       },
       cell: ({ row }) => {
         const userId = row.getValue("userId") as string;
-        const [username, setUsername] = useState<string | null>(null);
-
-        useEffect(() => {
-          disPatch(getUser(userId))
-            .unwrap()
-            .then((user) => setUsername(user.username));
-        }, [userId]);
-
-        return <div className="lowercase">{username || "Loading..."}</div>;
+        const findUser = users.find((user) => user.id === userId);
+        return <div className="lowercase">{findUser?.username || "N/A"}</div>;
       },
     },
     {
@@ -122,15 +119,10 @@ const CartsTable = ({ open, onClose }: IForm) => {
       },
       cell: ({ row }) => {
         const roomTypeId = row.getValue("roomTypeId") as string;
-        const [roomTypeTitle, setRoomTypeTitle] = useState<string | null>(null);
-
-        useEffect(() => {
-          disPatch(getRoomType(roomTypeId))
-            .unwrap()
-            .then((roomType) => setRoomTypeTitle(roomType.title));
-        }, [roomTypeId]);
-
-        return <div className="lowercase">{roomTypeTitle || "Loading..."}</div>;
+        const findRoomType = roomTypes.find(
+          (roomType) => roomType.id === roomTypeId
+        );
+        return <div className="lowercase">{findRoomType?.title || "N/A"}</div>;
       },
     },
     {
@@ -148,15 +140,9 @@ const CartsTable = ({ open, onClose }: IForm) => {
       },
       cell: ({ row }) => {
         const optionId = row.getValue("optionId") as string;
-        const [optionTitle, setOptionTitle] = useState<string | null>(null);
-
-        useEffect(() => {
-          disPatch(getOption(optionId))
-            .unwrap()
-            .then((option) => setOptionTitle(option.title));
-        }, [optionId]);
-
-        return <div className="lowercase">{optionTitle || "Loading..."}</div>;
+        const findOption =
+          options && options.find((option) => option.id === optionId);
+        return <div className="lowercase">{findOption?.title || "N/A"}</div>;
       },
     },
     {
@@ -174,20 +160,8 @@ const CartsTable = ({ open, onClose }: IForm) => {
       },
       cell: ({ row }) => {
         const roomId = row.getValue("roomId") as string;
-        const [roomTitle, setRoomTitle] = useState<string | null>(null);
-
-        useEffect(() => {
-          toast({
-            variant: "success",
-            title: "Success",
-            description: "Change status Cart success",
-          });
-          disPatch(getRoom(roomId))
-            .unwrap()
-            .then((room) => setRoomTitle(room.roomNumber));
-        }, [roomId]);
-
-        return <div className="lowercase">{roomTitle || "Loading..."}</div>;
+        const findRoom = rooms.find((room) => room.id === roomId);
+        return <div className="lowercase">{findRoom?.roomNumber || "N/A"}</div>;
       },
     },
 
@@ -238,7 +212,6 @@ const CartsTable = ({ open, onClose }: IForm) => {
       },
       cell: ({ row }) => {
         const statusCart = row.getValue("status") as string;
-        const id = row.original.id;
         const [status, setStatus] = useState<string>(statusCart);
 
         useEffect(() => {
@@ -253,17 +226,20 @@ const CartsTable = ({ open, onClose }: IForm) => {
               ? ECart.pending
               : ECart.confirm;
 
-          disPatch(getCart(id))
-            .unwrap()
-            .then((cart) =>
-              disPatch(
-                updateCart({
-                  id: cart.id,
-                  cart: { ...cart, status: newStatus },
-                })
-              )
-            );
-          setStatus(value);
+          disPatch(
+            updateCart({
+              id: row.original.id,
+              cart: { ...row.original, status: newStatus },
+            })
+          );
+
+          toast({
+            variant: "success",
+            title: "Success",
+            description: "Change status Cart success",
+          });
+
+          return setStatus(value);
         };
 
         return (
@@ -349,6 +325,7 @@ const CartsTable = ({ open, onClose }: IForm) => {
       },
     },
   ];
+
   return (
     <>
       <DataTable

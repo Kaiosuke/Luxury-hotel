@@ -68,16 +68,18 @@ const HeaderTop = ({
         </Link>
       </div>
       <div className="flex items-center sm:gap-4 gap-2">
-        <Button
-          variant="outline"
-          className={`text-size-lg animation-normal ${
-            isScrolled &&
-            !openMenu &&
-            "border-third text-third hover:border-primary hover:bg-secondary"
-          } ${openMenu ? "hover:bg-primary hover:text-secondary" : ""}`}
-        >
-          Book now
-        </Button>
+        <Link href="/booking">
+          <Button
+            variant="outline"
+            className={`text-size-lg animation-normal ${
+              isScrolled &&
+              !openMenu &&
+              "border-third text-third hover:border-primary hover:bg-secondary"
+            } ${openMenu ? "hover:bg-primary hover:text-secondary" : ""}`}
+          >
+            Book now
+          </Button>
+        </Link>
         <div>
           {currentUser && (
             <DropdownMenu>
@@ -127,7 +129,7 @@ const HeaderTop = ({
                     </Link>
                   )}
                 </DropdownMenuGroup>
-                <Link href="#!">
+                <Link href="https://github.com/Kaiosuke">
                   <DropdownMenuItem className="text-lg cursor-pointer hover:bg-primary hover:text-secondary">
                     GitHub
                     <DropdownMenuShortcut>

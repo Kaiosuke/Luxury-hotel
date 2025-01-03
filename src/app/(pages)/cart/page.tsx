@@ -103,15 +103,17 @@ const page = () => {
                   Add more Room
                 </Button>
               </Link>
-              <Link href="/checkout">
-                <Button
-                  variant={"third"}
-                  className="w-full mt-2"
-                  disabled={!cartsUsers.length}
-                >
+              {!cartsUsers.length ? (
+                <Button variant={"third"} className="w-full mt-2" disabled>
                   Checkout
                 </Button>
-              </Link>
+              ) : (
+                <Link href="/checkout">
+                  <Button variant={"third"} className="w-full mt-2">
+                    Checkout
+                  </Button>
+                </Link>
+              )}
             </div>
           </div>
         </div>

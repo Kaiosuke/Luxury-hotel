@@ -13,6 +13,7 @@ import { ReactNode, useEffect } from "react";
 import { useSelector } from "react-redux";
 import LoadingPage from "../_components/LoadingPage";
 import { getAllCart } from "../api/cartsRequest";
+import { getAllOption } from "../api/optionsRequest";
 import { getAllRoom } from "../api/roomsRequest";
 import { getAllRoomType } from "../api/roomTypesRequest";
 import { getAllUser } from "../api/usersRequest";
@@ -29,6 +30,7 @@ function layoutAdmin({ children }: { children: ReactNode }) {
     dispatch(getAllRoomType());
     dispatch(getAllRoom());
     dispatch(getAllCart());
+    dispatch(getAllOption());
   }, []);
 
   useEffect(() => {
