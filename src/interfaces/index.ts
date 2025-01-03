@@ -16,23 +16,23 @@ interface IUser {
 }
 
 interface IRoomType {
-  id?: string;
-  thumbnail?: string;
+  id: string;
+  thumbnail: string;
   title: string;
   price: number;
   quantity: number;
   rate: number;
-  category?: string;
-  view?: string;
+  category: string;
+  view: string;
   description: string;
-  quickDes?: string[];
-  features?: string[];
+  quickDes: string[];
+  features: string[];
   square: string;
   typeBed: string;
   sleeps: number;
-  images?: string[];
+  images: string[];
   map: string;
-  detailFeatures?: string[];
+  detailFeatures: string[];
   shortDes: string;
   detailDes: string;
 }
