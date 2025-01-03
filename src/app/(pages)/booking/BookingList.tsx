@@ -29,7 +29,7 @@ import {
 import { useRef, useState } from "react";
 import OptionRoom from "./OptionRoom";
 import { cartUserRemainingSelector } from "@/redux/selectors/cartsSelector";
-import useAvailableCarts from "@/hooks/useAvailableCarts";
+import { useAvailableCarts } from "@/hooks/useAvailableCarts";
 
 interface IBookingList {
   roomType: IRoomType;
@@ -64,7 +64,7 @@ const BookingList = ({
   const { checkIn, checkOut } = useAppContext();
   const { currentUser } = useSelector(authSelector);
   const { options } = useSelector(optionsSelector);
-  const { carts } = useSelector(cartUserRemainingSelector);
+  const { cartsUsers } = useSelector(cartUserRemainingSelector);
 
   const roomRef = useRef<HTMLButtonElement>(null);
 
@@ -120,13 +120,13 @@ const BookingList = ({
         bookedDates: { from: checkIn, to: checkOut },
       };
       const availableCart =
-        carts &&
+        cartsUsers &&
         checkIn &&
         checkOut &&
-        useAvailableCarts({ carts, newBooking });
+        useAvailableCarts({ carts: cartsUsers, newBooking });
 
       if (!availableCart.length) {
-        dispatch(addCart(newBooking));
+        dispatch(addCart(newBooking)).unwrap();
         setRoomId("");
         return toast({
           variant: "success",

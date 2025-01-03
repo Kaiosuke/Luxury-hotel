@@ -13,15 +13,24 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import CartList from "./CartList";
 import { cartUserRemainingSelector } from "@/redux/selectors/cartsSelector";
+import { useAppDispatch } from "@/redux/store";
+import { getAllCartByUserId } from "@/app/api/cartsRequest";
 
 const page = () => {
   const [showDelete, setShowDelete] = useState(false);
 
   const { currentUser } = useSelector(authSelector);
 
-  const { carts } = useSelector(cartUserRemainingSelector);
+  const { cartsUsers } = useSelector(cartUserRemainingSelector);
 
   const router = useRouter();
+
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    currentUser &&
+      currentUser.id &&
+      dispatch(getAllCartByUserId(currentUser.id));
+  }, []);
 
   useEffect(() => {
     if (!currentUser) {
@@ -46,8 +55,10 @@ const page = () => {
       <section className="padding-main">
         <div className="flex lg:flex-row flex-col gap-4">
           <div className="flex-[1_0_auto] lg:max-w-[70%] p-4 max-w-[100%]">
-            <h2 className="text-size-3xl">YourCart: {carts.length} Items</h2>
-            {!carts.length && (
+            <h2 className="text-size-3xl">
+              YourCart: {cartsUsers.length} Items
+            </h2>
+            {!cartsUsers.length && (
               <div className="mt-10">
                 <Link
                   href="/booking"
@@ -58,7 +69,7 @@ const page = () => {
               </div>
             )}
             <div className="flex flex-col gap-4 mt-4">
-              {carts.map((cart) => (
+              {cartsUsers.map((cart) => (
                 <CartList
                   key={cart.id}
                   cart={cart}
@@ -72,7 +83,7 @@ const page = () => {
             <h2 className="text-size-3xl">Price Details</h2>
             <div className="h-[680px] overflow-auto">
               <div className="flex flex-col gap-4 mt-4">
-                {carts.map((cart, index) => (
+                {cartsUsers.map((cart, index) => (
                   <PriceDetail key={cart.id} cart={cart} index={index + 1} />
                 ))}
               </div>
@@ -84,7 +95,7 @@ const page = () => {
                   <div>Including taxes and fees</div>
                 </div>
                 <span className="text-size-xl font-bold ">
-                  {formatMoney(sumMoney(carts))}
+                  {formatMoney(sumMoney(cartsUsers))}
                 </span>
               </div>
               <Link href="/booking">
@@ -96,7 +107,7 @@ const page = () => {
                 <Button
                   variant={"third"}
                   className="w-full mt-2"
-                  disabled={!carts.length}
+                  disabled={!cartsUsers.length}
                 >
                   Checkout
                 </Button>

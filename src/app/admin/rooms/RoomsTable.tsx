@@ -17,14 +17,15 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { IForm, IRoomType } from "@/interfaces";
+import { IForm, IRoom, IRoomType } from "@/interfaces";
 import { roomTypesSelector } from "@/redux/selectors/roomTypesSelector";
 import Image from "next/image";
 import { useState } from "react";
 import { useSelector } from "react-redux";
+import { roomsSelector } from "@/redux/selectors/roomsSelector";
 
-const RoomTypesTable = ({ open, onClose }: IForm) => {
-  const { roomTypes } = useSelector(roomTypesSelector);
+const RoomsTable = ({ open, onClose }: IForm) => {
+  const { rooms } = useSelector(roomsSelector);
 
   const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
   const [openFormDelete, setOpenFormDelete] = useState(false);
@@ -44,7 +45,7 @@ const RoomTypesTable = ({ open, onClose }: IForm) => {
     onClose(false);
   };
 
-  const roomTypeColumns: ColumnDef<IRoomType>[] = [
+  const roomTypeColumns: ColumnDef<IRoom>[] = [
     {
       id: "select",
       header: ({ table }) => (
@@ -68,114 +69,69 @@ const RoomTypesTable = ({ open, onClose }: IForm) => {
       enableHiding: false,
     },
     {
-      accessorKey: "title",
+      accessorKey: "roomTypeId",
       header: ({ column }) => {
         return (
           <div
             className="flex text-size-xl items-center cursor-pointer hover:text-sidebar-primary"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            Title
+            RoomType
             <ArrowUpDown />
           </div>
         );
       },
       cell: ({ row }) => (
-        <div className="lowercase">{row.getValue("title")}</div>
+        <div className="lowercase">{row.getValue("roomTypeId")}</div>
       ),
     },
     {
-      accessorKey: "rate",
+      accessorKey: "roomNumber",
       header: ({ column }) => {
         return (
           <div
             className="flex text-size-xl items-center cursor-pointer hover:text-sidebar-primary"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            Rate
+            Room Number
             <ArrowUpDown />
           </div>
         );
       },
       cell: ({ row }) => (
-        <div className="lowercase">{row.getValue("rate")}</div>
+        <div className="lowercase">{row.getValue("roomNumber")}</div>
       ),
     },
     {
-      accessorKey: "quantity",
-      header: ({ column }) => {
-        return (
-          <div
-            className="flex text-size-xl items-center cursor-pointer hover:text-sidebar-primary"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
-            Quantity
-            <ArrowUpDown />
-          </div>
-        );
-      },
-      cell: ({ row }) => (
-        <div className="lowercase">{row.getValue("quantity")}</div>
-      ),
-    },
-    {
-      accessorKey: "price",
-      header: ({ column }) => {
-        return (
-          <div
-            className="flex text-size-xl items-center cursor-pointer hover:text-sidebar-primary"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
-            Price basic
-            <ArrowUpDown />
-          </div>
-        );
-      },
-      cell: ({ row }) => (
-        <div className="lowercase">{row.getValue("price")}</div>
-      ),
-    },
-    {
-      accessorKey: "category",
-      header: ({ column }) => {
-        return (
-          <div
-            className="flex text-size-xl items-center cursor-pointer hover:text-sidebar-primary"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
-            Category
-            <ArrowUpDown />
-          </div>
-        );
-      },
-      cell: ({ row }) => (
-        <div className="lowercase">{row.getValue("category")}</div>
-      ),
-    },
-
-    {
-      accessorKey: "thumbnail",
+      accessorKey: "status",
       header: () => {
         return (
           <div className="flex text-size-xl items-center cursor-pointer hover:text-sidebar-primary">
-            Thumbnail
+            Status
+            <ArrowUpDown />
           </div>
         );
       },
-      cell: ({ row }) => {
-        const thumbnailUrl = row.getValue("thumbnail");
-        return (
-          <AspectRatio ratio={16 / 9} className="bg-muted">
-            <Image
-              src={thumbnailUrl as string}
-              alt="Photo by Drew Beamer"
-              fill
-              className="h-full w-full rounded-md object-cover"
-            />
-          </AspectRatio>
-        );
-      },
+      cell: ({ row }) => (
+        <div className="lowercase">{row.getValue("status")}</div>
+      ),
     },
+
+    // {
+    //   accessorKey: "bookedDates",
+    //   header: () => {
+    //     return (
+    //       <div className="flex text-size-xl items-center cursor-pointer hover:text-sidebar-primary">
+    //         bookedDates
+    //         <ArrowUpDown />
+    //       </div>
+    //     );
+    //   },
+    //   cell: ({ row }) => (
+    //     <div className="lowercase">{row.getValue("bookedDates")}</div>
+    //   ),
+    // },
+
     {
       id: "actions",
       enableHiding: false,
@@ -216,9 +172,9 @@ const RoomTypesTable = ({ open, onClose }: IForm) => {
   return (
     <>
       <DataTable
-        data={roomTypes}
+        data={rooms}
         columns={roomTypeColumns}
-        filterPlaceholders="title"
+        filterPlaceholders="roomNumber"
       />
       {open && (
         <FormRoom open={open} onClose={handleCloseForm} id={selectedUserId} />
@@ -234,4 +190,4 @@ const RoomTypesTable = ({ open, onClose }: IForm) => {
   );
 };
 
-export default RoomTypesTable;
+export default RoomsTable;

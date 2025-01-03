@@ -6,7 +6,7 @@ const cartsSelector = (state: RootState): ICartState => state.cartsSlice;
 
 const cartUserRemainingSelector = createSelector(cartsSelector, (carts) => {
   return {
-    carts: carts.carts.filter((cart) => cart.status === "pending"),
+    cartsUsers: carts.cartsUser.filter((cart) => cart.status === "pending"),
   };
 });
 export { cartsSelector, cartUserRemainingSelector };

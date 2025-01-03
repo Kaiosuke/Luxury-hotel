@@ -37,12 +37,14 @@ const HeaderTop = ({
   const dispatch = useAppDispatch();
 
   const { currentUser } = useSelector(authSelector);
-  const { carts } = useSelector(cartUserRemainingSelector);
+  const { cartsUsers } = useSelector(cartUserRemainingSelector);
 
   const handleSigOut = () => {
     signOut();
     dispatch(loginUser(null));
   };
+
+  // console.log(cartsUsers);
 
   return (
     <div
@@ -120,7 +122,7 @@ const HeaderTop = ({
                         <DropdownMenuShortcut className="relative">
                           <FiShoppingCart className="text-lg" />
                           <span className="w-5 h-5 flex items-center justify-center absolute -top-3 -right-3 bg-primary text-secondary rounded-full">
-                            {carts.length}
+                            {cartsUsers.length}
                           </span>
                         </DropdownMenuShortcut>
                       </DropdownMenuItem>

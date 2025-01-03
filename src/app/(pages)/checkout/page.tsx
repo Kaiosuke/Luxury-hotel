@@ -13,14 +13,14 @@ import { useSelector } from "react-redux";
 import CheckoutInfo from "./CheckoutInfo";
 
 const page = () => {
-  const { carts } = useSelector(cartUserRemainingSelector);
+  const { cartsUsers } = useSelector(cartUserRemainingSelector);
 
   const { currentUser } = useSelector(authSelector);
 
   const router = useRouter();
 
   useEffect(() => {
-    if (!currentUser || !carts.length) {
+    if (!currentUser || !cartsUsers.length) {
       router.push("/");
     }
   }, []);
@@ -51,7 +51,7 @@ const page = () => {
             <h2 className="text-size-3xl">Price Details</h2>
             <div className="h-[680px] overflow-auto">
               <div className="flex flex-col gap-4 mt-4">
-                {carts.map((room, index) => (
+                {cartsUsers.map((room, index) => (
                   <PriceDetail key={room.id} cart={room} index={index + 1} />
                 ))}
               </div>
@@ -63,7 +63,7 @@ const page = () => {
                   <div>Including taxes and fees</div>
                 </div>
                 <span className="text-size-xl font-bold ">
-                  {formatMoney(sumMoney(carts))}
+                  {formatMoney(sumMoney(cartsUsers))}
                 </span>
               </div>
               <Button variant={"secondary"} className="w-full">

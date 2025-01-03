@@ -28,11 +28,15 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
-import { cartUserRemainingSelector } from "@/redux/selectors/cartsSelector";
-import { updateCart } from "@/app/api/cartsRequest";
+import {
+  cartsSelector,
+  cartUserRemainingSelector,
+} from "@/redux/selectors/cartsSelector";
+import { getAllCart, updateCart } from "@/app/api/cartsRequest";
 import LoadingPage from "@/app/_components/LoadingPage";
 import { getRoom, updateRoom } from "@/app/api/roomsRequest";
 import { addCartSuccess } from "@/redux/slices/cartsSlice";
+import { useAvailableCartsUsers } from "@/hooks/useAvailableCarts";
 
 const CheckoutInfo = () => {
   const [country, setCountry] = useState("VN");
@@ -47,7 +51,8 @@ const CheckoutInfo = () => {
       city: "",
     },
   });
-  const { carts } = useSelector(cartUserRemainingSelector);
+  const { cartsUsers } = useSelector(cartUserRemainingSelector);
+  const { carts } = useSelector(cartsSelector);
 
   const dispatch = useAppDispatch();
   const router = useRouter();
@@ -62,6 +67,10 @@ const CheckoutInfo = () => {
         city: currentUser.city,
       });
     }
+  }, []);
+
+  useEffect(() => {
+    currentUser && dispatch(getAllCart());
   }, []);
 
   const handleGetData = async (data: IUser) => {
@@ -79,33 +88,42 @@ const CheckoutInfo = () => {
         dispatch(updateUser({ id: currentUser.id, user: newData }));
         dispatch(updateCurrentUser(newData));
       }
-      for (const cart of carts) {
+      for (const cart of cartsUsers) {
         const newCart: ICart = {
           ...cart,
           status: ECart.booked,
         };
 
-        currentUser.id &&
-          (await dispatch(updateCart({ id: cart.id, cart: newCart })));
+        // currentUser.id &&
+        //   (await dispatch(updateCart({ id: cart.id, cart: newCart })));
 
-        const findRoom = await dispatch(getRoom(cart.roomId)).unwrap();
-        const updatedBookedDates = [
-          ...findRoom.bookedDates,
-          {
-            from: cart.bookedDates.from,
-            to: cart.bookedDates.to,
-          },
-        ];
+        // const { from, to } = cart.bookedDates;
 
-        await dispatch(
-          updateRoom({
-            id: cart.roomId,
-            room: { ...findRoom, bookedDates: updatedBookedDates },
-          })
-        );
+        const availableCart = useAvailableCartsUsers({
+          carts: carts,
+          newBooking: cart,
+        });
+        // console.log(carts, cartsUsers);
+        console.log(availableCart);
+
+        // const findRoom = await dispatch(getRoom(cart.roomId)).unwrap();
+        // const updatedBookedDates = [
+        //   ...findRoom.bookedDates,
+        //   {
+        //     from: cart.bookedDates.from,
+        //     to: cart.bookedDates.to,
+        //   },
+        // ];
+
+        // await dispatch(
+        //   updateRoom({
+        //     id: cart.roomId,
+        //     room: { ...findRoom, bookedDates: updatedBookedDates },
+        //   })
+        // );
       }
     }
-    router.push("/booking/success");
+    // router.push("/booking/success");
   };
 
   if (!carts.length) {

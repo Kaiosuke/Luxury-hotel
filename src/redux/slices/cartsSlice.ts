@@ -32,7 +32,7 @@ const setError = (
   state: ICartState,
   action: PayloadAction<string | undefined>
 ) => {
-  state.loading = false;
+  state.loading = true;
   state.error = action.payload;
 };
 
@@ -70,6 +70,7 @@ const cartsSlice = createSlice({
       addCart.fulfilled,
       (state, action: PayloadAction<ICart>) => {
         state.loading = false;
+        state.cartsUser = [...state.carts, action.payload];
         state.carts = [...state.carts, action.payload];
       }
     );
@@ -83,6 +84,9 @@ const cartsSlice = createSlice({
         state.carts = state.carts.map((user) =>
           user.id === action.payload.id ? action.payload : user
         );
+        state.cartsUser = state.carts.map((user) =>
+          user.id === action.payload.id ? action.payload : user
+        );
       }
     );
     builder.addCase(updateCart.rejected, setError);
@@ -93,6 +97,9 @@ const cartsSlice = createSlice({
       (state, action: PayloadAction<string>) => {
         state.loading = false;
         state.carts = state.carts.filter((user) => user.id !== action.payload);
+        state.cartsUser = state.carts.filter(
+          (user) => user.id !== action.payload
+        );
       }
     );
     builder.addCase(deleteCart.rejected, setError);
