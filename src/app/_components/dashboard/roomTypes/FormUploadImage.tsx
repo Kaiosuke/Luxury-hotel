@@ -109,6 +109,9 @@ const FormUploadImage = <T extends FieldValues>({
                 src={url}
                 alt="picture"
                 fill
+                sizes="(max-width: 768px) 100vw, 
+                    (max-width: 1200px) 50vw, 
+                    33vw"
                 className="h-full w-full rounded-md object-cover"
               />
             </AspectRatio>
@@ -126,6 +129,9 @@ const FormUploadImage = <T extends FieldValues>({
                     src={image}
                     alt={`Uploaded Image ${index + 1}`}
                     fill
+                    sizes="(max-width: 768px) 100vw, 
+                    (max-width: 1200px) 50vw, 
+                    33vw"
                     className="h-full w-full rounded-md object-cover"
                   />
                 </AspectRatio>

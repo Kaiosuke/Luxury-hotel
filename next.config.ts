@@ -9,9 +9,6 @@ const nextConfig: NextConfig = {
       "d321ocj5nbe62c.cloudfront.net",
     ],
   },
-  // env: {
-  //   CLOUD_NAME: "dyjvnhq5s",
-  // },
   async redirects() {
     return [
       {

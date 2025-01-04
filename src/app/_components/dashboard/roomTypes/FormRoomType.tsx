@@ -94,15 +94,15 @@ function FormRoomType({ open, onClose, id }: IForm) {
     }
   }, [id]);
 
-  const VITE_UPLOAD_PRESET = "kaiosuke";
-  const VITE_CLOUD_NAME = "dyjvnhq5s";
+  const UPLOAD_PRESET = process.env.NEXT_PUBLIC_UPLOAD_PRESET!;
+  const CLOUD_NAME = process.env.NEXT_PUBLIC_CLOUD_NAME;
 
   const uploadImage = async (file: string | Blob) => {
     const formData = new FormData();
     formData.append("file", file);
-    formData.append("upload_preset", VITE_UPLOAD_PRESET);
+    formData.append("upload_preset", UPLOAD_PRESET);
     const response = await fetch(
-      `https://api.cloudinary.com/v1_1/${VITE_CLOUD_NAME}/image/upload`,
+      `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`,
       {
         method: "POST",
         body: formData,

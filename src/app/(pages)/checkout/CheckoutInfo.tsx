@@ -37,7 +37,7 @@ import LoadingPage from "@/app/_components/LoadingPage";
 import { getRoom, updateRoom } from "@/app/api/roomsRequest";
 import { addCartSuccess } from "@/redux/slices/cartsSlice";
 import { useAvailableCartsUsers } from "@/hooks/useAvailableCarts";
-
+import sendMail from "@/app/api/sendMailRequuest";
 const CheckoutInfo = () => {
   const [country, setCountry] = useState("VN");
   const { currentUser } = useSelector(authSelector);
@@ -123,6 +123,7 @@ const CheckoutInfo = () => {
         );
       }
     }
+    currentUser && (await sendMail({ user: currentUser }));
     dispatch(addCartSuccess(cartsUsers));
     router.push("/booking/success");
   };
@@ -275,7 +276,7 @@ const CheckoutInfo = () => {
           </div>
         </div>
         <div className="mt-4 text-right">
-          <Button variant={"third"}>Continue</Button>
+          <Button variant={"third"}>Booking</Button>
         </div>
       </form>
     </div>
