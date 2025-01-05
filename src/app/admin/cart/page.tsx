@@ -2,7 +2,6 @@
 
 import BreadcrumbComponent from "@/app/_components/BreadcrumbComponent";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,12 +12,12 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useState } from "react";
-import { FaPlus } from "react-icons/fa";
 import { IoMdOptions } from "react-icons/io";
 import CartsTable from "./CartsTable";
 
 const page = () => {
   const [openForm, setOpenForm] = useState(false);
+
   return (
     <div>
       <BreadcrumbComponent page="Carts" />

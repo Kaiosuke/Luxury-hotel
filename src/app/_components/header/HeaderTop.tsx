@@ -121,9 +121,11 @@ const HeaderTop = ({
                         Cart
                         <DropdownMenuShortcut className="relative">
                           <FiShoppingCart className="text-lg" />
-                          <span className="w-5 h-5 flex items-center justify-center absolute -top-3 -right-3 bg-primary text-secondary rounded-full">
-                            {cartsUsers.length}
-                          </span>
+                          {cartsUsers.length > 0 && (
+                            <span className="w-5 h-5 flex items-center justify-center absolute -top-3 -right-3 bg-primary text-secondary rounded-full">
+                              {cartsUsers.length}
+                            </span>
+                          )}
                         </DropdownMenuShortcut>
                       </DropdownMenuItem>
                     </Link>

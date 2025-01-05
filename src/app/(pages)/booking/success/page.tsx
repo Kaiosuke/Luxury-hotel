@@ -58,7 +58,7 @@ const page = () => {
                   <p className="text-[#25af89]">
                     Success! You reservation is booked
                   </p>
-                  <p>
+                  <p className="font-semibold">
                     Check trongleele@gmail.com to view your confirmation email
                   </p>
                 </div>

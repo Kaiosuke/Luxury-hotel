@@ -12,7 +12,10 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import CartList from "./CartList";
-import { cartUserRemainingSelector } from "@/redux/selectors/cartsSelector";
+import {
+  cartsSelector,
+  cartUserRemainingSelector,
+} from "@/redux/selectors/cartsSelector";
 import { useAppDispatch } from "@/redux/store";
 import { getAllCartByUserId } from "@/app/api/cartsRequest";
 
@@ -22,6 +25,8 @@ const page = () => {
   const { currentUser } = useSelector(authSelector);
 
   const { cartsUsers } = useSelector(cartUserRemainingSelector);
+
+  const { loading } = useSelector(cartsSelector);
 
   const router = useRouter();
 
@@ -38,7 +43,7 @@ const page = () => {
       dispatch(getAllCartByUserId(currentUser.id));
   }, []);
 
-  if (!currentUser) {
+  if (!currentUser || loading) {
     return <LoadingPage />;
   }
 
@@ -68,7 +73,7 @@ const page = () => {
                 </Link>
               </div>
             )}
-            <div className="flex flex-col gap-4 mt-4">
+            <div className="flex flex-col gap-4 mt-4 h-[880px] overflow-auto">
               {cartsUsers.map((cart) => (
                 <CartList
                   key={cart.id}

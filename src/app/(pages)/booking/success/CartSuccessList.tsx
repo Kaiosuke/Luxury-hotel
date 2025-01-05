@@ -41,6 +41,7 @@ const CartSuccessList = ({ cart }: { cart: ICart }) => {
                   src={roomType.thumbnail}
                   alt={roomType.title}
                   fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   className="h-full w-full rounded-md object-cover"
                 />
               </AspectRatio>

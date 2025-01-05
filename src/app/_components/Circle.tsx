@@ -1,12 +1,5 @@
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
 import useDetectScroll from "@smakss/react-scroll-direction";
 import { useEffect, useRef, useState } from "react";
-import { FaArrowAltCircleUp } from "react-icons/fa";
 
 const Circle = () => {
   const refImg = useRef<HTMLImageElement | null>(null);
@@ -23,9 +16,9 @@ const Circle = () => {
     };
   }, [scrollDir]);
 
-  const handleScrollToTop = () => {
-    window.scrollTo(0, 0);
-  };
+  // const handleScrollToTop = () => {
+  //   window.scrollTo(0, 0);
+  // };
 
   return (
     <div className="fixed top-1/2 lg:right-[100px] right-[60px]">
@@ -36,7 +29,7 @@ const Circle = () => {
         src="https://aguasdeibiza.com/wp-content/uploads/2024/11/Recurso-7@288x.png"
         alt="logo"
       />
-      <div className="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 cursor-pointer">
+      {/* <div className="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 cursor-pointer">
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
@@ -50,7 +43,7 @@ const Circle = () => {
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
-      </div>
+      </div> */}
     </div>
   );
 };

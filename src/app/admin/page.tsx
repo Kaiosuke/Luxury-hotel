@@ -12,6 +12,7 @@ import { roomsSelector } from "@/redux/selectors/roomsSelector";
 import { roomTypesSelector } from "@/redux/selectors/roomTypesSelector";
 import { usersSelector } from "@/redux/selectors/usersSelector";
 import { useSelector } from "react-redux";
+import LoadingPage from "../_components/LoadingPage";
 
 function page() {
   const { users } = useSelector(usersSelector);
@@ -22,6 +23,13 @@ function page() {
   const roomsAvailable = (rooms: IRoom[]) => {
     return rooms.filter((room) => room.status === "available");
   };
+
+  const { loading } = useSelector(roomTypesSelector);
+
+  if (loading) {
+    return <LoadingPage />;
+  }
+
   return (
     <div className="grid lg:grid-cols-2 grid-cols-1 gap-4 ">
       <div className="grid grid-cols-2 gap-4">

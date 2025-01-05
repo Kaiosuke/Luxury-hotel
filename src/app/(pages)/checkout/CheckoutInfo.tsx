@@ -38,9 +38,13 @@ import { getRoom, updateRoom } from "@/app/api/roomsRequest";
 import { addCartSuccess } from "@/redux/slices/cartsSlice";
 import { useAvailableCartsUsers } from "@/hooks/useAvailableCarts";
 import sendMail from "@/app/api/sendMailRequuest";
+import { useToast } from "@/hooks/use-toast";
 const CheckoutInfo = () => {
   const [country, setCountry] = useState("VN");
   const { currentUser } = useSelector(authSelector);
+
+  const [loading, setLoading] = useState(false);
+
   const { register, formState, handleSubmit, reset } = useForm({
     resolver: zodResolver(CheckOutSchema),
     defaultValues: {
@@ -53,6 +57,8 @@ const CheckoutInfo = () => {
   });
   const { cartsUsers } = useSelector(cartUserRemainingSelector);
   const { carts } = useSelector(cartsSelector);
+
+  const { toast } = useToast();
 
   const dispatch = useAppDispatch();
   const router = useRouter();
@@ -74,61 +80,86 @@ const CheckoutInfo = () => {
   }, []);
 
   const handleGetData = async (data: IUser) => {
-    const newData = {
-      ...currentUser,
-      ...data,
-      country,
-    };
-    dispatch(addCartSuccess(carts));
+    try {
+      setLoading(true);
 
-    if (currentUser && currentUser.id) {
-      const areArraysEqual =
-        JSON.stringify(newData) === JSON.stringify(currentUser);
-      if (!areArraysEqual) {
-        dispatch(updateUser({ id: currentUser.id, user: newData }));
-        dispatch(updateCurrentUser(newData));
-      }
-      for (const cart of cartsUsers) {
-        const newCart: ICart = {
-          ...cart,
-          status: ECart.booked,
-        };
+      const newData = {
+        ...currentUser,
+        ...data,
+        country,
+      };
+      dispatch(addCartSuccess(carts));
 
-        currentUser.id &&
-          (await dispatch(updateCart({ id: cart.id, cart: newCart })));
+      if (currentUser && currentUser.id) {
+        const areArraysEqual =
+          JSON.stringify(newData) === JSON.stringify(currentUser);
 
-        const availableCart = useAvailableCartsUsers({
-          carts: carts,
-          newBooking: cart,
-        });
-
-        const existCart = availableCart.find((data) => data.id !== cart.id);
-        if (existCart) {
-          dispatch(deleteCart(existCart.id));
+        if (!areArraysEqual) {
+          dispatch(updateUser({ id: currentUser.id, user: newData }));
+          dispatch(updateCurrentUser(newData));
         }
-        const findRoom = await dispatch(getRoom(cart.roomId)).unwrap();
-        const updatedBookedDates = [
-          ...findRoom.bookedDates,
-          {
-            from: cart.bookedDates.from,
-            to: cart.bookedDates.to,
-          },
-        ];
 
-        await dispatch(
-          updateRoom({
-            id: cart.roomId,
-            room: { ...findRoom, bookedDates: updatedBookedDates },
-          })
-        );
+        for (const cart of cartsUsers) {
+          const newCart: ICart = {
+            ...cart,
+            status: ECart.booked,
+          };
+
+          currentUser.id &&
+            (await dispatch(updateCart({ id: cart.id, cart: newCart })));
+
+          const availableCart = useAvailableCartsUsers({
+            carts: carts,
+            newBooking: cart,
+          });
+
+          const existCart = availableCart.find((data) => data.id !== cart.id);
+          if (existCart) {
+            dispatch(deleteCart(existCart.id));
+          }
+
+          const findRoom = await dispatch(getRoom(cart.roomId)).unwrap();
+          const updatedBookedDates = [
+            ...findRoom.bookedDates,
+            {
+              from: cart.bookedDates.from,
+              to: cart.bookedDates.to,
+            },
+          ];
+
+          await dispatch(
+            updateRoom({
+              id: cart.roomId,
+              room: { ...findRoom, bookedDates: updatedBookedDates },
+            })
+          );
+        }
       }
+
+      toast({
+        variant: "success",
+        title: "success",
+        description: "Booking has been added to cart",
+      });
+
+      router.push("/booking/success");
+      if (currentUser) {
+        await sendMail({ user: currentUser });
+      }
+
+      dispatch(addCartSuccess(cartsUsers));
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: "Something went wrong during booking.",
+      });
+    } finally {
+      setLoading(false);
     }
-    currentUser && (await sendMail({ user: currentUser }));
-    dispatch(addCartSuccess(cartsUsers));
-    router.push("/booking/success");
   };
 
-  if (!carts.length) {
+  if (!carts.length || loading) {
     return <LoadingPage />;
   }
 
@@ -256,7 +287,7 @@ const CheckoutInfo = () => {
                 </div>
               </div>
               <div className="mt-4">
-                <h3 className="font-semibold">ROOM 1 DELUXE</h3>
+                <h3 className="font-semibold">ROOM</h3>
                 <div>
                   <div>Guarantee Policy</div>
                   <p>

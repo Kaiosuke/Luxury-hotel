@@ -5,7 +5,10 @@ import LoadingPage from "@/app/_components/LoadingPage";
 import PriceDetail from "@/app/_components/PriceDetail";
 import { Button } from "@/components/ui/button";
 import { authSelector } from "@/redux/selectors/authSelector";
-import { cartUserRemainingSelector } from "@/redux/selectors/cartsSelector";
+import {
+  cartsSelector,
+  cartUserRemainingSelector,
+} from "@/redux/selectors/cartsSelector";
 import { formatMoney, sumMoney } from "@/utils/helpers";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";

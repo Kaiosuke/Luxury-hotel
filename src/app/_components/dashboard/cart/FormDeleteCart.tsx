@@ -31,6 +31,8 @@ function FormDeleteCart({ open, onClose, id }: IForm) {
         bookedDates: newBookDates,
       };
 
+      onClose(false);
+
       await dispatch(updateRoom({ id: cart.roomId, room: newRoom }));
 
       await dispatch(deleteCart(id));
@@ -40,7 +42,6 @@ function FormDeleteCart({ open, onClose, id }: IForm) {
         description: "Delete Room success",
       });
     }
-    return onClose(false);
   };
   return (
     <Dialog open={open} onOpenChange={onClose}>

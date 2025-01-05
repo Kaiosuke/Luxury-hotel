@@ -25,6 +25,7 @@ import { useAppDispatch } from "@/redux/store";
 import { ToastAction } from "@radix-ui/react-toast";
 import { useState } from "react";
 import { useSelector } from "react-redux";
+import LoadingProcess from "@/app/_components/Loading";
 
 const UserTable = ({ open, onClose }: IForm) => {
   const { users } = useSelector(usersSelector);
@@ -209,6 +210,13 @@ const UserTable = ({ open, onClose }: IForm) => {
       },
     },
   ];
+
+  const { loading } = useSelector(usersSelector);
+
+  if (loading) {
+    return <LoadingProcess />;
+  }
+
   return (
     <>
       <DataTable

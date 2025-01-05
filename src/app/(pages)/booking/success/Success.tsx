@@ -38,10 +38,12 @@ const Success = () => {
           <div>{currentUser?.email}</div>
         </div>
       </div>
-      {cartsSuccess &&
-        cartsSuccess.map((cart) => (
-          <CartSuccessList key={cart.id} cart={cart} />
-        ))}
+      <div className="h-[400px] overflow-auto">
+        {cartsSuccess &&
+          cartsSuccess.map((cart) => (
+            <CartSuccessList key={cart.id} cart={cart} />
+          ))}
+      </div>
       <div className="mt-10">
         <span className="text-size-xl font-semibold">Policies:</span>
         <div className="bg-secondary text-primary mt-2">
@@ -57,7 +59,7 @@ const Success = () => {
               </div>
             </div>
             <div className="mt-4">
-              <h3 className="font-semibold">ROOM 1 DELUXE</h3>
+              <h3 className="font-semibold">ROOM</h3>
               <div>
                 <div>Guarantee Policy</div>
                 <p>

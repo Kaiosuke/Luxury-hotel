@@ -30,7 +30,6 @@ const useAvailableCarts = ({ carts, newBooking }: IAvailableCart): ICart[] => {
     if (!bookedDates.from || !bookedDates.to) return false;
     const bookedFrom = new Date(bookedDates.from);
     const bookedTo = new Date(bookedDates.to);
-    console.log(from, bookedFrom);
 
     return (
       (from >= bookedFrom && from <= bookedTo) ||

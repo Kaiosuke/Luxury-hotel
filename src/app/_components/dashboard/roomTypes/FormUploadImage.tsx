@@ -1,5 +1,6 @@
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
@@ -51,6 +52,7 @@ const FormUploadImage = <T extends FieldValues>({
       ) : (
         <div>
           <Select value={option} onValueChange={(value) => setOption(value)}>
+            <Label>Upload Image</Label>
             <SelectTrigger className="w-[240px] text-sm">
               <SelectValue />
             </SelectTrigger>
@@ -109,9 +111,7 @@ const FormUploadImage = <T extends FieldValues>({
                 src={url}
                 alt="picture"
                 fill
-                sizes="(max-width: 768px) 100vw, 
-                    (max-width: 1200px) 50vw, 
-                    33vw"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 className="h-full w-full rounded-md object-cover"
               />
             </AspectRatio>

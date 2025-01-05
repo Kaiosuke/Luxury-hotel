@@ -6,6 +6,7 @@ import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 import FormDeleteRoomType from "@/app/_components/dashboard/roomTypes/FormDeleteRoomType";
 import FormRoom from "@/app/_components/dashboard/roomTypes/FormRoomType";
 import DataTable from "@/app/_components/DataTable";
+import LoadingProcess from "@/app/_components/Loading";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -172,9 +173,7 @@ const RoomTypesTable = ({ open, onClose }: IForm) => {
               src={thumbnailUrl as string}
               alt="Photo by Kaio"
               fill
-              sizes="(max-width: 768px) 100vw, 
-                    (max-width: 1200px) 50vw, 
-                    33vw"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               className="h-full w-full rounded-md object-cover"
             />
           </AspectRatio>
@@ -218,6 +217,13 @@ const RoomTypesTable = ({ open, onClose }: IForm) => {
       },
     },
   ];
+
+  const { loading } = useSelector(roomTypesSelector);
+
+  if (loading) {
+    return <LoadingProcess />;
+  }
+
   return (
     <>
       <DataTable

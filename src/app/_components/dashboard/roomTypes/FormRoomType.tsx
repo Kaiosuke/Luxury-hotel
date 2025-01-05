@@ -35,6 +35,7 @@ import { DialogClose } from "@radix-ui/react-dialog";
 import { features } from "process";
 import { z } from "zod";
 import FormUploadImage from "./FormUploadImage";
+import LoadingProcess from "../../Loading";
 
 function FormRoomType({ open, onClose, id }: IForm) {
   const [category, setCategory] = useState("Normal");
@@ -178,57 +179,67 @@ function FormRoomType({ open, onClose, id }: IForm) {
   };
 
   const onSubmit = async (data: any) => {
-    let newRoomType = {
-      ...data,
-      quickDes,
-      features,
-      detailFeatures,
-      category,
-      view,
-      images: [
-        "https://d321ocj5nbe62c.cloudfront.net/imageRepo/7/0/111/661/862/PRINT-Aguas-de-Ibiza-Room-2019-2_P.jpg",
-        "https://d321ocj5nbe62c.cloudfront.net/imageRepo/7/0/111/661/890/PRINT-Aguas-de-Ibiza-Room-2019-6_P.jpg",
-        "https://d321ocj5nbe62c.cloudfront.net/imageRepo/7/0/111/661/916/PRINT-Aguas-de-Ibiza-Room-2019-20_P.jpg",
-      ],
-    };
-    switch (thumbnailOption) {
-      case "upload":
-        if (data.thumbnail && data.thumbnail[0]) {
-          const thumbnailUrl = await uploadImage(data.thumbnail[0]);
-          newRoomType = { ...newRoomType, thumbnail: thumbnailUrl };
-        }
+    try {
+      let newRoomType = {
+        ...data,
+        quickDes,
+        features,
+        detailFeatures,
+        category,
+        view,
+        images: [
+          "https://d321ocj5nbe62c.cloudfront.net/imageRepo/7/0/111/661/862/PRINT-Aguas-de-Ibiza-Room-2019-2_P.jpg",
+          "https://d321ocj5nbe62c.cloudfront.net/imageRepo/7/0/111/661/890/PRINT-Aguas-de-Ibiza-Room-2019-6_P.jpg",
+          "https://d321ocj5nbe62c.cloudfront.net/imageRepo/7/0/111/661/916/PRINT-Aguas-de-Ibiza-Room-2019-20_P.jpg",
+        ],
+      };
 
-        if (data.map && data.map[0]) {
-          const mapUrl = await uploadImage(data.map[0]);
-          newRoomType = { ...newRoomType, map: mapUrl };
-        }
+      switch (thumbnailOption) {
+        case "upload":
+          if (data.thumbnail && data.thumbnail[0]) {
+            const thumbnailUrl = await uploadImage(data.thumbnail[0]);
+            newRoomType = { ...newRoomType, thumbnail: thumbnailUrl };
+          }
 
-        // if (data.images) {
-        //   const imagesUrls = await uploadImages(data.images);
-        //   console.log(imagesUrls);
-        //   newRoomType = { ...newRoomType, images: imagesUrls };
-        // }
+          if (data.map && data.map[0]) {
+            const mapUrl = await uploadImage(data.map[0]);
+            newRoomType = { ...newRoomType, map: mapUrl };
+          }
 
-        break;
-      default:
-    }
-    if (id) {
-      dispatch(updateRoomType({ id, roomType: newRoomType }));
+          // if (data.images) {
+          //   const imagesUrls = await uploadImages(data.images);
+          //   console.log(imagesUrls);
+          //   newRoomType = { ...newRoomType, images: imagesUrls };
+          // }
+
+          break;
+        default:
+      }
+
+      if (id) {
+        await dispatch(updateRoomType({ id, roomType: newRoomType }));
+        toast({
+          variant: "success",
+          title: "success",
+          description: "Update Room Type success",
+        });
+      } else {
+        await dispatch(addRoomType(newRoomType));
+        toast({
+          variant: "success",
+          title: "success",
+          description: "Add Room Type success",
+        });
+      }
+    } catch (error) {
       toast({
-        variant: "success",
-        title: "success",
-        description: "Update Room Type success",
+        variant: "destructive",
+        title: "Error",
+        description: "Something went wrong",
       });
-    } else {
-      dispatch(addRoomType(newRoomType));
-      toast({
-        variant: "success",
-        title: "success",
-        description: "Add Room Type success",
-      });
+    } finally {
+      onClose(false);
     }
-
-    return onClose(false);
   };
 
   return (

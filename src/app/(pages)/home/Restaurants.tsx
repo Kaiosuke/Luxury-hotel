@@ -20,6 +20,7 @@ const Restaurants = () => {
               src="https://aguasdeibiza.com/wp-content/uploads/2019/09/Aguasdeibiza-2019-221-edit-alta-tiny.png"
               alt="Photo by Drew Beamer"
               fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               className="h-full w-full rounded-md object-cover"
             />
           </AspectRatio>

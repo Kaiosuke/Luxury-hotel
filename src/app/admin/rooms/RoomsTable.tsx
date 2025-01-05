@@ -6,8 +6,8 @@ import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 import FormDeleteRoom from "@/app/_components/dashboard/rooms/FormDeleteRoom";
 import FormRoom from "@/app/_components/dashboard/rooms/FormRoom";
 import DataTable from "@/app/_components/DataTable";
+import LoadingProcess from "@/app/_components/Loading";
 import { getRoom, updateRoom } from "@/app/api/roomsRequest";
-import { getRoomType } from "@/app/api/roomTypesRequest";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
@@ -20,11 +20,11 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { IForm, IRoom } from "@/interfaces";
 import { roomsSelector } from "@/redux/selectors/roomsSelector";
+import { roomTypesSelector } from "@/redux/selectors/roomTypesSelector";
 import { useAppDispatch } from "@/redux/store";
 import { format } from "date-fns";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useSelector } from "react-redux";
-import { roomTypesSelector } from "@/redux/selectors/roomTypesSelector";
 
 const RoomsTable = ({ open, onClose }: IForm) => {
   const { rooms } = useSelector(roomsSelector);
@@ -219,6 +219,13 @@ const RoomsTable = ({ open, onClose }: IForm) => {
       },
     },
   ];
+
+  const { loading } = useSelector(roomsSelector);
+
+  if (loading) {
+    return <LoadingProcess />;
+  }
+
   return (
     <>
       <DataTable

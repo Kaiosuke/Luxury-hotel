@@ -2,10 +2,12 @@
 import TitleNormal from "@/app/_components/contentTitle/TitleNormal";
 import TitleXL from "@/app/_components/contentTitle/TitleXL";
 import HeroImage from "@/app/_components/HeroImage";
+import LoadingPage from "@/app/_components/LoadingPage";
 import MotionWrapper from "@/app/_components/MotionWrapper";
 import ThumbnailImage from "@/app/_components/ThumbnailImage";
 import { getAllCartByUserId } from "@/app/api/cartsRequest";
 import { authSelector } from "@/redux/selectors/authSelector";
+import { cartsSelector } from "@/redux/selectors/cartsSelector";
 import { useAppDispatch } from "@/redux/store";
 import Link from "next/link";
 import { useEffect } from "react";
@@ -25,6 +27,12 @@ const Home = () => {
       currentUser.id &&
       dispatch(getAllCartByUserId(currentUser.id));
   }, []);
+
+  const { loading } = useSelector(cartsSelector);
+
+  if (loading) {
+    return <LoadingPage />;
+  }
 
   return (
     <>

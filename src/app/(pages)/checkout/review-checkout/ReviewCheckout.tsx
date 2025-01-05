@@ -89,7 +89,7 @@ const ReviewCheckout = () => {
               </div>
             </div>
             <div className="mt-4">
-              <h3 className="font-semibold">ROOM 1 DELUXE</h3>
+              <h3 className="font-semibold">ROOM</h3>
               <div>
                 <div>Guarantee Policy</div>
                 <p>
