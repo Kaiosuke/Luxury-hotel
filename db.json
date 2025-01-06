@@ -21,7 +21,7 @@
       "phoneNumber": "0123232121",
       "country": "VN",
       "address": "Ha Noi",
-      "city": "Hai Duong",
+      "city": "Ha Duong",
       "id": "2"
     },
     {
@@ -39,7 +39,7 @@
     {
       "username": "zzz1o",
       "email": "Gokusilver74@gmail.com",
-      "role": "user",
+      "role": "admin",
       "password": "lehuutrong",
       "confirm": "lehuutrong",
       "phoneNumber": "0123232133",
@@ -47,6 +47,30 @@
       "address": "zz112",
       "city": "rvv1",
       "id": "tEM3iky"
+    },
+    {
+      "username": "Trong Le 5",
+      "email": "trongleele4@gmail.com",
+      "role": "user",
+      "password": "lehuutorng",
+      "confirm": "lehuutorng",
+      "phoneNumber": "",
+      "country": "",
+      "address": "",
+      "city": "",
+      "id": "LJRYVfd"
+    },
+    {
+      "username": "trongle 5",
+      "email": "trongleele6@gmail.com",
+      "role": "user",
+      "password": "lehuutrong",
+      "confirm": "lehuutrong",
+      "phoneNumber": "0123456789",
+      "country": "VN",
+      "address": "Ninh Giang",
+      "city": "Hai Duong",
+      "id": "Qx9j5-m"
     }
   ],
   "roomTypes": [
@@ -385,76 +409,75 @@
       "detailDes": "Junior Suite Sea View features a large and bright room overlooking the island of Formentera and its crystal clear waters, combined with beautiful modern furniture. Suite features King or Twin beds, living room, bathroom with bath and separate shower, air conditioning, complimentary WiFi access, hairdryer, satellite TV, safe, minibar, tea and coffee maker. Size: 38 to 45 square metres / 409 to 484 square feet. It is located on the second and third floors. Location subject to availability."
     },
     {
-      "thumbnail": "https://res.cloudinary.com/dyjvnhq5s/image/upload/v1736001852/nick-scheerbart-soGoAfesWO8-unsplash_mrslyq.jpg",
-      "title": "323213213",
-      "price": 1,
-      "quantity": 2,
-      "rate": 2,
-      "description": "12312",
-      "square": "321",
-      "typeBed": "13213",
-      "sleeps": 2,
-      "images": [
-        "https://d321ocj5nbe62c.cloudfront.net/imageRepo/7/0/111/661/862/PRINT-Aguas-de-Ibiza-Room-2019-2_P.jpg",
-        "https://d321ocj5nbe62c.cloudfront.net/imageRepo/7/0/111/661/890/PRINT-Aguas-de-Ibiza-Room-2019-6_P.jpg",
-        "https://d321ocj5nbe62c.cloudfront.net/imageRepo/7/0/111/661/916/PRINT-Aguas-de-Ibiza-Room-2019-20_P.jpg"
-      ],
-      "map": "https://res.cloudinary.com/dyjvnhq5s/image/upload/v1736001855/Kaio_A_swordsman_walking_alone_basluy.png",
-      "shortDes": "3123",
-      "detailDes": "12312",
-      "quickDes": [],
-      "detailFeatures": [],
-      "category": "Normal",
-      "view": "Mountain",
-      "id": "f8Lq4d2"
-    },
-    {
-      "thumbnail": "https://res.cloudinary.com/dyjvnhq5s/image/upload/v1736002315/Kaio_In_the_world_of_fantasy_1_xfexay.png",
+      "thumbnail": "https://res.cloudinary.com/dyjvnhq5s/image/upload/v1736066519/Kaio_A_swordsman_walking_alone_fzr6ge.png",
       "title": "321",
-      "price": 2,
-      "quantity": 2,
-      "rate": 2,
-      "description": "312",
-      "square": "2321",
-      "typeBed": "321",
-      "sleeps": 2,
+      "price": 200,
+      "quantity": 12,
+      "rate": 4,
+      "description": "3123",
+      "square": "221",
+      "typeBed": "321321",
+      "sleeps": 321,
       "images": [
         "https://d321ocj5nbe62c.cloudfront.net/imageRepo/7/0/111/661/862/PRINT-Aguas-de-Ibiza-Room-2019-2_P.jpg",
         "https://d321ocj5nbe62c.cloudfront.net/imageRepo/7/0/111/661/890/PRINT-Aguas-de-Ibiza-Room-2019-6_P.jpg",
         "https://d321ocj5nbe62c.cloudfront.net/imageRepo/7/0/111/661/916/PRINT-Aguas-de-Ibiza-Room-2019-20_P.jpg"
       ],
-      "map": "https://res.cloudinary.com/dyjvnhq5s/image/upload/v1736002317/Kaio_A_swordsman_walking_alone_ugbepp.png",
-      "shortDes": "321",
-      "detailDes": "232",
-      "quickDes": [],
+      "map": "https://res.cloudinary.com/dyjvnhq5s/image/upload/v1736066520/Kaio_In_the_world_of_fantasy_1_citlph.png",
+      "shortDes": "12312",
+      "detailDes": "312",
+      "quickDes": [
+        "It is located on 1st, 2nd and 3rd floor. Subject to availability",
+        "It is located on 1st, 2nd, 3rd and 4th floor. Subject to availability.",
+        "Shower and tub",
+        "Sea views"
+      ],
       "detailFeatures": [],
       "category": "Normal",
       "view": "Mountain",
-      "id": "0acfcZz"
+      "id": "3yBMB8N"
     },
     {
-      "thumbnail": "https://res.cloudinary.com/dyjvnhq5s/image/upload/v1736002355/Kaio_A_swordsman_walking_alone_n1f3s1.png",
-      "title": "312",
-      "price": 1,
-      "quantity": 1,
-      "rate": 1,
-      "description": "2312",
-      "square": "3123",
-      "typeBed": "231",
-      "sleeps": 1,
+      "thumbnail": "https://res.cloudinary.com/dyjvnhq5s/image/upload/v1736074964/elden_ring_c0jko5.jpg",
+      "title": "Loai phong 6",
+      "price": 1000,
+      "quantity": 12,
+      "rate": 2,
+      "description": "Loai phong 6Loai phong 6Loai phong 6Loai phong 6Loai phong 6Loai phong 6Loai phong 6",
+      "square": "34 to 40 sqm",
+      "typeBed": "test1",
+      "sleeps": 4,
       "images": [
         "https://d321ocj5nbe62c.cloudfront.net/imageRepo/7/0/111/661/862/PRINT-Aguas-de-Ibiza-Room-2019-2_P.jpg",
         "https://d321ocj5nbe62c.cloudfront.net/imageRepo/7/0/111/661/890/PRINT-Aguas-de-Ibiza-Room-2019-6_P.jpg",
         "https://d321ocj5nbe62c.cloudfront.net/imageRepo/7/0/111/661/916/PRINT-Aguas-de-Ibiza-Room-2019-20_P.jpg"
       ],
-      "map": "https://res.cloudinary.com/dyjvnhq5s/image/upload/v1736002356/Kaio_In_the_world_of_fantasy_1_woadeq.png",
-      "shortDes": "3123",
-      "detailDes": "12312",
-      "quickDes": [],
-      "detailFeatures": [],
-      "category": "Normal",
-      "view": "Mountain",
-      "id": "RLlSzsR"
+      "map": "https://res.cloudinary.com/dyjvnhq5s/image/upload/v1736074966/wallpaperflare.com_wallpaper_1_jthtke.jpg",
+      "shortDes": "Loai phong 6Loai phong 6Loai phong 6Loai phong 6Loai phong 6Loai phong 6Loai phong 6",
+      "detailDes": "Loai phong 6Loai phong 6Loai phong 6Loai phong 6Loai phong 6Loai phong 6Loai phong 6",
+      "quickDes": [
+        "Bathtub",
+        "Pool view",
+        "Double beds",
+        "It is located on 1st, 2nd and 3rd floor. Subject to availability",
+        "It is located on 1st, 2nd, 3rd and 4th floor. Subject to availability.",
+        "Unlimited access to spa",
+        "Pillow menu"
+      ],
+      "detailFeatures": [
+        "Coffee/Tea maker",
+        "Hairdryer",
+        "Slippers",
+        "Telephone",
+        "Bathrobe",
+        "Wake-up calls",
+        "Bathroom telephone",
+        "Speaker phone",
+        "TV"
+      ],
+      "category": "Premier",
+      "view": "Pool",
+      "id": "kVZHGm0"
     }
   ],
   "rooms": [
@@ -493,6 +516,10 @@
         {
           "from": "2025-01-19T17:00:00.000Z",
           "to": "2025-01-24T17:00:00.000Z"
+        },
+        {
+          "from": "2025-01-05T17:00:00.000Z",
+          "to": "2025-01-09T17:00:00.000Z"
         }
       ]
     },
@@ -579,8 +606,8 @@
     },
     {
       "id": "210",
-      "roomTypeId": "1",
-      "roomNumber": "210",
+      "roomTypeId": "3",
+      "roomNumber": 210,
       "floor": 2,
       "status": "maintenance",
       "bookedDates": []
@@ -629,6 +656,10 @@
         {
           "from": "2025-01-26T17:00:00.000Z",
           "to": "2025-01-30T17:00:00.000Z"
+        },
+        {
+          "from": "2025-01-05T17:00:00.000Z",
+          "to": "2025-01-07T17:00:00.000Z"
         }
       ]
     },
@@ -659,7 +690,12 @@
       "roomNumber": "305",
       "floor": 3,
       "status": "available",
-      "bookedDates": []
+      "bookedDates": [
+        {
+          "from": "2025-01-07T17:00:00.000Z",
+          "to": "2025-01-09T17:00:00.000Z"
+        }
+      ]
     },
     {
       "id": "306",
@@ -725,7 +761,12 @@
       "roomNumber": "401",
       "floor": 4,
       "status": "available",
-      "bookedDates": []
+      "bookedDates": [
+        {
+          "from": "2025-01-05T17:00:00.000Z",
+          "to": "2025-01-10T17:00:00.000Z"
+        }
+      ]
     },
     {
       "id": "402",
@@ -1080,6 +1121,14 @@
       "status": "available",
       "bookedDates": [],
       "id": "gvC8_6j"
+    },
+    {
+      "roomNumber": 3000,
+      "roomTypeId": "2",
+      "floor": 3,
+      "status": "available",
+      "bookedDates": [],
+      "id": "bxPrcgY"
     }
   ],
   "options": [
@@ -1149,7 +1198,7 @@
       "roomTypeId": "2",
       "optionId": "1",
       "roomId": "301",
-      "status": "booked",
+      "status": "confirm",
       "price": 374,
       "totalPrice": 374,
       "day": 1,
@@ -1428,6 +1477,81 @@
         "to": "2025-01-30T17:00:00.000Z"
       },
       "id": 30
+    },
+    {
+      "userId": "1",
+      "roomTypeId": "3",
+      "optionId": "1",
+      "roomId": "401",
+      "status": "booked",
+      "price": 418,
+      "totalPrice": 2090,
+      "day": 5,
+      "bookedDates": {
+        "from": "2025-01-05T17:00:00.000Z",
+        "to": "2025-01-10T17:00:00.000Z"
+      },
+      "id": 34
+    },
+    {
+      "userId": "2",
+      "roomTypeId": "2",
+      "optionId": "1",
+      "roomId": "302",
+      "status": "booked",
+      "price": 374,
+      "totalPrice": 748,
+      "day": 2,
+      "bookedDates": {
+        "from": "2025-01-07T17:00:00.000Z",
+        "to": "2025-01-09T17:00:00.000Z"
+      },
+      "id": 38
+    },
+    {
+      "userId": "2",
+      "roomTypeId": "2",
+      "optionId": "2",
+      "roomId": "305",
+      "status": "booked",
+      "price": 396,
+      "totalPrice": 792,
+      "day": 2,
+      "bookedDates": {
+        "from": "2025-01-07T17:00:00.000Z",
+        "to": "2025-01-09T17:00:00.000Z"
+      },
+      "id": 39
+    },
+    {
+      "userId": "2",
+      "roomTypeId": "2",
+      "optionId": "1",
+      "roomId": "302",
+      "status": "booked",
+      "price": 374,
+      "totalPrice": 748,
+      "day": 2,
+      "bookedDates": {
+        "from": "2025-01-05T17:00:00.000Z",
+        "to": "2025-01-07T17:00:00.000Z"
+      },
+      "id": 40
+    },
+    {
+      "userId": "Qx9j5-m",
+      "roomTypeId": "1",
+      "optionId": "1",
+      "roomId": "202",
+      "status": "booked",
+      "price": 330,
+      "totalPrice": 1320,
+      "day": 4,
+      "bookedDates": {
+        "from": "2025-01-05T17:00:00.000Z",
+        "to": "2025-01-09T17:00:00.000Z"
+      },
+      "id": 41
     }
   ]
 }

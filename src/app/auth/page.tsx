@@ -5,13 +5,20 @@ import { type ISourceOptions } from "@tsparticles/engine";
 import Particles, { initParticlesEngine } from "@tsparticles/react";
 import { loadSlim } from "@tsparticles/slim";
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useLayoutEffect, useMemo, useState } from "react";
 import { FaLongArrowAltLeft } from "react-icons/fa";
 import Login from "./Login";
 import Register from "./Register";
+import { useSelector } from "react-redux";
+import { authSelector } from "@/redux/selectors/authSelector";
+import { useRouter } from "next/navigation";
+import LoadingPage from "../_components/LoadingPage";
 
 const page = () => {
   const [init, setInit] = useState(false);
+
+  const { currentUser } = useSelector(authSelector);
+  const router = useRouter();
 
   useEffect(() => {
     initParticlesEngine(async (engine) => {
@@ -87,9 +94,19 @@ const page = () => {
     []
   );
 
+  useEffect(() => {
+    if (currentUser) {
+      router.push("/");
+    }
+  }, []);
+
+  if (currentUser) {
+    return <LoadingPage />;
+  }
+
   if (init) {
     return (
-      <div className="w-screen h-screen flex pt-40 justify-center bg-[url('https://media.publit.io/file/Philippines-night-G.png')]">
+      <div className="w-screen h-screen flex pt-20 overflow-hidden justify-center bg-[url('https://media.publit.io/file/Philippines-night-G.png')]">
         <div className="fixed top-10 left-10">
           <Link
             href="/home"

@@ -36,6 +36,7 @@ import { format } from "date-fns";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import LoadingProcess from "@/app/_components/Loading";
+import { formatMoney } from "@/utils/helpers";
 
 const CartsTable = ({ open, onClose }: IForm) => {
   const { carts } = useSelector(cartsSelector);
@@ -194,9 +195,10 @@ const CartsTable = ({ open, onClose }: IForm) => {
           </div>
         );
       },
-      cell: ({ row }) => (
-        <div className="lowercase">{row.getValue("totalPrice")}</div>
-      ),
+      cell: ({ row }) => {
+        const totalPrice = formatMoney(row.getValue("totalPrice"));
+        return <div className="lowercase">{totalPrice}</div>;
+      },
     },
     {
       accessorKey: "status",
@@ -327,11 +329,11 @@ const CartsTable = ({ open, onClose }: IForm) => {
     },
   ];
 
-  const { loading } = useSelector(cartsSelector);
+  // const { loading } = useSelector(cartsSelector);
 
-  if (loading) {
-    return <LoadingProcess />;
-  }
+  // if (loading) {
+  //   return <LoadingProcess />;
+  // }
 
   return (
     <>

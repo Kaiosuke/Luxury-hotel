@@ -48,7 +48,7 @@ const Header = () => {
             : "translate-y-[-1000px] opacity-0"
         }`}
       >
-        <div className="grid lg:grid-cols-5 md:grid-cols-3 grid-cols-1 gap-4">
+        <div className="grid lg:grid-cols-5 md:grid-cols-3 grid-cols-1 gap-4 mt-10 lg:mt-0">
           <HeaderMainPages openMenu={openMenu} setOpenMenu={setOpenMenu} />
           <HeaderSubPages />
           {!currentUser && (

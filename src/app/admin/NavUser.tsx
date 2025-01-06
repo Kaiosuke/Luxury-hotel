@@ -23,6 +23,7 @@ import { IUser } from "@/interfaces";
 import { useAppDispatch } from "@/redux/store";
 import { signOut } from "next-auth/react";
 import { loginUser } from "@/redux/slices/authSlice";
+import { useToast } from "@/hooks/use-toast";
 
 function NavUser({ user }: { user: IUser }) {
   const { isMobile } = useSidebar();
@@ -30,9 +31,16 @@ function NavUser({ user }: { user: IUser }) {
   const { username, email, role } = user;
   const dispatch = useAppDispatch();
 
+  const { toast } = useToast();
+
   const handleSigOut = () => {
     signOut();
     dispatch(loginUser(null));
+    return toast({
+      variant: "success",
+      title: "success",
+      description: `Logout success`,
+    });
   };
 
   return (

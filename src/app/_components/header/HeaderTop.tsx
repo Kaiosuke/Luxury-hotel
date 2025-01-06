@@ -24,6 +24,7 @@ import { FaGithub } from "react-icons/fa6";
 import { FiShoppingCart } from "react-icons/fi";
 import { MdOutlineDashboard } from "react-icons/md";
 import { useSelector } from "react-redux";
+import { useToast } from "@/hooks/use-toast";
 
 const HeaderTop = ({
   isScrolled,
@@ -39,9 +40,16 @@ const HeaderTop = ({
   const { currentUser } = useSelector(authSelector);
   const { cartsUsers } = useSelector(cartUserRemainingSelector);
 
+  const { toast } = useToast();
+
   const handleSigOut = () => {
     signOut();
     dispatch(loginUser(null));
+    return toast({
+      variant: "success",
+      title: "success",
+      description: `Logout success`,
+    });
   };
 
   return (

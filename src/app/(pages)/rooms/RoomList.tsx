@@ -32,7 +32,7 @@ const RoomList = ({ room }: IRoomList) => {
               <Link href={`rooms/${room.id}`}>
                 <Button variant={"third"}>View more</Button>
               </Link>
-              <Link href="#!">
+              <Link href="/booking">
                 <Button variant={"secondary"}>Book Now</Button>
               </Link>
             </div>

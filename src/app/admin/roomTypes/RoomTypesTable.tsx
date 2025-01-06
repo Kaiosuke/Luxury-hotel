@@ -23,6 +23,7 @@ import { roomTypesSelector } from "@/redux/selectors/roomTypesSelector";
 import Image from "next/image";
 import { useState } from "react";
 import { useSelector } from "react-redux";
+import { formatMoney } from "@/utils/helpers";
 
 const RoomTypesTable = ({ open, onClose }: IForm) => {
   const { roomTypes } = useSelector(roomTypesSelector);
@@ -134,9 +135,10 @@ const RoomTypesTable = ({ open, onClose }: IForm) => {
           </div>
         );
       },
-      cell: ({ row }) => (
-        <div className="lowercase">{row.getValue("price")}</div>
-      ),
+      cell: ({ row }) => {
+        const price = formatMoney(row.getValue("price"));
+        return <div className="lowercase">{price}</div>;
+      },
     },
     {
       accessorKey: "category",
@@ -218,11 +220,11 @@ const RoomTypesTable = ({ open, onClose }: IForm) => {
     },
   ];
 
-  const { loading } = useSelector(roomTypesSelector);
+  // const { loading } = useSelector(roomTypesSelector);
 
-  if (loading) {
-    return <LoadingProcess />;
-  }
+  // if (loading) {
+  //   return <LoadingProcess />;
+  // }
 
   return (
     <>

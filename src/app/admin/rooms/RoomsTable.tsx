@@ -220,11 +220,11 @@ const RoomsTable = ({ open, onClose }: IForm) => {
     },
   ];
 
-  const { loading } = useSelector(roomsSelector);
+  // const { loading } = useSelector(roomsSelector);
 
-  if (loading) {
-    return <LoadingProcess />;
-  }
+  // if (loading) {
+  //   return <LoadingProcess />;
+  // }
 
   return (
     <>

@@ -211,11 +211,11 @@ const UserTable = ({ open, onClose }: IForm) => {
     },
   ];
 
-  const { loading } = useSelector(usersSelector);
+  // const { loading } = useSelector(usersSelector);
 
-  if (loading) {
-    return <LoadingProcess />;
-  }
+  // if (loading) {
+  //   return <LoadingProcess />;
+  // }
 
   return (
     <>

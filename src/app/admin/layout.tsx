@@ -39,7 +39,7 @@ function layoutAdmin({ children }: { children: ReactNode }) {
     }
   }, [router, currentUser]);
 
-  if (!currentUser) {
+  if (!currentUser || currentUser.role === "user") {
     return <LoadingPage />;
   }
 
