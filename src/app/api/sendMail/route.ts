@@ -33,7 +33,7 @@ export async function POST(req: Request) {
         <p>instructions <a href="https://sis.redsys.es/sis/p2f?t=2D7AE99ECDD13089C9AB7462F3182628420EE18B">HERE</a></p>
         <p>I kindly inform you that if payment is not received by the specified deadline (2 hours after the issuance of this message), your reservation may be subject to cancellation.</p>
         <p>If you have any questions, please do not hesitate to contact us at <a href="mailto:trongleele@gmail.com">trongleele@gmail.com</a></p>
-          <div class= "flex gap-20">
+          <div class= "flex gap-">
             <img src="https://res.cloudinary.com/dyjvnhq5s/image/upload/v1735978886/Luxury_Hotel/kfbr7a8usehlxml6yqyw.png" style="max-width: auto; height: 100px; border-radius: 8px; " />
             <img src="https://res.cloudinary.com/dyjvnhq5s/image/upload/v1735978886/Luxury_Hotel/wv4t4xk5fmsmkuedzvtw.jpg" style="max-width: auto; height: 100px; border-radius: 8px;" />
         </div>

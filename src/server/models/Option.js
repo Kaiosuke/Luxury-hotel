@@ -1,0 +1,26 @@
+import mongoose, { Schema } from "mongoose";
+import MongooseDelete from "mongoose-delete";
+
+const OptionSchema = new Schema(
+  {
+    title: { type: String, require: true },
+    price: { type: number, require: true },
+    extensions: [{ type: String, require: true }],
+    typeDescription: { type: String, require: true },
+    carts: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "carts",
+      },
+    ],
+  },
+  { timestamps: true }
+);
+
+OptionSchema.plugin(MongooseDelete, {
+  deletedAt: true,
+  overrideMethods: true,
+});
+
+const Option = mongoose.model("options", OptionSchema);
+export default Option;
