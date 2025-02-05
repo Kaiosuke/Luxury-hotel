@@ -4,7 +4,11 @@ import MongooseDelete from "mongoose-delete";
 const ReviewSchema = new Schema(
   {
     userId: { type: String, require: true },
-    roomTypeId: { type: Schema.Types.ObjectId, require: true },
+    roomTypeId: {
+      type: Schema.Types.ObjectId,
+      ref: "roomTypes",
+      require: true,
+    },
     description: { type: String, require: true },
   },
   { timestamps: true }

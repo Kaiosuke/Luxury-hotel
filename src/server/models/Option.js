@@ -11,8 +11,14 @@ const OptionSchema = new Schema(
       {
         type: Schema.Types.ObjectId,
         ref: "carts",
+        require: true,
       },
     ],
+    foodId: {
+      type: Schema.Types.ObjectId,
+      ref: "foods",
+      require: true,
+    },
   },
   { timestamps: true }
 );

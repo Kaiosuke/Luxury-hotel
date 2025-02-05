@@ -19,6 +19,7 @@ const UserController = {
       return handleError500(res, req);
     }
   },
+
   getById: async (req, res) => {
     try {
       const { id } = req.params;

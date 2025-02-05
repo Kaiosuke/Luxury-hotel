@@ -3,8 +3,16 @@ import MongooseDelete from "mongoose-delete";
 
 const PaymentSchema = new Schema(
   {
-    userId: { type: Schema.Types.ObjectId, require: true },
-    cartId: { type: Schema.Types.ObjectId, require: true },
+    userId: {
+      type: Schema.Types.ObjectId,
+      ref: "users",
+      require: true,
+    },
+    cartId: {
+      type: Schema.Types.ObjectId,
+      ref: "carts",
+      require: true,
+    },
     amount: { type: Number, require: true },
     paymentMethod: { type: String, require: true },
   },
