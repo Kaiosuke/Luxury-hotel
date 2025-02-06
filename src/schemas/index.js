@@ -25,7 +25,7 @@ const RegisterSchema = z
       message: "Username must be at least 2 characters.",
     }),
     email: z.string().email({ message: "Invalid email address" }),
-    role: z.enum(["ceo", "admin", "user"]),
+    role: z.enum(["ceo", "admin", "user"]).optional(),
     password: z
       .string()
       .min(6, "Password must be greater than or equal to 6 characters"),
@@ -94,9 +94,20 @@ const RoomTypesSchema = z.object({
 });
 
 const RoomSchema = z.object({
-  roomNumber: z.number().min(1, "Minimum number of rooms 1"),
+  roomNumber: z.number().min(1, "Minimum number of rooms 1 characters"),
 });
 
+const ViewSchema = z.object({
+  title: z.string().min(1, "Minimum number of views 1 characters"),
+});
+
+const TypeBedSchema = z.object({
+  title: z.string().min(1, "Minimum number of typeBed 1 characters"),
+});
+
+const categoryRoomSchema = z.object({
+  title: z.string().min(1, "Minimum number of categoryRoom 1 characters"),
+});
 export {
   SubscribeSchema,
   LoginSchema,
@@ -105,4 +116,7 @@ export {
   UserSchema,
   RoomTypesSchema,
   RoomSchema,
+  ViewSchema,
+  TypeBedSchema,
+  categoryRoomSchema,
 };

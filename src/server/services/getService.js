@@ -1,22 +1,30 @@
-const getAll = async (model, populate = null) => {
-  const dataList = populate
-    ? await model.find().populate(populate)
-    : await model.find();
+const getAllData = async (model, populate = []) => {
+  let query = model.find();
+  if (populate.length) {
+    populate.forEach((field) => {
+      query = query.populate(field, "title");
+    });
+  }
+  return query;
+};
+
+const getData = async (model, data, body, populate = []) => {
+  const dataList = populate.length
+    ? await model.findOne({ [data]: body }).populate(populate)
+    : await model.findOne({ [data]: body });
+
   return dataList;
 };
 
-const get = async (model, data, populate = null) => {
-  const dataList = populate
-    ? await model.find({ data }).populate(populate)
-    : await model.find();
-  return dataList;
+const getDataById = async (model, id, populate = []) => {
+  let query = await model.findById(id);
+
+  if (populate.length) {
+    populate.forEach((field) => {
+      query = query.populate(field, "title");
+    });
+  }
+  return await query;
 };
 
-const getById = async (model, id, populate = null) => {
-  const data = populate
-    ? await model.findById(id).populate(populate)
-    : await model.findById(id);
-  return data;
-};
-
-export { getAll, get, getById };
+export { getAllData, getData, getDataById };

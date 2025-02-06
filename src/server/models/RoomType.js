@@ -30,7 +30,7 @@ const RoomTypeSChema = new Schema(
     sleeps: { type: String, require: true },
     images: [{ type: String, require: true }],
     map: { type: String, require: true },
-    detailFeatures: { type: String, require: true },
+    detailFeatures: [{ type: String, require: true }],
     shortDes: { type: String, require: true },
     detailDes: { type: String, require: true },
     carts: [

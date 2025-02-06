@@ -14,6 +14,10 @@ const handleError404 = (res) => {
   return res.status(404).json({ message: "Not found!" });
 };
 
+const handleError404WithData = (res, data) => {
+  return res.status(404).json({ message: `Not found ${data}!` });
+};
+
 const handleError409 = (res, message) => {
   return res.status(404).json({ message });
 };
@@ -29,6 +33,7 @@ export {
   handleSuccess201,
   handleError401,
   handleError404,
+  handleError404WithData,
   handleError409,
   handleError500,
 };

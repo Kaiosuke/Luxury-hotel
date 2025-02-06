@@ -5,7 +5,7 @@ import {
   handleSuccess200,
   handleSuccess201,
 } from "../../utils/helpers/handleStatusCode.js";
-import View from "../models/View.js";
+import CategoryRoom from "../models/CategoryRoom.js";
 import { deleteData, forceDeleteData } from "../services/deleteService.js";
 import { getData, getAllData, getDataById } from "../services/getService.js";
 import {
@@ -14,16 +14,16 @@ import {
 } from "../services/patchService.js";
 import { createData } from "../services/postService.js";
 
-const ViewController = {
+const CategoryRoomController = {
   getAll: async (req, res) => {
     try {
-      const views = await getAllData(View);
+      const CategoryRooms = await getAllData(CategoryRoom);
 
-      if (!views.length) {
+      if (!CategoryRooms.length) {
         return handleError404(res);
       }
 
-      return handleSuccess200(res, views);
+      return handleSuccess200(res, CategoryRooms);
     } catch (error) {
       return handleError500(res, error);
     }
@@ -33,12 +33,12 @@ const ViewController = {
     try {
       const { id } = req.params;
 
-      const view = await getDataById(View, id);
+      const categoryRoom = await getDataById(CategoryRoom, id);
 
-      if (!view) {
+      if (!categoryRoom) {
         return handleError404(res);
       }
-      return handleSuccess200(res, view);
+      return handleSuccess200(res, categoryRoom);
     } catch (error) {
       return handleError500(res, error);
     }
@@ -48,14 +48,14 @@ const ViewController = {
     try {
       const { title } = req.body;
 
-      const findView = await getData(View, "title", title);
+      const findCategoryRoom = await getData(CategoryRoom, "title", title);
 
-      if (findView) {
-        return handleError409(res, "View already exists!");
+      if (findCategoryRoom) {
+        return handleError409(res, "CategoryRoom already exists!");
       }
 
-      const newView = await createData(View, req.body);
-      return handleSuccess201(res, newView);
+      const newCategoryRoom = await createData(CategoryRoom, req.body);
+      return handleSuccess201(res, newCategoryRoom);
     } catch (error) {
       return handleError500(res, error);
     }
@@ -65,15 +65,19 @@ const ViewController = {
     try {
       const { id } = req.params;
 
-      const findView = await getDataById(View, id);
+      const findCategoryRoom = await getDataById(CategoryRoom, id);
 
-      if (!findView) {
+      if (!findCategoryRoom) {
         return handleError404(res);
       }
 
-      const updateView = await findByIdAndUpdateData(View, id, req.body);
+      const updateCategoryRoom = await findByIdAndUpdateData(
+        CategoryRoom,
+        id,
+        req.body
+      );
 
-      return handleSuccess200(res, updateView);
+      return handleSuccess200(res, updateCategoryRoom);
     } catch (error) {
       return handleError500(res, error);
     }
@@ -83,13 +87,13 @@ const ViewController = {
     try {
       const { id } = req.params;
 
-      const findView = await getDataById(View, id);
+      const findCategoryRoom = await getDataById(CategoryRoom, id);
 
-      if (!findView) {
+      if (!findCategoryRoom) {
         return handleError404(res);
       }
 
-      await deleteData(View, id);
+      await deleteData(CategoryRoom, id);
 
       return handleSuccess200(res, id);
     } catch (error) {
@@ -101,15 +105,15 @@ const ViewController = {
     try {
       const { id } = req.params;
 
-      const restoreView = await restoreData(View, id);
+      const restoreCategoryRoom = await restoreData(CategoryRoom, id);
 
-      if (!restoreView.matchedCount) {
+      if (!restoreCategoryRoom.matchedCount) {
         return handleError404(res);
       }
 
-      const findView = await getDataById(View, id);
+      const findCategoryRoom = await getDataById(CategoryRoom, id);
 
-      return handleSuccess200(res, findView);
+      return handleSuccess200(res, findCategoryRoom);
     } catch (error) {
       return handleError500(res, error);
     }
@@ -118,9 +122,9 @@ const ViewController = {
   forceDelete: async (req, res) => {
     const { id } = req.params;
 
-    const forceDeleteView = await forceDeleteData(View, id);
+    const forceDeleteCategoryRoom = await forceDeleteData(CategoryRoom, id);
 
-    if (!forceDeleteView.deletedCount) {
+    if (!forceDeleteCategoryRoom.deletedCount) {
       return handleError404(res);
     }
 
@@ -128,4 +132,4 @@ const ViewController = {
   },
 };
 
-export default ViewController;
+export default CategoryRoomController;

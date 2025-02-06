@@ -10,17 +10,17 @@ import {
   handleSuccess200,
 } from "../../utils/helpers/handleStatusCode.js";
 
-import { create } from "../services/postService.js";
+import { createData } from "../services/postService.js";
+import { getData } from "../services/getService.js";
 
 import User from "../models/User.js";
-import { get } from "../services/getService.js";
 
-const refreshTokens = [];
+let refreshTokens = [];
 
 const AuthController = {
   register: async (req, res) => {
     try {
-      const email = await get(User, req.body.email);
+      const email = await getData(User, "email", req.body.email);
 
       if (email) {
         return handleError409(res, "Email already exists!");
@@ -29,7 +29,7 @@ const AuthController = {
       var salt = bcrypt.genSaltSync(10);
       var hash = bcrypt.hashSync(req.body.password, salt);
 
-      const newUser = await create(User, { ...req.body, password: hash });
+      const newUser = await createData(User, { ...req.body, password: hash });
 
       const { password, ...others } = newUser._doc;
 
@@ -61,13 +61,16 @@ const AuthController = {
 
   login: async (req, res) => {
     try {
-      const user = await get(User, req.body.email);
+      const user = await getData(User, req.body.email);
 
       if (!user) {
         return handleError404(res);
       }
 
-      const isValidPassword = bcrypt.compare(req.body.password, user.password);
+      const isValidPassword = await bcrypt.compare(
+        req.body.password,
+        user.password
+      );
 
       if (!isValidPassword) {
         return handleError401(res, "Invalid password");
@@ -79,7 +82,7 @@ const AuthController = {
 
       refreshTokens.push(refreshToken);
 
-      res.cookies("refreshToken", refreshToken, {
+      res.cookie("refreshToken", refreshToken, {
         httpOnly: true,
         secure: false,
         path: "/",
@@ -94,7 +97,37 @@ const AuthController = {
     }
   },
 
-  refreshToken: () => {},
+  refreshToken: async (req, res) => {
+    const refreshToken = req.cookies.refreshToken;
+
+    if (!refreshTokens.includes(refreshToken)) {
+      return res.status(401).json("Refresh Token is not valid!");
+    }
+    jwt.verify(refreshToken, env.REFRESH_TOKEN, async (err, user) => {
+      if (err) {
+        return res.status(401).json(err);
+      }
+      const newUser = await User.findById(user.user);
+      const newAccessToken = AuthController.generateAccessToken(newUser);
+      const newRefreshToken = AuthController.generateRefreshToken(newUser);
+
+      refreshTokens = refreshTokens.filter((token) => token !== refreshToken);
+
+      refreshTokens.push(newRefreshToken);
+
+      res.cookie("refreshToken", newRefreshToken, {
+        httpOnly: true,
+        secure: false,
+        path: "/",
+        sameSite: "strict",
+      });
+
+      return res.status(200).json({ newAccessToken });
+    });
+    if (!refreshToken) {
+      return res.status(401).json("You're not authenticated");
+    }
+  },
 };
 
 export default AuthController;

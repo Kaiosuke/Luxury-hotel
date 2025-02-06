@@ -1,14 +1,27 @@
 import { Router } from "express";
-import RoomType from "../models/RoomType.js";
+import { RoomTypesSchema } from "../../schemas/index.js";
+import RoomTypeController from "../controllers/RoomTypeController.js";
+import { verifyAdmin } from "../middlewares/auth.js";
+import { validateBody } from "../middlewares/validateBody.js";
 const route = Router();
 
-route.get("/", async (req, res) => {
-  try {
-    const data = await RoomType.find({});
-    return res.status(200).send(data);
-  } catch (error) {
-    return res.send(error);
-  }
-});
+route.get("/", RoomTypeController.getAll);
+
+route.get("/:id", RoomTypeController.getById);
+
+route.post(
+  "/create",
+  verifyAdmin,
+  // validateBody(RoomTypesSchema),
+  RoomTypeController.create
+);
+
+route.patch("/update/:id", verifyAdmin, RoomTypeController.update);
+
+route.delete("/delete/:id", verifyAdmin, RoomTypeController.delete);
+
+route.patch("/restore/:id", verifyAdmin, RoomTypeController.restore);
+
+route.delete("/delete/force/:id", verifyAdmin, RoomTypeController.forceDelete);
 
 export default route;

@@ -5,7 +5,7 @@ import {
   handleSuccess200,
   handleSuccess201,
 } from "../../utils/helpers/handleStatusCode.js";
-import View from "../models/View.js";
+import TypeBed from "../models/TypeBed.js";
 import { deleteData, forceDeleteData } from "../services/deleteService.js";
 import { getData, getAllData, getDataById } from "../services/getService.js";
 import {
@@ -14,16 +14,16 @@ import {
 } from "../services/patchService.js";
 import { createData } from "../services/postService.js";
 
-const ViewController = {
+const TypeBedController = {
   getAll: async (req, res) => {
     try {
-      const views = await getAllData(View);
+      const typeBeds = await getAllData(TypeBed);
 
-      if (!views.length) {
+      if (!typeBeds.length) {
         return handleError404(res);
       }
 
-      return handleSuccess200(res, views);
+      return handleSuccess200(res, typeBeds);
     } catch (error) {
       return handleError500(res, error);
     }
@@ -33,12 +33,12 @@ const ViewController = {
     try {
       const { id } = req.params;
 
-      const view = await getDataById(View, id);
+      const typeBed = await getDataById(TypeBed, id);
 
-      if (!view) {
+      if (!typeBed) {
         return handleError404(res);
       }
-      return handleSuccess200(res, view);
+      return handleSuccess200(res, typeBed);
     } catch (error) {
       return handleError500(res, error);
     }
@@ -48,14 +48,14 @@ const ViewController = {
     try {
       const { title } = req.body;
 
-      const findView = await getData(View, "title", title);
+      const findTypeBed = await getData(TypeBed, "title", title);
 
-      if (findView) {
-        return handleError409(res, "View already exists!");
+      if (findTypeBed) {
+        return handleError409(res, "TypeBed already exists!");
       }
 
-      const newView = await createData(View, req.body);
-      return handleSuccess201(res, newView);
+      const newTypeBed = await createData(TypeBed, req.body);
+      return handleSuccess201(res, newTypeBed);
     } catch (error) {
       return handleError500(res, error);
     }
@@ -65,15 +65,15 @@ const ViewController = {
     try {
       const { id } = req.params;
 
-      const findView = await getDataById(View, id);
+      const findTypeBed = await getDataById(TypeBed, id);
 
-      if (!findView) {
+      if (!findTypeBed) {
         return handleError404(res);
       }
 
-      const updateView = await findByIdAndUpdateData(View, id, req.body);
+      const updateTypeBed = await findByIdAndUpdateData(TypeBed, id, req.body);
 
-      return handleSuccess200(res, updateView);
+      return handleSuccess200(res, updateTypeBed);
     } catch (error) {
       return handleError500(res, error);
     }
@@ -83,13 +83,13 @@ const ViewController = {
     try {
       const { id } = req.params;
 
-      const findView = await getDataById(View, id);
+      const findTypeBed = await getDataById(TypeBed, id);
 
-      if (!findView) {
+      if (!findTypeBed) {
         return handleError404(res);
       }
 
-      await deleteData(View, id);
+      await deleteData(TypeBed, id);
 
       return handleSuccess200(res, id);
     } catch (error) {
@@ -101,15 +101,15 @@ const ViewController = {
     try {
       const { id } = req.params;
 
-      const restoreView = await restoreData(View, id);
+      const restoreTypeBed = await restoreData(TypeBed, id);
 
-      if (!restoreView.matchedCount) {
+      if (!restoreTypeBed.matchedCount) {
         return handleError404(res);
       }
 
-      const findView = await getDataById(View, id);
+      const findTypeBed = await getDataById(TypeBed, id);
 
-      return handleSuccess200(res, findView);
+      return handleSuccess200(res, findTypeBed);
     } catch (error) {
       return handleError500(res, error);
     }
@@ -118,9 +118,9 @@ const ViewController = {
   forceDelete: async (req, res) => {
     const { id } = req.params;
 
-    const forceDeleteView = await forceDeleteData(View, id);
+    const forceDeleteTypeBed = await forceDeleteData(TypeBed, id);
 
-    if (!forceDeleteView.deletedCount) {
+    if (!forceDeleteTypeBed.deletedCount) {
       return handleError404(res);
     }
 
@@ -128,4 +128,4 @@ const ViewController = {
   },
 };
 
-export default ViewController;
+export default TypeBedController;
