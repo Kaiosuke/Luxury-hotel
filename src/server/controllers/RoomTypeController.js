@@ -20,6 +20,7 @@ import {
 } from "../services/patchService.js";
 import { createData } from "../services/postService.js";
 import { Schema } from "mongoose";
+import env from "../config/envConfig.js";
 
 const RoomTypeController = {
   getAll: async (req, res) => {
@@ -192,11 +193,27 @@ const RoomTypeController = {
     try {
       const { id } = req.params;
 
-      const findRoomType = await getById(RoomType, id);
+      const findRoomType = await getDataById(RoomType, id);
 
       if (!findRoomType) {
         return handleError404(res);
       }
+
+      await findByIdAndPullData(View, findRoomType.viewId, "roomTypes", id);
+
+      await findByIdAndPullData(
+        TypeBed,
+        findRoomType.typeBedId,
+        "roomTypes",
+        id
+      );
+
+      await findByIdAndPullData(
+        CategoryRoom,
+        findRoomType.categoryRoomId,
+        "roomTypes",
+        id
+      );
 
       await deleteData(RoomType, id);
 
@@ -216,8 +233,50 @@ const RoomTypeController = {
         return handleError404(res);
       }
 
-      const findRoomType = await getById(RoomType, id);
+      const findRoomType = await getDataById(RoomType, id);
 
+      const findView = await findByIdAndPushData(
+        View,
+        findRoomType.viewId,
+        "roomTypes",
+        id
+      );
+
+      if (!findView) {
+        findRoomType.viewId = env.DEFAULT_VIEW;
+        await findByIdAndPushData(View, env.DEFAULT_VIEW, "roomTypes", id);
+      }
+
+      const findTypeBed = await findByIdAndPushData(
+        TypeBed,
+        findRoomType.typeBedId,
+        "roomTypes",
+        id
+      );
+
+      if (!findTypeBed) {
+        findRoomType.viewId = env.DEFAULT_TYPE_BED;
+        await findByIdAndPushData(View, env.DEFAULT_TYPE_BED, "roomTypes", id);
+      }
+
+      const findCategoryRoom = await findByIdAndPushData(
+        CategoryRoom,
+        findRoomType.categoryRoomId,
+        "roomTypes",
+        id
+      );
+
+      if (!findCategoryRoom) {
+        findRoomType.viewId = env.DEFAULT_CATEGORY_ROOM;
+        await findByIdAndPushData(
+          View,
+          env.DEFAULT_CATEGORY_ROOM,
+          "roomTypes",
+          id
+        );
+      }
+
+      findRoomType.save();
       return handleSuccess200(res, findRoomType);
     } catch (error) {
       return handleError500(res, error);

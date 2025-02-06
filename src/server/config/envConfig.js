@@ -7,6 +7,9 @@ const env = {
   MONGO_CONNECT: process.env.MONGO_CONNECT,
   ACCESS_TOKEN: process.env.ACCESS_TOKEN,
   REFRESH_TOKEN: process.env.REFRESH_TOKEN,
+  DEFAULT_VIEW: process.env.DEFAULT_VIEW,
+  DEFAULT_TYPE_BED: process.env.DEFAULT_TYPE_BED,
+  DEFAULT_CATEGORY_ROOM: process.env.DEFAULT_CATEGORY_ROOM,
 };
 
 export default env;

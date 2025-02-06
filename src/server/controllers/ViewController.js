@@ -5,6 +5,7 @@ import {
   handleSuccess200,
   handleSuccess201,
 } from "../../utils/helpers/handleStatusCode.js";
+import RoomType from "../models/RoomType.js";
 import View from "../models/View.js";
 import { deleteData, forceDeleteData } from "../services/deleteService.js";
 import { getData, getAllData, getDataById } from "../services/getService.js";
@@ -87,6 +88,14 @@ const ViewController = {
 
       if (!findView) {
         return handleError404(res);
+      }
+
+      const findRoomType = await getData(RoomType, "viewId", findView._id);
+      if (findRoomType) {
+        return handleError409(
+          res,
+          "Data conflict, cannot be deleted due to other constraints"
+        );
       }
 
       await deleteData(View, id);
