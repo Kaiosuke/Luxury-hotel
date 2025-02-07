@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { categoryRoomSchema } from "../../schemas/index.js";
+import { CategoryRoomSchema } from "../../schemas/index.js";
 import CategoryRoomController from "../controllers/CategoryRoomController.js";
 import { verifyAdmin } from "../middlewares/auth.js";
 import { validateBody } from "../middlewares/validateBody.js";
@@ -12,7 +12,7 @@ route.get("/:id", CategoryRoomController.getById);
 route.post(
   "/create",
   verifyAdmin,
-  validateBody(categoryRoomSchema),
+  validateBody(CategoryRoomSchema),
   CategoryRoomController.create
 );
 

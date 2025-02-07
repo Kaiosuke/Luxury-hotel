@@ -105,9 +105,24 @@ const TypeBedSchema = z.object({
   title: z.string().min(1, "Minimum number of typeBed 1 characters"),
 });
 
-const categoryRoomSchema = z.object({
+const CategoryRoomSchema = z.object({
   title: z.string().min(1, "Minimum number of categoryRoom 1 characters"),
 });
+
+const FoodSchema = z.object({
+  title: z.string().min(1, "Minimum number of food 1 characters"),
+});
+
+const OptionSchema = z.object({
+  title: z.string().min(1, "Minimum number of option 1 characters"),
+  foodId: z.string().min(1, "Cannot be left blank"),
+  price: z.number().min(1, "Price greater than or equal to 1"),
+  extensions: z.string().array().optional(),
+  typeDescription: z
+    .string()
+    .min(1, "Minimum number of categoryRoom 1 type description"),
+});
+
 export {
   SubscribeSchema,
   LoginSchema,
@@ -118,5 +133,7 @@ export {
   RoomSchema,
   ViewSchema,
   TypeBedSchema,
-  categoryRoomSchema,
+  CategoryRoomSchema,
+  FoodSchema,
+  OptionSchema,
 };

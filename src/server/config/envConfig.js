@@ -10,6 +10,7 @@ const env = {
   DEFAULT_VIEW: process.env.DEFAULT_VIEW,
   DEFAULT_TYPE_BED: process.env.DEFAULT_TYPE_BED,
   DEFAULT_CATEGORY_ROOM: process.env.DEFAULT_CATEGORY_ROOM,
+  DEFAULT_FOOD: process.env.DEFAULT_FOOD,
 };
 
 export default env;

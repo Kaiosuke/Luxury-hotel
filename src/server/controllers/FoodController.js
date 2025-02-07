@@ -6,41 +6,36 @@ import {
   handleSuccess201,
 } from "../../utils/helpers/handleStatusCode.js";
 import env from "../config/envConfig.js";
-import RoomType from "../models/RoomType.js";
-import View from "../models/View.js";
+import Food from "../models/Food.js";
+import Option from "../models/Food.js";
 import { deleteData, forceDeleteData } from "../services/deleteService.js";
-import { getData, getAllData, getDataById } from "../services/getService.js";
+import { getAllData, getData, getDataById } from "../services/getService.js";
 import {
   findByIdAndUpdateData,
   restoreData,
 } from "../services/patchService.js";
 import { createData } from "../services/postService.js";
 
-const ViewController = {
+const FoodController = {
   getAll: async (req, res) => {
     try {
-      const views = await getAllData(View);
-
-      if (!views.length) {
+      const foods = await getAllData(Food);
+      if (!foods.length) {
         return handleError404(res);
       }
-
-      return handleSuccess200(res, views);
+      return handleSuccess200(res, foods);
     } catch (error) {
       return handleError500(res, error);
     }
   },
-
   getById: async (req, res) => {
     try {
       const { id } = req.params;
-
-      const view = await getDataById(View, id);
-
-      if (!view) {
+      const findFood = await getDataById(Food, id);
+      if (!findFood) {
         return handleError404(res);
       }
-      return handleSuccess200(res, view);
+      return handleSuccess200(res, findFood);
     } catch (error) {
       return handleError500(res, error);
     }
@@ -50,14 +45,13 @@ const ViewController = {
     try {
       const { title } = req.body;
 
-      const findView = await getData(View, "title", title);
+      const findFood = await getData(Food, "title", title);
 
-      if (findView) {
+      if (findFood) {
         return handleError409(res, `${title} already exists!`);
       }
-
-      const newView = await createData(View, req.body);
-      return handleSuccess201(res, newView);
+      const newFood = await createData(Food, req.body);
+      return handleSuccess201(res, newFood);
     } catch (error) {
       return handleError500(res, error);
     }
@@ -66,16 +60,12 @@ const ViewController = {
   update: async (req, res) => {
     try {
       const { id } = req.params;
-
-      const findView = await getDataById(View, id);
-
-      if (!findView) {
+      const findFood = await getDataById(Food, id);
+      if (!findFood) {
         return handleError404(res);
       }
-
-      const updateView = await findByIdAndUpdateData(View, id, req.body);
-
-      return handleSuccess200(res, updateView);
+      const updateFood = await findByIdAndUpdateData(Food, id, req.body);
+      return handleSuccess200(res, updateFood);
     } catch (error) {
       return handleError500(res, error);
     }
@@ -84,27 +74,24 @@ const ViewController = {
   delete: async (req, res) => {
     try {
       const { id } = req.params;
-
-      const findView = await getDataById(View, id);
-
-      if (!findView) {
+      const findFood = await getDataById(Food, id);
+      if (!findFood) {
         return handleError404(res);
       }
 
-      if (findView._id.toString() === env.DEFAULT_VIEW) {
+      if (findFood._id.toString() === env.DEFAULT_FOOD) {
         return handleError409(res, "You cannot delete an uncategorized!");
       }
 
-      const findRoomType = await getData(RoomType, "viewId", findView._id);
-
-      if (findRoomType) {
+      const findOption = await getData(Option, "foodId", findFood._id);
+      if (findOption) {
         return handleError409(
           res,
           "Data conflict, cannot be deleted due to other constraints"
         );
       }
 
-      await deleteData(View, id);
+      await deleteData(Food, id);
 
       return handleSuccess200(res, id);
     } catch (error) {
@@ -116,31 +103,34 @@ const ViewController = {
     try {
       const { id } = req.params;
 
-      const restoreView = await restoreData(View, id);
+      const restoreFOod = await restoreData(Food, id);
 
-      if (!restoreView.matchedCount) {
+      if (!restoreFOod.matchedCount) {
         return handleError404(res);
       }
 
-      const findView = await getDataById(View, id);
+      const findRoom = await getDataById(Food, id);
 
-      return handleSuccess200(res, findView);
+      return handleSuccess200(res, findRoom);
     } catch (error) {
       return handleError500(res, error);
     }
   },
-
   forceDelete: async (req, res) => {
-    const { id } = req.params;
+    try {
+      const { id } = req.params;
 
-    const forceDeleteView = await forceDeleteData(View, id);
+      const forceDeleteFood = await forceDeleteData(Food, id);
 
-    if (!forceDeleteView.deletedCount) {
-      return handleError404(res);
+      if (!forceDeleteFood.deletedCount) {
+        return handleError404(res);
+      }
+
+      return handleSuccess200(res, id);
+    } catch (error) {
+      return handleError500(res, error);
     }
-
-    return handleSuccess200(res, id);
   },
 };
 
-export default ViewController;
+export default FoodController;

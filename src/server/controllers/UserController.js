@@ -6,6 +6,7 @@ import {
 import User from "../models/User.js";
 
 import { getAllData, getDataById } from "../services/getService.js";
+import { findByIdAndUpdateData } from "../services/patchService.js";
 
 const UserController = {
   getAll: async (req, res) => {
@@ -29,7 +30,21 @@ const UserController = {
       }
       return handleSuccess200(res, user);
     } catch (error) {
-      return handleError500(res, req);
+      return handleError500(res, error);
+    }
+  },
+
+  update: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const findUser = await getDataById(User, id);
+      if (!findUser) {
+        return handleError404(res);
+      }
+      const updateUser = await findByIdAndUpdateData(User, id, req.body);
+      return handleSuccess200(res, updateUser);
+    } catch (error) {
+      return handleError500(res, error);
     }
   },
 };

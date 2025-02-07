@@ -1,17 +1,17 @@
 import {
   handleError404,
   handleError404WithData,
-  handleError409,
   handleError500,
   handleSuccess200,
   handleSuccess201,
 } from "../../utils/helpers/handleStatusCode.js";
-import RoomType from "../models/RoomType.js";
-import View from "../models/View.js";
-import TypeBed from "../models/TypeBed.js";
+import env from "../config/envConfig.js";
 import CategoryRoom from "../models/CategoryRoom.js";
+import RoomType from "../models/RoomType.js";
+import TypeBed from "../models/TypeBed.js";
+import View from "../models/View.js";
 import { deleteData, forceDeleteData } from "../services/deleteService.js";
-import { getData, getAllData, getDataById } from "../services/getService.js";
+import { getAllData, getDataById } from "../services/getService.js";
 import {
   findByIdAndPullData,
   findByIdAndPushData,
@@ -19,8 +19,6 @@ import {
   restoreData,
 } from "../services/patchService.js";
 import { createData } from "../services/postService.js";
-import { Schema } from "mongoose";
-import env from "../config/envConfig.js";
 
 const RoomTypeController = {
   getAll: async (req, res) => {

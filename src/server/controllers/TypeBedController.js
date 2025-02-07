@@ -5,6 +5,8 @@ import {
   handleSuccess200,
   handleSuccess201,
 } from "../../utils/helpers/handleStatusCode.js";
+import env from "../config/envConfig.js";
+import RoomType from "../models/RoomType.js";
 import TypeBed from "../models/TypeBed.js";
 import { deleteData, forceDeleteData } from "../services/deleteService.js";
 import { getData, getAllData, getDataById } from "../services/getService.js";
@@ -51,7 +53,7 @@ const TypeBedController = {
       const findTypeBed = await getData(TypeBed, "title", title);
 
       if (findTypeBed) {
-        return handleError409(res, "TypeBed already exists!");
+        return handleError409(res, `${title} already exists!`);
       }
 
       const newTypeBed = await createData(TypeBed, req.body);
@@ -87,6 +89,23 @@ const TypeBedController = {
 
       if (!findTypeBed) {
         return handleError404(res);
+      }
+
+      if (findTypeBed._id.toString() === env.DEFAULT_TYPE_BED) {
+        return handleError409(res, "You cannot delete an uncategorized!");
+      }
+
+      const findRoomType = await getData(
+        RoomType,
+        "typeBedId",
+        findTypeBed._id
+      );
+
+      if (findRoomType) {
+        return handleError409(
+          res,
+          "Data conflict, cannot be deleted due to other constraints"
+        );
       }
 
       await deleteData(TypeBed, id);

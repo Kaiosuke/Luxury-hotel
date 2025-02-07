@@ -3,7 +3,9 @@ import roomTypeRoute from "./roomType.js";
 import authRoute from "./auth.js";
 import viewRoute from "./view.js";
 import typeBedRoute from "./typeBed.js";
-import categoryRoomRoute from "./CategoryRoom.js";
+import categoryRoomRoute from "./categoryRoom.js";
+import foodRoute from "./food.js";
+import optionRoute from "./option.js";
 
 const routes = (app) => {
   app.use("/auth", authRoute);
@@ -12,6 +14,8 @@ const routes = (app) => {
   app.use("/type-beds", typeBedRoute);
   app.use("/category-rooms", categoryRoomRoute);
   app.use("/room-types", roomTypeRoute);
+  app.use("/foods", foodRoute);
+  app.use("/options", optionRoute);
 };
 
 export default routes;
