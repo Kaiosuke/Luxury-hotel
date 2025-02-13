@@ -24,9 +24,9 @@ const CartSchema = new Schema(
       require: true,
     },
     status: { type: String, require: true },
-    price: { type: number, require: true },
+    price: { type: Number, require: true },
     totalPrice: { type: Number, require: true },
-    day: { type: number, require: true },
+    day: { type: Number, require: true },
     bookedDates: [{ type: String, require: true }],
     payments: [
       {

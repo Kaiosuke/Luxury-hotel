@@ -3,7 +3,8 @@ import MongooseDelete from "mongoose-delete";
 
 const ReviewSchema = new Schema(
   {
-    userId: { type: String, require: true },
+    userId: { type: String, require: true, ref: "users" },
+    title: { type: String, require: true },
     roomTypeId: {
       type: Schema.Types.ObjectId,
       ref: "roomTypes",

@@ -19,7 +19,7 @@ import { createData } from "../services/postService.js";
 const ViewController = {
   getAll: async (req, res) => {
     try {
-      const views = await getAllData(View);
+      const views = await getAllData(View, [{ roomTypes: "title" }]);
 
       if (!views.length) {
         return handleError404(res);
@@ -35,7 +35,7 @@ const ViewController = {
     try {
       const { id } = req.params;
 
-      const view = await getDataById(View, id);
+      const view = await getDataById(View, id, [{ roomTypes: "title" }]);
 
       if (!view) {
         return handleError404(res);
@@ -133,11 +133,15 @@ const ViewController = {
   forceDelete: async (req, res) => {
     const { id } = req.params;
 
-    const forceDeleteView = await forceDeleteData(View, id);
+    const findView = await View.findOne({ _id: id, deleted: true }, null, {
+      withDeleted: true,
+    });
 
-    if (!forceDeleteView.deletedCount) {
+    if (!findView) {
       return handleError404(res);
     }
+
+    await forceDeleteData(View, id);
 
     return handleSuccess200(res, id);
   },

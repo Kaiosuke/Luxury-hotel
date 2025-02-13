@@ -4,8 +4,8 @@ import MongooseDelete from "mongoose-delete";
 const RoomSchema = new Schema(
   {
     roomTypeId: { type: String, require: true },
-    roomNumber: { type: number, require: true },
-    floor: { type: string, require: true },
+    roomNumber: { type: Number, require: true },
+    floor: { type: String, require: true },
     status: { type: String, require: true },
     bookedDates: [{ type: String, require: true }],
     carts: [

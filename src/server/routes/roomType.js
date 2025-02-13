@@ -12,7 +12,7 @@ route.get("/:id", RoomTypeController.getById);
 route.post(
   "/create",
   verifyAdmin,
-  // validateBody(RoomTypesSchema),
+  validateBody(RoomTypesSchema),
   RoomTypeController.create
 );
 

@@ -12,6 +12,7 @@ import { useParams } from "next/navigation";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import RoomDetail from "./RoomDetail";
+import Review from "./Review";
 
 const page = () => {
   const { id }: { id: string } = useParams();
@@ -27,19 +28,19 @@ const page = () => {
     }
   }, [dispatch]);
 
-  if (loading) {
-    return <LoadingPage />;
-  }
+  // if (loading) {
+  //   return <LoadingPage />;
+  // }
 
-  if (error) {
-    return error;
-  }
+  // if (error) {
+  //   return error;
+  // }
 
   return (
     <>
       {roomType && (
         <>
-          <HeroImage
+          {/* <HeroImage
             image={roomType.thumbnail}
             title={`${roomType.title} - Soulful Mediterranean style`}
             linkContext="Book this room now"
@@ -60,7 +61,11 @@ const page = () => {
                 splideClass="roomList"
               />
             </section>
-          )}
+          )} */}
+          <div className="pd-high" />
+          <TitleNormal title="Reviews" />
+          <div className="pd-high" />
+          <Review />
           <div className="pd-high" />
         </>
       )}

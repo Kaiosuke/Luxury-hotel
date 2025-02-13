@@ -3,6 +3,8 @@ const findByIdAndUpdateData = async (model, id, data) => {
   return updateData;
 };
 
+// const updateManyData=  async(model, id)
+
 const findByIdAndPushData = async (model, id, data, dataId) => {
   const updateData = await model.findByIdAndUpdate(id, {
     $push: { [data]: dataId },

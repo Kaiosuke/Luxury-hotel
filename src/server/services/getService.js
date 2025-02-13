@@ -2,7 +2,8 @@ const getAllData = async (model, populate = []) => {
   let query = model.find();
   if (populate.length) {
     populate.forEach((field) => {
-      query = query.populate(field, "title");
+      const [path, select] = Object.entries(field)[0];
+      query = query.populate(path, select);
     });
   }
   return query;
@@ -17,11 +18,11 @@ const getData = async (model, data, body, populate = []) => {
 };
 
 const getDataById = async (model, id, populate = []) => {
-  let query = await model.findById(id);
-
+  let query = model.findById(id);
   if (populate.length) {
     populate.forEach((field) => {
-      query = query.populate(field, "title");
+      const [path, select] = Object.entries(field)[0];
+      query = query.populate(path, select);
     });
   }
   return await query;

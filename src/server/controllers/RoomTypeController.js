@@ -1,6 +1,7 @@
 import {
   handleError404,
   handleError404WithData,
+  handleError409,
   handleError500,
   handleSuccess200,
   handleSuccess201,
@@ -9,7 +10,9 @@ import env from "../config/envConfig.js";
 import CategoryRoom from "../models/CategoryRoom.js";
 import RoomType from "../models/RoomType.js";
 import TypeBed from "../models/TypeBed.js";
+import Review from "../models/Review.js";
 import View from "../models/View.js";
+import Cart from "../models/Cart.js";
 import { deleteData, forceDeleteData } from "../services/deleteService.js";
 import { getAllData, getDataById } from "../services/getService.js";
 import {
@@ -24,9 +27,9 @@ const RoomTypeController = {
   getAll: async (req, res) => {
     try {
       const roomTypes = await getAllData(RoomType, [
-        "viewId",
-        "typeBedId",
-        "categoryRoomId",
+        { viewId: "title" },
+        { typeBedId: "title" },
+        { categoryRoomId: "title" },
       ]);
 
       if (!roomTypes.length) {
@@ -44,9 +47,9 @@ const RoomTypeController = {
       const { id } = req.params;
 
       const roomType = await getDataById(RoomType, id, [
-        "viewId",
-        "typeBedId",
-        "categoryRoomId",
+        { viewId: "title" },
+        { typeBedId: "title" },
+        { categoryRoomId: "title" },
       ]);
 
       if (!roomType) {
@@ -197,6 +200,10 @@ const RoomTypeController = {
         return handleError404(res);
       }
 
+      if (findRoomType._id.toString() === env.DEFAULT_ROOM_TYPE) {
+        return handleError409(res, "You cannot delete an uncategorized!");
+      }
+
       await findByIdAndPullData(View, findRoomType.viewId, "roomTypes", id);
 
       await findByIdAndPullData(
@@ -211,6 +218,26 @@ const RoomTypeController = {
         findRoomType.categoryRoomId,
         "roomTypes",
         id
+      );
+
+      await Review.updateMany(
+        { _id: { $in: findRoomType.reviews } },
+        { $set: { roomTypeId: env.DEFAULT_ROOM_TYPE } }
+      );
+
+      await RoomType.updateOne(
+        { _id: env.DEFAULT_ROOM_TYPE },
+        { $push: { reviews: { $each: findRoomType.reviews } } }
+      );
+
+      await Cart.updateMany(
+        { _id: { $in: findRoomType.carts } },
+        { $set: { roomTypeId: env.DEFAULT_ROOM_TYPE } }
+      );
+
+      await RoomType.updateOne(
+        { _id: env.DEFAULT_ROOM_TYPE },
+        { $push: { carts: { $each: findRoomType.carts } } }
       );
 
       await deleteData(RoomType, id);
@@ -284,11 +311,19 @@ const RoomTypeController = {
   forceDelete: async (req, res) => {
     const { id } = req.params;
 
-    const forceDeleteRoomType = await forceDeleteData(RoomType, id);
+    const findRoomType = await RoomType.findOne(
+      { _id: id, deleted: true },
+      null,
+      {
+        withDeleted: true,
+      }
+    );
 
-    if (!forceDeleteRoomType.deletedCount) {
+    if (!findRoomType) {
       return handleError404(res);
     }
+
+    await forceDeleteData(RoomType, id);
 
     return handleSuccess200(res, id);
   },

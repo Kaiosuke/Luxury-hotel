@@ -4,9 +4,8 @@ import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 
 import FormDeleteRoomType from "@/app/_components/dashboard/roomTypes/FormDeleteRoomType";
-import FormRoom from "@/app/_components/dashboard/roomTypes/FormRoomType";
+import FormRoomType from "@/app/_components/dashboard/roomTypes/FormRoomType";
 import DataTable from "@/app/_components/DataTable";
-import LoadingProcess from "@/app/_components/Loading";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -20,10 +19,10 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { IForm, IRoomType } from "@/interfaces";
 import { roomTypesSelector } from "@/redux/selectors/roomTypesSelector";
+import { formatMoney } from "@/utils/helpers";
 import Image from "next/image";
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { formatMoney } from "@/utils/helpers";
 
 const RoomTypesTable = ({ open, onClose }: IForm) => {
   const { roomTypes } = useSelector(roomTypesSelector);
@@ -234,7 +233,7 @@ const RoomTypesTable = ({ open, onClose }: IForm) => {
         filterPlaceholders="title"
       />
       {open && (
-        <FormRoom
+        <FormRoomType
           open={open}
           onClose={handleCloseForm}
           id={selectedRoomTypeId}

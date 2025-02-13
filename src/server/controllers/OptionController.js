@@ -1,6 +1,7 @@
 import {
   handleError404,
   handleError404WithData,
+  handleError409,
   handleError500,
   handleSuccess200,
   handleSuccess201,
@@ -8,6 +9,7 @@ import {
 import env from "../config/envConfig.js";
 import Option from "../models/Option.js";
 import Food from "../models/Food.js";
+import Cart from "../models/Cart.js";
 import { deleteData, forceDeleteData } from "../services/deleteService.js";
 import { getAllData, getDataById } from "../services/getService.js";
 import {
@@ -21,7 +23,7 @@ import { createData } from "../services/postService.js";
 const OptionController = {
   getAll: async (req, res) => {
     try {
-      const options = await getAllData(Option);
+      const options = await getAllData(Food, [{ foodId: "title" }]);
       if (!options.length) {
         return handleError404(res);
       }
@@ -33,7 +35,7 @@ const OptionController = {
   getById: async (req, res) => {
     try {
       const { id } = req.params;
-      const findOption = await getDataById(Option, id, ["foodId"]);
+      const findOption = await getDataById(Option, id, [{ foodId: "title" }]);
       if (!findOption) {
         return handleError404(res);
       }
@@ -52,7 +54,7 @@ const OptionController = {
       }
 
       const newFood = await createData(Option, req.body);
-      await findByIdAndPushData(Food, findFood._id, "foods", newFood._id);
+      await findByIdAndPushData(Food, findFood._id, "options", newFood._id);
 
       return handleSuccess201(res, newFood);
     } catch (error) {
@@ -65,7 +67,7 @@ const OptionController = {
       const { id } = req.params;
       const { foodId } = req.body;
 
-      const findOption = await getDataById(Food, id);
+      const findOption = await getDataById(Option, id);
       if (!findOption) {
         return handleError404(res);
       }
@@ -77,7 +79,7 @@ const OptionController = {
 
       const updateOption = await findByIdAndUpdateData(Option, id, req.body);
 
-      if (foodId !== findOption.viewId.toString()) {
+      if (foodId !== findOption.foodId.toString()) {
         await findByIdAndPullData(
           Food,
           findOption.foodId,
@@ -107,6 +109,20 @@ const OptionController = {
       if (!findOption) {
         return handleError404(res);
       }
+
+      if (findOption._id.toString() === env.DEFAULT_OPTION) {
+        return handleError409(res, "You cannot delete an uncategorized!");
+      }
+
+      await Cart.updateMany(
+        { _id: { $in: findOption.carts } },
+        { $set: { optionId: env.DEFAULT_OPTION } }
+      );
+
+      await Option.updateOne(
+        { _id: env.DEFAULT_OPTION },
+        { $push: { carts: { $each: findOption.carts } } }
+      );
 
       await findByIdAndPullData(Food, findOption.foodId, "options", id);
 
@@ -152,11 +168,19 @@ const OptionController = {
     try {
       const { id } = req.params;
 
-      const forceDeleteOption = await forceDeleteData(Option, id);
+      const findOption = await Option.findOne(
+        { _id: id, deleted: true },
+        null,
+        {
+          withDeleted: true,
+        }
+      );
 
-      if (!forceDeleteOption.deletedCount) {
+      if (!findOption) {
         return handleError404(res);
       }
+
+      await forceDeleteData(Option, id);
 
       return handleSuccess200(res, id);
     } catch (error) {

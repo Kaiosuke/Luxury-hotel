@@ -6,6 +6,8 @@ import typeBedRoute from "./typeBed.js";
 import categoryRoomRoute from "./categoryRoom.js";
 import foodRoute from "./food.js";
 import optionRoute from "./option.js";
+import reviewRoute from "./review.js";
+import paymentRoute from "./payment.js";
 
 const routes = (app) => {
   app.use("/auth", authRoute);
@@ -16,6 +18,8 @@ const routes = (app) => {
   app.use("/room-types", roomTypeRoute);
   app.use("/foods", foodRoute);
   app.use("/options", optionRoute);
+  app.use("/reviews", reviewRoute);
+  app.use("/payments", paymentRoute);
 };
 
 export default routes;

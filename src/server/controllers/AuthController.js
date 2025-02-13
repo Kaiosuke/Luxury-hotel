@@ -61,7 +61,7 @@ const AuthController = {
 
   login: async (req, res) => {
     try {
-      const user = await getData(User, req.body.email);
+      const user = await getData(User, "email", req.body.email);
 
       if (!user) {
         return handleError404(res);

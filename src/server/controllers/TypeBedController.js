@@ -19,7 +19,7 @@ import { createData } from "../services/postService.js";
 const TypeBedController = {
   getAll: async (req, res) => {
     try {
-      const typeBeds = await getAllData(TypeBed);
+      const typeBeds = await getAllData(TypeBed, [{ roomTypes: "title" }]);
 
       if (!typeBeds.length) {
         return handleError404(res);
@@ -35,7 +35,7 @@ const TypeBedController = {
     try {
       const { id } = req.params;
 
-      const typeBed = await getDataById(TypeBed, id);
+      const typeBed = await getDataById(TypeBed, id, [{ roomTypes: "title" }]);
 
       if (!typeBed) {
         return handleError404(res);
@@ -137,11 +137,19 @@ const TypeBedController = {
   forceDelete: async (req, res) => {
     const { id } = req.params;
 
-    const forceDeleteTypeBed = await forceDeleteData(TypeBed, id);
+    const findTypeBed = await TypeBed.findOne(
+      { _id: id, deleted: true },
+      null,
+      {
+        withDeleted: true,
+      }
+    );
 
-    if (!forceDeleteTypeBed.deletedCount) {
+    if (!findTypeBed) {
       return handleError404(res);
     }
+
+    await forceDeleteData(TypeBed, id);
 
     return handleSuccess200(res, id);
   },

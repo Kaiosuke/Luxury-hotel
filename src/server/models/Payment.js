@@ -13,7 +13,6 @@ const PaymentSchema = new Schema(
       ref: "carts",
       require: true,
     },
-    amount: { type: Number, require: true },
     paymentMethod: { type: String, require: true },
   },
   { timestamps: true }

@@ -7,7 +7,7 @@ import {
 } from "../../utils/helpers/handleStatusCode.js";
 import env from "../config/envConfig.js";
 import Food from "../models/Food.js";
-import Option from "../models/Food.js";
+import Option from "../models/Option.js";
 import { deleteData, forceDeleteData } from "../services/deleteService.js";
 import { getAllData, getData, getDataById } from "../services/getService.js";
 import {
@@ -19,7 +19,8 @@ import { createData } from "../services/postService.js";
 const FoodController = {
   getAll: async (req, res) => {
     try {
-      const foods = await getAllData(Food);
+      const foods = await getAllData(Food, [{ options: "title" }]);
+
       if (!foods.length) {
         return handleError404(res);
       }
@@ -31,7 +32,7 @@ const FoodController = {
   getById: async (req, res) => {
     try {
       const { id } = req.params;
-      const findFood = await getDataById(Food, id);
+      const findFood = await getDataById(Food, id, [{ options: "title" }]);
       if (!findFood) {
         return handleError404(res);
       }
@@ -46,7 +47,6 @@ const FoodController = {
       const { title } = req.body;
 
       const findFood = await getData(Food, "title", title);
-
       if (findFood) {
         return handleError409(res, `${title} already exists!`);
       }
@@ -79,11 +79,12 @@ const FoodController = {
         return handleError404(res);
       }
 
-      if (findFood._id.toString() === env.DEFAULT_FOOD) {
+      if (id === env.DEFAULT_FOOD) {
         return handleError409(res, "You cannot delete an uncategorized!");
       }
 
-      const findOption = await getData(Option, "foodId", findFood._id);
+      const findOption = await getData(Option, "foodId", id);
+
       if (findOption) {
         return handleError409(
           res,
@@ -120,11 +121,15 @@ const FoodController = {
     try {
       const { id } = req.params;
 
-      const forceDeleteFood = await forceDeleteData(Food, id);
+      const findFood = await Food.findOne({ _id: id, deleted: true }, null, {
+        withDeleted: true,
+      });
 
-      if (!forceDeleteFood.deletedCount) {
+      if (!findFood) {
         return handleError404(res);
       }
+
+      await forceDeleteData(Food, id);
 
       return handleSuccess200(res, id);
     } catch (error) {

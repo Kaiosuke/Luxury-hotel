@@ -95,6 +95,9 @@ const RoomTypesSchema = z.object({
 
 const RoomSchema = z.object({
   roomNumber: z.number().min(1, "Minimum number of rooms 1 characters"),
+  roomTypeId: z.string().min(1, "Cannot be left blank"),
+  floor: z.number().min(1, "Minimum number of floor 1 characters"),
+  status: z.string().optional(),
 });
 
 const ViewSchema = z.object({
@@ -123,6 +126,37 @@ const OptionSchema = z.object({
     .min(1, "Minimum number of categoryRoom 1 type description"),
 });
 
+const ReviewSchema = z.object({
+  title: z.string().min(1, "Minimum number of review 1 characters"),
+  userId: z.string().min(1, "Cannot be left blank"),
+  roomTypeId: z.string().min(1, "Cannot be left blank"),
+});
+
+const PaymentSchema = z.object({
+  title: z.string().min(1, "Minimum number of review 1 characters"),
+  userId: z.string().min(1, "Cannot be left blank"),
+  cartId: z.string().min(1, "Cannot be left blank"),
+  paymentMethod: z
+    .string()
+    .min(1, "Minimum number of payment method 1 characters"),
+});
+
+const Cart = z.object({
+  title: z.string().min(1, "Minimum number of review 1 characters"),
+  optionId: z.string().min(1, "Cannot be left blank"),
+  userId: z.string().min(1, "Cannot be left blank"),
+  roomId: z.string().min(1, "Cannot be left blank"),
+  roomTypeId: z.string().min(1, "Cannot be left blank"),
+  status: z.string().optional(),
+  price: z.number().min(1, "Price greater than or equal to 1"),
+  totalPrice: z.number().min(1, "Price greater than or equal to 1"),
+  dayNumber: z.string().min(1, "Minimum number of dayNumber 1 characters"),
+  bookedDates: z.string().min(1, "Minimum number of bookedDates 1 characters"),
+  paymentMethod: z
+    .string()
+    .min(1, "Minimum number of payment method 1 characters"),
+});
+
 export {
   SubscribeSchema,
   LoginSchema,
@@ -136,4 +170,7 @@ export {
   CategoryRoomSchema,
   FoodSchema,
   OptionSchema,
+  ReviewSchema,
+  PaymentSchema,
+  Cart,
 };

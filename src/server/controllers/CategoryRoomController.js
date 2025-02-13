@@ -19,7 +19,9 @@ import { createData } from "../services/postService.js";
 const CategoryRoomController = {
   getAll: async (req, res) => {
     try {
-      const CategoryRooms = await getAllData(CategoryRoom);
+      const CategoryRooms = await getAllData(CategoryRoom, [
+        { roomTypes: "title" },
+      ]);
 
       if (!CategoryRooms.length) {
         return handleError404(res);
@@ -35,7 +37,9 @@ const CategoryRoomController = {
     try {
       const { id } = req.params;
 
-      const categoryRoom = await getDataById(CategoryRoom, id);
+      const categoryRoom = await getDataById(CategoryRoom, id, [
+        { roomTypes: "title" },
+      ]);
 
       if (!categoryRoom) {
         return handleError404(res);
@@ -141,11 +145,19 @@ const CategoryRoomController = {
   forceDelete: async (req, res) => {
     const { id } = req.params;
 
-    const forceDeleteCategoryRoom = await forceDeleteData(CategoryRoom, id);
+    const findCategoryRoom = await CategoryRoom.findOne(
+      { _id: id, deleted: true },
+      null,
+      {
+        withDeleted: true,
+      }
+    );
 
-    if (!forceDeleteCategoryRoom.deletedCount) {
+    if (!findCategoryRoom) {
       return handleError404(res);
     }
+
+    await forceDeleteData(CategoryRoom, id);
 
     return handleSuccess200(res, id);
   },
