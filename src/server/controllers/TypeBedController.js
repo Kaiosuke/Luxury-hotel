@@ -104,7 +104,7 @@ const TypeBedController = {
       if (findRoomType) {
         return handleError409(
           res,
-          "Data conflict, cannot be deleted due to other constraints"
+          "Room type conflict, cannot be deleted due to other constraints"
         );
       }
 

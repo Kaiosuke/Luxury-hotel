@@ -9,12 +9,13 @@ import {
 import env from "../config/envConfig.js";
 import CategoryRoom from "../models/CategoryRoom.js";
 import RoomType from "../models/RoomType.js";
+import Room from "../models/Room.js";
 import TypeBed from "../models/TypeBed.js";
 import Review from "../models/Review.js";
 import View from "../models/View.js";
 import Cart from "../models/Cart.js";
 import { deleteData, forceDeleteData } from "../services/deleteService.js";
-import { getAllData, getDataById } from "../services/getService.js";
+import { getAllData, getData, getDataById } from "../services/getService.js";
 import {
   findByIdAndPullData,
   findByIdAndPushData,
@@ -204,6 +205,14 @@ const RoomTypeController = {
         return handleError409(res, "You cannot delete an uncategorized!");
       }
 
+      const findRoom = await getData(Room, "roomTypeId", findRoomType._id);
+      if (findRoom) {
+        return handleError409(
+          res,
+          "Room conflict, cannot be deleted due to other constraints"
+        );
+      }
+
       await findByIdAndPullData(View, findRoomType.viewId, "roomTypes", id);
 
       await findByIdAndPullData(
@@ -280,8 +289,13 @@ const RoomTypeController = {
       );
 
       if (!findTypeBed) {
-        findRoomType.viewId = env.DEFAULT_TYPE_BED;
-        await findByIdAndPushData(View, env.DEFAULT_TYPE_BED, "roomTypes", id);
+        findRoomType.typeBedId = env.DEFAULT_TYPE_BED;
+        await findByIdAndPushData(
+          TypeBed,
+          env.DEFAULT_TYPE_BED,
+          "roomTypes",
+          id
+        );
       }
 
       const findCategoryRoom = await findByIdAndPushData(
@@ -292,9 +306,9 @@ const RoomTypeController = {
       );
 
       if (!findCategoryRoom) {
-        findRoomType.viewId = env.DEFAULT_CATEGORY_ROOM;
+        findRoomType.categoryRoomId = env.DEFAULT_CATEGORY_ROOM;
         await findByIdAndPushData(
-          View,
+          CategoryRoom,
           env.DEFAULT_CATEGORY_ROOM,
           "roomTypes",
           id

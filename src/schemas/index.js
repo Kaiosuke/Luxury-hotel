@@ -85,7 +85,9 @@ const RoomTypesSchema = z.object({
     .string()
     .min(2, "Description must be greater than 2 characters"),
   square: z.string().min(2, "Square must be greater than 2 characters"),
-  typeBed: z.string().min(2, "TypeBed must be greater than 2 characters"),
+  categoryRoomId: z.string().min(1, "Cannot be left blank"),
+  viewId: z.string().min(1, "Cannot be left blank"),
+  typeBedId: z.string().min(1, "Cannot be left blank"),
   sleeps: z.number().min(1, "Sleeps greater than or equal to 1"),
   images: z.any().optional(),
   map: z.any().optional(),
@@ -141,7 +143,7 @@ const PaymentSchema = z.object({
     .min(1, "Minimum number of payment method 1 characters"),
 });
 
-const Cart = z.object({
+const CartSchema = z.object({
   title: z.string().min(1, "Minimum number of review 1 characters"),
   optionId: z.string().min(1, "Cannot be left blank"),
   userId: z.string().min(1, "Cannot be left blank"),
@@ -172,5 +174,5 @@ export {
   OptionSchema,
   ReviewSchema,
   PaymentSchema,
-  Cart,
+  CartSchema,
 };

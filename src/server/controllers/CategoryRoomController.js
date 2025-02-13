@@ -94,7 +94,6 @@ const CategoryRoomController = {
       const { id } = req.params;
 
       const findCategoryRoom = await getDataById(CategoryRoom, id);
-
       if (!findCategoryRoom) {
         return handleError404(res);
       }
@@ -112,7 +111,7 @@ const CategoryRoomController = {
       if (findRoomType) {
         return handleError409(
           res,
-          "Data conflict, cannot be deleted due to other constraints"
+          "Room type conflict, cannot be deleted due to other constraints"
         );
       }
 

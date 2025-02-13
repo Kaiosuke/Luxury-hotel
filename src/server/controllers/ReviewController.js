@@ -194,7 +194,6 @@ const ReviewController = {
         "reviews",
         findReview._id
       );
-
       if (!findRoomType) {
         findReview.roomTypeId = env.DEFAULT_ROOM_TYPE;
         await findByIdAndPushData(

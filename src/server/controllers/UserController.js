@@ -88,7 +88,7 @@ const UserController = {
       if (findCart) {
         return handleError409(
           res,
-          "Data conflict, cannot be deleted due to other constraints"
+          "Cart conflict, cannot be deleted due to other constraints"
         );
       }
 
@@ -96,7 +96,7 @@ const UserController = {
       if (findPayment) {
         return handleError409(
           res,
-          "Data conflict, cannot be deleted due to other constraints"
+          "Payment conflict, cannot be deleted due to other constraints"
         );
       }
 
@@ -104,7 +104,7 @@ const UserController = {
       if (findReview) {
         return handleError409(
           res,
-          "Data conflict, cannot be deleted due to other constraints"
+          "Review conflict, cannot be deleted due to other constraints"
         );
       }
 

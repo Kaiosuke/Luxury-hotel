@@ -23,7 +23,7 @@ import { deleteData, forceDeleteData } from "../services/deleteService.js";
 const RoomController = {
   getAll: async (req, res) => {
     try {
-      const rooms = await getAllData(Room, [{ roomType: "title" }]);
+      const rooms = await getAllData(Room, [{ roomTypeId: "title" }]);
 
       if (!rooms.length) {
         return handleError404(res);
@@ -163,7 +163,7 @@ const RoomController = {
       );
 
       if (!findRoomType) {
-        findRoom.roomTypeId = env.DEFAULT_ROOM;
+        findRoom.roomTypeId = env.DEFAULT_ROOM_TYPE;
         await findByIdAndPushData(
           RoomType,
           env.DEFAULT_ROOM_TYPE,

@@ -31,6 +31,26 @@ const verifyAdmin = async (req, res, next) => {
     await verifyToken(req, res, async () => {
       const user = await getDataById(User, req.user.user);
 
+      if (!user) {
+        return res.status(404).json({ message: "User not found!" });
+      }
+
+      if (user.role === "admin" || user.role === "ceo") {
+        next();
+      } else {
+        return res.status(403).json("You don't have permission!");
+      }
+    });
+  } catch (error) {
+    return handleError500(res, error);
+  }
+};
+
+const verifyAdminAuth = async (req, res, next) => {
+  try {
+    await verifyToken(req, res, async () => {
+      const user = await getDataById(User, req.user.user);
+
       const targetUser = await User.findOne({ _id: req.params.id }, null, {
         withDeleted: true,
       });
@@ -83,4 +103,4 @@ const verifyCeo = async (req, res, next) => {
   }
 };
 
-export { verifyToken, verifyAdmin, verifyCeo };
+export { verifyToken, verifyAdmin, verifyAdminAuth, verifyCeo };

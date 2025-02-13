@@ -4,7 +4,7 @@ import {
   handleError500,
   handleSuccess200,
   handleSuccess201,
-} from "../../utils/helpers/handleStatusCode";
+} from "../../utils/helpers/handleStatusCode.js";
 import env from "../config/envConfig.js";
 import Cart from "../models/Cart.js";
 import RoomType from "../models/RoomType.js";
@@ -21,7 +21,7 @@ import {
   findByIdAndUpdateData,
   restoreData,
 } from "../services/patchService.js";
-import { deleteData, forceDeleteData } from "../services/deleteService";
+import { deleteData, forceDeleteData } from "../services/deleteService.js";
 
 const CartController = {
   getAll: async (req, res) => {
@@ -178,7 +178,7 @@ const CartController = {
       if (findPayment) {
         return handleError409(
           res,
-          "Data conflict, cannot be deleted due to other constraints"
+          "Payment conflict, cannot be deleted due to other constraints"
         );
       }
 

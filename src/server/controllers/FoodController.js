@@ -88,7 +88,7 @@ const FoodController = {
       if (findOption) {
         return handleError409(
           res,
-          "Data conflict, cannot be deleted due to other constraints"
+          "Option conflict, cannot be deleted due to other constraints"
         );
       }
 
