@@ -27,14 +27,15 @@ const CartSchema = new Schema(
     price: { type: Number, require: true },
     totalPrice: { type: Number, require: true },
     day: { type: Number, require: true },
-    bookedDates: [{ type: String, require: true }],
-    payments: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "payments",
-        require: true,
-      },
-    ],
+    bookedDates: {
+      type: Object,
+      required: true,
+    },
+    payments: {
+      type: Schema.Types.ObjectId,
+      ref: "payments",
+      require: true,
+    },
   },
   { timestamps: true }
 );

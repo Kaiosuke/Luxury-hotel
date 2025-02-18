@@ -229,25 +229,43 @@ const RoomTypeController = {
         id
       );
 
-      await Review.updateMany(
-        { _id: { $in: findRoomType.reviews } },
-        { $set: { roomTypeId: env.DEFAULT_ROOM_TYPE } }
-      );
+      // await Review.updateMany(
+      //   { _id: { $in: findRoomType.reviews } },
+      //   { $set: { roomTypeId: env.DEFAULT_ROOM_TYPE } }
+      // );
 
-      await RoomType.updateOne(
-        { _id: env.DEFAULT_ROOM_TYPE },
-        { $push: { reviews: { $each: findRoomType.reviews } } }
-      );
+      // await RoomType.updateOne(
+      //   { _id: env.DEFAULT_ROOM_TYPE },
+      //   { $push: { reviews: { $each: findRoomType.reviews } } }
+      // );
 
-      await Cart.updateMany(
-        { _id: { $in: findRoomType.carts } },
-        { $set: { roomTypeId: env.DEFAULT_ROOM_TYPE } }
-      );
+      // await Cart.updateMany(
+      //   { _id: { $in: findRoomType.carts } },
+      //   { $set: { roomTypeId: env.DEFAULT_ROOM_TYPE } }
+      // );
 
-      await RoomType.updateOne(
-        { _id: env.DEFAULT_ROOM_TYPE },
-        { $push: { carts: { $each: findRoomType.carts } } }
-      );
+      // await RoomType.updateOne(
+      //   { _id: env.DEFAULT_ROOM_TYPE },
+      //   { $push: { carts: { $each: findRoomType.carts } } }
+      // );
+
+      const findReview = await getData(Review, "roomTypeId", id);
+
+      if (findReview) {
+        return handleError409(
+          res,
+          "Review type conflict, cannot be deleted due to other constraints"
+        );
+      }
+
+      const findCart = await getData(Cart, "roomTypeId", id);
+
+      if (findCart) {
+        return handleError409(
+          res,
+          "Cart type conflict, cannot be deleted due to other constraints"
+        );
+      }
 
       await deleteData(RoomType, id);
 

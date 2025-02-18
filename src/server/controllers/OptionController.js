@@ -11,7 +11,7 @@ import Option from "../models/Option.js";
 import Food from "../models/Food.js";
 import Cart from "../models/Cart.js";
 import { deleteData, forceDeleteData } from "../services/deleteService.js";
-import { getAllData, getDataById } from "../services/getService.js";
+import { getAllData, getData, getDataById } from "../services/getService.js";
 import {
   findByIdAndPullData,
   findByIdAndPushData,
@@ -114,15 +114,24 @@ const OptionController = {
         return handleError409(res, "You cannot delete an uncategorized!");
       }
 
-      await Cart.updateMany(
-        { _id: { $in: findOption.carts } },
-        { $set: { optionId: env.DEFAULT_OPTION } }
-      );
+      // await Cart.updateMany(
+      //   { _id: { $in: findOption.carts } },
+      //   { $set: { optionId: env.DEFAULT_OPTION } }
+      // );
 
-      await Option.updateOne(
-        { _id: env.DEFAULT_OPTION },
-        { $push: { carts: { $each: findOption.carts } } }
-      );
+      // await Option.updateOne(
+      //   { _id: env.DEFAULT_OPTION },
+      //   { $push: { carts: { $each: findOption.carts } } }
+      // );
+
+      const findCart = await getData(Cart, "optionId", id);
+
+      if (findCart) {
+        return handleError409(
+          res,
+          "Cart type conflict, cannot be deleted due to other constraints"
+        );
+      }
 
       await findByIdAndPullData(Food, findOption.foodId, "options", id);
 

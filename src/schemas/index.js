@@ -144,19 +144,27 @@ const PaymentSchema = z.object({
 });
 
 const CartSchema = z.object({
-  title: z.string().min(1, "Minimum number of review 1 characters"),
   optionId: z.string().min(1, "Cannot be left blank"),
   userId: z.string().min(1, "Cannot be left blank"),
   roomId: z.string().min(1, "Cannot be left blank"),
   roomTypeId: z.string().min(1, "Cannot be left blank"),
   status: z.string().optional(),
-  price: z.number().min(1, "Price greater than or equal to 1"),
-  totalPrice: z.number().min(1, "Price greater than or equal to 1"),
-  dayNumber: z.string().min(1, "Minimum number of dayNumber 1 characters"),
-  bookedDates: z.string().min(1, "Minimum number of bookedDates 1 characters"),
+  price: z.number().min(1, "Price must be greater than or equal to 1"),
+  totalPrice: z
+    .number()
+    .min(1, "Total price must be greater than or equal to 1"),
+  dayNumber: z.string().min(1, "Minimum number of dayNumber is 1 character"),
+  bookedDates: z.object({
+    from: z.string().refine((date) => !isNaN(Date.parse(date)), {
+      message: "Invalid date format",
+    }),
+    to: z.string().refine((date) => !isNaN(Date.parse(date)), {
+      message: "Invalid date format",
+    }),
+  }),
   paymentMethod: z
     .string()
-    .min(1, "Minimum number of payment method 1 characters"),
+    .min(1, "Minimum number of payment method is 1 character"),
 });
 
 export {

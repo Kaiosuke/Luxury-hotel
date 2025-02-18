@@ -1,5 +1,6 @@
 import {
   handleError404,
+  handleError404WithData,
   handleError409,
   handleError500,
   handleSuccess200,
@@ -29,7 +30,7 @@ const CartController = {
       const carts = await getAllData(Cart, [
         { optionId: "title" },
         { userId: "username" },
-        { roomId: "title" },
+        { roomId: "roomNumber" },
         { roomTypeId: "title" },
       ]);
 
@@ -48,7 +49,7 @@ const CartController = {
       const cart = await getDataById(Cart, id, [
         { optionId: "title" },
         { userId: "username" },
-        { roomId: "title" },
+        { roomId: "roomNumber" },
         { roomTypeId: "title" },
       ]);
       if (!cart) {
@@ -134,25 +135,25 @@ const CartController = {
 
       const updateCart = await findByIdAndUpdateData(Cart, id, req.body);
 
-      if (optionId !== updateCart.optionId.toString()) {
+      if (optionId !== updateCart.optionId) {
         await findByIdAndPullData(Option, findCart.optionId, "carts", id);
 
         await findByIdAndPushData(Option, optionId, "carts", id);
       }
 
-      if (userId !== updateCart.userId.toString()) {
+      if (userId !== updateCart.userId) {
         await findByIdAndPullData(User, findCart.userId, "carts", id);
 
         await findByIdAndPushData(User, userId, "carts", id);
       }
 
-      if (roomId !== updateCart.roomId.toString()) {
+      if (roomId !== updateCart.roomId) {
         await findByIdAndPullData(Room, findCart.roomId, "carts", id);
 
         await findByIdAndPushData(Room, roomId, "carts", id);
       }
 
-      if (roomTypeId !== updateCart.roomTypeId.toString()) {
+      if (roomTypeId !== updateCart.roomTypeId) {
         await findByIdAndPullData(RoomType, findCart.roomTypeId, "carts", id);
 
         await findByIdAndPushData(RoomType, roomTypeId, "carts", id);

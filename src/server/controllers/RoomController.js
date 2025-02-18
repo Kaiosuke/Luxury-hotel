@@ -7,7 +7,7 @@ import {
   handleSuccess201,
 } from "../../utils/helpers/handleStatusCode.js";
 import env from "../config/envConfig.js";
-import { getAllData, getDataById } from "../services/getService.js";
+import { getAllData, getData, getDataById } from "../services/getService.js";
 import Room from "../models/Room.js";
 import RoomType from "../models/RoomType.js";
 import Cart from "../models/Cart.js";
@@ -118,15 +118,24 @@ const RoomController = {
         return handleError409(res, "You cannot delete an uncategorized!");
       }
 
-      await Cart.updateMany(
-        { _id: { $in: findRoom.carts } },
-        { $set: { roomTypeId: env.DEFAULT_ROOM } }
-      );
+      // await Cart.updateMany(
+      //   { _id: { $in: findRoom.carts } },
+      //   { $set: { roomTypeId: env.DEFAULT_ROOM } }
+      // );
 
-      await Room.updateOne(
-        { _id: env.DEFAULT_ROOM },
-        { $push: { carts: { $each: findRoom.carts } } }
-      );
+      // await Room.updateOne(
+      //   { _id: env.DEFAULT_ROOM },
+      //   { $push: { carts: { $each: findRoom.carts } } }
+      // );
+
+      const findCart = await getData(Cart, "roomId", id);
+
+      if (findCart) {
+        return handleError409(
+          res,
+          "Cart type conflict, cannot be deleted due to other constraints"
+        );
+      }
 
       await deleteData(Room, id);
 
