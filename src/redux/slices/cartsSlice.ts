@@ -82,10 +82,10 @@ const cartsSlice = createSlice({
       (state, action: PayloadAction<ICart>) => {
         state.loading = false;
         state.carts = state.carts.map((user) =>
-          user.id === action.payload.id ? action.payload : user
+          user._id === action.payload._id ? action.payload : user
         );
         state.cartsUser = state.cartsUser.map((user) =>
-          user.id === action.payload.id ? action.payload : user
+          user._id === action.payload._id ? action.payload : user
         );
       }
     );
@@ -96,9 +96,9 @@ const cartsSlice = createSlice({
       deleteCart.fulfilled,
       (state, action: PayloadAction<string>) => {
         state.loading = false;
-        state.carts = state.carts.filter((user) => user.id !== action.payload);
+        state.carts = state.carts.filter((user) => user._id !== action.payload);
         state.cartsUser = state.cartsUser.filter(
-          (user) => user.id !== action.payload
+          (user) => user._id !== action.payload
         );
       }
     );

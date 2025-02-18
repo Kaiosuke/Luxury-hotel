@@ -74,7 +74,7 @@ const roomsSlice = createSlice({
       (state, action: PayloadAction<IRoom>) => {
         state.loading = false;
         state.rooms = state.rooms.map((room) =>
-          room.id === action.payload.id ? action.payload : room
+          room._id === action.payload._id ? action.payload : room
         );
       }
     );
@@ -85,7 +85,7 @@ const roomsSlice = createSlice({
       deleteRoom.fulfilled,
       (state, action: PayloadAction<string>) => {
         state.loading = false;
-        state.rooms = state.rooms.filter((room) => room.id !== action.payload);
+        state.rooms = state.rooms.filter((room) => room._id !== action.payload);
       }
     );
     builder.addCase(deleteRoom.rejected, setError);

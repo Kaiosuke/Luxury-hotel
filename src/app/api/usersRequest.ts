@@ -20,9 +20,9 @@ const getAllUser = createAsyncThunk<IUser[], void, { rejectValue: string }>(
 
 const getUser = createAsyncThunk<IUser, string, { rejectValue: string }>(
   "users/getUser",
-  async (id, { rejectWithValue }) => {
+  async (_id, { rejectWithValue }) => {
     try {
-      const res = await instanceLocal.get(`users/${id}`);
+      const res = await instanceLocal.get(`users/${_id}`);
       return res.data.data;
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -50,11 +50,11 @@ const addUser = createAsyncThunk<IUser, IUser, { rejectValue: string }>(
 
 const updateUser = createAsyncThunk<
   IUser,
-  { id: string; user: IUser },
+  { _id: string; user: IUser },
   { rejectValue: string }
->("users/updateUser", async ({ id, user }, { rejectWithValue }) => {
+>("users/updateUser", async ({ _id, user }, { rejectWithValue }) => {
   try {
-    const res = await instanceLocal.patch(`users/${id}`, user);
+    const res = await instanceLocal.patch(`users/update/${_id}`, user);
     return res.data.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -66,10 +66,10 @@ const updateUser = createAsyncThunk<
 
 const deleteUser = createAsyncThunk<string, string, { rejectValue: string }>(
   "users/deleteUser",
-  async (id, { rejectWithValue }) => {
+  async (_id, { rejectWithValue }) => {
     try {
-      await instanceLocal.delete(`users/${id}`);
-      return id;
+      await instanceLocal.delete(`users/delete/${_id}`);
+      return _id;
     } catch (error) {
       if (axios.isAxiosError(error)) {
         return rejectWithValue(error.response?.data.message);

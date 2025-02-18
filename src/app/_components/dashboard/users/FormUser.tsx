@@ -23,7 +23,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
-function FormUser({ open, onClose, id }: IForm) {
+function FormUser({ open, onClose, _id }: IForm) {
   const [role, setRole] = useState("user");
   const { register, formState, handleSubmit, reset } = useForm({
     resolver: zodResolver(UserSchema),
@@ -43,9 +43,9 @@ function FormUser({ open, onClose, id }: IForm) {
   const { toast } = useToast();
 
   useEffect(() => {
-    if (id) {
+    if (_id) {
       (async () => {
-        const user = await dispatch(getUser(id)).unwrap();
+        const user = await dispatch(getUser(_id)).unwrap();
         reset({
           username: user.username,
           email: user.email,
@@ -60,7 +60,7 @@ function FormUser({ open, onClose, id }: IForm) {
         user.role && setRole(user.role);
       })();
     }
-  }, [id]);
+  }, [_id]);
 
   const handleGetData = (data: IUser) => {
     const newRole =
@@ -75,20 +75,44 @@ function FormUser({ open, onClose, id }: IForm) {
       city: data.city,
       role: newRole,
     };
-    if (id) {
-      dispatch(updateUser({ id, user: newUser }));
-      toast({
-        variant: "success",
-        title: "Success",
-        description: "Update User success",
-      });
+    if (_id) {
+      (async () => {
+        try {
+          await dispatch(updateUser({ _id, user: newUser })).unwrap();
+          toast({
+            variant: "success",
+            title: "Success",
+            description: "Update User success",
+          });
+        } catch (error) {
+          const errorMessage =
+            typeof error === "string" ? error : "Something went wrong";
+          toast({
+            variant: "destructive",
+            title: "Failed",
+            description: errorMessage,
+          });
+        }
+      })();
     } else {
-      dispatch(addUser(newUser));
-      toast({
-        variant: "success",
-        title: "Success",
-        description: "Add User success",
-      });
+      (async () => {
+        try {
+          await dispatch(addUser(newUser)).unwrap();
+          toast({
+            variant: "success",
+            title: "Success",
+            description: "Add User success",
+          });
+        } catch (error) {
+          const errorMessage =
+            typeof error === "string" ? error : "Something went wrong";
+          toast({
+            variant: "destructive",
+            title: "Failed",
+            description: errorMessage,
+          });
+        }
+      })();
     }
     return onClose(false);
   };
@@ -98,7 +122,7 @@ function FormUser({ open, onClose, id }: IForm) {
       <DialogContent className="lg:max-w-[1000px] sm:max-w-[600px]   bg-sidebar-four text-sidebar-primary">
         <DialogHeader>
           <DialogTitle className="md:text-2xl text-xl">
-            {id ? "Update" : "Add"} User
+            {_id ? "Update" : "Add"} User
           </DialogTitle>
         </DialogHeader>
         <form onSubmit={handleSubmit((data) => handleGetData(data))}>
@@ -248,7 +272,7 @@ function FormUser({ open, onClose, id }: IForm) {
             </div>
           </div>
           <Button type="submit" variant={"outline"} className="text-left">
-            {id ? "Update" : "Add"} User
+            {_id ? "Update" : "Add"} User
           </Button>
         </form>
       </DialogContent>

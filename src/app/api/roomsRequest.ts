@@ -20,9 +20,9 @@ const getAllRoom = createAsyncThunk<IRoom[], void, { rejectValue: string }>(
 
 const getRoom = createAsyncThunk<IRoom, string, { rejectValue: string }>(
   "rooms/getRoom",
-  async (id, { rejectWithValue }) => {
+  async (_id, { rejectWithValue }) => {
     try {
-      const res = await instanceLocal.get(`rooms/${id}`);
+      const res = await instanceLocal.get(`rooms/${_id}`);
       return res.data.data;
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -51,11 +51,11 @@ const addRoom = createAsyncThunk<IRoom, IRoom, { rejectValue: string }>(
 
 const updateRoom = createAsyncThunk<
   IRoom,
-  { id: string; room: IRoom },
+  { _id: string; room: IRoom },
   { rejectValue: string }
->("rooms/updateRoom", async ({ id, room }, { rejectWithValue }) => {
+>("rooms/updateRoom", async ({ _id, room }, { rejectWithValue }) => {
   try {
-    const res = await instanceLocal.patch(`rooms/${id}`, room);
+    const res = await instanceLocal.patch(`rooms/${_id}`, room);
     return res.data.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -67,10 +67,10 @@ const updateRoom = createAsyncThunk<
 
 const deleteRoom = createAsyncThunk<string, string, { rejectValue: string }>(
   "rooms/deleteRoom",
-  async (id, { rejectWithValue }) => {
+  async (_id, { rejectWithValue }) => {
     try {
-      await instanceLocal.delete(`rooms/${id}`);
-      return id;
+      await instanceLocal.delete(`rooms/${_id}`);
+      return _id;
     } catch (error) {
       if (axios.isAxiosError(error)) {
         return rejectWithValue(error?.message);

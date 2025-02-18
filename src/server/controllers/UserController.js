@@ -1,4 +1,5 @@
 import {
+  handleError403,
   handleError404,
   handleError409,
   handleError500,
@@ -8,6 +9,7 @@ import User from "../models/User.js";
 import Cart from "../models/Cart.js";
 import Payment from "../models/Payment.js";
 import Review from "../models/Review.js";
+import env from "../config/envConfig.js";
 
 import { getAllData, getData, getDataById } from "../services/getService.js";
 import {
@@ -53,13 +55,18 @@ const UserController = {
   update: async (req, res) => {
     try {
       const { id } = req.params;
-      const findUser = await getDataById(User, id, [
-        { carts: "title" },
-        { reviews: "title" },
-        { payments: "title" },
-      ]);
+      const findUser = await getDataById(User, id);
+      const isAdmin = await getDataById(User, req.user.user);
+
       if (!findUser) {
         return handleError404(res);
+      }
+
+      if (
+        isAdmin.role === "admin" &&
+        (findUser.role === "admin" || findUser.role === "ceo")
+      ) {
+        return handleError403(res);
       }
       const updateUser = await findByIdAndUpdateData(User, id, req.body);
 
@@ -75,13 +82,22 @@ const UserController = {
     try {
       const { id } = req.params;
       const findUser = await getDataById(User, id);
+      const isAdmin = await getDataById(User, req.user.user);
 
       if (!findUser) {
         return handleError404(res);
       }
 
+      if (findUser._id.toString() === env.DEFAULT_USER) {
+        return handleError409(res, "You cannot delete an uncategorized!");
+      }
+
       if (findUser.role === "ceo") {
-        return res.status(403).json("You don't have permission!");
+        return handleError403(res);
+      }
+
+      if (isAdmin.role === "admin" && findUser.role === "admin") {
+        return handleError403(res);
       }
 
       const findCart = await getData(Cart, "userId", findUser._id);

@@ -20,9 +20,9 @@ const getAllOption = createAsyncThunk<IOption[], void, { rejectValue: string }>(
 
 const getOption = createAsyncThunk<IOption, string, { rejectValue: string }>(
   "options/getOption",
-  async (id, { rejectWithValue }) => {
+  async (_id, { rejectWithValue }) => {
     try {
-      const res = await instanceLocal.get(`options/${id}`);
+      const res = await instanceLocal.get(`options/${_id}`);
       return res.data.data;
     } catch (error) {
       if (axios.isAxiosError(error)) {

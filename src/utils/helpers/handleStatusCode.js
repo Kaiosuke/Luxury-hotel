@@ -10,6 +10,10 @@ const handleError401 = (res, message) => {
   return res.status(401).json({ message });
 };
 
+const handleError403 = (res) => {
+  return res.status(403).json({ message: "You don't have permission!" });
+};
+
 const handleError404 = (res) => {
   return res.status(404).json({ message: "Not found!" });
 };
@@ -36,4 +40,5 @@ export {
   handleError404WithData,
   handleError409,
   handleError500,
+  handleError403,
 };

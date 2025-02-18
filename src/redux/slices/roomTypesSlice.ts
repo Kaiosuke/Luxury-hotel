@@ -135,7 +135,7 @@ const roomTypesSlice = createSlice({
       (state, action: PayloadAction<IRoomType>) => {
         state.loading = false;
         state.roomTypes = state.roomTypes.map((roomType) =>
-          roomType.id === action.payload.id ? action.payload : roomType
+          roomType._id === action.payload._id ? action.payload : roomType
         );
       }
     );
@@ -147,7 +147,7 @@ const roomTypesSlice = createSlice({
       (state, action: PayloadAction<string>) => {
         state.loading = false;
         state.roomTypes = state.roomTypes.filter(
-          (roomType) => roomType.id !== action.payload
+          (roomType) => roomType._id !== action.payload
         );
       }
     );

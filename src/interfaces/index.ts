@@ -4,7 +4,7 @@ enum ERole {
   user = "user",
 }
 interface IUser {
-  id?: string;
+  _id?: string;
   username: string;
   email?: string;
   role?: ERole;
@@ -14,10 +14,13 @@ interface IUser {
   country: string;
   address: string;
   city: string;
+  carts?: string[];
+  reviews?: string[];
+  payments?: string[];
 }
 
 interface IRoomType {
-  _id: any;
+  _id: string;
   id: string;
   thumbnail: string;
   title: string;
@@ -40,7 +43,7 @@ interface IRoomType {
 }
 
 interface IRoom {
-  id: string;
+  _id: string;
   roomTypeId: string;
   roomNumber: string;
   floor: number;
@@ -55,7 +58,7 @@ export enum ECart {
 }
 
 interface ICart {
-  id: string;
+  _id: string;
   userId: string;
   roomTypeId: string;
   optionId: string;
@@ -69,7 +72,7 @@ interface ICart {
 }
 
 interface IOption {
-  id: string;
+  _id: string;
   title: string;
   price: number;
   extensions: string[];
@@ -77,7 +80,7 @@ interface IOption {
 }
 
 interface IForm {
-  id?: string | null;
+  _id?: string | null;
   open: boolean;
   type?: string;
   onClose: (value: boolean) => void;

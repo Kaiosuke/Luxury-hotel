@@ -62,7 +62,7 @@ const usersSlice = createSlice({
       (state, action: PayloadAction<IUser>) => {
         state.loading = false;
         state.users = state.users.map((user) =>
-          user.id === action.payload.id ? action.payload : user
+          user._id === action.payload._id ? action.payload : user
         );
       }
     );
@@ -73,7 +73,7 @@ const usersSlice = createSlice({
       deleteUser.fulfilled,
       (state, action: PayloadAction<string>) => {
         state.loading = false;
-        state.users = state.users.filter((user) => user.id !== action.payload);
+        state.users = state.users.filter((user) => user._id !== action.payload);
       }
     );
     builder.addCase(deleteUser.rejected, setError);

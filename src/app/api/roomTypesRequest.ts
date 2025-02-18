@@ -23,9 +23,9 @@ const getRoomType = createAsyncThunk<
   IRoomType,
   string,
   { rejectValue: string }
->("roomTypes/getRoomType", async (id, { rejectWithValue }) => {
+>("roomTypes/getRoomType", async (_id, { rejectWithValue }) => {
   try {
-    const res = await instanceLocal.get(`room-types/${id}`);
+    const res = await instanceLocal.get(`room-types/${_id}`);
     return res.data.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -54,28 +54,31 @@ const addRoomType = createAsyncThunk<
 
 const updateRoomType = createAsyncThunk<
   IRoomType,
-  { id: string; roomType: IRoomType },
+  { _id: string; roomType: IRoomType },
   { rejectValue: string }
->("roomTypes/updateRoomType", async ({ id, roomType }, { rejectWithValue }) => {
-  try {
-    const res = await instanceLocal.patch(`room-types/${id}`, roomType);
-    return res.data.data;
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      return rejectWithValue(error.response?.data?.message);
+>(
+  "roomTypes/updateRoomType",
+  async ({ _id, roomType }, { rejectWithValue }) => {
+    try {
+      const res = await instanceLocal.patch(`room-types/${_id}`, roomType);
+      return res.data.data;
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        return rejectWithValue(error.response?.data?.message);
+      }
+      return rejectWithValue("An unexpected error occurred");
     }
-    return rejectWithValue("An unexpected error occurred");
   }
-});
+);
 
 const deleteRoomType = createAsyncThunk<
   string,
   string,
   { rejectValue: string }
->("roomTypes/deleteRoomType", async (id, { rejectWithValue }) => {
+>("roomTypes/deleteRoomType", async (_id, { rejectWithValue }) => {
   try {
-    await instanceLocal.delete(`room-types/delete/${id}`);
-    return id;
+    await instanceLocal.delete(`room-types/delete/${_id}`);
+    return _id;
   } catch (error) {
     if (axios.isAxiosError(error)) {
       return rejectWithValue(error.response?.data?.message);

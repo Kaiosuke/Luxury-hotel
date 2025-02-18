@@ -29,68 +29,17 @@ import LoadingProcess from "@/app/_components/Loading";
 
 const UserTable = ({ open, onClose }: IForm) => {
   const { users } = useSelector(usersSelector);
-  const { currentUser } = useSelector(authSelector);
 
   const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
   const [openFormDelete, setOpenFormDelete] = useState(false);
 
-  const dispatch = useAppDispatch();
-
-  const { toast } = useToast();
-
   const handleUpdate = (id: string) => {
-    if (currentUser?.role === "admin") {
-      (async () => {
-        const user = await dispatch(getUser(id)).unwrap();
-        if (user.role === "ceo" || user.role === "admin") {
-          return toast({
-            variant: "destructive",
-            title: "Uh oh! Something went wrong.",
-            description: "You do not have permission to edit",
-            action: <ToastAction altText="Try again">Try again</ToastAction>,
-          });
-        } else {
-          setSelectedUserId(id);
-          onClose(true);
-        }
-      })();
-    } else {
-      setSelectedUserId(id);
-      onClose(true);
-    }
+    setSelectedUserId(id);
+    onClose(true);
   };
   const handleDelete = (id: string) => {
-    if (currentUser?.role === "admin") {
-      (async () => {
-        const user = await dispatch(getUser(id)).unwrap();
-        if (user.role === "ceo" || user.role === "admin") {
-          return toast({
-            variant: "destructive",
-            title: "Uh oh! Something went wrong.",
-            description: "You do not have permission to delete",
-            action: <ToastAction altText="Try again">Try again</ToastAction>,
-          });
-        } else {
-          setSelectedUserId(id);
-          setOpenFormDelete(true);
-        }
-      })();
-    } else if (currentUser?.role === "ceo") {
-      (async () => {
-        const user = await dispatch(getUser(id)).unwrap();
-        if (user.role === "ceo") {
-          return toast({
-            variant: "destructive",
-            title: "Uh oh! Something went wrong.",
-            description: "You can't erase yourself",
-            action: <ToastAction altText="Try again">Try again</ToastAction>,
-          });
-        } else {
-          setSelectedUserId(id);
-          setOpenFormDelete(true);
-        }
-      })();
-    }
+    setSelectedUserId(id);
+    setOpenFormDelete(true);
   };
 
   const handleCloseForm = () => {
@@ -164,19 +113,21 @@ const UserTable = ({ open, onClose }: IForm) => {
         <div className="capitalize">{row.getValue("role")}</div>
       ),
     },
-    // {
-    //   accessorKey: "orders",
-    //   header: "Orders",
-    //   cell: ({ row }) => (
-    //     <div className="capitalize">{row.getValue("orders")}</div>
-    //   ),
-    // },
+    {
+      accessorKey: "carts",
+      header: "Orders",
+      cell: ({ row }) => {
+        const carts = row.original;
+
+        return <div className="capitalize">{row.getValue("carts")}</div>;
+      },
+    },
 
     {
       id: "actions",
       enableHiding: false,
       cell: ({ row }) => {
-        const id = row.original.id;
+        const id = row.original._id;
         return (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -225,13 +176,13 @@ const UserTable = ({ open, onClose }: IForm) => {
         filterPlaceholders="username"
       />
       {open && (
-        <FormUser open={open} onClose={handleCloseForm} id={selectedUserId} />
+        <FormUser open={open} onClose={handleCloseForm} _id={selectedUserId} />
       )}
       {openFormDelete && (
         <FormDeleteUser
           open={openFormDelete}
           onClose={handleCloseForm}
-          id={selectedUserId}
+          _id={selectedUserId}
         />
       )}
     </>

@@ -36,9 +36,9 @@ const getAllCartByUserId = createAsyncThunk<
 
 const getCart = createAsyncThunk<ICart, string, { rejectValue: string }>(
   "carts/getCart",
-  async (id, { rejectWithValue }) => {
+  async (_id, { rejectWithValue }) => {
     try {
-      const res = await instanceLocal.get(`carts/${id}`);
+      const res = await instanceLocal.get(`carts/${_id}`);
       return res.data.data;
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -66,11 +66,11 @@ const addCart = createAsyncThunk<any, any, { rejectValue: string }>(
 
 const updateCart = createAsyncThunk<
   ICart,
-  { id: string; cart: ICart },
+  { _id: string; cart: ICart },
   { rejectValue: string }
->("carts/updateCart", async ({ id, cart }, { rejectWithValue }) => {
+>("carts/updateCart", async ({ _id, cart }, { rejectWithValue }) => {
   try {
-    const res = await instanceLocal.patch(`carts/${id}`, cart);
+    const res = await instanceLocal.patch(`carts/${_id}`, cart);
     return res.data.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -82,10 +82,10 @@ const updateCart = createAsyncThunk<
 
 const deleteCart = createAsyncThunk<string, string, { rejectValue: string }>(
   "carts/deleteCart",
-  async (id, { rejectWithValue }) => {
+  async (_id, { rejectWithValue }) => {
     try {
-      await instanceLocal.delete(`carts/${id}`);
-      return id;
+      await instanceLocal.delete(`carts/${_id}`);
+      return _id;
     } catch (error) {
       if (axios.isAxiosError(error)) {
         return rejectWithValue(error.response?.data?.message);

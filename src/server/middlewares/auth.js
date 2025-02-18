@@ -2,7 +2,10 @@ import jwt from "jsonwebtoken";
 import env from "../config/envConfig.js";
 import User from "../models/User.js";
 import { getDataById } from "../services/getService.js";
-import { handleError500 } from "../../utils/helpers/handleStatusCode.js";
+import {
+  handleError403,
+  handleError500,
+} from "../../utils/helpers/handleStatusCode.js";
 
 const verifyToken = async (req, res, next) => {
   try {
@@ -36,7 +39,7 @@ const verifyAdmin = async (req, res, next) => {
       if (user.role === "admin" || user.role === "ceo") {
         next();
       } else {
-        return res.status(403).json("You don't have permission!");
+        return handleError403(res);
       }
     });
   } catch (error) {
@@ -73,7 +76,7 @@ const verifyAdminAuth = async (req, res, next) => {
         user.role === "admin" &&
         (targetUser.role === "admin" || targetUser.role === "ceo")
       ) {
-        return res.status(403).json("You don't have permission!");
+        return handleError403(res);
       }
     });
   } catch (error) {
@@ -93,7 +96,7 @@ const verifyCeo = async (req, res, next) => {
       if (user.role === "ceo") {
         next();
       } else {
-        return res.status(403).json("You don't have permission!");
+        return handleError403(res);
       }
     });
   } catch (error) {
