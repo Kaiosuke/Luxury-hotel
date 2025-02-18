@@ -8,13 +8,10 @@ import { ERole, IUser } from "@/interfaces";
 import { useAppDispatch } from "@/redux/store";
 import { RegisterSchema } from "@/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ToastAction } from "@radix-ui/react-toast";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { addUser } from "../api/usersRequest";
-import { usersSelector } from "@/redux/selectors/usersSelector";
-import { useSelector } from "react-redux";
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);

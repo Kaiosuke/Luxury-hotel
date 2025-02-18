@@ -38,7 +38,7 @@ function page() {
             <CiUser className="text-sidebar-primary text-size-2xl" />
           </div>
           <div className="mt-4 text-size-xl">
-            <span>Total user: {users.length}</span>
+            <span>Total user: {users?.length}</span>
           </div>
         </div>
         <div className="rounded-xl p-6 bg-sidebar-four text-sidebar-primary hover:bg-secondary animation-normal cursor-pointer">
@@ -46,7 +46,7 @@ function page() {
             <MdMeetingRoom className="text-sidebar-primary text-size-2xl" />
           </div>
           <div className="mt-4 text-size-xl">
-            <span>TypeRooms: {roomTypes.length}</span>
+            <span>TypeRooms: {roomTypes?.length}</span>
           </div>
         </div>
         <div className="rounded-xl p-6 bg-sidebar-four text-sidebar-primary hover:bg-secondary animation-normal cursor-pointer">
@@ -54,7 +54,7 @@ function page() {
             <MdMeetingRoom className="text-sidebar-primary text-size-2xl" />
           </div>
           <div className="mt-4 text-size-xl">
-            <span>Room available: {roomsAvailable(rooms).length}</span>
+            <span>Room available: {roomsAvailable(rooms)?.length}</span>
           </div>
         </div>
         <div className="rounded-xl p-6 bg-sidebar-four text-sidebar-primary hover:bg-secondary animation-normal cursor-pointer">
@@ -62,7 +62,7 @@ function page() {
             <FaShoppingCart className="text-sidebar-primary text-size-2xl" />
           </div>
           <div className="mt-4 text-size-xl">
-            <span>Orders: {carts.length} </span>
+            <span>Orders: {carts?.length} </span>
           </div>
         </div>
       </div>

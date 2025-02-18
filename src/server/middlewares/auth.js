@@ -9,7 +9,6 @@ const verifyToken = async (req, res, next) => {
     const token = req.headers.authorization;
     if (token) {
       const accessToken = token.split(" ")[1];
-
       jwt.verify(accessToken, env.ACCESS_TOKEN, (err, user) => {
         if (err) {
           return res.status(401).json("Token is not valid!");
@@ -30,7 +29,6 @@ const verifyAdmin = async (req, res, next) => {
   try {
     await verifyToken(req, res, async () => {
       const user = await getDataById(User, req.user.user);
-
       if (!user) {
         return res.status(404).json({ message: "User not found!" });
       }

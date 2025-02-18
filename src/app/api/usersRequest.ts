@@ -8,7 +8,7 @@ const getAllUser = createAsyncThunk<IUser[], void, { rejectValue: string }>(
   async (_, { rejectWithValue }) => {
     try {
       const res = await instanceLocal.get("users");
-      return res.data;
+      return res.data.data;
     } catch (error) {
       if (axios.isAxiosError(error)) {
         return rejectWithValue(error.response?.data.message);
@@ -23,7 +23,7 @@ const getUser = createAsyncThunk<IUser, string, { rejectValue: string }>(
   async (id, { rejectWithValue }) => {
     try {
       const res = await instanceLocal.get(`users/${id}`);
-      return res.data;
+      return res.data.data;
     } catch (error) {
       if (axios.isAxiosError(error)) {
         return rejectWithValue(error.response?.data.message);
@@ -38,8 +38,7 @@ const addUser = createAsyncThunk<IUser, IUser, { rejectValue: string }>(
   async (user, { rejectWithValue }) => {
     try {
       const res = await instanceLocal.post(`auth/register`, user);
-
-      return res.data;
+      return res.data.data;
     } catch (error) {
       if (axios.isAxiosError(error)) {
         return rejectWithValue(error.response?.data.message);
@@ -56,7 +55,7 @@ const updateUser = createAsyncThunk<
 >("users/updateUser", async ({ id, user }, { rejectWithValue }) => {
   try {
     const res = await instanceLocal.patch(`users/${id}`, user);
-    return res.data;
+    return res.data.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
       return rejectWithValue(error.response?.data.message);

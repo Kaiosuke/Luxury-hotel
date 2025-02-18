@@ -17,6 +17,7 @@ interface IUser {
 }
 
 interface IRoomType {
+  _id: any;
   id: string;
   thumbnail: string;
   title: string;

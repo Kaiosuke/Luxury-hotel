@@ -7,6 +7,7 @@ const nextConfig: NextConfig = {
       "images.unsplash.com",
       "res.cloudinary.com",
       "d321ocj5nbe62c.cloudfront.net",
+      "i.ytimg.com",
     ],
   },
   async redirects() {

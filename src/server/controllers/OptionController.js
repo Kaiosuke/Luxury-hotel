@@ -23,7 +23,7 @@ import { createData } from "../services/postService.js";
 const OptionController = {
   getAll: async (req, res) => {
     try {
-      const options = await getAllData(Food, [{ foodId: "title" }]);
+      const options = await getAllData(Option, [{ foodId: "title" }]);
       if (!options.length) {
         return handleError404(res);
       }

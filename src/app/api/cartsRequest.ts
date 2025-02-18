@@ -8,7 +8,7 @@ const getAllCart = createAsyncThunk<ICart[], void, { rejectValue: string }>(
   async (_, { rejectWithValue }) => {
     try {
       const res = await instanceLocal.get(`carts`);
-      return res.data;
+      return res.data.data;
     } catch (error) {
       if (axios.isAxiosError(error)) {
         return rejectWithValue(error.response?.data?.message);
@@ -25,7 +25,7 @@ const getAllCartByUserId = createAsyncThunk<
 >("carts/getAllCartByUserId", async (userId, { rejectWithValue }) => {
   try {
     const res = await instanceLocal.get(`carts?userId=${userId}`);
-    return res.data;
+    return res.data.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
       return rejectWithValue(error.response?.data?.message);
@@ -39,7 +39,7 @@ const getCart = createAsyncThunk<ICart, string, { rejectValue: string }>(
   async (id, { rejectWithValue }) => {
     try {
       const res = await instanceLocal.get(`carts/${id}`);
-      return res.data;
+      return res.data.data;
     } catch (error) {
       if (axios.isAxiosError(error)) {
         return rejectWithValue(error.response?.data?.message);
@@ -54,7 +54,7 @@ const addCart = createAsyncThunk<any, any, { rejectValue: string }>(
   async (cart, { rejectWithValue }) => {
     try {
       const res = await instanceLocal.post(`carts`, cart);
-      return res.data;
+      return res.data.data;
     } catch (error) {
       if (axios.isAxiosError(error)) {
         return rejectWithValue(error.response?.data?.message);
@@ -71,7 +71,7 @@ const updateCart = createAsyncThunk<
 >("carts/updateCart", async ({ id, cart }, { rejectWithValue }) => {
   try {
     const res = await instanceLocal.patch(`carts/${id}`, cart);
-    return res.data;
+    return res.data.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
       return rejectWithValue(error.response?.data?.message);

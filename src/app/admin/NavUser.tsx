@@ -21,9 +21,8 @@ import { FaHome } from "react-icons/fa";
 import Link from "next/link";
 import { IUser } from "@/interfaces";
 import { useAppDispatch } from "@/redux/store";
-import { signOut } from "next-auth/react";
-import { loginUser } from "@/redux/slices/authSlice";
 import { useToast } from "@/hooks/use-toast";
+import { logout } from "../api/authRequest";
 
 function NavUser({ user }: { user: IUser }) {
   const { isMobile } = useSidebar();
@@ -33,14 +32,21 @@ function NavUser({ user }: { user: IUser }) {
 
   const { toast } = useToast();
 
-  const handleSigOut = () => {
-    signOut();
-    dispatch(loginUser(null));
-    return toast({
-      variant: "success",
-      title: "success",
-      description: `Logout success`,
-    });
+  const handleSigOut = async () => {
+    try {
+      await dispatch(logout()).unwrap();
+      return toast({
+        variant: "success",
+        title: "success",
+        description: `Logout success`,
+      });
+    } catch (error) {
+      return toast({
+        variant: "success",
+        title: "success",
+        description: `Logout failed`,
+      });
+    }
   };
 
   return (

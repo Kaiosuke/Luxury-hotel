@@ -185,7 +185,8 @@ const RoomTypesTable = ({ open, onClose }: IForm) => {
       id: "actions",
       enableHiding: false,
       cell: ({ row }) => {
-        const id = row.original.id;
+        const id = row.original._id;
+
         return (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -227,24 +228,28 @@ const RoomTypesTable = ({ open, onClose }: IForm) => {
 
   return (
     <>
-      <DataTable
-        data={roomTypes}
-        columns={roomTypeColumns}
-        filterPlaceholders="title"
-      />
-      {open && (
-        <FormRoomType
-          open={open}
-          onClose={handleCloseForm}
-          id={selectedRoomTypeId}
-        />
-      )}
-      {openFormDelete && (
-        <FormDeleteRoomType
-          open={openFormDelete}
-          onClose={handleCloseForm}
-          id={selectedRoomTypeId}
-        />
+      {roomTypes?.length && (
+        <>
+          <DataTable
+            data={roomTypes}
+            columns={roomTypeColumns}
+            filterPlaceholders="title"
+          />
+          {open && (
+            <FormRoomType
+              open={open}
+              onClose={handleCloseForm}
+              id={selectedRoomTypeId}
+            />
+          )}
+          {openFormDelete && (
+            <FormDeleteRoomType
+              open={openFormDelete}
+              onClose={handleCloseForm}
+              id={selectedRoomTypeId}
+            />
+          )}
+        </>
       )}
     </>
   );
