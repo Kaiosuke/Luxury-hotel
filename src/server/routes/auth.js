@@ -8,6 +8,7 @@ const route = Router();
 route.post("/register", validateBody(RegisterSchema), AuthController.register);
 
 route.post("/login", validateBody(LoginSchema), AuthController.login);
+route.post("/logout", AuthController.logout);
 
 route.post("/refresh-token", AuthController.refreshToken);
 

@@ -2,7 +2,6 @@ import {
   addUser,
   deleteUser,
   getAllUser,
-  getUserByEmail,
   updateUser,
 } from "@/app/api/usersRequest";
 import { IUser } from "@/interfaces";
@@ -28,7 +27,6 @@ const setError = (
   state: IUserState,
   action: PayloadAction<string | undefined>
 ) => {
-  console.log(action.payload);
   state.loading = false;
   state.error = action.payload;
 };
@@ -47,12 +45,6 @@ const usersSlice = createSlice({
       }
     );
     builder.addCase(getAllUser.rejected, setError);
-
-    builder.addCase(getUserByEmail.pending, setLoading);
-    builder.addCase(getUserByEmail.fulfilled, (state) => {
-      state.loading = false;
-    });
-    builder.addCase(getUserByEmail.rejected, setError);
 
     builder.addCase(addUser.pending, setLoading);
     builder.addCase(

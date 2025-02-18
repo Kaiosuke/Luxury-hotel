@@ -11,18 +11,16 @@ import { Label } from "@/components/ui/label";
 import { TabsContent } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
 import { IUser } from "@/interfaces";
-import { loginUser } from "@/redux/slices/authSlice";
+
 import { useAppDispatch } from "@/redux/store";
 import { LoginSchema } from "@/schemas";
-import { authenticate } from "@/utils/nextAuth/action";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ToastAction } from "@radix-ui/react-toast";
-import { getSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
+import { login } from "../api/authRequest";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -41,25 +39,21 @@ const Login = () => {
   const dispatch = useAppDispatch();
 
   const handleLogin = async (data: IUser) => {
-    const { email, password } = data;
-
-    const res: { error: string; code: number } =
-      email && password && (await authenticate(email, password));
-    if (res.error) {
-      return toast({
-        variant: "destructive",
-        title: "Oh No!",
-        description: `${res.error}`,
-        action: <ToastAction altText="Try again">Try again</ToastAction>,
-      });
-    } else {
-      const session = await getSession();
-      dispatch(loginUser(session?.user));
+    try {
+      await dispatch(login(data)).unwrap();
       router.push("/");
       return toast({
         variant: "success",
         title: "success",
         description: `Login success`,
+      });
+    } catch (error) {
+      const errorMessage =
+        typeof error === "string" ? error : "Something went wrong";
+      toast({
+        variant: "destructive",
+        title: "Registration failed",
+        description: errorMessage,
       });
     }
   };

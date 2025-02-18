@@ -207,6 +207,15 @@ const CartController = {
 
       const findCart = await getDataById(Cart, id);
 
+      const findPayment = await getData(Payment, "cartId", id);
+
+      if (findPayment) {
+        return handleError409(
+          res,
+          "Payment type conflict, cannot be deleted due to other constraints"
+        );
+      }
+
       const findOption = await findByIdAndPushData(
         Option,
         findCart.optionId,

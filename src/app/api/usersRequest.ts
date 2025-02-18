@@ -11,7 +11,7 @@ const getAllUser = createAsyncThunk<IUser[], void, { rejectValue: string }>(
       return res.data;
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        return rejectWithValue(error?.message);
+        return rejectWithValue(error.response?.data.message);
       }
       return rejectWithValue("An unexpected error occurred");
     }
@@ -26,29 +26,7 @@ const getUser = createAsyncThunk<IUser, string, { rejectValue: string }>(
       return res.data;
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        return rejectWithValue(error?.message);
-      }
-      return rejectWithValue("An unexpected error occurred");
-    }
-  }
-);
-
-const getUserByEmail = createAsyncThunk<IUser, string, { rejectValue: string }>(
-  "users/getUser",
-  async (email, { rejectWithValue }) => {
-    try {
-      const res = await instanceLocal.get(`users`, {
-        params: {
-          email,
-        },
-      });
-      if (res.data.length === 0) {
-        return null;
-      }
-      return res.data;
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        return rejectWithValue(error?.message);
+        return rejectWithValue(error.response?.data.message);
       }
       return rejectWithValue("An unexpected error occurred");
     }
@@ -59,12 +37,12 @@ const addUser = createAsyncThunk<IUser, IUser, { rejectValue: string }>(
   "users/addUser",
   async (user, { rejectWithValue }) => {
     try {
-      const res = await instanceLocal.post(`users`, user);
+      const res = await instanceLocal.post(`auth/register`, user);
+
       return res.data;
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        console.log(error);
-        return rejectWithValue(error?.message);
+        return rejectWithValue(error.response?.data.message);
       }
       return rejectWithValue("An unexpected error occurred");
     }
@@ -81,7 +59,7 @@ const updateUser = createAsyncThunk<
     return res.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
-      return rejectWithValue(error?.message);
+      return rejectWithValue(error.response?.data.message);
     }
     return rejectWithValue("An unexpected error occurred");
   }
@@ -95,11 +73,11 @@ const deleteUser = createAsyncThunk<string, string, { rejectValue: string }>(
       return id;
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        return rejectWithValue(error?.message);
+        return rejectWithValue(error.response?.data.message);
       }
       return rejectWithValue("An unexpected error occurred");
     }
   }
 );
 
-export { getAllUser, addUser, getUser, getUserByEmail, updateUser, deleteUser };
+export { getAllUser, addUser, getUser, updateUser, deleteUser };

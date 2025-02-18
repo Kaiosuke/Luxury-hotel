@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { authSelector } from "@/redux/selectors/authSelector";
 import { cartUserRemainingSelector } from "@/redux/selectors/cartsSelector";
-import { loginUser } from "@/redux/slices/authSlice";
+
 import { useAppDispatch } from "@/redux/store";
 import { signOut } from "next-auth/react";
 import { CiUser } from "react-icons/ci";
@@ -25,6 +25,7 @@ import { FiShoppingCart } from "react-icons/fi";
 import { MdOutlineDashboard } from "react-icons/md";
 import { useSelector } from "react-redux";
 import { useToast } from "@/hooks/use-toast";
+import { logout } from "@/app/api/authRequest";
 
 const HeaderTop = ({
   isScrolled,
@@ -42,14 +43,21 @@ const HeaderTop = ({
 
   const { toast } = useToast();
 
-  const handleSigOut = () => {
-    signOut();
-    dispatch(loginUser(null));
-    return toast({
-      variant: "success",
-      title: "success",
-      description: `Logout success`,
-    });
+  const handleSigOut = async () => {
+    try {
+      await dispatch(logout()).unwrap();
+      return toast({
+        variant: "success",
+        title: "success",
+        description: `Logout success`,
+      });
+    } catch (error) {
+      return toast({
+        variant: "success",
+        title: "success",
+        description: `Logout failed`,
+      });
+    }
   };
 
   return (

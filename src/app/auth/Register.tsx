@@ -12,21 +12,15 @@ import { ToastAction } from "@radix-ui/react-toast";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
-import { addUser, getUserByEmail } from "../api/usersRequest";
-
-interface IFormUser {
-  username: string;
-  email: string;
-  role: ERole;
-  password: string;
-  confirm: string;
-}
+import { addUser } from "../api/usersRequest";
+import { usersSelector } from "@/redux/selectors/usersSelector";
+import { useSelector } from "react-redux";
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [confirm, setConfirm] = useState(false);
 
-  const { handleSubmit, formState, register, reset } = useForm<IFormUser>({
+  const { handleSubmit, formState, register, reset } = useForm<IUser>({
     resolver: zodResolver(RegisterSchema),
     defaultValues: {
       username: "",
@@ -40,31 +34,24 @@ const Register = () => {
 
   const { toast } = useToast();
 
-  const handleGetData = async (data: IFormUser) => {
-    const existUser = await dispatch(getUserByEmail(data.email)).unwrap();
-    if (existUser) {
-      return toast({
+  const handleGetData = async (data: IUser) => {
+    try {
+      await dispatch(addUser(data)).unwrap();
+      toast({
+        variant: "success",
+        title: "Success",
+        description: "Registration successful",
+      });
+      reset();
+    } catch (error) {
+      const errorMessage =
+        typeof error === "string" ? error : "Something went wrong";
+      toast({
         variant: "destructive",
-        title: "Oh No!",
-        description: "Email already exists",
-        action: <ToastAction altText="Try again">Try again</ToastAction>,
+        title: "Registration failed",
+        description: errorMessage,
       });
     }
-    const newUser = {
-      ...data,
-      phoneNumber: "",
-      country: "",
-      address: "",
-      city: "",
-    };
-
-    await dispatch(addUser(newUser)).unwrap();
-    reset();
-    return toast({
-      variant: "success",
-      title: "success",
-      description: "Account registration successful",
-    });
   };
   return (
     <TabsContent

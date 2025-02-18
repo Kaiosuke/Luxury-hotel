@@ -61,24 +61,24 @@ const AuthController = {
 
   login: async (req, res) => {
     try {
-      const user = await getData(User, "email", req.body.email);
+      const findUser = await getData(User, "email", req.body.email);
 
-      if (!user) {
+      if (!findUser) {
         return handleError404(res);
       }
 
       const isValidPassword = await bcrypt.compare(
         req.body.password,
-        user.password
+        findUser.password
       );
 
       if (!isValidPassword) {
         return handleError401(res, "Invalid password");
       }
 
-      const accessToken = AuthController.generateAccessToken(user);
+      const accessToken = AuthController.generateAccessToken(findUser);
 
-      const refreshToken = AuthController.generateRefreshToken(user);
+      const refreshToken = AuthController.generateRefreshToken(findUser);
 
       refreshTokens.push(refreshToken);
 
@@ -89,9 +89,9 @@ const AuthController = {
         sameSite: "strict",
       });
 
-      const { password, ...others } = user._doc;
+      const { password, ...user } = findUser._doc;
 
-      return handleSuccess200(res, { others, accessToken });
+      return handleSuccess200(res, { ...user, accessToken });
     } catch (error) {
       return handleError500(res, error);
     }
@@ -126,6 +126,17 @@ const AuthController = {
     });
     if (!refreshToken) {
       return res.status(401).json("You're not authenticated");
+    }
+  },
+  logout: async (req, res) => {
+    try {
+      res.clearCookie("refreshToken");
+      refreshTokens = refreshTokens.filter(
+        (token) => token !== req.cookies.refreshToken
+      );
+      return handleSuccess200(res);
+    } catch (error) {
+      return handleError500(res, error);
     }
   },
 };

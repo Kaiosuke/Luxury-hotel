@@ -19,7 +19,7 @@ const handleError404WithData = (res, data) => {
 };
 
 const handleError409 = (res, message) => {
-  return res.status(404).json({ message });
+  return res.status(409).json({ message });
 };
 
 const handleError500 = (res, error) => {

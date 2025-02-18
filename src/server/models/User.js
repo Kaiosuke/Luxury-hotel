@@ -12,10 +12,10 @@ const UserSchema = new Schema(
       require: true,
     },
     password: { type: String, require: true },
-    phoneNumber: { type: String },
-    country: { type: String },
-    address: { type: String },
-    city: { type: String },
+    phoneNumber: { type: String, default: "" },
+    country: { type: String, default: "" },
+    address: { type: String, default: "" },
+    city: { type: String, default: "" },
     carts: [
       {
         type: Schema.Types.ObjectId,

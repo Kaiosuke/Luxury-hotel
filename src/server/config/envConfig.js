@@ -15,6 +15,7 @@ const env = {
   DEFAULT_ROOM_TYPE: process.env.DEFAULT_ROOM_TYPE,
   DEFAULT_OPTION: process.env.DEFAULT_OPTION,
   DEFAULT_ROOM: process.env.DEFAULT_ROOM,
+  DEFAULT_CART: process.env.DEFAULT_CART,
 };
 
 export default env;

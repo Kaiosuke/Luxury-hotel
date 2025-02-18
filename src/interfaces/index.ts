@@ -9,6 +9,7 @@ interface IUser {
   email?: string;
   role?: ERole;
   password?: string;
+  confirm?: string;
   phoneNumber: string;
   country: string;
   address: string;

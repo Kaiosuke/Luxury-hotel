@@ -1,6 +1,10 @@
 import { Router } from "express";
 import UserController from "../controllers/UserController.js";
-import { verifyAdmin, verifyAdminAuth } from "../middlewares/auth.js";
+import {
+  verifyToken,
+  verifyAdmin,
+  verifyAdminAuth,
+} from "../middlewares/auth.js";
 const route = Router();
 
 route.get("/", UserController.getAll);
