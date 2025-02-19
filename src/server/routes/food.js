@@ -6,7 +6,7 @@ import { FoodSchema } from "../../schemas/index.js";
 const route = Router();
 
 route.get("/", FoodController.getAll);
-
+route.get("/deleted", FoodController.forceDelete);
 route.get("/:id", FoodController.getById);
 
 route.post(

@@ -6,7 +6,11 @@ import {
   handleSuccess201,
 } from "../../utils/helpers/handleStatusCode.js";
 import env from "../config/envConfig.js";
-import { getAllData, getDataById } from "../services/getService.js";
+import {
+  getAllData,
+  getAllDataDeleted,
+  getDataById,
+} from "../services/getService.js";
 import Review from "../models/Review.js";
 import User from "../models/User.js";
 import RoomType from "../models/RoomType.js";
@@ -33,6 +37,21 @@ const ReviewController = {
       return handleSuccess200(res, reviews);
     } catch (error) {
       return handleError500(res, error);
+    }
+  },
+
+  getAllDeleted: async (req, res) => {
+    try {
+      const reviews = await getAllDataDeleted(Review, [
+        { userId: "username" },
+        { roomTypeId: "title" },
+      ]);
+      if (!reviews.length) {
+        return handleError404(res);
+      }
+      return handleSuccess200(res, reviews);
+    } catch (error) {
+      return handleError500(res, req);
     }
   },
 

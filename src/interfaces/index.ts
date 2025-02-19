@@ -21,7 +21,6 @@ interface IUser {
 
 interface IRoomType {
   _id: string;
-  id: string;
   thumbnail: string;
   title: string;
   price: number;
@@ -74,6 +73,7 @@ interface ICart {
 interface IOption {
   _id: string;
   title: string;
+  foodId: string;
   price: number;
   extensions: string[];
   typeDescription: string;
@@ -86,5 +86,52 @@ interface IForm {
   onClose: (value: boolean) => void;
 }
 
+interface ITypeBed {
+  _id?: string;
+  title: string;
+}
+
+interface IView {
+  _id: string;
+  title: string;
+}
+
+interface ICategoryRoom {
+  _id: string;
+  title: string;
+}
+
+interface IFood {
+  _id: string;
+  title: string;
+}
+
+interface IPayment {
+  _id: string;
+  userId: string;
+  cartId: string;
+  paymentMethod: string;
+}
+
+interface IReview {
+  _id: string;
+  userId: string;
+  roomTypeId: string;
+  description: string;
+}
+
 export { ERole };
-export type { IRoom, IRoomType, IUser, IForm, IOption, ICart };
+export type {
+  IRoom,
+  IRoomType,
+  IUser,
+  IForm,
+  IOption,
+  ICart,
+  ITypeBed,
+  IView,
+  ICategoryRoom,
+  IFood,
+  IPayment,
+  IReview,
+};

@@ -9,7 +9,12 @@ import env from "../config/envConfig.js";
 import CategoryRoom from "../models/CategoryRoom.js";
 import RoomType from "../models/RoomType.js";
 import { deleteData, forceDeleteData } from "../services/deleteService.js";
-import { getData, getAllData, getDataById } from "../services/getService.js";
+import {
+  getData,
+  getAllData,
+  getDataById,
+  getAllDataDeleted,
+} from "../services/getService.js";
 import {
   findByIdAndUpdateData,
   restoreData,
@@ -19,17 +24,31 @@ import { createData } from "../services/postService.js";
 const CategoryRoomController = {
   getAll: async (req, res) => {
     try {
-      const CategoryRooms = await getAllData(CategoryRoom, [
+      const categoryRooms = await getAllData(CategoryRoom, [
         { roomTypes: "title" },
       ]);
 
-      if (!CategoryRooms.length) {
+      if (!categoryRooms.length) {
         return handleError404(res);
       }
 
-      return handleSuccess200(res, CategoryRooms);
+      return handleSuccess200(res, categoryRooms);
     } catch (error) {
       return handleError500(res, error);
+    }
+  },
+
+  getAllDeleted: async (req, res) => {
+    try {
+      const categoryRooms = await getAllDataDeleted(CategoryRoom, [
+        { roomTypes: "title" },
+      ]);
+      if (!categoryRooms.length) {
+        return handleError404(res);
+      }
+      return handleSuccess200(res, categoryRooms);
+    } catch (error) {
+      return handleError500(res, req);
     }
   },
 

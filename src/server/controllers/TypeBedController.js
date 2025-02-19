@@ -9,7 +9,12 @@ import env from "../config/envConfig.js";
 import RoomType from "../models/RoomType.js";
 import TypeBed from "../models/TypeBed.js";
 import { deleteData, forceDeleteData } from "../services/deleteService.js";
-import { getData, getAllData, getDataById } from "../services/getService.js";
+import {
+  getData,
+  getAllData,
+  getDataById,
+  getAllDataDeleted,
+} from "../services/getService.js";
 import {
   findByIdAndUpdateData,
   restoreData,
@@ -28,6 +33,20 @@ const TypeBedController = {
       return handleSuccess200(res, typeBeds);
     } catch (error) {
       return handleError500(res, error);
+    }
+  },
+
+  getAllDeleted: async (req, res) => {
+    try {
+      const typeBeds = await getAllDataDeleted(TypeBed, [
+        { roomTypes: "title" },
+      ]);
+      if (!typeBeds.length) {
+        return handleError404(res);
+      }
+      return handleSuccess200(res, typeBeds);
+    } catch (error) {
+      return handleError500(res, req);
     }
   },
 

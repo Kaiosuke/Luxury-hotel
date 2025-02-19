@@ -27,7 +27,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 
-function FormRoom({ open, onClose, id }: IForm) {
+function FormRoom({ open, onClose, _id }: IForm) {
   const [status, setStatus] = useState("available");
   const [roomType, setRoomType] = useState("1");
   const [floor, setFloor] = useState(1);
@@ -45,9 +45,9 @@ function FormRoom({ open, onClose, id }: IForm) {
   const { toast } = useToast();
 
   useEffect(() => {
-    if (id) {
+    if (_id) {
       (async () => {
-        const room = await dispatch(getRoom(id)).unwrap();
+        const room = await dispatch(getRoom(_id)).unwrap();
         const roomType = await dispatch(getRoomType(room.roomTypeId)).unwrap();
         reset({
           roomNumber: room.roomNumber,
@@ -57,7 +57,7 @@ function FormRoom({ open, onClose, id }: IForm) {
         setRoomType(roomType.id);
       })();
     }
-  }, [id]);
+  }, [_id]);
 
   const handleGetData = (data: any) => {
     const newRoom = {
@@ -67,8 +67,8 @@ function FormRoom({ open, onClose, id }: IForm) {
       status,
       bookedDates: [],
     };
-    if (id) {
-      dispatch(updateRoom({ id, room: newRoom }));
+    if (_id) {
+      dispatch(updateRoom({ _id, room: newRoom }));
       toast({
         variant: "success",
         title: "success",
@@ -90,7 +90,7 @@ function FormRoom({ open, onClose, id }: IForm) {
       <DialogContent className="lg:max-w-[1000px] sm:max-w-[600px]   bg-sidebar-four text-sidebar-primary">
         <DialogHeader>
           <DialogTitle className="md:text-2xl text-xl">
-            {id ? "Update" : "Add"} Room
+            {_id ? "Update" : "Add"} Room
           </DialogTitle>
         </DialogHeader>
         <form onSubmit={handleSubmit((data) => handleGetData(data))}>
@@ -170,7 +170,7 @@ function FormRoom({ open, onClose, id }: IForm) {
             </div>
           </div>
           <Button type="submit" variant={"outline"} className="text-left">
-            {id ? "Update" : "Add"} Room
+            {_id ? "Update" : "Add"} Room
           </Button>
         </form>
       </DialogContent>

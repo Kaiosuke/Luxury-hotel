@@ -102,7 +102,7 @@ const CartsTable = ({ open, onClose }: IForm) => {
       },
       cell: ({ row }) => {
         const userId = row.getValue("userId") as string;
-        const findUser = users.find((user) => user.id === userId);
+        const findUser = users.find((user) => user._id === userId);
         return <div className="lowercase">{findUser?.username || "N/A"}</div>;
       },
     },
@@ -143,7 +143,7 @@ const CartsTable = ({ open, onClose }: IForm) => {
       cell: ({ row }) => {
         const optionId = row.getValue("optionId") as string;
         const findOption =
-          options && options.find((option) => option.id === optionId);
+          options && options.find((option) => option._id === optionId);
         return <div className="lowercase">{findOption?.title || "N/A"}</div>;
       },
     },
@@ -162,7 +162,7 @@ const CartsTable = ({ open, onClose }: IForm) => {
       },
       cell: ({ row }) => {
         const roomId = row.getValue("roomId") as string;
-        const findRoom = rooms.find((room) => room.id === roomId);
+        const findRoom = rooms.find((room) => room._id === roomId);
         return <div className="lowercase">{findRoom?.roomNumber || "N/A"}</div>;
       },
     },
@@ -231,7 +231,7 @@ const CartsTable = ({ open, onClose }: IForm) => {
 
           disPatch(
             updateCart({
-              id: row.original.id,
+              _id: row.original._id,
               cart: { ...row.original, status: newStatus },
             })
           );
@@ -343,13 +343,13 @@ const CartsTable = ({ open, onClose }: IForm) => {
         filterPlaceholders="roomTypeId"
       />
       {open && (
-        <FormRoom open={open} onClose={handleCloseForm} id={selectCartId} />
+        <FormRoom open={open} onClose={handleCloseForm} _id={selectCartId} />
       )}
       {openFormDelete && (
         <FormDeleteCart
           open={openFormDelete}
           onClose={handleCloseForm}
-          id={selectCartId}
+          _id={selectCartId}
         />
       )}
     </>

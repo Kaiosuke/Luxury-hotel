@@ -18,6 +18,22 @@ const getAllUser = createAsyncThunk<IUser[], void, { rejectValue: string }>(
   }
 );
 
+const getAllUserDeleted = createAsyncThunk<
+  IUser[],
+  void,
+  { rejectValue: string }
+>("users/getAllUserDeleted", async (_, { rejectWithValue }) => {
+  try {
+    const res = await instanceLocal.get("users/deleted");
+    return res.data.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      return rejectWithValue(error.response?.data.message);
+    }
+    return rejectWithValue("An unexpected error occurred");
+  }
+});
+
 const getUser = createAsyncThunk<IUser, string, { rejectValue: string }>(
   "users/getUser",
   async (_id, { rejectWithValue }) => {
@@ -79,4 +95,44 @@ const deleteUser = createAsyncThunk<string, string, { rejectValue: string }>(
   }
 );
 
-export { getAllUser, addUser, getUser, updateUser, deleteUser };
+const restoreUser = createAsyncThunk<IUser, string, { rejectValue: string }>(
+  "users/restoreUser",
+  async (_id, { rejectWithValue }) => {
+    try {
+      const res = await instanceLocal.patch(`users/restore/${_id}`);
+      return res.data.data;
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        return rejectWithValue(error?.message);
+      }
+      return rejectWithValue("An unexpected error occurred");
+    }
+  }
+);
+
+const forceDeleteUser = createAsyncThunk<
+  string,
+  string,
+  { rejectValue: string }
+>("users/forceDeleteUser", async (_id, { rejectWithValue }) => {
+  try {
+    await instanceLocal.delete(`users/delete/force/${_id}`);
+    return _id;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      return rejectWithValue(error?.message);
+    }
+    return rejectWithValue("An unexpected error occurred");
+  }
+});
+
+export {
+  getAllUser,
+  getAllUserDeleted,
+  addUser,
+  getUser,
+  updateUser,
+  deleteUser,
+  restoreUser,
+  forceDeleteUser,
+};

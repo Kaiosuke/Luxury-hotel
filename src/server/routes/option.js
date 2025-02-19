@@ -6,7 +6,7 @@ import { validateBody } from "../middlewares/validateBody.js";
 const route = Router();
 
 route.get("/", OptionController.getAll);
-
+route.get("/deleted", OptionController.getAllDeleted);
 route.get("/:id", OptionController.getById);
 
 route.post(

@@ -1,8 +1,11 @@
 import {
   addCart,
   deleteCart,
+  forceDeleteCart,
   getAllCart,
   getAllCartByUserId,
+  getAllCartDeleted,
+  restoreCart,
   updateCart,
 } from "@/app/api/cartsRequest";
 import { ICart } from "@/interfaces";
@@ -10,6 +13,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface ICartState {
   carts: ICart[] | [];
+  cartsDeleted: ICart[] | [];
   cartsUser: ICart[] | [];
   cartsSuccess: ICart[] | [];
   loading: boolean;
@@ -18,6 +22,7 @@ export interface ICartState {
 
 const initialState: ICartState = {
   carts: [],
+  cartsDeleted: [],
   cartsUser: [],
   cartsSuccess: [],
   loading: false,
@@ -81,11 +86,11 @@ const cartsSlice = createSlice({
       updateCart.fulfilled,
       (state, action: PayloadAction<ICart>) => {
         state.loading = false;
-        state.carts = state.carts.map((user) =>
-          user._id === action.payload._id ? action.payload : user
+        state.carts = state.carts.map((cart) =>
+          cart._id === action.payload._id ? action.payload : cart
         );
-        state.cartsUser = state.cartsUser.map((user) =>
-          user._id === action.payload._id ? action.payload : user
+        state.cartsUser = state.cartsUser.map((cart) =>
+          cart._id === action.payload._id ? action.payload : cart
         );
       }
     );
@@ -96,13 +101,54 @@ const cartsSlice = createSlice({
       deleteCart.fulfilled,
       (state, action: PayloadAction<string>) => {
         state.loading = false;
-        state.carts = state.carts.filter((user) => user._id !== action.payload);
+        const findCart = state.carts.find(
+          (cart) => cart._id === action.payload
+        );
+        if (findCart) {
+          state.cartsDeleted = [...state.cartsDeleted, findCart];
+        }
+        state.carts = state.carts.filter((cart) => cart._id !== action.payload);
         state.cartsUser = state.cartsUser.filter(
-          (user) => user._id !== action.payload
+          (cart) => cart._id !== action.payload
         );
       }
     );
     builder.addCase(deleteCart.rejected, setError);
+
+    builder.addCase(forceDeleteCart.pending, setLoading);
+    builder.addCase(
+      forceDeleteCart.fulfilled,
+      (state, action: PayloadAction<string>) => {
+        state.loading = false;
+        state.cartsDeleted = state.cartsDeleted.filter(
+          (cart) => cart._id !== action.payload
+        );
+      }
+    );
+    builder.addCase(forceDeleteCart.rejected, setError);
+
+    builder.addCase(getAllCartDeleted.pending, setLoading);
+    builder.addCase(
+      getAllCartDeleted.fulfilled,
+      (state, action: PayloadAction<ICart[]>) => {
+        state.loading = false;
+        state.cartsDeleted = action.payload;
+      }
+    );
+    builder.addCase(getAllCartDeleted.rejected, setError);
+
+    builder.addCase(restoreCart.pending, setLoading);
+    builder.addCase(
+      restoreCart.fulfilled,
+      (state, action: PayloadAction<ICart>) => {
+        state.loading = false;
+        state.carts = [...state.carts, action.payload];
+        state.cartsDeleted = state.cartsDeleted.filter(
+          (cart) => cart._id !== action.payload._id
+        );
+      }
+    );
+    builder.addCase(restoreCart.rejected, setError);
   },
 });
 

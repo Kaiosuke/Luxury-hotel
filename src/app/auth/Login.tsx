@@ -44,7 +44,7 @@ const Login = () => {
       router.push("/");
       return toast({
         variant: "success",
-        title: "success",
+        title: "Successfully!",
         description: `Login success`,
       });
     } catch (error) {

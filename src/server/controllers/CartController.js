@@ -14,7 +14,12 @@ import User from "../models/User.js";
 import Option from "../models/Option.js";
 import Payment from "../models/Payment.js";
 
-import { getAllData, getData, getDataById } from "../services/getService.js";
+import {
+  getAllData,
+  getAllDataDeleted,
+  getData,
+  getDataById,
+} from "../services/getService.js";
 import { createData } from "../services/postService.js";
 import {
   findByIdAndPullData,
@@ -42,6 +47,24 @@ const CartController = {
       return handleError500(res, error);
     }
   },
+
+  getAllDeleted: async (req, res) => {
+    try {
+      const carts = await getAllDataDeleted(Cart, [
+        { optionId: "title" },
+        { userId: "username" },
+        { roomId: "roomNumber" },
+        { roomTypeId: "title" },
+      ]);
+      if (!carts.length) {
+        return handleError404(res);
+      }
+      return handleSuccess200(res, carts);
+    } catch (error) {
+      return handleError500(res, req);
+    }
+  },
+
   getById: async (req, res) => {
     try {
       const { id } = req.params;

@@ -15,7 +15,12 @@ import Review from "../models/Review.js";
 import View from "../models/View.js";
 import Cart from "../models/Cart.js";
 import { deleteData, forceDeleteData } from "../services/deleteService.js";
-import { getAllData, getData, getDataById } from "../services/getService.js";
+import {
+  getAllData,
+  getAllDataDeleted,
+  getData,
+  getDataById,
+} from "../services/getService.js";
 import {
   findByIdAndPullData,
   findByIdAndPushData,
@@ -40,6 +45,22 @@ const RoomTypeController = {
       return handleSuccess200(res, roomTypes);
     } catch (error) {
       return handleError500(res, error);
+    }
+  },
+
+  getAllDeleted: async (req, res) => {
+    try {
+      const roomTypes = await getAllDataDeleted(RoomType, [
+        { viewId: "title" },
+        { typeBedId: "title" },
+        { categoryRoomId: "title" },
+      ]);
+      if (!roomTypes.length) {
+        return handleError404(res);
+      }
+      return handleSuccess200(res, roomTypes);
+    } catch (error) {
+      return handleError500(res, req);
     }
   },
 

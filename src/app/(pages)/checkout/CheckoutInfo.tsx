@@ -90,12 +90,12 @@ const CheckoutInfo = () => {
       };
       dispatch(addCartSuccess(carts));
 
-      if (currentUser && currentUser.id) {
+      if (currentUser && currentUser._id) {
         const areArraysEqual =
           JSON.stringify(newData) === JSON.stringify(currentUser);
 
         if (!areArraysEqual) {
-          dispatch(updateUser({ id: currentUser.id, user: newData }));
+          dispatch(updateUser({ _id: currentUser._id, user: newData }));
           dispatch(updateCurrentUser(newData));
         }
 
@@ -105,17 +105,17 @@ const CheckoutInfo = () => {
             status: ECart.booked,
           };
 
-          currentUser.id &&
-            (await dispatch(updateCart({ id: cart.id, cart: newCart })));
+          currentUser._id &&
+            (await dispatch(updateCart({ _id: cart._id, cart: newCart })));
 
           const availableCart = useAvailableCartsUsers({
             carts: carts,
             newBooking: cart,
           });
 
-          const existCart = availableCart.find((data) => data.id !== cart.id);
+          const existCart = availableCart.find((data) => data._id !== cart._id);
           if (existCart) {
-            dispatch(deleteCart(existCart.id));
+            dispatch(deleteCart(existCart._id));
           }
 
           const findRoom = await dispatch(getRoom(cart.roomId)).unwrap();
@@ -129,7 +129,7 @@ const CheckoutInfo = () => {
 
           await dispatch(
             updateRoom({
-              id: cart.roomId,
+              _id: cart.roomId,
               room: { ...findRoom, bookedDates: updatedBookedDates },
             })
           );

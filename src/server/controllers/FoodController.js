@@ -9,7 +9,12 @@ import env from "../config/envConfig.js";
 import Food from "../models/Food.js";
 import Option from "../models/Option.js";
 import { deleteData, forceDeleteData } from "../services/deleteService.js";
-import { getAllData, getData, getDataById } from "../services/getService.js";
+import {
+  getAllData,
+  getAllDataDeleted,
+  getData,
+  getDataById,
+} from "../services/getService.js";
 import {
   findByIdAndUpdateData,
   restoreData,
@@ -29,6 +34,19 @@ const FoodController = {
       return handleError500(res, error);
     }
   },
+
+  getAllDeleted: async (req, res) => {
+    try {
+      const foods = await getAllDataDeleted(Food, [{ options: "title" }]);
+      if (!foods.length) {
+        return handleError404(res);
+      }
+      return handleSuccess200(res, foods);
+    } catch (error) {
+      return handleError500(res, req);
+    }
+  },
+
   getById: async (req, res) => {
     try {
       const { id } = req.params;

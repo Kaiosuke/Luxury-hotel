@@ -1,7 +1,10 @@
 import {
   addUser,
   deleteUser,
+  forceDeleteUser,
   getAllUser,
+  getAllUserDeleted,
+  restoreUser,
   updateUser,
 } from "@/app/api/usersRequest";
 import { IUser } from "@/interfaces";
@@ -9,12 +12,14 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface IUserState {
   users: IUser[] | [];
+  usersDeleted: IUser[] | [];
   loading: boolean;
   error: null | string | undefined;
 }
 
 const initialState: IUserState = {
   users: [],
+  usersDeleted: [],
   loading: false,
   error: null,
 };
@@ -73,10 +78,51 @@ const usersSlice = createSlice({
       deleteUser.fulfilled,
       (state, action: PayloadAction<string>) => {
         state.loading = false;
+        const findUser = state.users.find(
+          (user) => user._id === action.payload
+        );
+        if (findUser) {
+          state.usersDeleted = [...state.usersDeleted, findUser];
+        }
         state.users = state.users.filter((user) => user._id !== action.payload);
       }
     );
     builder.addCase(deleteUser.rejected, setError);
+
+    builder.addCase(forceDeleteUser.pending, setLoading);
+    builder.addCase(
+      forceDeleteUser.fulfilled,
+      (state, action: PayloadAction<string>) => {
+        state.loading = false;
+        state.usersDeleted = state.usersDeleted.filter(
+          (user) => user._id !== action.payload
+        );
+      }
+    );
+    builder.addCase(forceDeleteUser.rejected, setError);
+
+    builder.addCase(getAllUserDeleted.pending, setLoading);
+    builder.addCase(
+      getAllUserDeleted.fulfilled,
+      (state, action: PayloadAction<IUser[]>) => {
+        state.loading = false;
+        state.usersDeleted = action.payload;
+      }
+    );
+    builder.addCase(getAllUserDeleted.rejected, setError);
+
+    builder.addCase(restoreUser.pending, setLoading);
+    builder.addCase(
+      restoreUser.fulfilled,
+      (state, action: PayloadAction<IUser>) => {
+        state.loading = false;
+        state.users = [...state.users, action.payload];
+        state.usersDeleted = state.usersDeleted.filter(
+          (user) => user._id !== action.payload._id
+        );
+      }
+    );
+    builder.addCase(restoreUser.rejected, setError);
   },
 });
 

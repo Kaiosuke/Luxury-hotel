@@ -12,13 +12,13 @@ import { useToast } from "@/hooks/use-toast";
 import { IForm } from "@/interfaces";
 import { useAppDispatch } from "@/redux/store";
 
-function FormDeleteRoomType({ open, onClose, id }: IForm) {
+function FormDeleteRoomType({ open, onClose, _id }: IForm) {
   const dispatch = useAppDispatch();
   const { toast } = useToast();
 
   const handleDelete = async () => {
     try {
-      id && (await dispatch(deleteRoomType(id)).unwrap());
+      _id && (await dispatch(deleteRoomType(_id)).unwrap());
       toast({
         variant: "success",
         title: "Success",

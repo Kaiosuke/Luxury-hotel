@@ -11,7 +11,12 @@ import Payment from "../models/Payment.js";
 import Review from "../models/Review.js";
 import env from "../config/envConfig.js";
 
-import { getAllData, getData, getDataById } from "../services/getService.js";
+import {
+  getAllData,
+  getAllDataDeleted,
+  getData,
+  getDataById,
+} from "../services/getService.js";
 import {
   findByIdAndUpdateData,
   restoreData,
@@ -22,6 +27,22 @@ const UserController = {
   getAll: async (req, res) => {
     try {
       const users = await getAllData(User, [
+        { carts: "title" },
+        { reviews: "title" },
+        { payments: "title" },
+      ]);
+      if (!users.length) {
+        return handleError404(res);
+      }
+      return handleSuccess200(res, users);
+    } catch (error) {
+      return handleError500(res, req);
+    }
+  },
+
+  getAllDeleted: async (req, res) => {
+    try {
+      const users = await getAllDataDeleted(User, [
         { carts: "title" },
         { reviews: "title" },
         { payments: "title" },

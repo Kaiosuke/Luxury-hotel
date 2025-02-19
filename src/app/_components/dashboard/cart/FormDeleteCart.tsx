@@ -13,13 +13,13 @@ import { useToast } from "@/hooks/use-toast";
 import { IForm } from "@/interfaces";
 import { useAppDispatch } from "@/redux/store";
 
-function FormDeleteCart({ open, onClose, id }: IForm) {
+function FormDeleteCart({ open, onClose, _id }: IForm) {
   const dispatch = useAppDispatch();
   const { toast } = useToast();
 
   const handleDelete = async () => {
-    if (id) {
-      const cart = await dispatch(getCart(id)).unwrap();
+    if (_id) {
+      const cart = await dispatch(getCart(_id)).unwrap();
       const room = await dispatch(getRoom(cart.roomId)).unwrap();
       const newBookDates = room.bookedDates.filter(
         (date) =>
@@ -33,9 +33,9 @@ function FormDeleteCart({ open, onClose, id }: IForm) {
 
       onClose(false);
 
-      await dispatch(updateRoom({ id: cart.roomId, room: newRoom }));
+      await dispatch(updateRoom({ _id: cart.roomId, room: newRoom }));
 
-      await dispatch(deleteCart(id));
+      await dispatch(deleteCart(_id));
       toast({
         variant: "success",
         title: "Success",

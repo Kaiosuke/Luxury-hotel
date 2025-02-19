@@ -6,7 +6,6 @@ import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 import FormDeleteUser from "@/app/_components/dashboard/users/FormDeleteUser";
 import FormUser from "@/app/_components/dashboard/users/FormUser";
 import DataTable from "@/app/_components/DataTable";
-import { getUser } from "@/app/api/usersRequest";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
@@ -17,15 +16,10 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useToast } from "@/hooks/use-toast";
 import { IForm, IUser } from "@/interfaces";
-import { authSelector } from "@/redux/selectors/authSelector";
 import { usersSelector } from "@/redux/selectors/usersSelector";
-import { useAppDispatch } from "@/redux/store";
-import { ToastAction } from "@radix-ui/react-toast";
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import LoadingProcess from "@/app/_components/Loading";
 
 const UserTable = ({ open, onClose }: IForm) => {
   const { users } = useSelector(usersSelector);
@@ -118,7 +112,7 @@ const UserTable = ({ open, onClose }: IForm) => {
       header: "Orders",
       cell: ({ row }) => {
         const carts = row.original;
-
+        // console.log(carts);
         return <div className="capitalize">{row.getValue("carts")}</div>;
       },
     },

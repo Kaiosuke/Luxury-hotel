@@ -54,7 +54,7 @@ const RoomsTable = ({ open, onClose }: IForm) => {
   const handleChangeStatus = async (id: string, value: string) => {
     const status = value === "available" ? "maintenance" : "available";
     const findRoom = await disPatch(getRoom(id)).unwrap();
-    dispatch(updateRoom({ id, room: { ...findRoom, status } }));
+    dispatch(updateRoom({ _id: id, room: { ...findRoom, status } }));
   };
 
   const disPatch = useAppDispatch();
@@ -135,7 +135,7 @@ const RoomsTable = ({ open, onClose }: IForm) => {
       },
       cell: ({ row }) => {
         const status = row.getValue("status") as string;
-        const id = row.original.id;
+        const id = row.original._id;
         return (
           <Button
             variant={`${status === "available" ? "secondary" : "destructive"}`}
@@ -186,7 +186,7 @@ const RoomsTable = ({ open, onClose }: IForm) => {
       id: "actions",
       enableHiding: false,
       cell: ({ row }) => {
-        const id = row.original.id;
+        const id = row.original._id;
         return (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -234,13 +234,13 @@ const RoomsTable = ({ open, onClose }: IForm) => {
         filterPlaceholders="roomNumber"
       />
       {open && (
-        <FormRoom open={open} onClose={handleCloseForm} id={selectedRoomId} />
+        <FormRoom open={open} onClose={handleCloseForm} _id={selectedRoomId} />
       )}
       {openFormDelete && (
         <FormDeleteRoom
           open={openFormDelete}
           onClose={handleCloseForm}
-          id={selectedRoomId}
+          _id={selectedRoomId}
         />
       )}
     </>

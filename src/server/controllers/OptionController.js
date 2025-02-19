@@ -11,7 +11,12 @@ import Option from "../models/Option.js";
 import Food from "../models/Food.js";
 import Cart from "../models/Cart.js";
 import { deleteData, forceDeleteData } from "../services/deleteService.js";
-import { getAllData, getData, getDataById } from "../services/getService.js";
+import {
+  getAllData,
+  getAllDataDeleted,
+  getData,
+  getDataById,
+} from "../services/getService.js";
 import {
   findByIdAndPullData,
   findByIdAndPushData,
@@ -32,6 +37,19 @@ const OptionController = {
       return handleError500(res, error);
     }
   },
+
+  getAllDeleted: async (req, res) => {
+    try {
+      const options = await getAllDataDeleted(Option, [{ foodId: "title" }]);
+      if (!options.length) {
+        return handleError404(res);
+      }
+      return handleSuccess200(res, options);
+    } catch (error) {
+      return handleError500(res, req);
+    }
+  },
+
   getById: async (req, res) => {
     try {
       const { id } = req.params;

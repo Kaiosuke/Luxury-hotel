@@ -71,6 +71,18 @@
       "address": "Ninh Giang",
       "city": "Hai Duong",
       "id": "Qx9j5-m"
+    },
+    {
+      "username": "Kaio12",
+      "email": "trongleele12@gmail.com",
+      "role": "user",
+      "password": "lehuutrong",
+      "confirm": "lehuutrong",
+      "phoneNumber": "",
+      "country": "",
+      "address": "",
+      "city": "",
+      "id": "RNb752v"
     }
   ],
   "roomTypes": [

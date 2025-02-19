@@ -1,8 +1,11 @@
 import {
   addRoomType,
   deleteRoomType,
+  forceDeleteRoomType,
   getAllRoomType,
+  getAllRoomTypeDeleted,
   getRoomType,
+  restoreRoomType,
   updateRoomType,
 } from "@/app/api/roomTypesRequest";
 import { IRoomType } from "@/interfaces";
@@ -11,25 +14,15 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 export interface IRoomTypeState {
   roomTypes: IRoomType[] | [];
   roomType: IRoomType | null;
-  filters: {
-    sort: string;
-    views: string[];
-    features: string[];
-    categories: string[];
-  };
+  roomTypesDeleted: IRoomType[] | [];
   loading: boolean;
   error: null | string | undefined;
 }
 
 const initialState: IRoomTypeState = {
   roomTypes: [],
+  roomTypesDeleted: [],
   roomType: null,
-  filters: {
-    sort: "recommended",
-    views: [],
-    features: [],
-    categories: [],
-  },
   loading: false,
   error: null,
 };
@@ -47,59 +40,10 @@ const setError = (
 };
 
 const roomTypesSlice = createSlice({
-  name: "roomTypes",
+  name: "RoomTypes",
   initialState,
-  reducers: {
-    filterBySort(state, action: PayloadAction<string>) {
-      state.filters.sort = action.payload;
-    },
-    filterByViews(state, action: PayloadAction<string | null>) {
-      if (!action.payload) {
-        state.filters.views = [];
-      } else {
-        const view = state.filters.views.includes(action.payload);
-        if (view) {
-          state.filters.views = state.filters.views.filter(
-            (view) => view !== action.payload
-          );
-        } else {
-          state.filters.views = [...state.filters.views, action.payload];
-        }
-      }
-    },
-    filterByCategories(state, action: PayloadAction<string | null>) {
-      if (!action.payload) {
-        state.filters.categories = [];
-      } else {
-        const category = state.filters.categories.includes(action.payload);
-        if (category) {
-          state.filters.categories = state.filters.categories.filter(
-            (cate) => cate !== action.payload
-          );
-        } else {
-          state.filters.categories = [
-            ...state.filters.categories,
-            action.payload,
-          ];
-        }
-      }
-    },
-    filterByFeatures(state, action: PayloadAction<string | null>) {
-      if (!action.payload) {
-        state.filters.features = [];
-      } else {
-        const feature = state.filters.features.includes(action.payload);
-        if (feature) {
-          state.filters.features = state.filters.features.filter(
-            (feature) => feature !== action.payload
-          );
-        } else {
-          state.filters.features = [...state.filters.features, action.payload];
-        }
-      }
-    },
-  },
-  extraReducers: (builder) => {
+  reducers: {},
+  extraReducers(builder) {
     builder.addCase(getAllRoomType.pending, setLoading);
     builder.addCase(
       getAllRoomType.fulfilled,
@@ -118,7 +62,7 @@ const roomTypesSlice = createSlice({
         state.roomType = action.payload;
       }
     );
-    builder.addCase(getRoomType.rejected, setError);
+
     builder.addCase(addRoomType.pending, setLoading);
     builder.addCase(
       addRoomType.fulfilled,
@@ -146,19 +90,54 @@ const roomTypesSlice = createSlice({
       deleteRoomType.fulfilled,
       (state, action: PayloadAction<string>) => {
         state.loading = false;
+        const findRoomType = state.roomTypes.find(
+          (roomType) => roomType._id === action.payload
+        );
+        if (findRoomType) {
+          state.roomTypesDeleted = [...state.roomTypesDeleted, findRoomType];
+        }
         state.roomTypes = state.roomTypes.filter(
           (roomType) => roomType._id !== action.payload
         );
       }
     );
     builder.addCase(deleteRoomType.rejected, setError);
+
+    builder.addCase(forceDeleteRoomType.pending, setLoading);
+    builder.addCase(
+      forceDeleteRoomType.fulfilled,
+      (state, action: PayloadAction<string>) => {
+        state.loading = false;
+        state.roomTypesDeleted = state.roomTypesDeleted.filter(
+          (roomType) => roomType._id !== action.payload
+        );
+      }
+    );
+    builder.addCase(forceDeleteRoomType.rejected, setError);
+
+    builder.addCase(getAllRoomTypeDeleted.pending, setLoading);
+    builder.addCase(
+      getAllRoomTypeDeleted.fulfilled,
+      (state, action: PayloadAction<IRoomType[]>) => {
+        state.loading = false;
+        state.roomTypesDeleted = action.payload;
+      }
+    );
+    builder.addCase(getAllRoomTypeDeleted.rejected, setError);
+
+    builder.addCase(restoreRoomType.pending, setLoading);
+    builder.addCase(
+      restoreRoomType.fulfilled,
+      (state, action: PayloadAction<IRoomType>) => {
+        state.loading = false;
+        state.roomTypes = [...state.roomTypes, action.payload];
+        state.roomTypesDeleted = state.roomTypesDeleted.filter(
+          (roomType) => roomType._id !== action.payload._id
+        );
+      }
+    );
+    builder.addCase(restoreRoomType.rejected, setError);
   },
 });
 
 export default roomTypesSlice.reducer;
-export const {
-  filterBySort,
-  filterByViews,
-  filterByFeatures,
-  filterByCategories,
-} = roomTypesSlice.actions;

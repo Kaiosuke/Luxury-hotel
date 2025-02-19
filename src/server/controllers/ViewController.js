@@ -9,7 +9,12 @@ import env from "../config/envConfig.js";
 import RoomType from "../models/RoomType.js";
 import View from "../models/View.js";
 import { deleteData, forceDeleteData } from "../services/deleteService.js";
-import { getData, getAllData, getDataById } from "../services/getService.js";
+import {
+  getData,
+  getAllData,
+  getDataById,
+  getAllDataDeleted,
+} from "../services/getService.js";
 import {
   findByIdAndUpdateData,
   restoreData,
@@ -28,6 +33,18 @@ const ViewController = {
       return handleSuccess200(res, views);
     } catch (error) {
       return handleError500(res, error);
+    }
+  },
+
+  getAllDeleted: async (req, res) => {
+    try {
+      const views = await getAllDataDeleted(View, [{ roomTypes: "title" }]);
+      if (!views.length) {
+        return handleError404(res);
+      }
+      return handleSuccess200(res, views);
+    } catch (error) {
+      return handleError500(res, req);
     }
   },
 

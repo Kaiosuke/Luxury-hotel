@@ -9,6 +9,17 @@ const getAllData = async (model, populate = []) => {
   return query;
 };
 
+const getAllDataDeleted = async (model, populate = []) => {
+  let query = model.find({ deleted: true }, null, { withDeleted: true });
+  if (populate.length) {
+    populate.forEach((field) => {
+      const [path, select] = Object.entries(field)[0];
+      query = query.populate(path, select);
+    });
+  }
+  return query;
+};
+
 const getData = async (model, data, body, populate = []) => {
   const dataList = populate.length
     ? await model.findOne({ [data]: body }).populate(populate)
@@ -28,4 +39,4 @@ const getDataById = async (model, id, populate = []) => {
   return await query;
 };
 
-export { getAllData, getData, getDataById };
+export { getAllData, getAllDataDeleted, getData, getDataById };

@@ -239,14 +239,14 @@ const RoomTypesTable = ({ open, onClose }: IForm) => {
             <FormRoomType
               open={open}
               onClose={handleCloseForm}
-              id={selectedRoomTypeId}
+              _id={selectedRoomTypeId}
             />
           )}
           {openFormDelete && (
             <FormDeleteRoomType
               open={openFormDelete}
               onClose={handleCloseForm}
-              id={selectedRoomTypeId}
+              _id={selectedRoomTypeId}
             />
           )}
         </>

@@ -16,8 +16,9 @@ import { getAllCart } from "../api/cartsRequest";
 import { getAllOption } from "../api/optionsRequest";
 import { getAllRoom } from "../api/roomsRequest";
 import { getAllRoomType } from "../api/roomTypesRequest";
-import { getAllUser } from "../api/usersRequest";
+import { getAllUser, getAllUserDeleted } from "../api/usersRequest";
 import AppSidebar from "./AdminSideBar";
+import { getAllTypeBed } from "../api/typeBedsRequest";
 
 function layoutAdmin({ children }: { children: ReactNode }) {
   const { currentUser } = useSelector(authSelector);
@@ -27,10 +28,12 @@ function layoutAdmin({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     dispatch(getAllUser());
+    dispatch(getAllUserDeleted());
     dispatch(getAllRoomType());
     dispatch(getAllRoom());
     dispatch(getAllCart());
     dispatch(getAllOption());
+    dispatch(getAllTypeBed());
   }, []);
 
   useEffect(() => {

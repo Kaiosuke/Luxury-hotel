@@ -6,7 +6,7 @@ import { ViewSchema } from "../../schemas/index.js";
 const route = Router();
 
 route.get("/", ViewController.getAll);
-
+route.get("/deleted", ViewController.getAllDeleted);
 route.get("/:id", ViewController.getById);
 
 route.post(

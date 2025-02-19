@@ -5,7 +5,11 @@ import {
   handleSuccess200,
   handleSuccess201,
 } from "../../utils/helpers/handleStatusCode.js";
-import { getAllData, getDataById } from "../services/getService.js";
+import {
+  getAllData,
+  getAllDataDeleted,
+  getDataById,
+} from "../services/getService.js";
 import env from "../config/envConfig.js";
 import Payment from "../models/Payment.js";
 import User from "../models/User.js";
@@ -33,6 +37,21 @@ const PaymentController = {
       return handleSuccess200(res, payments);
     } catch (error) {
       return handleError500(res, error);
+    }
+  },
+
+  getAllDeleted: async (req, res) => {
+    try {
+      const payments = await getAllDataDeleted(Option, [
+        { userId: "username" },
+        { cartId: "" },
+      ]);
+      if (!payments.length) {
+        return handleError404(res);
+      }
+      return handleSuccess200(res, payments);
+    } catch (error) {
+      return handleError500(res, req);
     }
   },
 

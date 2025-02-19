@@ -7,7 +7,12 @@ import {
   handleSuccess201,
 } from "../../utils/helpers/handleStatusCode.js";
 import env from "../config/envConfig.js";
-import { getAllData, getData, getDataById } from "../services/getService.js";
+import {
+  getAllData,
+  getAllDataDeleted,
+  getData,
+  getDataById,
+} from "../services/getService.js";
 import Room from "../models/Room.js";
 import RoomType from "../models/RoomType.js";
 import Cart from "../models/Cart.js";
@@ -31,6 +36,18 @@ const RoomController = {
       return handleSuccess200(res, rooms);
     } catch (error) {
       return handleError500(res, error);
+    }
+  },
+
+  getAllDeleted: async (req, res) => {
+    try {
+      const rooms = await getAllDataDeleted(Room, [{ roomTypeId: "title" }]);
+      if (!rooms.length) {
+        return handleError404(res);
+      }
+      return handleSuccess200(res, rooms);
+    } catch (error) {
+      return handleError500(res, req);
     }
   },
 

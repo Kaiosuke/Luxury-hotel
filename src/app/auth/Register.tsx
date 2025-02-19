@@ -36,7 +36,7 @@ const Register = () => {
       await dispatch(addUser(data)).unwrap();
       toast({
         variant: "success",
-        title: "Success",
+        title: "Successfully!",
         description: "Registration successful",
       });
       reset();

@@ -1,8 +1,11 @@
 import {
   addRoom,
   deleteRoom,
+  forceDeleteRoom,
   getAllRoom,
+  getAllRoomDeleted,
   getRoom,
+  restoreRoom,
   updateRoom,
 } from "@/app/api/roomsRequest";
 import { IRoom } from "@/interfaces";
@@ -11,12 +14,14 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 export interface IRoomState {
   rooms: IRoom[] | [];
   room: IRoom | null;
+  roomsDeleted: IRoom[] | [];
   loading: boolean;
   error: null | string | undefined;
 }
 
 const initialState: IRoomState = {
   rooms: [],
+  roomsDeleted: [],
   room: null,
   loading: false,
   error: null,
@@ -35,10 +40,10 @@ const setError = (
 };
 
 const roomsSlice = createSlice({
-  name: "roomTypes",
+  name: "Rooms",
   initialState,
   reducers: {},
-  extraReducers: (builder) => {
+  extraReducers(builder) {
     builder.addCase(getAllRoom.pending, setLoading);
     builder.addCase(
       getAllRoom.fulfilled,
@@ -48,6 +53,7 @@ const roomsSlice = createSlice({
       }
     );
     builder.addCase(getAllRoom.rejected, setError);
+
     builder.addCase(getRoom.pending, setLoading);
     builder.addCase(
       getRoom.fulfilled,
@@ -56,7 +62,6 @@ const roomsSlice = createSlice({
         state.room = action.payload;
       }
     );
-    builder.addCase(getRoom.rejected, setError);
 
     builder.addCase(addRoom.pending, setLoading);
     builder.addCase(
@@ -85,10 +90,51 @@ const roomsSlice = createSlice({
       deleteRoom.fulfilled,
       (state, action: PayloadAction<string>) => {
         state.loading = false;
+        const findRoom = state.rooms.find(
+          (room) => room._id === action.payload
+        );
+        if (findRoom) {
+          state.roomsDeleted = [...state.roomsDeleted, findRoom];
+        }
         state.rooms = state.rooms.filter((room) => room._id !== action.payload);
       }
     );
     builder.addCase(deleteRoom.rejected, setError);
+
+    builder.addCase(forceDeleteRoom.pending, setLoading);
+    builder.addCase(
+      forceDeleteRoom.fulfilled,
+      (state, action: PayloadAction<string>) => {
+        state.loading = false;
+        state.roomsDeleted = state.roomsDeleted.filter(
+          (room) => room._id !== action.payload
+        );
+      }
+    );
+    builder.addCase(forceDeleteRoom.rejected, setError);
+
+    builder.addCase(getAllRoomDeleted.pending, setLoading);
+    builder.addCase(
+      getAllRoomDeleted.fulfilled,
+      (state, action: PayloadAction<IRoom[]>) => {
+        state.loading = false;
+        state.roomsDeleted = action.payload;
+      }
+    );
+    builder.addCase(getAllRoomDeleted.rejected, setError);
+
+    builder.addCase(restoreRoom.pending, setLoading);
+    builder.addCase(
+      restoreRoom.fulfilled,
+      (state, action: PayloadAction<IRoom>) => {
+        state.loading = false;
+        state.rooms = [...state.rooms, action.payload];
+        state.roomsDeleted = state.roomsDeleted.filter(
+          (room) => room._id !== action.payload._id
+        );
+      }
+    );
+    builder.addCase(restoreRoom.rejected, setError);
   },
 });
 

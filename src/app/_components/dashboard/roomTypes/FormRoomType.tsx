@@ -37,7 +37,7 @@ import { z } from "zod";
 import FormUploadImage from "./FormUploadImage";
 import LoadingProcess from "../../Loading";
 
-function FormRoomType({ open, onClose, id }: IForm) {
+function FormRoomType({ open, onClose, _id }: IForm) {
   const [category, setCategory] = useState("Normal");
   const [view, setView] = useState("Mountain");
   const [quickDes, setQuickDes] = useState<string[]>([]);
@@ -65,7 +65,7 @@ function FormRoomType({ open, onClose, id }: IForm) {
       rate: 0,
       description: "",
       square: "",
-      typeBed: "",
+      typeBedId: "",
       sleeps: 0,
       images: [],
       map: "",
@@ -78,9 +78,9 @@ function FormRoomType({ open, onClose, id }: IForm) {
   const { toast } = useToast();
 
   useEffect(() => {
-    if (id) {
+    if (_id) {
       (async () => {
-        const roomType = await dispatch(getRoomType(id)).unwrap();
+        const roomType = await dispatch(getRoomType(_id)).unwrap();
 
         reset(roomType);
         roomType.quickDes && setQuickDes(roomType.quickDes);
@@ -93,7 +93,7 @@ function FormRoomType({ open, onClose, id }: IForm) {
         // roomType.images && setImagesUrl(roomType.images);
       })();
     }
-  }, [id]);
+  }, [_id]);
 
   const UPLOAD_PRESET = process.env.NEXT_PUBLIC_UPLOAD_PRESET!;
   const CLOUD_NAME = process.env.NEXT_PUBLIC_CLOUD_NAME;
@@ -216,8 +216,8 @@ function FormRoomType({ open, onClose, id }: IForm) {
         default:
       }
 
-      if (id) {
-        await dispatch(updateRoomType({ id, roomType: newRoomType }));
+      if (_id) {
+        await dispatch(updateRoomType({ _id, roomType: newRoomType }));
         toast({
           variant: "success",
           title: "success",
@@ -247,7 +247,7 @@ function FormRoomType({ open, onClose, id }: IForm) {
       <DialogContent className="lg:max-w-[1200px] sm:max-w-[600px] h-[90%] overflow-auto  bg-sidebar-four text-sidebar-primary">
         <DialogHeader>
           <DialogTitle className="md:text-2xl text-xl">
-            {id ? "Update" : "Add"} RoomType
+            {_id ? "Update" : "Add"} RoomType
           </DialogTitle>
         </DialogHeader>
         <form onSubmit={handleSubmit((data) => onSubmit(data))}>
@@ -275,10 +275,10 @@ function FormRoomType({ open, onClose, id }: IForm) {
                   id="typeBed"
                   className="mt-1"
                   placeholder=". . ."
-                  {...register("typeBed")}
+                  {...register("typeBedId")}
                 />
                 <span className="text-red-500 text-sm">
-                  {formState.errors.typeBed?.message}
+                  {formState.errors.typeBedId?.message}
                 </span>
               </div>
             </div>
@@ -558,7 +558,7 @@ function FormRoomType({ open, onClose, id }: IForm) {
             </div>
             <div className="grid md:grid-cols-2 gap-4 grid-cols-1 mt-2">
               <FormUploadImage<FormValues>
-                id={id}
+                id={_id}
                 title="thumbnail"
                 register={register}
                 formState={formState}
@@ -568,7 +568,7 @@ function FormRoomType({ open, onClose, id }: IForm) {
                 isImages={false}
               />
               <FormUploadImage<FormValues>
-                id={id}
+                id={_id}
                 title="map"
                 register={register}
                 formState={formState}
@@ -590,7 +590,7 @@ function FormRoomType({ open, onClose, id }: IForm) {
             </div>
           </div>
           <Button type="submit" variant={"outline"} className="text-left">
-            {id ? "Update" : "Add"} RoomType
+            {_id ? "Update" : "Add"} RoomType
           </Button>
         </form>
       </DialogContent>
