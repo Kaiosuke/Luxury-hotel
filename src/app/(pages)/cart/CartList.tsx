@@ -41,7 +41,7 @@ const CartList = ({ cart, showDelete, setShowDelete }: ICartList) => {
 
   const handleDeleCart = () => {
     setShowDelete(!showDelete);
-    setCartId(cart.id);
+    setCartId(cart._id);
   };
 
   return (

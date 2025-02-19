@@ -5,14 +5,14 @@ import useAppContext from "@/hooks/useAppContext";
 import useAvailableRooms from "@/hooks/useAvailableRooms";
 import { IRoom } from "@/interfaces";
 import { roomsSelector } from "@/redux/selectors/roomsSelector";
-import { roomTypesRemainingSelector } from "@/redux/selectors/roomTypesSelector";
+import { roomTypesSelector } from "@/redux/selectors/roomTypesSelector";
 import { useSelector } from "react-redux";
 import BookingFilter from "./BookingFilter";
 import BookingList from "./BookingList";
 
 const Booking = () => {
   const { checkIn, checkOut } = useAppContext();
-  const roomTypeList = useSelector(roomTypesRemainingSelector);
+  const { roomTypes } = useSelector(roomTypesSelector);
   const { rooms } = useSelector(roomsSelector);
 
   const availableRooms: IRoom[] =
@@ -41,12 +41,12 @@ const Booking = () => {
           <BookingFilter />
           {checkIn && checkOut ? (
             <>
-              {roomTypeList.length ? (
-                roomTypeList.map(
+              {roomTypes.length ? (
+                roomTypes.map(
                   (roomType) =>
-                    getQuantityAvailableRoom(roomType.id) > 0 && (
+                    getQuantityAvailableRoom(roomType._id) > 0 && (
                       <BookingList
-                        key={roomType.id}
+                        key={roomType._id}
                         roomType={roomType}
                         availableRooms={availableRooms}
                         getQuantityAvailableRoom={getQuantityAvailableRoom}

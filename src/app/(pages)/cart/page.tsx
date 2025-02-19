@@ -39,8 +39,8 @@ const page = () => {
   const dispatch = useAppDispatch();
   useEffect(() => {
     currentUser &&
-      currentUser.id &&
-      dispatch(getAllCartByUserId(currentUser.id));
+      currentUser._id &&
+      dispatch(getAllCartByUserId(currentUser._id));
   }, []);
 
   if (!currentUser || loading) {
@@ -76,7 +76,7 @@ const page = () => {
             <div className="flex flex-col gap-4 mt-4 h-[880px] overflow-auto">
               {cartsUsers.map((cart) => (
                 <CartList
-                  key={cart.id}
+                  key={cart._id}
                   cart={cart}
                   showDelete={showDelete}
                   setShowDelete={setShowDelete}
@@ -89,7 +89,7 @@ const page = () => {
             <div className="h-[680px] overflow-auto">
               <div className="flex flex-col gap-4 mt-4">
                 {cartsUsers.map((cart, index) => (
-                  <PriceDetail key={cart.id} cart={cart} index={index + 1} />
+                  <PriceDetail key={cart._id} cart={cart} index={index + 1} />
                 ))}
               </div>
             </div>

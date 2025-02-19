@@ -109,7 +109,7 @@ const BookingList = ({
         });
       }
       const newBooking = {
-        userId: currentUser.id,
+        userId: currentUser._id,
         roomTypeId,
         optionId,
         roomId,
@@ -156,7 +156,7 @@ const BookingList = ({
     <>
       <MotionWrapper
         className="border border-third rounded-lg p-4 mt-6"
-        key={roomType.id}
+        key={roomType._id}
       >
         <div className="flex lg:gap-6 md:gap-4 md:flex-row flex-col">
           <div className="flex-[1_0_auto] md:max-w-[30%] max-w-[100%]">
@@ -183,13 +183,13 @@ const BookingList = ({
               {roomType.title}
             </h2>
             <div className="flex gap-6 mt-6">
-              {getQuantityAvailableRoom(roomType.id) < 5 ? (
+              {getQuantityAvailableRoom(roomType._id) < 5 ? (
                 <span className="text-size-base text-red-400">
-                  Only {getQuantityAvailableRoom(roomType.id)} rooms left
+                  Only {getQuantityAvailableRoom(roomType._id)} rooms left
                 </span>
               ) : (
                 <span>
-                  {getQuantityAvailableRoom(roomType.id)} rooms available.
+                  {getQuantityAvailableRoom(roomType._id)} rooms available.
                 </span>
               )}
               <span className="text-size-base">{roomType.typeBed}</span>
@@ -202,8 +202,8 @@ const BookingList = ({
               </SelectTrigger>
               <SelectContent className="bg-secondary text-primary">
                 <SelectGroup>
-                  {filterRoom(roomType.id).map((room) => (
-                    <SelectItem key={room.id} value={room.id}>
+                  {filterRoom(roomType._id).map((room) => (
+                    <SelectItem key={room._id} value={room._id}>
                       {room.roomNumber}
                     </SelectItem>
                   ))}
@@ -214,7 +214,7 @@ const BookingList = ({
               <p>{roomType.shortDes}</p>
             </div>
             <div></div>
-            <Link href={`/rooms/${roomType.id}`}>
+            <Link href={`/rooms/${roomType._id}`}>
               <Button variant={"third"} className="mt-6">
                 Rooms Detail
               </Button>
@@ -225,7 +225,7 @@ const BookingList = ({
                 checkOut &&
                 options.map((option) => (
                   <OptionRoom
-                    key={option.id}
+                    key={option._id}
                     roomType={roomType}
                     option={option}
                     filterIconFeature={filterIconFeature}
