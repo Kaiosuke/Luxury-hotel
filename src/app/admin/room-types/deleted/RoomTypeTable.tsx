@@ -26,6 +26,9 @@ import { roomTypesSelector } from "@/redux/selectors/roomTypesSelector";
 import { useAppDispatch } from "@/redux/store";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { AspectRatio } from "@/components/ui/aspect-ratio";
+import Image from "next/image";
+import { formatMoney } from "@/utils/helpers";
 
 const RoomTypeDeletedTable = ({ open, onClose }: IForm) => {
   const dispatch = useAppDispatch();
@@ -112,19 +115,102 @@ const RoomTypeDeletedTable = ({ open, onClose }: IForm) => {
       cell: ({ row }) => <div>{row.getValue("title")}</div>,
     },
     {
-      accessorKey: "roomTypeId",
+      accessorKey: "view",
       header: ({ column }) => {
         return (
           <div
             className="flex text-size-xl items-center cursor-pointer hover:text-sidebar-primary"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            Room Type
+            view
             <ArrowUpDown />
           </div>
         );
       },
-      cell: ({ row }) => <div>{row.getValue("roomTypeId")}</div>,
+      cell: ({ row }) => {
+        const view = row.original.viewId;
+        return <div>{view?.title}</div>;
+      },
+    },
+    {
+      accessorKey: "typeBed",
+      header: ({ column }) => {
+        return (
+          <div
+            className="flex text-size-xl items-center cursor-pointer hover:text-sidebar-primary"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            typeBed
+            <ArrowUpDown />
+          </div>
+        );
+      },
+      cell: ({ row }) => {
+        const typeBed = row.original.typeBedId;
+        return <div>{typeBed?.title}</div>;
+      },
+    },
+
+    {
+      accessorKey: "categoryRoom",
+      header: ({ column }) => {
+        return (
+          <div
+            className="flex text-size-xl items-center cursor-pointer hover:text-sidebar-primary"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            categoryRoom
+            <ArrowUpDown />
+          </div>
+        );
+      },
+      cell: ({ row }) => {
+        const categoryRoom = row.original.categoryRoomId;
+        return <div>{categoryRoom?.title}</div>;
+      },
+    },
+    {
+      accessorKey: "price",
+      header: ({ column }) => {
+        return (
+          <div
+            className="flex text-size-xl items-center cursor-pointer hover:text-sidebar-primary"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            Price basic
+            <ArrowUpDown />
+          </div>
+        );
+      },
+      cell: ({ row }) => {
+        const price = formatMoney(row.getValue("price"));
+        return <div>{price}</div>;
+      },
+    },
+    {
+      accessorKey: "thumbnail",
+      header: () => {
+        return (
+          <div className="flex text-size-xl items-center cursor-pointer hover:text-sidebar-primary">
+            Thumbnail
+          </div>
+        );
+      },
+      cell: ({ row }) => {
+        const thumbnailUrl = row.getValue("thumbnail");
+        return (
+          <AspectRatio ratio={16 / 9} className="bg-muted">
+            <Image
+              src={thumbnailUrl as string}
+              alt="Photo by Kaio"
+              fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              className="h-full w-full rounded-md object-cover"
+              priority
+            />
+          </AspectRatio>
+        );
+      },
     },
     {
       id: "actions",

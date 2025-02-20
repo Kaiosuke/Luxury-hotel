@@ -32,15 +32,16 @@ import { createData } from "../services/postService.js";
 const RoomTypeController = {
   getAll: async (req, res) => {
     try {
-      const roomTypes = await getAllData(RoomType, [
-        { viewId: "title" },
-        { typeBedId: "title" },
-        { categoryRoomId: "title" },
-      ]);
-
-      if (!roomTypes.length) {
-        return handleError404(res);
-      }
+      const search = req.query.search.trim() || "";
+      const roomTypes = await getAllData(
+        RoomType,
+        [
+          { viewId: "title" },
+          { typeBedId: "title" },
+          { categoryRoomId: "title" },
+        ],
+        search
+      );
 
       return handleSuccess200(res, roomTypes);
     } catch (error) {
@@ -315,7 +316,11 @@ const RoomTypeController = {
         return handleError404(res);
       }
 
-      const findRoomType = await getDataById(RoomType, id);
+      const findRoomType = await getDataById(RoomType, id, [
+        { viewId: "title" },
+        { typeBedId: "title" },
+        { categoryRoomId: "title" },
+      ]);
 
       const findView = await findByIdAndPushData(
         View,

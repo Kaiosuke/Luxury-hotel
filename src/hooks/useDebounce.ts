@@ -2,21 +2,19 @@ import { useEffect, useState } from "react";
 
 interface IUseDebounce {
   value: string;
-  delay: number;
 }
 
-const useDebounce = ({ value, delay }: IUseDebounce) => {
+const useDebounce = ({ value }: IUseDebounce) => {
   const [debounced, setDebounced] = useState(value);
-
   useEffect(() => {
     const handleDebounced = setTimeout(() => {
       setDebounced(value);
-    }, delay);
+    }, 400);
 
     return () => {
       clearTimeout(handleDebounced);
     };
-  }, [value, delay]);
+  }, [value, 400]);
   return debounced;
 };
 

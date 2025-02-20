@@ -30,7 +30,7 @@ function layoutAdmin({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     dispatch(getAllUser());
-    dispatch(getAllRoomType());
+    dispatch(getAllRoomType(""));
     dispatch(getAllRoom());
     dispatch(getAllCart());
     dispatch(getAllOption());

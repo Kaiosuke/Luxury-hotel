@@ -24,9 +24,12 @@ import { createData } from "../services/postService.js";
 const CategoryRoomController = {
   getAll: async (req, res) => {
     try {
-      const categoryRooms = await getAllData(CategoryRoom, [
-        { roomTypes: "title" },
-      ]);
+      const search = req.query.search || "";
+      const categoryRooms = await getAllData(
+        CategoryRoom,
+        [{ roomTypes: "title" }],
+        search
+      );
 
       if (!categoryRooms.length) {
         return handleError404(res);

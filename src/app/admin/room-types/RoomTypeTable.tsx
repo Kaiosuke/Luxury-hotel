@@ -17,15 +17,27 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { IForm, IRoomType, IView } from "@/interfaces";
+import { IForm, IRoomType } from "@/interfaces";
 import { roomTypesSelector } from "@/redux/selectors/roomTypesSelector";
 import { formatMoney } from "@/utils/helpers";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { getAllRoomType } from "@/app/api/roomTypeRequest";
+import { useAppDispatch } from "@/redux/store";
+import useDebounce from "@/hooks/useDebounce";
 
 const RoomTypesTable = ({ open, onClose }: IForm) => {
   const { roomTypes } = useSelector(roomTypesSelector);
+  const [search, setSearch] = useState("");
+
+  const debounce = useDebounce({ value: search });
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(getAllRoomType(search));
+  }, [debounce]);
 
   const [selectedRoomTypeId, setSelectedRoomTypeId] = useState<string | null>(
     null
@@ -46,8 +58,6 @@ const RoomTypesTable = ({ open, onClose }: IForm) => {
     setOpenFormDelete(false);
     onClose(false);
   };
-
-  // console.log(roomTypes);
 
   const roomTypeColumns: ColumnDef<IRoomType>[] = [
     {
@@ -225,37 +235,31 @@ const RoomTypesTable = ({ open, onClose }: IForm) => {
     },
   ];
 
-  // const { loading } = useSelector(roomTypesSelector);
-
-  // if (loading) {
-  //   return <LoadingProcess />;
-  // }
-
   return (
     <>
-      {roomTypes?.length && (
-        <>
-          <DataTable
-            data={roomTypes}
-            columns={roomTypeColumns}
-            filterPlaceholders="title"
+      <>
+        <DataTable
+          data={roomTypes}
+          columns={roomTypeColumns}
+          filterPlaceholders="title"
+          search={search}
+          setSearch={setSearch}
+        />
+        {open && (
+          <FormRoomType
+            open={open}
+            onClose={handleCloseForm}
+            _id={selectedRoomTypeId}
           />
-          {open && (
-            <FormRoomType
-              open={open}
-              onClose={handleCloseForm}
-              _id={selectedRoomTypeId}
-            />
-          )}
-          {openFormDelete && (
-            <FormDeleteRoomType
-              open={openFormDelete}
-              onClose={handleCloseForm}
-              _id={selectedRoomTypeId}
-            />
-          )}
-        </>
-      )}
+        )}
+        {openFormDelete && (
+          <FormDeleteRoomType
+            open={openFormDelete}
+            onClose={handleCloseForm}
+            _id={selectedRoomTypeId}
+          />
+        )}
+      </>
     </>
   );
 };

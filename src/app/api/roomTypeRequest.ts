@@ -5,11 +5,12 @@ import { IRoomType } from "@/interfaces";
 
 const getAllRoomType = createAsyncThunk<
   IRoomType[],
-  void,
+  string,
   { rejectValue: string }
->("roomTypes/getAllRoomType", async (_, { rejectWithValue }) => {
+>("roomTypes/getAllRoomType", async (search, { rejectWithValue }) => {
   try {
-    const res = await instanceLocal.get("room-types");
+    console.log(search);
+    const res = await instanceLocal.get(`room-types/?search=${search}`);
     return res.data.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {

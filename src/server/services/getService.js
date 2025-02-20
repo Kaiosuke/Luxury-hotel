@@ -1,5 +1,8 @@
-const getAllData = async (model, populate = []) => {
-  let query = model.find();
+const getAllData = async (model, populate = [], search = null) => {
+  let query = search
+    ? model.find({ title: { $regex: search, $options: "i" } })
+    : model.find({});
+
   if (populate.length) {
     populate.forEach((field) => {
       const [path, select] = Object.entries(field)[0];

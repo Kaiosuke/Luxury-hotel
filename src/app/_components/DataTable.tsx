@@ -13,7 +13,7 @@ import {
   VisibilityState,
 } from "@tanstack/react-table";
 import { ChevronDown } from "lucide-react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -31,6 +31,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import useDebounce from "@/hooks/useDebounce";
 
 interface IDataTable<T> {
   data: T[];
@@ -38,9 +39,17 @@ interface IDataTable<T> {
   onFilterChange?: (value: string) => void;
   filterPlaceholders?: string;
   renderAction?: (row: T) => React.ReactNode;
+  setSearch: (value: any) => void;
+  search: any;
 }
 
-function DataTable<T>({ data, columns, filterPlaceholders }: IDataTable<T>) {
+function DataTable<T>({
+  data,
+  columns,
+  filterPlaceholders,
+  setSearch,
+  search,
+}: IDataTable<T>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -73,16 +82,8 @@ function DataTable<T>({ data, columns, filterPlaceholders }: IDataTable<T>) {
       <div className="flex items-center py-4">
         <Input
           placeholder={filterPlaceholders}
-          value={
-            (table
-              .getColumn(`${filterPlaceholders}`)
-              ?.getFilterValue() as string) ?? ""
-          }
-          onChange={(event) =>
-            table
-              .getColumn(`${filterPlaceholders}`)
-              ?.setFilterValue(event.target.value)
-          }
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
           className="max-w-sm border-sidebar-primary text-sidebar-primary"
         />
 
