@@ -6,7 +6,7 @@ import {
   getAllReviewDeleted,
   restoreReview,
   updateReview,
-} from "@/app/api/reviewsRequest";
+} from "@/app/api/reviewRequest";
 import { IReview } from "@/interfaces";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 

@@ -1,9 +1,9 @@
 "use client";
 import HeroImage from "@/app/_components/HeroImage";
 import LoadingPage from "@/app/_components/LoadingPage";
-import { getAllOption } from "@/app/api/optionsRequest";
-import { getAllRoom } from "@/app/api/roomsRequest";
-import { getAllRoomType } from "@/app/api/roomTypesRequest";
+import { getAllOption } from "@/app/api/optionRequest";
+import { getAllRoom } from "@/app/api/roomRequest";
+import { getAllRoomType } from "@/app/api/roomTypeRequest";
 import { roomsSelector } from "@/redux/selectors/roomsSelector";
 import { useAppDispatch } from "@/redux/store";
 import { useEffect } from "react";

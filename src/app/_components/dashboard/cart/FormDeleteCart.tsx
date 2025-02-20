@@ -1,5 +1,5 @@
-import { deleteCart, getCart } from "@/app/api/cartsRequest";
-import { deleteRoom, getRoom, updateRoom } from "@/app/api/roomsRequest";
+import { deleteCart, getCart } from "@/app/api/cartRequest";
+import { deleteRoom, getRoom, updateRoom } from "@/app/api/roomRequest";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,

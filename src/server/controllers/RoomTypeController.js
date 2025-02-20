@@ -103,7 +103,11 @@ const RoomTypeController = {
         return handleError404WithData(res, "category room");
       }
 
-      const newRoomType = await createData(RoomType, req.body);
+      const newRoomType = await createData(RoomType, req.body, [
+        { viewId: "title" },
+        { typeBedId: "title" },
+        { categoryRoomId: "title" },
+      ]);
 
       await findByIdAndPushData(View, viewId, "roomTypes", newRoomType._id);
       await findByIdAndPushData(
@@ -155,7 +159,12 @@ const RoomTypeController = {
       const updateRoomType = await findByIdAndUpdateData(
         RoomType,
         id,
-        req.body
+        req.body,
+        [
+          { viewId: "title" },
+          { typeBedId: "title" },
+          { categoryRoomId: "title" },
+        ]
       );
 
       if (viewId !== findRoomType.viewId.toString()) {

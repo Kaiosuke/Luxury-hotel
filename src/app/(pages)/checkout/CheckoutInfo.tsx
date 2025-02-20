@@ -10,7 +10,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-import { updateUser } from "@/app/api/usersRequest";
+import { updateUser } from "@/app/api/userRequest";
 import {
   Accordion,
   AccordionContent,
@@ -32,9 +32,9 @@ import {
   cartsSelector,
   cartUserRemainingSelector,
 } from "@/redux/selectors/cartsSelector";
-import { deleteCart, getAllCart, updateCart } from "@/app/api/cartsRequest";
+import { deleteCart, getAllCart, updateCart } from "@/app/api/cartRequest";
 import LoadingPage from "@/app/_components/LoadingPage";
-import { getRoom, updateRoom } from "@/app/api/roomsRequest";
+import { getRoom, updateRoom } from "@/app/api/roomRequest";
 import { addCartSuccess } from "@/redux/slices/cartsSlice";
 import { useAvailableCartsUsers } from "@/hooks/useAvailableCarts";
 import sendMail from "@/app/api/sendMailRequuest";

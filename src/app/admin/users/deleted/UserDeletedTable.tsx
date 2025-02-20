@@ -3,10 +3,10 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 
-import FormForceDeleteUser from "@/app/_components/dashboard/users/FormForceDeleteUser";
-import FormUser from "@/app/_components/dashboard/users/FormUser";
+import FormForceDeleteUser from "@/app/_components/dashboard/user/FormForceDeleteUser";
+import FormUser from "@/app/_components/dashboard/user/FormUser";
 import DataTable from "@/app/_components/DataTable";
-import { getAllUserDeleted, restoreUser } from "@/app/api/usersRequest";
+import { getAllUserDeleted, restoreUser } from "@/app/api/userRequest";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
@@ -27,9 +27,9 @@ import { useToast } from "@/hooks/use-toast";
 const UserDeletedTable = ({ open, onClose }: IForm) => {
   const dispatch = useAppDispatch();
 
-  // useEffect(() => {
-  //   dispatch(getAllUserDeleted());
-  // }, []);
+  useEffect(() => {
+    dispatch(getAllUserDeleted());
+  }, []);
 
   const { usersDeleted } = useSelector(usersSelector);
 
@@ -104,9 +104,7 @@ const UserDeletedTable = ({ open, onClose }: IForm) => {
           </Button>
         );
       },
-      cell: ({ row }) => (
-        <div className="lowercase">{row.getValue("username")}</div>
-      ),
+      cell: ({ row }) => <div>{row.getValue("username")}</div>,
     },
     {
       accessorKey: "email",
@@ -121,9 +119,7 @@ const UserDeletedTable = ({ open, onClose }: IForm) => {
           </Button>
         );
       },
-      cell: ({ row }) => (
-        <div className="lowercase">{row.getValue("email")}</div>
-      ),
+      cell: ({ row }) => <div>{row.getValue("email")}</div>,
     },
     {
       accessorKey: "role",
@@ -137,7 +133,6 @@ const UserDeletedTable = ({ open, onClose }: IForm) => {
       header: "Orders",
       cell: ({ row }) => {
         const carts = row.original;
-        // console.log(carts);
         return <div className="capitalize">{row.getValue("carts")}</div>;
       },
     },

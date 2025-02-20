@@ -17,7 +17,7 @@ import {
   cartUserRemainingSelector,
 } from "@/redux/selectors/cartsSelector";
 import { useAppDispatch } from "@/redux/store";
-import { getAllCartByUserId } from "@/app/api/cartsRequest";
+import { getAllCartByUserId } from "@/app/api/cartRequest";
 
 const page = () => {
   const [showDelete, setShowDelete] = useState(false);

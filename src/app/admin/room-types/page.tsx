@@ -15,7 +15,7 @@ import {
 import { useState } from "react";
 import { FaPlus } from "react-icons/fa";
 import { IoMdOptions } from "react-icons/io";
-import RoomTypesTable from "./RoomTypesTable";
+import RoomTypesTable from "./RoomTypeTable";
 
 const page = () => {
   const [openForm, setOpenForm] = useState(false);
@@ -45,7 +45,11 @@ const page = () => {
           </DropdownMenu>
         </div>
         <div>
-          <Button variant={"secondary"} onClick={() => setOpenForm(true)}>
+          <Button
+            variant={"secondary"}
+            type="button"
+            onClick={() => setOpenForm(true)}
+          >
             <FaPlus />
             Add RoomType
           </Button>

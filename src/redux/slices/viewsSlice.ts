@@ -6,7 +6,7 @@ import {
   getAllViewDeleted,
   restoreView,
   updateView,
-} from "@/app/api/viewsRequest";
+} from "@/app/api/viewRequest";
 import { IView } from "@/interfaces";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 

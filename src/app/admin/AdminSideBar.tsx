@@ -59,6 +59,10 @@ const data = {
           url: "/admin/room-types",
         },
         {
+          title: "Room Type Deleted List",
+          url: "/admin/room-types/deleted",
+        },
+        {
           title: "Explorer",
           url: "#",
         },
@@ -72,6 +76,10 @@ const data = {
         {
           title: "Room List",
           url: "/admin/rooms",
+        },
+        {
+          title: "Room Deleted List",
+          url: "/admin/rooms/deleted",
         },
         {
           title: "Quantum",
@@ -89,6 +97,10 @@ const data = {
           url: "/admin/cart",
         },
         {
+          title: "Cart Deleted List",
+          url: "/admin/carts/deleted",
+        },
+        {
           title: "Quantum",
           url: "#",
         },
@@ -102,6 +114,10 @@ const data = {
         {
           title: "TypeBed List",
           url: "/admin/type-beds",
+        },
+        {
+          title: "Type Bed Deleted List",
+          url: "/admin/type-beds/deleted",
         },
         {
           title: "Quantum",
@@ -119,6 +135,10 @@ const data = {
           url: "/admin/views",
         },
         {
+          title: "View Deleted List",
+          url: "/admin/views/deleted",
+        },
+        {
           title: "Quantum",
           url: "#",
         },
@@ -132,6 +152,10 @@ const data = {
         {
           title: "Category Room List",
           url: "/admin/category-rooms",
+        },
+        {
+          title: "Category Room  Deleted List",
+          url: "/admin/category-rooms/deleted",
         },
         {
           title: "Quantum",
@@ -149,6 +173,10 @@ const data = {
           url: "/admin/foods",
         },
         {
+          title: "Food Deleted List",
+          url: "/admin/foods/deleted",
+        },
+        {
           title: "Quantum",
           url: "#",
         },
@@ -162,6 +190,10 @@ const data = {
         {
           title: "Option List",
           url: "/admin/options",
+        },
+        {
+          title: "Option Deleted List",
+          url: "/admin/options/deleted",
         },
         {
           title: "Quantum",
@@ -179,6 +211,10 @@ const data = {
           url: "/admin/payments",
         },
         {
+          title: "Payment Deleted List",
+          url: "/admin/payments/deleted",
+        },
+        {
           title: "Quantum",
           url: "#",
         },
@@ -192,6 +228,10 @@ const data = {
         {
           title: "Review List",
           url: "/admin/reviews",
+        },
+        {
+          title: "review Deleted List",
+          url: "/admin/reviews/deleted",
         },
         {
           title: "Quantum",

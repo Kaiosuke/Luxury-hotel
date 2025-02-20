@@ -11,10 +11,8 @@ import {
 import { Button } from "@/components/ui/button";
 import { IForm } from "@/interfaces";
 
-function AlertDialogDelete({ open, onClose, id }: IForm) {
+function AlertDialogDelete({ open, onClose, _id }: IForm) {
   const handleDelete = () => {
-    console.log(id);
-
     onClose(false);
   };
 

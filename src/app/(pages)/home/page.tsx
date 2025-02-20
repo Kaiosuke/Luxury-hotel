@@ -5,7 +5,7 @@ import HeroImage from "@/app/_components/HeroImage";
 import LoadingPage from "@/app/_components/LoadingPage";
 import MotionWrapper from "@/app/_components/MotionWrapper";
 import ThumbnailImage from "@/app/_components/ThumbnailImage";
-import { getAllCartByUserId } from "@/app/api/cartsRequest";
+import { getAllCartByUserId } from "@/app/api/cartRequest";
 import { authSelector } from "@/redux/selectors/authSelector";
 import { cartsSelector } from "@/redux/selectors/cartsSelector";
 import { useAppDispatch } from "@/redux/store";

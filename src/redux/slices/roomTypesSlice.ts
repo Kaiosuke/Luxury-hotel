@@ -7,7 +7,7 @@ import {
   getRoomType,
   restoreRoomType,
   updateRoomType,
-} from "@/app/api/roomTypesRequest";
+} from "@/app/api/roomTypeRequest";
 import { IRoomType } from "@/interfaces";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 

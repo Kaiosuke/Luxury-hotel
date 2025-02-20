@@ -73,10 +73,11 @@ const UserSchema = z
 // Rooms
 
 const RoomTypesSchema = z.object({
-  thumbnail: z.any().optional(),
+  thumbnail: z.any().refine((file) => file && file.length > 0, {
+    message: "You must choose one image",
+  }),
   title: z.string().min(2, "Title must be greater than 2 characters"),
   price: z.number().min(1, "Price greater than or equal to 1"),
-  quantity: z.number().min(1, "Quantity greater than or equal to 1"),
   rate: z
     .number()
     .min(1, "Rate greater than or equal to 1")
@@ -85,14 +86,18 @@ const RoomTypesSchema = z.object({
     .string()
     .min(2, "Description must be greater than 2 characters"),
   square: z.string().min(2, "Square must be greater than 2 characters"),
-  categoryRoomId: z.string().min(1, "Cannot be left blank"),
-  viewId: z.string().min(1, "Cannot be left blank"),
-  typeBedId: z.string().min(1, "Cannot be left blank"),
   sleeps: z.number().min(1, "Sleeps greater than or equal to 1"),
-  images: z.any().optional(),
-  map: z.any().optional(),
+  images: z.any().refine((file) => file && file.length > 0, {
+    message: "You must choose less one image",
+  }),
+  map: z.any().refine((file) => file && file.length > 0, {
+    message: "You must choose one image",
+  }),
   shortDes: z.string().min(2, "ShortDes must be greater than 2 characters"),
   detailDes: z.string().min(2, "DetailDes must be greater than 2 characters"),
+  viewId: z.string().min(1, "Cannot be left blank"),
+  typeBedId: z.string().min(1, "Cannot be left blank"),
+  categoryRoomId: z.string().min(1, "Cannot be left blank"),
 });
 
 const RoomSchema = z.object({

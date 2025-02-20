@@ -9,7 +9,7 @@ import { useSelector } from "react-redux";
 import { roomTypesSelector } from "@/redux/selectors/roomTypesSelector";
 import { useAppDispatch } from "@/redux/store";
 import { useEffect } from "react";
-import { getAllRoomType } from "@/app/api/roomTypesRequest";
+import { getAllRoomType } from "@/app/api/roomTypeRequest";
 import LoadingPage from "@/app/_components/LoadingPage";
 import { IRoomType } from "@/interfaces";
 

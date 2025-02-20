@@ -1,6 +1,6 @@
-import { getOption } from "@/app/api/optionsRequest";
-import { getRoom } from "@/app/api/roomsRequest";
-import { getRoomType } from "@/app/api/roomTypesRequest";
+import { getOption } from "@/app/api/optionRequest";
+import { getRoom } from "@/app/api/roomRequest";
+import { getRoomType } from "@/app/api/roomTypeRequest";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { ICart, IOption, IRoom, IRoomType } from "@/interfaces";
 import { useAppDispatch } from "@/redux/store";

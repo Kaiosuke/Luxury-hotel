@@ -118,12 +118,12 @@ function DataTable<T>({ data, columns, filterPlaceholders }: IDataTable<T>) {
       </div>
       <div className="rounded-md border ">
         <Table>
-          <TableHeader className="text-sidebar-primary">
+          <TableHeader className="">
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={header.id}>
+                    <TableHead key={header.id} className="text-sidebar-primary">
                       {header.isPlaceholder
                         ? null
                         : flexRender(

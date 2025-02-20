@@ -4,9 +4,9 @@ import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 
 import FormDeleteCart from "@/app/_components/dashboard/cart/FormDeleteCart";
-import FormRoom from "@/app/_components/dashboard/rooms/FormRoom";
+import FormRoom from "@/app/_components/dashboard/room/FormRoom";
 import DataTable from "@/app/_components/DataTable";
-import { updateCart } from "@/app/api/cartsRequest";
+import { updateCart } from "@/app/api/cartRequest";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
@@ -103,7 +103,7 @@ const CartsTable = ({ open, onClose }: IForm) => {
       cell: ({ row }) => {
         const userId = row.getValue("userId") as string;
         const findUser = users.find((user) => user._id === userId);
-        return <div className="lowercase">{findUser?.username || "N/A"}</div>;
+        return <div>{findUser?.username || "N/A"}</div>;
       },
     },
     {
@@ -122,9 +122,9 @@ const CartsTable = ({ open, onClose }: IForm) => {
       cell: ({ row }) => {
         const roomTypeId = row.getValue("roomTypeId") as string;
         const findRoomType = roomTypes.find(
-          (roomType) => roomType.id === roomTypeId
+          (roomType) => roomType._id === roomTypeId
         );
-        return <div className="lowercase">{findRoomType?.title || "N/A"}</div>;
+        return <div>{findRoomType?.title || "N/A"}</div>;
       },
     },
     {
@@ -144,7 +144,7 @@ const CartsTable = ({ open, onClose }: IForm) => {
         const optionId = row.getValue("optionId") as string;
         const findOption =
           options && options.find((option) => option._id === optionId);
-        return <div className="lowercase">{findOption?.title || "N/A"}</div>;
+        return <div>{findOption?.title || "N/A"}</div>;
       },
     },
     {
@@ -163,7 +163,7 @@ const CartsTable = ({ open, onClose }: IForm) => {
       cell: ({ row }) => {
         const roomId = row.getValue("roomId") as string;
         const findRoom = rooms.find((room) => room._id === roomId);
-        return <div className="lowercase">{findRoom?.roomNumber || "N/A"}</div>;
+        return <div>{findRoom?.roomNumber || "N/A"}</div>;
       },
     },
 
@@ -180,7 +180,7 @@ const CartsTable = ({ open, onClose }: IForm) => {
           </div>
         );
       },
-      cell: ({ row }) => <div className="lowercase">{row.getValue("day")}</div>,
+      cell: ({ row }) => <div>{row.getValue("day")}</div>,
     },
     {
       accessorKey: "totalPrice",
@@ -197,7 +197,7 @@ const CartsTable = ({ open, onClose }: IForm) => {
       },
       cell: ({ row }) => {
         const totalPrice = formatMoney(row.getValue("totalPrice"));
-        return <div className="lowercase">{totalPrice}</div>;
+        return <div>{totalPrice}</div>;
       },
     },
     {
@@ -286,7 +286,7 @@ const CartsTable = ({ open, onClose }: IForm) => {
           to: string;
         };
         return (
-          <div className="lowercase">
+          <div>
             <div className="flex gap-2 flex-col">
               <div>{format(new Date(bookedDates.from), "dd/MM/yyyy")}</div>
               <div>{format(new Date(bookedDates.to), "dd/MM/yyyy")}</div>

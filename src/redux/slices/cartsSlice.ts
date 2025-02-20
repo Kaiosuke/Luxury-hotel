@@ -7,7 +7,7 @@ import {
   getAllCartDeleted,
   restoreCart,
   updateCart,
-} from "@/app/api/cartsRequest";
+} from "@/app/api/cartRequest";
 import { ICart } from "@/interfaces";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 

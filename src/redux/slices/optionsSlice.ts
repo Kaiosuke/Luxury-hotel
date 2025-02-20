@@ -6,7 +6,7 @@ import {
   getAllOptionDeleted,
   restoreOption,
   updateOption,
-} from "@/app/api/optionsRequest";
+} from "@/app/api/optionRequest";
 import { IOption } from "@/interfaces";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 

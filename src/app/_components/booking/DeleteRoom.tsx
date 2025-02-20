@@ -1,4 +1,4 @@
-import { deleteCart, getAllCartByUserId } from "@/app/api/cartsRequest";
+import { deleteCart, getAllCartByUserId } from "@/app/api/cartRequest";
 import {
   AlertDialog,
   AlertDialogContent,

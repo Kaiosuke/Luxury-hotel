@@ -26,13 +26,22 @@ interface IRoomType {
   price: number;
   quantity: number;
   rate: number;
-  category: string;
-  view: string;
+  categoryRoomId: {
+    _id: string;
+    title: string;
+  };
+  viewId: {
+    _id: string;
+    title: string;
+  };
   description: string;
   quickDes: string[];
   features: string[];
   square: string;
-  typeBed: string;
+  typeBedId: {
+    _id: string;
+    title: string;
+  };
   sleeps: number;
   images: string[];
   map: string;
@@ -92,17 +101,17 @@ interface ITypeBed {
 }
 
 interface IView {
-  _id: string;
+  _id?: string;
   title: string;
 }
 
 interface ICategoryRoom {
-  _id: string;
+  _id?: string;
   title: string;
 }
 
 interface IFood {
-  _id: string;
+  _id?: string;
   title: string;
 }
 

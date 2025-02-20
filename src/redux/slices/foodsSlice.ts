@@ -6,7 +6,7 @@ import {
   getAllFoodDeleted,
   restoreFood,
   updateFood,
-} from "@/app/api/foodsRequest";
+} from "@/app/api/foodRequest";
 import { IFood } from "@/interfaces";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 

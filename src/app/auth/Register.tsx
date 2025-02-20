@@ -11,7 +11,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
-import { addUser } from "../api/usersRequest";
+import { addUser } from "../api/userRequest";
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);

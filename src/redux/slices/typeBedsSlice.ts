@@ -6,20 +6,20 @@ import {
   getAllTypeBedDeleted,
   restoreTypeBed,
   updateTypeBed,
-} from "@/app/api/typeBedsRequest";
+} from "@/app/api/typeBedRequest";
 import { ITypeBed } from "@/interfaces";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface ITypeBedState {
   typeBeds: ITypeBed[] | [];
-  typeBedDeleted: ITypeBed[] | [];
+  typeBedsDeleted: ITypeBed[] | [];
   loading: boolean;
   error: null | string | undefined;
 }
 
 const initialState: ITypeBedState = {
   typeBeds: [],
-  typeBedDeleted: [],
+  typeBedsDeleted: [],
   loading: false,
   error: null,
 };
@@ -82,7 +82,7 @@ const typeBedsSlice = createSlice({
           (typeBed) => typeBed._id === action.payload
         );
         if (findTypeBed) {
-          state.typeBedDeleted = [...state.typeBedDeleted, findTypeBed];
+          state.typeBedsDeleted = [...state.typeBedsDeleted, findTypeBed];
         }
         state.typeBeds = state.typeBeds.filter(
           (typeBed) => typeBed._id !== action.payload
@@ -96,7 +96,7 @@ const typeBedsSlice = createSlice({
       forceDeleteTypeBed.fulfilled,
       (state, action: PayloadAction<string>) => {
         state.loading = false;
-        state.typeBedDeleted = state.typeBedDeleted.filter(
+        state.typeBedsDeleted = state.typeBedsDeleted.filter(
           (typeBed) => typeBed._id !== action.payload
         );
       }
@@ -108,7 +108,7 @@ const typeBedsSlice = createSlice({
       getAllTypeBedDeleted.fulfilled,
       (state, action: PayloadAction<ITypeBed[]>) => {
         state.loading = false;
-        state.typeBedDeleted = action.payload;
+        state.typeBedsDeleted = action.payload;
       }
     );
     builder.addCase(getAllTypeBedDeleted.rejected, setError);
@@ -119,7 +119,7 @@ const typeBedsSlice = createSlice({
       (state, action: PayloadAction<ITypeBed>) => {
         state.loading = false;
         state.typeBeds = [...state.typeBeds, action.payload];
-        state.typeBedDeleted = state.typeBedDeleted.filter(
+        state.typeBedsDeleted = state.typeBedsDeleted.filter(
           (typeBed) => typeBed._id !== action.payload._id
         );
       }

@@ -3,9 +3,9 @@ import { ICart, IOption, IRoom, IRoomType } from "@/interfaces";
 import { useAppDispatch } from "@/redux/store";
 import { convertDate, formatMoney } from "@/utils/helpers";
 import { useEffect, useState } from "react";
-import { getOption } from "../api/optionsRequest";
-import { getRoomType } from "../api/roomTypesRequest";
-import { getRoom } from "../api/roomsRequest";
+import { getOption } from "../api/optionRequest";
+import { getRoomType } from "../api/roomTypeRequest";
+import { getRoom } from "../api/roomRequest";
 
 interface IPriceDetail {
   cart: ICart;

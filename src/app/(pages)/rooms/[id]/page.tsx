@@ -5,7 +5,7 @@ import SplideList from "@/app/_components/SplideList";
 import ThumbnailImage from "@/app/_components/ThumbnailImage";
 
 import LoadingPage from "@/app/_components/LoadingPage";
-import { getRoomType } from "@/app/api/roomTypesRequest";
+import { getRoomType } from "@/app/api/roomTypeRequest";
 import { roomTypesSelector } from "@/redux/selectors/roomTypesSelector";
 import { useAppDispatch } from "@/redux/store";
 import { useParams } from "next/navigation";

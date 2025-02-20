@@ -6,7 +6,7 @@ import {
   getAllUserDeleted,
   restoreUser,
   updateUser,
-} from "@/app/api/usersRequest";
+} from "@/app/api/userRequest";
 import { IUser } from "@/interfaces";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 

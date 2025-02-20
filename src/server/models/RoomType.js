@@ -21,7 +21,6 @@ const RoomTypeSChema = new Schema(
     },
     title: { type: String, require: true },
     price: { type: Number, require: true },
-    quantity: { type: Number, require: true },
     rate: { type: Number, require: true },
     description: { type: String, require: true },
     quickDes: [{ type: String, require: true }],

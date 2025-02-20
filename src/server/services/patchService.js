@@ -1,9 +1,15 @@
-const findByIdAndUpdateData = async (model, id, data) => {
-  const updateData = await model.findByIdAndUpdate(id, data, { new: true });
-  return updateData;
-};
+const findByIdAndUpdateData = async (model, id, data, populate = []) => {
+  let updateData = model.findByIdAndUpdate(id, data, { new: true });
 
-// const updateManyData=  async(model, id)
+  if (populate.length) {
+    populate.forEach((field) => {
+      const [path, select] = Object.entries(field)[0];
+      updateData = updateData.populate(path, select);
+    });
+  }
+
+  return await updateData;
+};
 
 const findByIdAndPushData = async (model, id, data, dataId) => {
   const updateData = await model.findByIdAndUpdate(id, {

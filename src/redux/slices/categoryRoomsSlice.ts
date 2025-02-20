@@ -6,7 +6,7 @@ import {
   getAllCategoryRoomDeleted,
   restoreCategoryRoom,
   updateCategoryRoom,
-} from "@/app/api/categoryRoomsRequest";
+} from "@/app/api/categoryRoomRequest";
 import { ICategoryRoom } from "@/interfaces";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 

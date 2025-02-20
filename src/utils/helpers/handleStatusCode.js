@@ -27,9 +27,7 @@ const handleError409 = (res, message) => {
 };
 
 const handleError500 = (res, error) => {
-  return res
-    .status(500)
-    .json({ message: "Internal server error", error: error.message });
+  return res.status(500).json({ message: error.message });
 };
 
 export {

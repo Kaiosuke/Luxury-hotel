@@ -15,7 +15,7 @@ import {
 import { useState } from "react";
 import { FaPlus } from "react-icons/fa";
 import { IoMdOptions } from "react-icons/io";
-import RoomsTable from "./RoomsTable";
+import RoomsTable from "./RoomTable";
 
 const page = () => {
   const [openForm, setOpenForm] = useState(false);

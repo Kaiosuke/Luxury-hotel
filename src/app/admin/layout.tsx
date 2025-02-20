@@ -12,13 +12,15 @@ import { useRouter } from "next/navigation";
 import { ReactNode, useEffect } from "react";
 import { useSelector } from "react-redux";
 import LoadingPage from "../_components/LoadingPage";
-import { getAllCart } from "../api/cartsRequest";
-import { getAllOption } from "../api/optionsRequest";
-import { getAllRoom } from "../api/roomsRequest";
-import { getAllRoomType } from "../api/roomTypesRequest";
-import { getAllUser, getAllUserDeleted } from "../api/usersRequest";
+import { getAllCart } from "../api/cartRequest";
+import { getAllOption } from "../api/optionRequest";
+import { getAllRoom } from "../api/roomRequest";
+import { getAllRoomType } from "../api/roomTypeRequest";
+import { getAllUser, getAllUserDeleted } from "../api/userRequest";
 import AppSidebar from "./AdminSideBar";
-import { getAllTypeBed } from "../api/typeBedsRequest";
+import { getAllTypeBed } from "../api/typeBedRequest";
+import { getAllView } from "../api/viewRequest";
+import { getAllCategoryRoom } from "../api/categoryRoomRequest";
 
 function layoutAdmin({ children }: { children: ReactNode }) {
   const { currentUser } = useSelector(authSelector);
@@ -28,12 +30,13 @@ function layoutAdmin({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     dispatch(getAllUser());
-    dispatch(getAllUserDeleted());
     dispatch(getAllRoomType());
     dispatch(getAllRoom());
     dispatch(getAllCart());
     dispatch(getAllOption());
     dispatch(getAllTypeBed());
+    dispatch(getAllView());
+    dispatch(getAllCategoryRoom());
   }, []);
 
   useEffect(() => {

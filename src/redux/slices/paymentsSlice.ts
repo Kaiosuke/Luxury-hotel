@@ -6,7 +6,7 @@ import {
   getAllPaymentDeleted,
   restorePayment,
   updatePayment,
-} from "@/app/api/paymentsRequest";
+} from "@/app/api/paymentRequest";
 import { IPayment } from "@/interfaces";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 

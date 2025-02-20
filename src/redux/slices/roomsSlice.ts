@@ -7,7 +7,7 @@ import {
   getRoom,
   restoreRoom,
   updateRoom,
-} from "@/app/api/roomsRequest";
+} from "@/app/api/roomRequest";
 import { IRoom } from "@/interfaces";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 

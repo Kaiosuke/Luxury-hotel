@@ -1,5 +1,5 @@
 import MotionWrapper from "@/app/_components/MotionWrapper";
-import { addCart } from "@/app/api/cartsRequest";
+import { addCart } from "@/app/api/cartRequest";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Button } from "@/components/ui/button";
 import { ToastAction } from "@/components/ui/toast";
