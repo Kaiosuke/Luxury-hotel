@@ -18,11 +18,24 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { IForm, ITypeBed } from "@/interfaces";
 import { typeBedsSelector } from "@/redux/selectors/typeBedsSelector";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import useDebounce from "@/hooks/useDebounce";
+import { useAppDispatch } from "@/redux/store";
+import { getAllTypeBed } from "@/app/api/typeBedRequest";
 
 const TypeBedTable = ({ open, onClose }: IForm) => {
   const { typeBeds } = useSelector(typeBedsSelector);
+
+  const [search, setSearch] = useState("");
+
+  const debounce = useDebounce({ value: search });
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(getAllTypeBed(search));
+  }, [debounce]);
 
   const [selectedTypeBedId, setSelectedTypeBedId] = useState<string | null>(
     null
@@ -83,19 +96,28 @@ const TypeBedTable = ({ open, onClose }: IForm) => {
       cell: ({ row }) => <div>{row.getValue("title")}</div>,
     },
     {
-      accessorKey: "roomTypeId",
+      accessorKey: "roomTypes",
       header: ({ column }) => {
         return (
           <div
             className="flex text-size-xl items-center cursor-pointer hover:text-sidebar-primary"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            Room Type
+            Room Types
             <ArrowUpDown />
           </div>
         );
       },
-      cell: ({ row }) => <div>{row.getValue("roomTypeId")}</div>,
+      cell: ({ row }) => {
+        const roomTypes = row.original.roomTypes;
+        return (
+          <div>
+            {roomTypes.map((roomType: { _id: string; title: string }) => (
+              <div key={roomType._id}>{roomType.title}</div>
+            ))}
+          </div>
+        );
+      },
     },
 
     {
@@ -142,6 +164,8 @@ const TypeBedTable = ({ open, onClose }: IForm) => {
         data={typeBeds}
         columns={TypeBedColumns}
         filterPlaceholders="title"
+        search={search}
+        setSearch={setSearch}
       />
       {open && (
         <FormTypeBed

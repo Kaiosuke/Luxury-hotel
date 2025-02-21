@@ -14,14 +14,14 @@ const verifyToken = async (req, res, next) => {
       const accessToken = token.split(" ")[1];
       jwt.verify(accessToken, env.ACCESS_TOKEN, (err, user) => {
         if (err) {
-          return res.status(401).json("Token is not valid!");
+          return res.status(401).json({ message: "Token is not valid!" });
         }
 
         req.user = user;
         next();
       });
     } else {
-      return res.status(401).json("You're not authenticated!");
+      return res.status(401).json({ message: "You're not authenticated!" });
     }
   } catch (error) {
     return handleError500(res, error);

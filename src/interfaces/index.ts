@@ -34,6 +34,7 @@ interface IRoomType {
     _id: string;
     title: string;
   };
+
   description: string;
   quickDes: string[];
   features: string[];
@@ -52,11 +53,15 @@ interface IRoomType {
 
 interface IRoom {
   _id: string;
+  title?: string;
   roomTypeId: string;
   roomNumber: string;
   floor: number;
   status: string;
   bookedDates: { from: Date; to: Date }[];
+  roomType?: {
+    title: string;
+  };
 }
 
 export enum ECart {
@@ -80,11 +85,16 @@ interface ICart {
 }
 
 interface IOption {
-  _id: string;
+  _id?: string;
   title: string;
-  foodId: string;
+  foodId: {
+    _id: string;
+    title: string;
+  };
+
+  carts?: any;
   price: number;
-  extensions: string[];
+  extension: string;
   typeDescription: string;
 }
 
@@ -98,21 +108,25 @@ interface IForm {
 interface ITypeBed {
   _id?: string;
   title: string;
+  roomTypes: any;
 }
 
 interface IView {
   _id?: string;
   title: string;
+  roomTypes: any;
 }
 
 interface ICategoryRoom {
   _id?: string;
   title: string;
+  roomTypes: any;
 }
 
 interface IFood {
   _id?: string;
   title: string;
+  options: any;
 }
 
 interface IPayment {

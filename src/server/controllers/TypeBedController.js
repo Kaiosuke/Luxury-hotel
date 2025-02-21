@@ -24,11 +24,13 @@ import { createData } from "../services/postService.js";
 const TypeBedController = {
   getAll: async (req, res) => {
     try {
-      const typeBeds = await getAllData(TypeBed, [{ roomTypes: "title" }]);
+      const search = req.query.search || "";
 
-      if (!typeBeds.length) {
-        return handleError404(res);
-      }
+      const typeBeds = await getAllData(
+        TypeBed,
+        [{ roomTypes: "title" }],
+        search.trim()
+      );
 
       return handleSuccess200(res, typeBeds);
     } catch (error) {
@@ -38,12 +40,14 @@ const TypeBedController = {
 
   getAllDeleted: async (req, res) => {
     try {
-      const typeBeds = await getAllDataDeleted(TypeBed, [
-        { roomTypes: "title" },
-      ]);
-      if (!typeBeds.length) {
-        return handleError404(res);
-      }
+      const search = req.query.search || "";
+
+      const typeBeds = await getAllDataDeleted(
+        TypeBed,
+        [{ roomTypes: "title" }],
+        search.trim()
+      );
+
       return handleSuccess200(res, typeBeds);
     } catch (error) {
       return handleError500(res, req);
@@ -75,7 +79,9 @@ const TypeBedController = {
         return handleError409(res, `${title} already exists!`);
       }
 
-      const newTypeBed = await createData(TypeBed, req.body);
+      const newTypeBed = await createData(TypeBed, req.body, [
+        { roomTypes: "title" },
+      ]);
       return handleSuccess201(res, newTypeBed);
     } catch (error) {
       return handleError500(res, error);
@@ -92,7 +98,9 @@ const TypeBedController = {
         return handleError404(res);
       }
 
-      const updateTypeBed = await findByIdAndUpdateData(TypeBed, id, req.body);
+      const updateTypeBed = await findByIdAndUpdateData(TypeBed, id, req.body, [
+        { roomTypes: "title" },
+      ]);
 
       return handleSuccess200(res, updateTypeBed);
     } catch (error) {
@@ -145,7 +153,9 @@ const TypeBedController = {
         return handleError404(res);
       }
 
-      const findTypeBed = await getDataById(TypeBed, id);
+      const findTypeBed = await getDataById(TypeBed, id, [
+        { roomTypes: "title" },
+      ]);
 
       return handleSuccess200(res, findTypeBed);
     } catch (error) {

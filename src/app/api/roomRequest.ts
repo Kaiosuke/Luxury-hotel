@@ -3,11 +3,11 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import instanceLocal from "./instances";
 
-const getAllRoom = createAsyncThunk<IRoom[], void, { rejectValue: string }>(
+const getAllRoom = createAsyncThunk<IRoom[], string, { rejectValue: string }>(
   "rooms/getAllRoom",
-  async (_, { rejectWithValue }) => {
+  async (search, { rejectWithValue }) => {
     try {
-      const res = await instanceLocal.get("rooms");
+      const res = await instanceLocal.get(`rooms/?search=${search}`);
       return res.data.data;
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -20,11 +20,11 @@ const getAllRoom = createAsyncThunk<IRoom[], void, { rejectValue: string }>(
 
 const getAllRoomDeleted = createAsyncThunk<
   IRoom[],
-  void,
+  string,
   { rejectValue: string }
->("rooms/getAllRoomDeleted", async (_, { rejectWithValue }) => {
+>("rooms/getAllRoomDeleted", async (search, { rejectWithValue }) => {
   try {
-    const res = await instanceLocal.get("rooms/deleted");
+    const res = await instanceLocal.get(`rooms/deleted/?search=${search}`);
     return res.data.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {

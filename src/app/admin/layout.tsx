@@ -7,37 +7,16 @@ import {
 } from "@/components/ui/sidebar";
 
 import { authSelector } from "@/redux/selectors/authSelector";
-import { useAppDispatch } from "@/redux/store";
 import { useRouter } from "next/navigation";
 import { ReactNode, useEffect } from "react";
 import { useSelector } from "react-redux";
 import LoadingPage from "../_components/LoadingPage";
-import { getAllCart } from "../api/cartRequest";
-import { getAllOption } from "../api/optionRequest";
-import { getAllRoom } from "../api/roomRequest";
-import { getAllRoomType } from "../api/roomTypeRequest";
-import { getAllUser, getAllUserDeleted } from "../api/userRequest";
 import AppSidebar from "./AdminSideBar";
-import { getAllTypeBed } from "../api/typeBedRequest";
-import { getAllView } from "../api/viewRequest";
-import { getAllCategoryRoom } from "../api/categoryRoomRequest";
 
 function layoutAdmin({ children }: { children: ReactNode }) {
   const { currentUser } = useSelector(authSelector);
 
   const router = useRouter();
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    dispatch(getAllUser());
-    dispatch(getAllRoomType(""));
-    dispatch(getAllRoom());
-    dispatch(getAllCart());
-    dispatch(getAllOption());
-    dispatch(getAllTypeBed());
-    dispatch(getAllView());
-    dispatch(getAllCategoryRoom());
-  }, []);
 
   useEffect(() => {
     if (!currentUser || currentUser.role === "user") {

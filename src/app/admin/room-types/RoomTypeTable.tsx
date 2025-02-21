@@ -27,7 +27,7 @@ import { getAllRoomType } from "@/app/api/roomTypeRequest";
 import { useAppDispatch } from "@/redux/store";
 import useDebounce from "@/hooks/useDebounce";
 
-const RoomTypesTable = ({ open, onClose }: IForm) => {
+const RoomTypeTable = ({ open, onClose }: IForm) => {
   const { roomTypes } = useSelector(roomTypesSelector);
   const [search, setSearch] = useState("");
 
@@ -105,7 +105,7 @@ const RoomTypesTable = ({ open, onClose }: IForm) => {
             className="flex text-size-xl items-center cursor-pointer hover:text-sidebar-primary"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            view
+            View
             <ArrowUpDown />
           </div>
         );
@@ -123,7 +123,7 @@ const RoomTypesTable = ({ open, onClose }: IForm) => {
             className="flex text-size-xl items-center cursor-pointer hover:text-sidebar-primary"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            typeBed
+            Type Bed
             <ArrowUpDown />
           </div>
         );
@@ -142,7 +142,7 @@ const RoomTypesTable = ({ open, onClose }: IForm) => {
             className="flex text-size-xl items-center cursor-pointer hover:text-sidebar-primary"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            categoryRoom
+            Category Room
             <ArrowUpDown />
           </div>
         );
@@ -264,4 +264,4 @@ const RoomTypesTable = ({ open, onClose }: IForm) => {
   );
 };
 
-export default RoomTypesTable;
+export default RoomTypeTable;

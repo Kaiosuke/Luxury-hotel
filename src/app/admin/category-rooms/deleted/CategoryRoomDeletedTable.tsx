@@ -27,13 +27,18 @@ import { categoryRoomsSelector } from "@/redux/selectors/categoryRoomsSelector";
 import { useAppDispatch } from "@/redux/store";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import useDebounce from "@/hooks/useDebounce";
 
 const CategoryRoomDeletedTable = ({ open, onClose }: IForm) => {
   const dispatch = useAppDispatch();
 
+  const [search, setSearch] = useState("");
+
+  const debounce = useDebounce({ value: search });
+
   useEffect(() => {
-    dispatch(getAllCategoryRoomDeleted());
-  }, []);
+    dispatch(getAllCategoryRoomDeleted(search));
+  }, [debounce]);
 
   const { categoryRoomsDeleted } = useSelector(categoryRoomsSelector);
 
@@ -113,19 +118,28 @@ const CategoryRoomDeletedTable = ({ open, onClose }: IForm) => {
       cell: ({ row }) => <div>{row.getValue("title")}</div>,
     },
     {
-      accessorKey: "roomTypeId",
+      accessorKey: "roomTypes",
       header: ({ column }) => {
         return (
           <div
             className="flex text-size-xl items-center cursor-pointer hover:text-sidebar-primary"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            Room Type
+            Room Types
             <ArrowUpDown />
           </div>
         );
       },
-      cell: ({ row }) => <div>{row.getValue("roomTypeId")}</div>,
+      cell: ({ row }) => {
+        const roomTypes = row.original.roomTypes;
+        return (
+          <div>
+            {roomTypes.map((roomType: { _id: string; title: string }) => (
+              <div key={roomType._id}>{roomType.title}</div>
+            ))}
+          </div>
+        );
+      },
     },
     {
       id: "actions",
@@ -178,6 +192,8 @@ const CategoryRoomDeletedTable = ({ open, onClose }: IForm) => {
         data={categoryRoomsDeleted}
         columns={CategoryRoomColumns}
         filterPlaceholders="title"
+        search={search}
+        setSearch={setSearch}
       />
       {open && (
         <FormCategoryRoom

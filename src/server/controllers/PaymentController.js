@@ -26,14 +26,13 @@ import { deleteData, forceDeleteData } from "../services/deleteService.js";
 const PaymentController = {
   getAll: async (req, res) => {
     try {
-      const payments = await getAllData(Payment, [
-        { userId: "username" },
-        { cartId: "" },
-      ]);
+      const search = req.query.search || "";
+      const payments = await getAllData(
+        Payment,
+        [{ userId: "username" }, { cartId: "" }],
+        search.trim()
+      );
 
-      if (!payments.length) {
-        return handleError404(res);
-      }
       return handleSuccess200(res, payments);
     } catch (error) {
       return handleError500(res, error);
@@ -42,13 +41,14 @@ const PaymentController = {
 
   getAllDeleted: async (req, res) => {
     try {
-      const payments = await getAllDataDeleted(Option, [
-        { userId: "username" },
-        { cartId: "" },
-      ]);
-      if (!payments.length) {
-        return handleError404(res);
-      }
+      const search = req.query.search || "";
+
+      const payments = await getAllDataDeleted(
+        Option,
+        [{ userId: "username" }, { cartId: "" }],
+        search.trim()
+      );
+
       return handleSuccess200(res, payments);
     } catch (error) {
       return handleError500(res, req);
@@ -86,7 +86,10 @@ const PaymentController = {
         return handleError404WithData(res, "cart");
       }
 
-      const newPayment = await createData(Payment, req.body);
+      const newPayment = await createData(Payment, req.body, [
+        { userId: "username" },
+        { cartId: "" },
+      ]);
 
       await findByIdAndPushData(User, userId, "payments", newPayment._id);
       await findByIdAndPushData(Cart, cartId, "payments", newPayment._id);
@@ -117,7 +120,10 @@ const PaymentController = {
         return handleError404WithData(res, "cart");
       }
 
-      const updatePayment = await findByIdAndUpdateData(Payment, id, req.body);
+      const updatePayment = await findByIdAndUpdateData(Payment, id, req.body, [
+        { userId: "username" },
+        { cartId: "" },
+      ]);
 
       if (findPayment.userId !== userId) {
         await findByIdAndPullData(
@@ -183,7 +189,10 @@ const PaymentController = {
         return handleError404(res);
       }
 
-      const findPayment = await getDataById(Payment, id);
+      const findPayment = await getDataById(Payment, id, [
+        { userId: "username" },
+        { cartId: "" },
+      ]);
 
       const findUser = await findByIdAndPushData(
         User,

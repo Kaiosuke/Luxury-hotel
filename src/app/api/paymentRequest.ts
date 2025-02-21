@@ -5,11 +5,11 @@ import { IPayment } from "@/interfaces";
 
 const getAllPayment = createAsyncThunk<
   IPayment[],
-  void,
+  string,
   { rejectValue: string }
->("payments/getAllPayment", async (_, { rejectWithValue }) => {
+>("payments/getAllPayment", async (search, { rejectWithValue }) => {
   try {
-    const res = await instanceLocal.get("payments");
+    const res = await instanceLocal.get(`payments/?search=${search}`);
     return res.data.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -21,11 +21,11 @@ const getAllPayment = createAsyncThunk<
 
 const getAllPaymentDeleted = createAsyncThunk<
   IPayment[],
-  void,
+  string,
   { rejectValue: string }
->("payments/getAllPaymentDeleted", async (_, { rejectWithValue }) => {
+>("payments/getAllPaymentDeleted", async (search, { rejectWithValue }) => {
   try {
-    const res = await instanceLocal.get("payments/deleted");
+    const res = await instanceLocal.get(`payments/deleted/?search=${search}`);
     return res.data.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {

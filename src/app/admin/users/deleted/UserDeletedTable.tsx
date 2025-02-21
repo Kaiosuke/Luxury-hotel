@@ -17,21 +17,24 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useToast } from "@/hooks/use-toast";
 import { IForm, IUser } from "@/interfaces";
 import { usersSelector } from "@/redux/selectors/usersSelector";
 import { useAppDispatch } from "@/redux/store";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useToast } from "@/hooks/use-toast";
+import useDebounce from "@/hooks/useDebounce";
 
 const UserDeletedTable = ({ open, onClose }: IForm) => {
+  const { usersDeleted } = useSelector(usersSelector);
   const dispatch = useAppDispatch();
+  const [search, setSearch] = useState("");
+
+  const debounce = useDebounce({ value: search });
 
   useEffect(() => {
-    dispatch(getAllUserDeleted());
-  }, []);
-
-  const { usersDeleted } = useSelector(usersSelector);
+    dispatch(getAllUserDeleted(search));
+  }, [debounce]);
 
   const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
   const [openFormDelete, setOpenFormDelete] = useState(false);
@@ -188,6 +191,8 @@ const UserDeletedTable = ({ open, onClose }: IForm) => {
         data={usersDeleted}
         columns={userColumns}
         filterPlaceholders="username"
+        search={search}
+        setSearch={setSearch}
       />
       {open && (
         <FormUser open={open} onClose={handleCloseForm} _id={selectedUserId} />

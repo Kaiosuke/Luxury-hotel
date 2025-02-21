@@ -3,11 +3,11 @@ import axios from "axios";
 import instanceLocal from "./instances";
 import { IView } from "@/interfaces";
 
-const getAllView = createAsyncThunk<IView[], void, { rejectValue: string }>(
+const getAllView = createAsyncThunk<IView[], string, { rejectValue: string }>(
   "views/getAllViews",
-  async (_, { rejectWithValue }) => {
+  async (search, { rejectWithValue }) => {
     try {
-      const res = await instanceLocal.get("views");
+      const res = await instanceLocal.get(`views/?search=${search}`);
       return res.data.data;
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -20,11 +20,11 @@ const getAllView = createAsyncThunk<IView[], void, { rejectValue: string }>(
 
 const getAllViewDeleted = createAsyncThunk<
   IView[],
-  void,
+  string,
   { rejectValue: string }
->("views/getAllViewDeleted", async (_, { rejectWithValue }) => {
+>("views/getAllViewDeleted", async (search, { rejectWithValue }) => {
   try {
-    const res = await instanceLocal.get("views/deleted");
+    const res = await instanceLocal.get(`views/deleted/?search=${search}`);
     return res.data.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {

@@ -17,6 +17,7 @@ import UserDeletedTable from "./UserDeletedTable";
 
 const page = () => {
   const [openForm, setOpenForm] = useState(false);
+
   return (
     <div>
       <BreadcrumbComponent page="Users" />

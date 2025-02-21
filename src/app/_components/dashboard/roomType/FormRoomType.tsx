@@ -26,10 +26,10 @@ import { IForm } from "@/interfaces";
 import { useAppDispatch } from "@/redux/store";
 import { RoomTypesSchema } from "@/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
-import { featureList, quickDesList, shortFeaturesList } from "@/app/data.json";
+import { featureList, quickDesList, featuresList } from "@/app/data.json";
 import { Checkbox } from "@/components/ui/checkbox";
 import { categoryRoomsSelector } from "@/redux/selectors/categoryRoomsSelector";
 import { typeBedsSelector } from "@/redux/selectors/typeBedsSelector";
@@ -42,7 +42,7 @@ import FormUploadImage from "./FormUploadImage";
 
 function FormRoomType({ open, onClose, _id }: IForm) {
   const [quickDes, setQuickDes] = useState<string[]>([]);
-  const [shortFeatures, setShortFeatures] = useState<string[]>([]);
+  const [features, setFeatures] = useState<string[]>([]);
   const [detailFeatures, setDetailFeatures] = useState<string[]>([]);
   const [typeBedId, setTypeBedId] = useState<string>("");
   const [viewId, setViewId] = useState<string>("");
@@ -96,7 +96,7 @@ function FormRoomType({ open, onClose, _id }: IForm) {
           });
 
           setQuickDes(roomType.quickDes);
-          setShortFeatures(roomType.features);
+          setFeatures(roomType.features);
           setDetailFeatures(roomType.detailFeatures);
           setCategoryRoomId(roomType.categoryRoomId?._id || "");
           setViewId(roomType.viewId?._id || "");
@@ -116,12 +116,6 @@ function FormRoomType({ open, onClose, _id }: IForm) {
       })();
     }
   }, [_id]);
-
-  useEffect(() => {
-    setValue("viewId", viewId, { shouldValidate: true });
-    setValue("categoryRoomId", categoryRoomId, { shouldValidate: true });
-    setValue("typeBedId", typeBedId, { shouldValidate: true });
-  }, [viewId, categoryRoomId, typeBedId, setValue]);
 
   const UPLOAD_PRESET = process.env.NEXT_PUBLIC_UPLOAD_PRESET!;
   const CLOUD_NAME = process.env.NEXT_PUBLIC_CLOUD_NAME;
@@ -185,14 +179,14 @@ function FormRoomType({ open, onClose, _id }: IForm) {
     }
   };
 
-  const handleShortFeatures = (value: string) => {
-    const exist = shortFeatures.includes(value);
+  const handleFeatures = (value: string) => {
+    const exist = features.includes(value);
     if (exist) {
-      setShortFeatures((prev) => {
+      setFeatures((prev) => {
         return prev.filter((data) => data !== value);
       });
     } else {
-      setShortFeatures((prev) => {
+      setFeatures((prev) => {
         return [...prev, value];
       });
     }
@@ -274,12 +268,12 @@ function FormRoomType({ open, onClose, _id }: IForm) {
     } else {
       try {
         await dispatch(addRoomType(newRoomType)).unwrap();
-
         toast({
           variant: "success",
           title: "Success",
           description: "Add Room Type success",
         });
+        onClose(true);
       } catch (error) {
         const errorMessage =
           typeof error === "string" ? error : "Something went wrong";
@@ -553,7 +547,7 @@ function FormRoomType({ open, onClose, _id }: IForm) {
                       </DialogTitle>
                     </DialogHeader>
                     <div className="grid sm:grid-cols-2 grid-cols-1 items-start w-full">
-                      {shortFeaturesList.map((feature, index) => (
+                      {featuresList.map((feature, index) => (
                         <div
                           key={index}
                           className="flex items-center space-x-2"
@@ -561,8 +555,8 @@ function FormRoomType({ open, onClose, _id }: IForm) {
                           <Checkbox
                             id={"shortFeature" + index}
                             className="text-secondary"
-                            checked={shortFeatures.includes(feature)}
-                            onCheckedChange={() => handleShortFeatures(feature)}
+                            checked={features.includes(feature)}
+                            onCheckedChange={() => handleFeatures(feature)}
                           />
                           <label
                             htmlFor={"shortFeature" + index}

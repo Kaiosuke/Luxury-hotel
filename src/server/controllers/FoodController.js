@@ -24,11 +24,12 @@ import { createData } from "../services/postService.js";
 const FoodController = {
   getAll: async (req, res) => {
     try {
-      const foods = await getAllData(Food, [{ options: "title" }]);
-
-      if (!foods.length) {
-        return handleError404(res);
-      }
+      const search = req.query.search || "";
+      const foods = await getAllData(
+        Food,
+        [{ options: "title" }],
+        search.trim()
+      );
       return handleSuccess200(res, foods);
     } catch (error) {
       return handleError500(res, error);
@@ -37,10 +38,13 @@ const FoodController = {
 
   getAllDeleted: async (req, res) => {
     try {
-      const foods = await getAllDataDeleted(Food, [{ options: "title" }]);
-      if (!foods.length) {
-        return handleError404(res);
-      }
+      const search = req.query.search || "";
+
+      const foods = await getAllDataDeleted(
+        Food,
+        [{ options: "title" }],
+        search.trim()
+      );
       return handleSuccess200(res, foods);
     } catch (error) {
       return handleError500(res, req);
@@ -68,7 +72,7 @@ const FoodController = {
       if (findFood) {
         return handleError409(res, `${title} already exists!`);
       }
-      const newFood = await createData(Food, req.body);
+      const newFood = await createData(Food, req.body, [{ options: "title" }]);
       return handleSuccess201(res, newFood);
     } catch (error) {
       return handleError500(res, error);
@@ -82,7 +86,9 @@ const FoodController = {
       if (!findFood) {
         return handleError404(res);
       }
-      const updateFood = await findByIdAndUpdateData(Food, id, req.body);
+      const updateFood = await findByIdAndUpdateData(Food, id, req.body, [
+        { options: "title" },
+      ]);
       return handleSuccess200(res, updateFood);
     } catch (error) {
       return handleError500(res, error);
@@ -128,7 +134,7 @@ const FoodController = {
         return handleError404(res);
       }
 
-      const findRoom = await getDataById(Food, id);
+      const findRoom = await getDataById(Food, id, [{ options: "title" }]);
 
       return handleSuccess200(res, findRoom);
     } catch (error) {

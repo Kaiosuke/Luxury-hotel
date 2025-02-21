@@ -1,6 +1,5 @@
 import { addRoom, getRoom, updateRoom } from "@/app/api/roomRequest";
 import { getRoomType } from "@/app/api/roomTypeRequest";
-import { addUser, getUser, updateUser } from "@/app/api/userRequest";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -18,10 +17,10 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
-import { ERole, IForm, IUser } from "@/interfaces";
+import { IForm } from "@/interfaces";
 import { roomTypesSelector } from "@/redux/selectors/roomTypesSelector";
 import { useAppDispatch } from "@/redux/store";
-import { RoomSchema, UserSchema } from "@/schemas";
+import { RoomSchema } from "@/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -29,13 +28,16 @@ import { useSelector } from "react-redux";
 
 function FormRoom({ open, onClose, _id }: IForm) {
   const [status, setStatus] = useState("available");
-  const [roomType, setRoomType] = useState("1");
+  const [roomTypeId, setRoomTypeId] = useState("1");
   const [floor, setFloor] = useState(1);
 
-  const { register, formState, handleSubmit, reset } = useForm({
+  const { register, formState, handleSubmit, reset, setValue } = useForm({
     resolver: zodResolver(RoomSchema),
     defaultValues: {
       roomNumber: "",
+      roomTypeId: "",
+      floor: "",
+      status: "",
     },
   });
 
@@ -44,17 +46,20 @@ function FormRoom({ open, onClose, _id }: IForm) {
   const dispatch = useAppDispatch();
   const { toast } = useToast();
 
+  console.log(typeof floor, floor);
+
   useEffect(() => {
     if (_id) {
       (async () => {
         const room = await dispatch(getRoom(_id)).unwrap();
-        const roomType = await dispatch(getRoomType(room.roomTypeId)).unwrap();
+
         reset({
           roomNumber: room.roomNumber,
+          roomTypeId: room.roomTypeId,
         });
         setStatus(room.status);
         setFloor(room.floor);
-        setRoomType(roomType.id);
+        setRoomTypeId(room.roomTypeId);
       })();
     }
   }, [_id]);
@@ -62,27 +67,50 @@ function FormRoom({ open, onClose, _id }: IForm) {
   const handleGetData = (data: any) => {
     const newRoom = {
       ...data,
-      roomTypeId: roomType,
       floor,
       status,
       bookedDates: [],
     };
     if (_id) {
-      dispatch(updateRoom({ _id, room: newRoom }));
-      toast({
-        variant: "success",
-        title: "success",
-        description: "Update Room success",
-      });
+      (async () => {
+        try {
+          await dispatch(updateRoom({ _id, room: newRoom })).unwrap();
+          toast({
+            variant: "success",
+            title: "success",
+            description: "Update Room success",
+          });
+        } catch (error) {
+          const errorMessage =
+            typeof error === "string" ? error : "Something went wrong";
+          toast({
+            variant: "destructive",
+            title: "Failed",
+            description: errorMessage,
+          });
+        }
+      })();
     } else {
-      dispatch(addRoom(newRoom));
-      toast({
-        variant: "success",
-        title: "success",
-        description: "Add Room success",
-      });
+      (async () => {
+        try {
+          await dispatch(addRoom(newRoom)).unwrap();
+          toast({
+            variant: "success",
+            title: "success",
+            description: "Add Room success",
+          });
+        } catch (error) {
+          const errorMessage =
+            typeof error === "string" ? error : "Something went wrong";
+          toast({
+            variant: "destructive",
+            title: "Failed",
+            description: errorMessage,
+          });
+        }
+      })();
     }
-    return onClose(false);
+    // return onClose(false);
   };
 
   return (
@@ -114,8 +142,11 @@ function FormRoom({ open, onClose, _id }: IForm) {
 
               <div className="">
                 <Select
-                  value={roomType}
-                  onValueChange={(value) => setRoomType(value)}
+                  value={roomTypeId}
+                  onValueChange={(value) => {
+                    setRoomTypeId(value);
+                    setValue("roomTypeId", value, { shouldValidate: true });
+                  }}
                 >
                   <Label>Room Type</Label>
                   <SelectTrigger className="w-[180px] text-sm">
@@ -124,12 +155,15 @@ function FormRoom({ open, onClose, _id }: IForm) {
                   <SelectContent className="bg-sidebar-four text-sidebar-primary ">
                     {roomTypes.length &&
                       roomTypes.map((roomType) => (
-                        <SelectItem key={roomType.id} value={roomType.id}>
+                        <SelectItem key={roomType._id} value={roomType._id}>
                           {roomType.title}
                         </SelectItem>
                       ))}
                   </SelectContent>
                 </Select>
+                <span className="text-red-500 text-sm">
+                  {formState.errors.roomTypeId?.message}
+                </span>
               </div>
 
               <div className="">
@@ -150,6 +184,9 @@ function FormRoom({ open, onClose, _id }: IForm) {
                     <SelectItem value="6">6</SelectItem>
                   </SelectContent>
                 </Select>
+                <span className="text-red-500 text-sm">
+                  {formState.errors.floor?.message}
+                </span>
               </div>
 
               <div className="">

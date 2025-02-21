@@ -5,15 +5,16 @@ import {
   handleError500,
   handleSuccess200,
 } from "../../utils/helpers/handleStatusCode.js";
-import User from "../models/User.js";
+import env from "../config/envConfig.js";
 import Cart from "../models/Cart.js";
 import Payment from "../models/Payment.js";
 import Review from "../models/Review.js";
-import env from "../config/envConfig.js";
+import User from "../models/User.js";
 
+import { deleteData, forceDeleteData } from "../services/deleteService.js";
 import {
-  getAllData,
-  getAllDataDeleted,
+  getAllUser,
+  getAllUserDeleted,
   getData,
   getDataById,
 } from "../services/getService.js";
@@ -21,35 +22,31 @@ import {
   findByIdAndUpdateData,
   restoreData,
 } from "../services/patchService.js";
-import { deleteData, forceDeleteData } from "../services/deleteService.js";
 
 const UserController = {
   getAll: async (req, res) => {
     try {
-      const users = await getAllData(User, [
-        { carts: "title" },
-        { reviews: "title" },
-        { payments: "title" },
-      ]);
-      if (!users.length) {
-        return handleError404(res);
-      }
+      const search = req.query.search || "";
+      const users = await getAllUser(
+        User,
+        [{ carts: "title" }, { reviews: "title" }, { payments: "title" }],
+        search.trim()
+      );
       return handleSuccess200(res, users);
     } catch (error) {
+      console.log(error);
       return handleError500(res, req);
     }
   },
 
   getAllDeleted: async (req, res) => {
     try {
-      const users = await getAllDataDeleted(User, [
-        { carts: "title" },
-        { reviews: "title" },
-        { payments: "title" },
-      ]);
-      if (!users.length) {
-        return handleError404(res);
-      }
+      const search = req.query.search || "";
+      const users = await getAllUserDeleted(
+        User,
+        [{ carts: "title" }, { reviews: "title" }, { payments: "title" }],
+        search
+      );
       return handleSuccess200(res, users);
     } catch (error) {
       return handleError500(res, req);
@@ -89,7 +86,11 @@ const UserController = {
       ) {
         return handleError403(res);
       }
-      const updateUser = await findByIdAndUpdateData(User, id, req.body);
+      const updateUser = await findByIdAndUpdateData(User, id, req.body, [
+        { carts: "title" },
+        { reviews: "title" },
+        { payments: "title" },
+      ]);
 
       const { password, ...others } = updateUser._doc;
 
@@ -162,7 +163,11 @@ const UserController = {
         return handleError404(res);
       }
 
-      const findUser = await getDataById(User, id);
+      const findUser = await getDataById(User, id, [
+        { carts: "title" },
+        { reviews: "title" },
+        { payments: "title" },
+      ]);
 
       const { password, ...others } = findUser._doc;
 

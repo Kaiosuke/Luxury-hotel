@@ -3,28 +3,29 @@ import axios from "axios";
 import instanceLocal from "./instances";
 import { IReview } from "@/interfaces";
 
-const getAllReview = createAsyncThunk<IReview[], void, { rejectValue: string }>(
-  "reviews/getAllReview",
-  async (_, { rejectWithValue }) => {
-    try {
-      const res = await instanceLocal.get("reviews");
-      return res.data.data;
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        return rejectWithValue(error.response?.data?.message);
-      }
-      return rejectWithValue("An unexpected error occurred");
+const getAllReview = createAsyncThunk<
+  IReview[],
+  string,
+  { rejectValue: string }
+>("reviews/getAllReview", async (search, { rejectWithValue }) => {
+  try {
+    const res = await instanceLocal.get(`reviews/?search=${search}`);
+    return res.data.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      return rejectWithValue(error.response?.data?.message);
     }
+    return rejectWithValue("An unexpected error occurred");
   }
-);
+});
 
 const getAllReviewDeleted = createAsyncThunk<
   IReview[],
-  void,
+  string,
   { rejectValue: string }
->("reviews/getAllReviewDeleted", async (_, { rejectWithValue }) => {
+>("reviews/getAllReviewDeleted", async (search, { rejectWithValue }) => {
   try {
-    const res = await instanceLocal.get("reviews/deleted");
+    const res = await instanceLocal.get(`reviews/deleted/?search=${search}`);
     return res.data.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {

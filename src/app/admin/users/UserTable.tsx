@@ -18,12 +18,23 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { IForm, IUser } from "@/interfaces";
 import { usersSelector } from "@/redux/selectors/usersSelector";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { useAppDispatch } from "@/redux/store";
+import { getAllUser } from "@/app/api/userRequest";
+import useDebounce from "@/hooks/useDebounce";
 
 const UserTable = ({ open, onClose }: IForm) => {
-  const { users } = useSelector(usersSelector);
+  const dispatch = useAppDispatch();
+  const [search, setSearch] = useState("");
 
+  const debounce = useDebounce({ value: search });
+
+  useEffect(() => {
+    dispatch(getAllUser(search));
+  }, [debounce]);
+
+  const { users } = useSelector(usersSelector);
   const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
   const [openFormDelete, setOpenFormDelete] = useState(false);
 
@@ -163,6 +174,8 @@ const UserTable = ({ open, onClose }: IForm) => {
         data={users}
         columns={userColumns}
         filterPlaceholders="username"
+        search={search}
+        setSearch={setSearch}
       />
       {open && (
         <FormUser open={open} onClose={handleCloseForm} _id={selectedUserId} />

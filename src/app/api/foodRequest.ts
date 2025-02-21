@@ -3,11 +3,11 @@ import axios from "axios";
 import instanceLocal from "./instances";
 import { IFood } from "@/interfaces";
 
-const getAllFood = createAsyncThunk<IFood[], void, { rejectValue: string }>(
+const getAllFood = createAsyncThunk<IFood[], string, { rejectValue: string }>(
   "foods/getAllFood",
-  async (_, { rejectWithValue }) => {
+  async (search, { rejectWithValue }) => {
     try {
-      const res = await instanceLocal.get("foods");
+      const res = await instanceLocal.get(`foods/?search=${search}`);
       return res.data.data;
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -20,11 +20,11 @@ const getAllFood = createAsyncThunk<IFood[], void, { rejectValue: string }>(
 
 const getAllFoodDeleted = createAsyncThunk<
   IFood[],
-  void,
+  string,
   { rejectValue: string }
->("foods/getAllFoodDeleted", async (_, { rejectWithValue }) => {
+>("foods/getAllFoodDeleted", async (search, { rejectWithValue }) => {
   try {
-    const res = await instanceLocal.get("foods/deleted");
+    const res = await instanceLocal.get(`foods/deleted/?search=${search}`);
     return res.data.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -95,7 +95,7 @@ const deleteFood = createAsyncThunk<string, string, { rejectValue: string }>(
   }
 );
 
-const restoreFood = createAsyncThunk<IFood, IFood, { rejectValue: string }>(
+const restoreFood = createAsyncThunk<IFood, string, { rejectValue: string }>(
   "foods/restoreFood",
   async (_id, { rejectWithValue }) => {
     try {

@@ -4,7 +4,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 
 import FormDeleteView from "@/app/_components/dashboard/view/FormDeleteView";
-import FormView from "@/app/_components/dashboard/view/FormTypeView";
+import FormView from "@/app/_components/dashboard/view/FormView";
 import DataTable from "@/app/_components/DataTable";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -18,11 +18,24 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { IForm, IView } from "@/interfaces";
 import { viewsSelector } from "@/redux/selectors/viewsSelector";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import useDebounce from "@/hooks/useDebounce";
+import { useAppDispatch } from "@/redux/store";
+import { getAllView } from "@/app/api/viewRequest";
 
-const ViewsTable = ({ open, onClose }: IForm) => {
+const ViewTable = ({ open, onClose }: IForm) => {
   const { views } = useSelector(viewsSelector);
+
+  const [search, setSearch] = useState("");
+
+  const debounce = useDebounce({ value: search });
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(getAllView(search));
+  }, [debounce]);
 
   const [selectedViewId, setSelectedViewId] = useState<string | null>(null);
   const [openFormDelete, setOpenFormDelete] = useState(false);
@@ -81,19 +94,28 @@ const ViewsTable = ({ open, onClose }: IForm) => {
       cell: ({ row }) => <div>{row.getValue("title")}</div>,
     },
     {
-      accessorKey: "roomTypeId",
+      accessorKey: "roomTypes",
       header: ({ column }) => {
         return (
           <div
             className="flex text-size-xl items-center cursor-pointer hover:text-sidebar-primary"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            Room Type
+            Room Types
             <ArrowUpDown />
           </div>
         );
       },
-      cell: ({ row }) => <div>{row.getValue("roomTypeId")}</div>,
+      cell: ({ row }) => {
+        const roomTypes = row.original.roomTypes;
+        return (
+          <div>
+            {roomTypes.map((roomType: { _id: string; title: string }) => (
+              <div key={roomType._id}>{roomType.title}</div>
+            ))}
+          </div>
+        );
+      },
     },
 
     {
@@ -140,6 +162,8 @@ const ViewsTable = ({ open, onClose }: IForm) => {
         data={views}
         columns={ViewColumns}
         filterPlaceholders="title"
+        search={search}
+        setSearch={setSearch}
       />
       {open && (
         <FormView open={open} onClose={handleCloseForm} _id={selectedViewId} />
@@ -155,4 +179,4 @@ const ViewsTable = ({ open, onClose }: IForm) => {
   );
 };
 
-export default ViewsTable;
+export default ViewTable;

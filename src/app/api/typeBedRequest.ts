@@ -5,11 +5,11 @@ import { ITypeBed } from "@/interfaces";
 
 const getAllTypeBed = createAsyncThunk<
   ITypeBed[],
-  void,
+  string,
   { rejectValue: string }
->("typeBeds/getAllTypeBeds", async (_, { rejectWithValue }) => {
+>("typeBeds/getAllTypeBeds", async (search, { rejectWithValue }) => {
   try {
-    const res = await instanceLocal.get("type-beds");
+    const res = await instanceLocal.get(`type-beds/?search=${search}`);
     return res.data.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -21,11 +21,11 @@ const getAllTypeBed = createAsyncThunk<
 
 const getAllTypeBedDeleted = createAsyncThunk<
   ITypeBed[],
-  void,
+  string,
   { rejectValue: string }
->("typeBeds/getAllTypeBedDeleted", async (_, { rejectWithValue }) => {
+>("typeBeds/getAllTypeBedDeleted", async (search, { rejectWithValue }) => {
   try {
-    const res = await instanceLocal.get("type-beds/deleted");
+    const res = await instanceLocal.get(`type-beds/deleted/?search=${search}`);
     return res.data.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {

@@ -5,7 +5,7 @@ const OptionSchema = new Schema(
   {
     title: { type: String, require: true },
     price: { type: Number, require: true },
-    extensions: [{ type: String, require: true }],
+    extension: { type: String, require: true },
     typeDescription: { type: String, require: true },
     carts: [
       {

@@ -29,13 +29,17 @@ import { useSelector } from "react-redux";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import Image from "next/image";
 import { formatMoney } from "@/utils/helpers";
+import useDebounce from "@/hooks/useDebounce";
 
 const RoomTypeDeletedTable = ({ open, onClose }: IForm) => {
   const dispatch = useAppDispatch();
+  const [search, setSearch] = useState("");
+
+  const debounce = useDebounce({ value: search });
 
   useEffect(() => {
-    dispatch(getAllRoomTypeDeleted());
-  }, []);
+    dispatch(getAllRoomTypeDeleted(search));
+  }, [debounce]);
 
   const { roomTypesDeleted } = useSelector(roomTypesSelector);
 
@@ -122,7 +126,7 @@ const RoomTypeDeletedTable = ({ open, onClose }: IForm) => {
             className="flex text-size-xl items-center cursor-pointer hover:text-sidebar-primary"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            view
+            View
             <ArrowUpDown />
           </div>
         );
@@ -140,7 +144,7 @@ const RoomTypeDeletedTable = ({ open, onClose }: IForm) => {
             className="flex text-size-xl items-center cursor-pointer hover:text-sidebar-primary"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            typeBed
+            Type Bed
             <ArrowUpDown />
           </div>
         );
@@ -159,7 +163,7 @@ const RoomTypeDeletedTable = ({ open, onClose }: IForm) => {
             className="flex text-size-xl items-center cursor-pointer hover:text-sidebar-primary"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            categoryRoom
+            Category Room
             <ArrowUpDown />
           </div>
         );
@@ -263,6 +267,8 @@ const RoomTypeDeletedTable = ({ open, onClose }: IForm) => {
         data={roomTypesDeleted}
         columns={RoomTypeColumns}
         filterPlaceholders="title"
+        search={search}
+        setSearch={setSearch}
       />
       {open && (
         <FormRoomType

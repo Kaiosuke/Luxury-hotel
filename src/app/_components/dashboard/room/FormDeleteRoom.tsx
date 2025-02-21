@@ -16,14 +16,25 @@ function FormDeleteRoom({ open, onClose, _id }: IForm) {
   const dispatch = useAppDispatch();
   const { toast } = useToast();
 
-  const handleDelete = () => {
-    _id && dispatch(deleteRoom(_id));
-    toast({
-      variant: "success",
-      title: "Success",
-      description: "Delete Room success",
-    });
-    return onClose(false);
+  const handleDelete = async () => {
+    try {
+      _id && (await dispatch(deleteRoom(_id)).unwrap());
+      toast({
+        variant: "success",
+        title: "Success",
+        description: "Delete Room success",
+      });
+      return onClose(false);
+    } catch (error) {
+      const errorMessage =
+        typeof error === "string" ? error : "Something went wrong";
+      toast({
+        variant: "destructive",
+        title: "Failed",
+        description: errorMessage,
+      });
+      return onClose(false);
+    }
   };
   return (
     <Dialog open={open} onOpenChange={onClose}>

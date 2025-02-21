@@ -28,11 +28,44 @@ import { deleteData, forceDeleteData } from "../services/deleteService.js";
 const RoomController = {
   getAll: async (req, res) => {
     try {
-      const rooms = await getAllData(Room, [{ roomTypeId: "title" }]);
+      const search = req.query.search || "";
 
-      if (!rooms.length) {
-        return handleError404(res);
-      }
+      const rooms = await Room.aggregate([
+        {
+          $addFields: {
+            roomTypeId: { $toObjectId: "$roomTypeId" },
+          },
+        },
+        {
+          $lookup: {
+            from: "roomtypes",
+            localField: "roomTypeId",
+            foreignField: "_id",
+            as: "roomType",
+          },
+        },
+        {
+          $unwind: "$roomType",
+        },
+        {
+          $match: {
+            "roomType.title": { $regex: search.trim(), $options: "i" },
+          },
+        },
+        {
+          $project: {
+            _id: 1,
+            roomNumber: 1,
+            roomTypeId: 1,
+            floor: 1,
+            status: 1,
+            bookedDates: 1,
+            carts: 1,
+            "roomType.title": 1,
+          },
+        },
+      ]);
+
       return handleSuccess200(res, rooms);
     } catch (error) {
       return handleError500(res, error);
@@ -41,10 +74,14 @@ const RoomController = {
 
   getAllDeleted: async (req, res) => {
     try {
-      const rooms = await getAllDataDeleted(Room, [{ roomTypeId: "title" }]);
-      if (!rooms.length) {
-        return handleError404(res);
-      }
+      const search = req.query.search || "";
+
+      const rooms = await getAllDataDeleted(
+        Room,
+        [{ roomTypeId: "title" }],
+        search.trim()
+      );
+
       return handleSuccess200(res, rooms);
     } catch (error) {
       return handleError500(res, req);
@@ -78,7 +115,43 @@ const RoomController = {
 
       await findByIdAndPushData(RoomType, roomTypeId, "rooms", newRoom._id);
 
-      return handleSuccess201(res, newRoom);
+      const room = await Room.aggregate([
+        {
+          $addFields: {
+            roomTypeId: { $toObjectId: "$roomTypeId" },
+          },
+        },
+        {
+          $lookup: {
+            from: "roomtypes",
+            localField: "roomTypeId",
+            foreignField: "_id",
+            as: "roomType",
+          },
+        },
+        {
+          $unwind: "$roomType",
+        },
+        {
+          $match: {
+            _id: newRoom._id,
+          },
+        },
+        {
+          $project: {
+            _id: 1,
+            roomNumber: 1,
+            roomTypeId: 1,
+            floor: 1,
+            status: 1,
+            bookedDates: 1,
+            carts: 1,
+            "roomType.title": 1,
+          },
+        },
+      ]);
+
+      return handleSuccess201(res, room);
     } catch (error) {
       return handleError500(res, error);
     }
@@ -116,7 +189,43 @@ const RoomController = {
         );
       }
 
-      await handleSuccess201(res, updateRoom);
+      const room = await Room.aggregate([
+        {
+          $addFields: {
+            roomTypeId: { $toObjectId: "$roomTypeId" },
+          },
+        },
+        {
+          $lookup: {
+            from: "roomtypes",
+            localField: "roomTypeId",
+            foreignField: "_id",
+            as: "roomType",
+          },
+        },
+        {
+          $unwind: "$roomType",
+        },
+        {
+          $match: {
+            _id: id,
+          },
+        },
+        {
+          $project: {
+            _id: 1,
+            roomNumber: 1,
+            roomTypeId: 1,
+            floor: 1,
+            status: 1,
+            bookedDates: 1,
+            carts: 1,
+            "roomType.title": 1,
+          },
+        },
+      ]);
+
+      await handleSuccess201(res, room);
     } catch (error) {
       return handleError500(res, error);
     }
@@ -179,7 +288,41 @@ const RoomController = {
         return handleError404(res);
       }
 
-      const findRoom = await getDataById(Room, id);
+      const findRoom = await Room.aggregate([
+        {
+          $addFields: {
+            roomTypeId: { $toObjectId: "$roomTypeId" },
+          },
+        },
+        {
+          $lookup: {
+            from: "roomtypes",
+            localField: "roomTypeId",
+            foreignField: "_id",
+            as: "roomType",
+          },
+        },
+        {
+          $unwind: "$roomType",
+        },
+        {
+          $match: {
+            _id: id,
+          },
+        },
+        {
+          $project: {
+            _id: 1,
+            roomNumber: 1,
+            roomTypeId: 1,
+            floor: 1,
+            status: 1,
+            bookedDates: 1,
+            carts: 1,
+            "roomType.title": 1,
+          },
+        },
+      ]);
 
       const findRoomType = await findByIdAndPushData(
         RoomType,
@@ -198,6 +341,7 @@ const RoomController = {
         );
       }
       findRoom.save();
+      console.log(findRoom);
       return handleSuccess200(res, findRoom);
     } catch (error) {
       return handleError500(res, error);

@@ -15,7 +15,7 @@ import {
 import { useState } from "react";
 import { FaPlus } from "react-icons/fa";
 import { IoMdOptions } from "react-icons/io";
-import TypeBedsTable from "./CategoryRoomTable";
+import CategoryRoomTable from "./CategoryRoomTable";
 
 const page = () => {
   const [openForm, setOpenForm] = useState(false);
@@ -52,7 +52,7 @@ const page = () => {
         </div>
       </div>
       <div className="mt-6">
-        <TypeBedsTable open={openForm} onClose={setOpenForm} />
+        <CategoryRoomTable open={openForm} onClose={setOpenForm} />
       </div>
     </div>
   );

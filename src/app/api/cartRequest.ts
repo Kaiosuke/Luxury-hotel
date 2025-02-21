@@ -3,11 +3,11 @@ import axios from "axios";
 import instanceLocal from "./instances";
 import { ICart } from "@/interfaces";
 
-const getAllCart = createAsyncThunk<ICart[], void, { rejectValue: string }>(
+const getAllCart = createAsyncThunk<ICart[], string, { rejectValue: string }>(
   "carts/getAllCart",
-  async (_, { rejectWithValue }) => {
+  async (search, { rejectWithValue }) => {
     try {
-      const res = await instanceLocal.get(`carts`);
+      const res = await instanceLocal.get(`carts/?search=${search}`);
       return res.data.data;
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -20,11 +20,11 @@ const getAllCart = createAsyncThunk<ICart[], void, { rejectValue: string }>(
 
 const getAllCartDeleted = createAsyncThunk<
   ICart[],
-  void,
+  string,
   { rejectValue: string }
->("carts/getAllCartDeleted", async (_, { rejectWithValue }) => {
+>("carts/getAllCartDeleted", async (search, { rejectWithValue }) => {
   try {
-    const res = await instanceLocal.get("carts/deleted");
+    const res = await instanceLocal.get(`carts/deleted/?search=${search}`);
     return res.data.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {

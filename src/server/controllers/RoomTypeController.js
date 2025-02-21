@@ -32,7 +32,7 @@ import { createData } from "../services/postService.js";
 const RoomTypeController = {
   getAll: async (req, res) => {
     try {
-      const search = req.query.search.trim() || "";
+      const search = req.query.search || "";
       const roomTypes = await getAllData(
         RoomType,
         [
@@ -40,7 +40,7 @@ const RoomTypeController = {
           { typeBedId: "title" },
           { categoryRoomId: "title" },
         ],
-        search
+        search.trim()
       );
 
       return handleSuccess200(res, roomTypes);
@@ -51,14 +51,17 @@ const RoomTypeController = {
 
   getAllDeleted: async (req, res) => {
     try {
-      const roomTypes = await getAllDataDeleted(RoomType, [
-        { viewId: "title" },
-        { typeBedId: "title" },
-        { categoryRoomId: "title" },
-      ]);
-      if (!roomTypes.length) {
-        return handleError404(res);
-      }
+      const search = req.query.search || "";
+      const roomTypes = await getAllDataDeleted(
+        RoomType,
+        [
+          { viewId: "title" },
+          { typeBedId: "title" },
+          { categoryRoomId: "title" },
+        ],
+        search.trim()
+      );
+
       return handleSuccess200(res, roomTypes);
     } catch (error) {
       return handleError500(res, req);

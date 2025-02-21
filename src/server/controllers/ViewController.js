@@ -24,11 +24,13 @@ import { createData } from "../services/postService.js";
 const ViewController = {
   getAll: async (req, res) => {
     try {
-      const views = await getAllData(View, [{ roomTypes: "title" }]);
+      const search = req.query.search || "";
 
-      if (!views.length) {
-        return handleError404(res);
-      }
+      const views = await getAllData(
+        View,
+        [{ roomTypes: "title" }],
+        search.trim()
+      );
 
       return handleSuccess200(res, views);
     } catch (error) {
@@ -38,10 +40,14 @@ const ViewController = {
 
   getAllDeleted: async (req, res) => {
     try {
-      const views = await getAllDataDeleted(View, [{ roomTypes: "title" }]);
-      if (!views.length) {
-        return handleError404(res);
-      }
+      const search = req.query.search || "";
+
+      const views = await getAllDataDeleted(
+        View,
+        [{ roomTypes: "title" }],
+        search.trim()
+      );
+
       return handleSuccess200(res, views);
     } catch (error) {
       return handleError500(res, req);
@@ -73,7 +79,9 @@ const ViewController = {
         return handleError409(res, `${title} already exists!`);
       }
 
-      const newView = await createData(View, req.body);
+      const newView = await createData(View, req.body, [
+        { roomTypes: "title" },
+      ]);
       return handleSuccess201(res, newView);
     } catch (error) {
       return handleError500(res, error);
@@ -90,7 +98,9 @@ const ViewController = {
         return handleError404(res);
       }
 
-      const updateView = await findByIdAndUpdateData(View, id, req.body);
+      const updateView = await findByIdAndUpdateData(View, id, req.body, [
+        { roomTypes: "title" },
+      ]);
 
       return handleSuccess200(res, updateView);
     } catch (error) {
@@ -139,7 +149,7 @@ const ViewController = {
         return handleError404(res);
       }
 
-      const findView = await getDataById(View, id);
+      const findView = await getDataById(View, id, [{ roomTypes: "title" }]);
 
       return handleSuccess200(res, findView);
     } catch (error) {

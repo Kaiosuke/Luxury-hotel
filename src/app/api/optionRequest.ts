@@ -3,28 +3,29 @@ import axios from "axios";
 import instanceLocal from "./instances";
 import { IOption } from "@/interfaces";
 
-const getAllOption = createAsyncThunk<IOption[], void, { rejectValue: string }>(
-  "options/getAllOption",
-  async (_, { rejectWithValue }) => {
-    try {
-      const res = await instanceLocal.get("options");
-      return res.data.data;
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        return rejectWithValue(error.response?.data?.message);
-      }
-      return rejectWithValue("An unexpected error occurred");
+const getAllOption = createAsyncThunk<
+  IOption[],
+  string,
+  { rejectValue: string }
+>("options/getAllOption", async (search, { rejectWithValue }) => {
+  try {
+    const res = await instanceLocal.get(`options/?search=${search}`);
+    return res.data.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      return rejectWithValue(error.response?.data?.message);
     }
+    return rejectWithValue("An unexpected error occurred");
   }
-);
+});
 
 const getAllOptionDeleted = createAsyncThunk<
   IOption[],
-  void,
+  string,
   { rejectValue: string }
->("options/getAllOptionDeleted", async (_, { rejectWithValue }) => {
+>("options/getAllOptionDeleted", async (search, { rejectWithValue }) => {
   try {
-    const res = await instanceLocal.get("options/deleted");
+    const res = await instanceLocal.get(`options/deleted/?search=${search}`);
     return res.data.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -97,7 +98,7 @@ const deleteOption = createAsyncThunk<string, string, { rejectValue: string }>(
 
 const restoreOption = createAsyncThunk<
   IOption,
-  IOption,
+  string,
   { rejectValue: string }
 >("options/restoreOption", async (_id, { rejectWithValue }) => {
   try {

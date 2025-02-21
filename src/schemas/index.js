@@ -103,7 +103,7 @@ const RoomTypesSchema = z.object({
 const RoomSchema = z.object({
   roomNumber: z.number().min(1, "Minimum number of rooms 1 characters"),
   roomTypeId: z.string().min(1, "Cannot be left blank"),
-  floor: z.number().min(1, "Minimum number of floor 1 characters"),
+  floor: z.any().optional(),
   status: z.string().optional(),
 });
 
@@ -127,7 +127,7 @@ const OptionSchema = z.object({
   title: z.string().min(1, "Minimum number of option 1 characters"),
   foodId: z.string().min(1, "Cannot be left blank"),
   price: z.number().min(1, "Price greater than or equal to 1"),
-  extensions: z.string().array().optional(),
+  extension: z.string().min(1, "Minimum number of extension 1 characters"),
   typeDescription: z
     .string()
     .min(1, "Minimum number of categoryRoom 1 type description"),

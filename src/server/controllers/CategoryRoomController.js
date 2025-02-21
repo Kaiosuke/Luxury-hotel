@@ -28,12 +28,8 @@ const CategoryRoomController = {
       const categoryRooms = await getAllData(
         CategoryRoom,
         [{ roomTypes: "title" }],
-        search
+        search.trim()
       );
-
-      if (!categoryRooms.length) {
-        return handleError404(res);
-      }
 
       return handleSuccess200(res, categoryRooms);
     } catch (error) {
@@ -43,12 +39,14 @@ const CategoryRoomController = {
 
   getAllDeleted: async (req, res) => {
     try {
-      const categoryRooms = await getAllDataDeleted(CategoryRoom, [
-        { roomTypes: "title" },
-      ]);
-      if (!categoryRooms.length) {
-        return handleError404(res);
-      }
+      const search = req.query.search || "";
+
+      const categoryRooms = await getAllDataDeleted(
+        CategoryRoom,
+        [{ roomTypes: "title" }],
+        search.trim()
+      );
+
       return handleSuccess200(res, categoryRooms);
     } catch (error) {
       return handleError500(res, req);
@@ -82,7 +80,9 @@ const CategoryRoomController = {
         return handleError409(res, `${title} already exists!`);
       }
 
-      const newCategoryRoom = await createData(CategoryRoom, req.body);
+      const newCategoryRoom = await createData(CategoryRoom, req.body, [
+        { roomTypes: "title" },
+      ]);
       return handleSuccess201(res, newCategoryRoom);
     } catch (error) {
       return handleError500(res, error);
@@ -102,7 +102,8 @@ const CategoryRoomController = {
       const updateCategoryRoom = await findByIdAndUpdateData(
         CategoryRoom,
         id,
-        req.body
+        req.body,
+        [{ roomTypes: "title" }]
       );
 
       return handleSuccess200(res, updateCategoryRoom);
@@ -155,7 +156,9 @@ const CategoryRoomController = {
         return handleError404(res);
       }
 
-      const findCategoryRoom = await getDataById(CategoryRoom, id);
+      const findCategoryRoom = await getDataById(CategoryRoom, id, [
+        { roomTypes: "title" },
+      ]);
 
       return handleSuccess200(res, findCategoryRoom);
     } catch (error) {

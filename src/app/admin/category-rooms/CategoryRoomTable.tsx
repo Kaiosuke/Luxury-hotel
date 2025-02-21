@@ -18,11 +18,24 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { ICategoryRoom, IForm } from "@/interfaces";
 import { categoryRoomsSelector } from "@/redux/selectors/categoryRoomsSelector";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { useAppDispatch } from "@/redux/store";
+import useDebounce from "@/hooks/useDebounce";
+import { getAllCategoryRoom } from "@/app/api/categoryRoomRequest";
 
 const CategoryRoomTable = ({ open, onClose }: IForm) => {
   const { categoryRooms } = useSelector(categoryRoomsSelector);
+
+  const [search, setSearch] = useState("");
+
+  const dispatch = useAppDispatch();
+
+  const debounce = useDebounce({ value: search });
+
+  useEffect(() => {
+    dispatch(getAllCategoryRoom(search));
+  }, [debounce]);
 
   const [selectedCategoryRoomId, setSelectedCategoryRoomId] = useState<
     string | null
@@ -83,19 +96,28 @@ const CategoryRoomTable = ({ open, onClose }: IForm) => {
       cell: ({ row }) => <div>{row.getValue("title")}</div>,
     },
     {
-      accessorKey: "roomTypeId",
+      accessorKey: "roomTypes",
       header: ({ column }) => {
         return (
           <div
             className="flex text-size-xl items-center cursor-pointer hover:text-sidebar-primary"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            Room Type
+            Room Types
             <ArrowUpDown />
           </div>
         );
       },
-      cell: ({ row }) => <div>{row.getValue("roomTypeId")}</div>,
+      cell: ({ row }) => {
+        const roomTypes = row.original.roomTypes;
+        return (
+          <div>
+            {roomTypes.map((roomType: { _id: string; title: string }) => (
+              <div key={roomType._id}>{roomType.title}</div>
+            ))}
+          </div>
+        );
+      },
     },
 
     {
@@ -142,6 +164,8 @@ const CategoryRoomTable = ({ open, onClose }: IForm) => {
         data={categoryRooms}
         columns={CategoryRoomColumns}
         filterPlaceholders="title"
+        search={search}
+        setSearch={setSearch}
       />
       {open && (
         <FormCategoryRoom

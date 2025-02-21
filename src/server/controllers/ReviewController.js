@@ -26,14 +26,13 @@ import { deleteData, forceDeleteData } from "../services/deleteService.js";
 const ReviewController = {
   getAll: async (req, res) => {
     try {
-      const reviews = await getAllData(Review, [
-        { userId: "username" },
-        { roomTypeId: "title" },
-      ]);
+      const search = req.query.search || "";
 
-      if (!reviews.length) {
-        return handleError404(res);
-      }
+      const reviews = await getAllData(
+        Review,
+        [{ userId: "username" }, { roomTypeId: "title" }],
+        search.trim()
+      );
       return handleSuccess200(res, reviews);
     } catch (error) {
       return handleError500(res, error);
@@ -42,13 +41,14 @@ const ReviewController = {
 
   getAllDeleted: async (req, res) => {
     try {
-      const reviews = await getAllDataDeleted(Review, [
-        { userId: "username" },
-        { roomTypeId: "title" },
-      ]);
-      if (!reviews.length) {
-        return handleError404(res);
-      }
+      const search = req.query.search || "";
+
+      const reviews = await getAllDataDeleted(
+        Review,
+        [{ userId: "username" }, { roomTypeId: "title" }],
+        search.trim()
+      );
+
       return handleSuccess200(res, reviews);
     } catch (error) {
       return handleError500(res, req);
@@ -86,7 +86,10 @@ const ReviewController = {
         return handleError404WithData(res, "roomType");
       }
 
-      const newReview = await createData(Review, req.body);
+      const newReview = await createData(Review, req.body, [
+        { userId: "username" },
+        { roomTypeId: "title" },
+      ]);
 
       await findByIdAndPushData(User, userId, "reviews", newReview._id);
       await findByIdAndPushData(RoomType, roomTypeId, "reviews", newReview._id);
@@ -117,7 +120,10 @@ const ReviewController = {
         return handleError404WithData(res, "roomType");
       }
 
-      const updateReview = await findByIdAndUpdateData(Review, id, req.body);
+      const updateReview = await findByIdAndUpdateData(Review, id, req.body, [
+        { userId: "username" },
+        { roomTypeId: "title" },
+      ]);
 
       if (findReview.userId !== userId) {
         await findByIdAndPullData(
@@ -188,7 +194,10 @@ const ReviewController = {
         return handleError404(res);
       }
 
-      const findReview = await getDataById(Review, id);
+      const findReview = await getDataById(Review, id, [
+        { userId: "username" },
+        { roomTypeId: "title" },
+      ]);
 
       const findUser = await findByIdAndPushData(
         User,

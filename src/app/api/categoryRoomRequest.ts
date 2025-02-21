@@ -5,11 +5,11 @@ import { ICategoryRoom } from "@/interfaces";
 
 const getAllCategoryRoom = createAsyncThunk<
   ICategoryRoom[],
-  void,
+  string,
   { rejectValue: string }
->("categoryRooms/getAllCategoryRoom", async (_, { rejectWithValue }) => {
+>("categoryRooms/getAllCategoryRoom", async (search, { rejectWithValue }) => {
   try {
-    const res = await instanceLocal.get("category-rooms");
+    const res = await instanceLocal.get(`category-rooms/?search=${search}`);
     return res.data.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -21,19 +21,24 @@ const getAllCategoryRoom = createAsyncThunk<
 
 const getAllCategoryRoomDeleted = createAsyncThunk<
   ICategoryRoom[],
-  void,
+  string,
   { rejectValue: string }
->("categoryRooms/getAllCategoryRoomDeleted", async (_, { rejectWithValue }) => {
-  try {
-    const res = await instanceLocal.get("category-rooms/deleted");
-    return res.data.data;
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      return rejectWithValue(error.response?.data.message);
+>(
+  "categoryRooms/getAllCategoryRoomDeleted",
+  async (search, { rejectWithValue }) => {
+    try {
+      const res = await instanceLocal.get(
+        `category-rooms/deleted/?search=${search}`
+      );
+      return res.data.data;
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        return rejectWithValue(error.response?.data.message);
+      }
+      return rejectWithValue("An unexpected error occurred");
     }
-    return rejectWithValue("An unexpected error occurred");
   }
-});
+);
 
 const getCategoryRoom = createAsyncThunk<
   ICategoryRoom,

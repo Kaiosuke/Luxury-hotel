@@ -29,7 +29,11 @@ const AuthController = {
       var salt = bcrypt.genSaltSync(10);
       var hash = bcrypt.hashSync(req.body.password, salt);
 
-      const newUser = await createData(User, { ...req.body, password: hash });
+      const newUser = await createData(User, { ...req.body, password: hash }, [
+        { carts: "title" },
+        { reviews: "title" },
+        { payments: "title" },
+      ]);
 
       const { password, ...others } = newUser._doc;
 

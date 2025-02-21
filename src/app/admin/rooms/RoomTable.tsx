@@ -7,7 +7,7 @@ import FormDeleteRoom from "@/app/_components/dashboard/room/FormDeleteRoom";
 import FormRoom from "@/app/_components/dashboard/room/FormRoom";
 import DataTable from "@/app/_components/DataTable";
 import LoadingProcess from "@/app/_components/Loading";
-import { getRoom, updateRoom } from "@/app/api/roomRequest";
+import { getAllRoom, getRoom, updateRoom } from "@/app/api/roomRequest";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
@@ -23,16 +23,26 @@ import { roomsSelector } from "@/redux/selectors/roomsSelector";
 import { roomTypesSelector } from "@/redux/selectors/roomTypesSelector";
 import { useAppDispatch } from "@/redux/store";
 import { format } from "date-fns";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import useDebounce from "@/hooks/useDebounce";
 
 const RoomsTable = ({ open, onClose }: IForm) => {
   const { rooms } = useSelector(roomsSelector);
+  const { roomTypes } = useSelector(roomTypesSelector);
+
+  const [search, setSearch] = useState("");
+
+  const debounce = useDebounce({ value: search });
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(getAllRoom(search));
+  }, [debounce]);
 
   const [selectedRoomId, setSelectedRoomId] = useState<string | null>(null);
   const [openFormDelete, setOpenFormDelete] = useState(false);
-
-  const { roomTypes } = useSelector(roomTypesSelector);
 
   const handleUpdate = (id: string) => {
     setSelectedRoomId(id);
@@ -48,8 +58,6 @@ const RoomsTable = ({ open, onClose }: IForm) => {
     setOpenFormDelete(false);
     onClose(false);
   };
-
-  const dispatch = useAppDispatch();
 
   const handleChangeStatus = async (id: string, value: string) => {
     const status = value === "available" ? "maintenance" : "available";
@@ -96,11 +104,11 @@ const RoomsTable = ({ open, onClose }: IForm) => {
         );
       },
       cell: ({ row }) => {
-        const roomTypeId = row.getValue("roomTypeId") as string;
-        const findRoomType = roomTypes.find(
-          (roomType) => roomType._id === roomTypeId
-        );
-        return <div>{findRoomType?.title || "N/A"}</div>;
+        const roomType = row.original.roomType as {
+          title: string;
+        };
+        const title = row.original.title;
+        return <div>{title ? title : roomType.title}</div>;
       },
     },
     {
@@ -139,7 +147,7 @@ const RoomsTable = ({ open, onClose }: IForm) => {
             variant={`${status === "available" ? "secondary" : "destructive"}`}
             onClick={() => handleChangeStatus(id, status)}
           >
-            {status}
+            {status ? status : "hi"}
           </Button>
         );
       },
@@ -161,7 +169,7 @@ const RoomsTable = ({ open, onClose }: IForm) => {
         }[];
         return (
           <div>
-            {bookedDates.length ? (
+            {bookedDates && bookedDates.length ? (
               <ul>
                 {bookedDates.map((date, index) => (
                   <li key={index} className="flex gap-2">
@@ -229,6 +237,8 @@ const RoomsTable = ({ open, onClose }: IForm) => {
         data={rooms}
         columns={roomTypeColumns}
         filterPlaceholders="roomNumber"
+        search={search}
+        setSearch={setSearch}
       />
       {open && (
         <FormRoom open={open} onClose={handleCloseForm} _id={selectedRoomId} />

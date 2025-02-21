@@ -28,10 +28,13 @@ import { createData } from "../services/postService.js";
 const OptionController = {
   getAll: async (req, res) => {
     try {
-      const options = await getAllData(Option, [{ foodId: "title" }]);
-      if (!options.length) {
-        return handleError404(res);
-      }
+      const search = req.query.search || "";
+      const options = await getAllData(
+        Option,
+        [{ foodId: "title" }],
+        search.trim()
+      );
+
       return handleSuccess200(res, options);
     } catch (error) {
       return handleError500(res, error);
@@ -40,10 +43,13 @@ const OptionController = {
 
   getAllDeleted: async (req, res) => {
     try {
-      const options = await getAllDataDeleted(Option, [{ foodId: "title" }]);
-      if (!options.length) {
-        return handleError404(res);
-      }
+      const search = req.query.search || "";
+
+      const options = await getAllDataDeleted(
+        Option,
+        [{ foodId: "title" }],
+        search.trim()
+      );
       return handleSuccess200(res, options);
     } catch (error) {
       return handleError500(res, req);
@@ -57,6 +63,7 @@ const OptionController = {
       if (!findOption) {
         return handleError404(res);
       }
+      return handleSuccess200(res, findOption);
     } catch (error) {
       return handleError500(res, error);
     }
@@ -71,7 +78,7 @@ const OptionController = {
         return handleError404WithData(res, "food");
       }
 
-      const newFood = await createData(Option, req.body);
+      const newFood = await createData(Option, req.body, [{ foodId: "title" }]);
       await findByIdAndPushData(Food, findFood._id, "options", newFood._id);
 
       return handleSuccess201(res, newFood);
@@ -95,7 +102,9 @@ const OptionController = {
         return handleError404WithData(res, "food");
       }
 
-      const updateOption = await findByIdAndUpdateData(Option, id, req.body);
+      const updateOption = await findByIdAndUpdateData(Option, id, req.body, [
+        { foodId: "title" },
+      ]);
 
       if (foodId !== findOption.foodId.toString()) {
         await findByIdAndPullData(
@@ -171,7 +180,7 @@ const OptionController = {
         return handleError404(res);
       }
 
-      const findOption = await getDataById(Option, id);
+      const findOption = await getDataById(Option, id, [{ foodId: "title" }]);
 
       const findFood = await findByIdAndPushData(
         Food,

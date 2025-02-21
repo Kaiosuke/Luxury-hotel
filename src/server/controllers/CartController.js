@@ -32,12 +32,17 @@ import { deleteData, forceDeleteData } from "../services/deleteService.js";
 const CartController = {
   getAll: async (req, res) => {
     try {
-      const carts = await getAllData(Cart, [
-        { optionId: "title" },
-        { userId: "username" },
-        { roomId: "roomNumber" },
-        { roomTypeId: "title" },
-      ]);
+      const search = req.query.search || "";
+      const carts = await getAllData(
+        Cart,
+        [
+          { optionId: "title" },
+          { userId: "username" },
+          { roomId: "roomNumber" },
+          { roomTypeId: "title" },
+        ],
+        search.trim()
+      );
 
       if (!carts.length) {
         return handleError404(res);
@@ -50,15 +55,18 @@ const CartController = {
 
   getAllDeleted: async (req, res) => {
     try {
-      const carts = await getAllDataDeleted(Cart, [
-        { optionId: "title" },
-        { userId: "username" },
-        { roomId: "roomNumber" },
-        { roomTypeId: "title" },
-      ]);
-      if (!carts.length) {
-        return handleError404(res);
-      }
+      const search = req.query.search || "";
+      const carts = await getAllDataDeleted(
+        Cart,
+        [
+          { optionId: "title" },
+          { userId: "username" },
+          { roomId: "roomNumber" },
+          { roomTypeId: "title" },
+        ],
+        search.trim()
+      );
+
       return handleSuccess200(res, carts);
     } catch (error) {
       return handleError500(res, req);
@@ -109,7 +117,12 @@ const CartController = {
         return handleError404WithData(res, "roomType");
       }
 
-      const newCart = await createData(Cart, req.body);
+      const newCart = await createData(Cart, req.body, [
+        { optionId: "title" },
+        { userId: "username" },
+        { roomId: "roomNumber" },
+        { roomTypeId: "title" },
+      ]);
 
       await findByIdAndPushData(Option, optionId, "carts", newCart._id);
 
@@ -156,7 +169,12 @@ const CartController = {
         return handleError404WithData(res, "roomType");
       }
 
-      const updateCart = await findByIdAndUpdateData(Cart, id, req.body);
+      const updateCart = await findByIdAndUpdateData(Cart, id, req.body, [
+        { optionId: "title" },
+        { userId: "username" },
+        { roomId: "roomNumber" },
+        { roomTypeId: "title" },
+      ]);
 
       if (optionId !== updateCart.optionId) {
         await findByIdAndPullData(Option, findCart.optionId, "carts", id);
@@ -228,7 +246,12 @@ const CartController = {
         return handleError404(res);
       }
 
-      const findCart = await getDataById(Cart, id);
+      const findCart = await getDataById(Cart, id, [
+        { optionId: "title" },
+        { userId: "username" },
+        { roomId: "roomNumber" },
+        { roomTypeId: "title" },
+      ]);
 
       const findPayment = await getData(Payment, "cartId", id);
 
