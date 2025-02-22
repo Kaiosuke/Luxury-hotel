@@ -46,12 +46,12 @@ const SplideList = ({
           <div className="splide__track">
             <ul className="splide__list">
               {dataList
-                .filter((data) => data.id !== id)
+                .filter((data) => data._id !== id)
                 .map((data) => (
-                  <li key={data.id} className="splide__slide">
-                    <MotionWrapper key={data.id}>
+                  <li key={data._id} className="splide__slide">
+                    <MotionWrapper key={data._id}>
                       <Link
-                        href={`/rooms/${data.id}`}
+                        href={`/rooms/${data._id}`}
                         className="relative group/data cursor-pointer"
                       >
                         <AspectRatio

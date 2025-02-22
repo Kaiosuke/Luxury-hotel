@@ -151,7 +151,6 @@ const BookingList = ({
       });
     }
   };
-
   return (
     <>
       <MotionWrapper
@@ -192,7 +191,7 @@ const BookingList = ({
                   {getQuantityAvailableRoom(roomType._id)} rooms available.
                 </span>
               )}
-              <span className="text-size-base">{roomType.typeBed}</span>
+              <span className="text-size-base">{roomType.typeBed.title}</span>
               <span>Sleeps {roomType.sleeps}</span>
               <span>{roomType.square}</span>
             </div>
@@ -223,17 +222,20 @@ const BookingList = ({
               {options &&
                 checkIn &&
                 checkOut &&
-                options.map((option) => (
-                  <OptionRoom
-                    key={option._id}
-                    roomType={roomType}
-                    option={option}
-                    filterIconFeature={filterIconFeature}
-                    checkIn={checkIn}
-                    checkOut={checkOut}
-                    bookRoom={bookRoom}
-                  />
-                ))}
+                options.map((option) => {
+                  if (option._id !== process.env.NEXT_PUBLIC_DEFAULT_OPTION)
+                    return (
+                      <OptionRoom
+                        key={option._id}
+                        roomType={roomType}
+                        option={option}
+                        filterIconFeature={filterIconFeature}
+                        checkIn={checkIn}
+                        checkOut={checkOut}
+                        bookRoom={bookRoom}
+                      />
+                    );
+                })}
             </div>
           </div>
         </div>

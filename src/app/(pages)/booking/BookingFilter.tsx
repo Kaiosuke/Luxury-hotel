@@ -20,40 +20,84 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
-import { roomTypesFilterSelector } from "@/redux/selectors/roomTypesSelector";
-
+import { getAllRoomTypeFilter } from "@/app/api/roomTypeRequest";
+import { useAppDispatch } from "@/redux/store";
+import { useEffect, useState } from "react";
 import { FaAngleDown } from "react-icons/fa6";
-import { useDispatch, useSelector } from "react-redux";
 
 const BookingFilter = () => {
-  const { viewList, featureList, categoryList } = data;
+  const { viewList, featureList, categoryList, typeBedList } = data;
+  const [sort, setSort] = useState("");
+  const [views, setViews] = useState<string[]>([]);
+  const [categoryRooms, setCategoryRooms] = useState<string[]>([]);
+  const [typeBeds, setTypeBeds] = useState<string[]>([]);
+  const [features, setFeatures] = useState<string[]>([]);
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const { sort, views, categories, features } = useSelector(
-    roomTypesFilterSelector
-  );
+  useEffect(() => {
+    dispatch(
+      getAllRoomTypeFilter({ sort, categoryRooms, views, typeBeds, features })
+    );
+  }, [sort]);
 
   const handleFilterBySort = (value: string) => {
-    dispatch(filterBySort(value));
+    setSort(value);
   };
 
   const handleFilterByViews = (value: string) => {
-    dispatch(filterByViews(value));
+    setViews((prev) => {
+      if (prev.includes(value)) {
+        return prev.filter((data) => data !== value);
+      }
+      return [...prev, value];
+    });
   };
 
   const handleFilterByCategories = (value: string) => {
-    dispatch(filterByCategories(value));
+    setCategoryRooms((prev) => {
+      if (prev.includes(value)) {
+        return prev.filter((data) => data !== value);
+      }
+      return [...prev, value];
+    });
+  };
+
+  const handleFilterByTypeBeds = (value: string) => {
+    setTypeBeds((prev) => {
+      if (prev.includes(value)) {
+        return prev.filter((data) => data !== value);
+      }
+      return [...prev, value];
+    });
   };
 
   const handleFilterByFeatures = (value: string) => {
-    dispatch(filterByFeatures(value));
+    setFeatures((prev) => {
+      if (prev.includes(value)) {
+        return prev.filter((data) => data !== value);
+      }
+      return [...prev, value];
+    });
+  };
+
+  const handleFiler = () => {
+    dispatch(
+      getAllRoomTypeFilter({
+        sort,
+        categoryRooms,
+        views,
+        typeBeds,
+        features,
+      })
+    );
   };
 
   const handleReset = () => {
-    dispatch(filterByViews(null));
-    dispatch(filterByCategories(null));
-    dispatch(filterByFeatures(null));
+    setViews([]);
+    setCategoryRooms([]);
+    setTypeBeds([]);
+    setFeatures([]);
   };
 
   return (
@@ -70,12 +114,15 @@ const BookingFilter = () => {
             Recommended
           </SelectItem>
           <SelectItem value="rate" className="lg:text-xl text-primary">
-            Rate
+            Lowest Rate
           </SelectItem>
-          <SelectItem value="low" className="lg:text-xl text-primary">
+          <SelectItem value="rate,desc" className="lg:text-xl text-primary">
+            Highest Rate
+          </SelectItem>
+          <SelectItem value="price" className="lg:text-xl text-primary">
             Lowest Price
           </SelectItem>
-          <SelectItem value="high" className="lg:text-xl text-primary">
+          <SelectItem value="price,desc" className="lg:text-xl text-primary">
             Highest Price
           </SelectItem>
         </SelectContent>
@@ -119,7 +166,7 @@ const BookingFilter = () => {
                     <Checkbox
                       id={cate.id}
                       className="text-secondary"
-                      checked={categories.includes(cate.title)}
+                      checked={categoryRooms.includes(cate.title)}
                       onCheckedChange={() =>
                         handleFilterByCategories(cate.title)
                       }
@@ -129,6 +176,27 @@ const BookingFilter = () => {
                       className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 md:text-lg cursor-pointer"
                     >
                       {cate.title}
+                    </label>
+                  </div>
+                ))}
+              </div>
+              <div>
+                <h3 className="text-size-xl mt-4">Type Bed</h3>
+                {typeBedList.map((typeBed) => (
+                  <div key={typeBed.id} className="flex items-center space-x-2">
+                    <Checkbox
+                      id={typeBed.id}
+                      className="text-secondary"
+                      checked={typeBeds.includes(typeBed.title)}
+                      onCheckedChange={() =>
+                        handleFilterByTypeBeds(typeBed.title)
+                      }
+                    />
+                    <label
+                      htmlFor={typeBed.id}
+                      className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 md:text-lg cursor-pointer"
+                    >
+                      {typeBed.title}
                     </label>
                   </div>
                 ))}
@@ -164,6 +232,11 @@ const BookingFilter = () => {
             <DialogClose asChild>
               <Button type="reset" variant="secondary">
                 Close
+              </Button>
+            </DialogClose>
+            <DialogClose asChild>
+              <Button type="reset" variant="primary" onClick={handleFiler}>
+                Filter
               </Button>
             </DialogClose>
           </DialogFooter>

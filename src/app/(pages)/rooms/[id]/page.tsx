@@ -40,7 +40,7 @@ const page = () => {
     <>
       {roomType && (
         <>
-          {/* <HeroImage
+          <HeroImage
             image={roomType.thumbnail}
             title={`${roomType.title} - Soulful Mediterranean style`}
             linkContext="Book this room now"
@@ -57,11 +57,11 @@ const page = () => {
             <section className="padding-main">
               <SplideList
                 dataList={roomTypes}
-                id={roomType.id}
+                id={roomType._id}
                 splideClass="roomList"
               />
             </section>
-          )} */}
+          )}
           <div className="pd-high" />
           <TitleNormal title="Reviews" />
           <div className="pd-high" />

@@ -33,7 +33,7 @@ const OptionRoom = ({
             <Link href="#!">{option.title}</Link>
           </h3>
           <div className="flex flex-col gap-1 mt-2">
-            {option.extensions.map((ex, index) => (
+            {/* {option.extensions.map((ex, index) => (
               <span
                 key={index}
                 className="font-bold text-size-lg flex items-center gap-2"
@@ -41,7 +41,13 @@ const OptionRoom = ({
                 <div className="text-2xl">{filterIconFeature(ex)}</div>
                 {ex}
               </span>
-            ))}
+            ))} */}
+            <span className="font-bold text-size-lg flex items-center gap-2">
+              {/* <div className="text-2xl">
+                {filterIconFeature(option.extension)}
+              </div> */}
+              {option.extension}
+            </span>
           </div>
           <p className="text-size-lg mt-4">{option.typeDescription}</p>
         </div>
@@ -67,8 +73,8 @@ const OptionRoom = ({
               className="mt-4 w-fit"
               onClick={() =>
                 bookRoom({
-                  roomTypeId: roomType.id,
-                  optionId: option.id,
+                  roomTypeId: roomType._id,
+                  optionId: option._id,
                   price: handleOriginalPrice(option.price + roomType.price),
                   totalPrice:
                     handleOriginalPrice(option.price + roomType.price) *

@@ -164,7 +164,7 @@ const Review = () => {
         <AlertDialogDelete
           open={openFormDelete}
           onClose={setOpenFormDelete}
-          id={reviewId}
+          _id={reviewId}
         />
       )}
     </div>

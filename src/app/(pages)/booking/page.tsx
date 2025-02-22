@@ -13,12 +13,11 @@ import Booking from "./Booking";
 const page = () => {
   const { loading, error } = useSelector(roomsSelector);
   const dispatch = useAppDispatch();
-
   useEffect(() => {
-    dispatch(getAllRoom());
-    dispatch(getAllRoomType());
-    dispatch(getAllOption());
+    dispatch(getAllRoom(""));
+    dispatch(getAllOption(""));
   }, []);
+
   if (loading) {
     return <LoadingPage />;
   }

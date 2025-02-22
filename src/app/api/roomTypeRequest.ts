@@ -19,6 +19,36 @@ const getAllRoomType = createAsyncThunk<
   }
 });
 
+const getAllRoomTypeFilter = createAsyncThunk<
+  IRoomType[],
+  {
+    sort: string;
+    categoryRooms: any;
+    views: string[];
+    typeBeds: any;
+    features: any;
+  },
+  { rejectValue: string }
+>(
+  "roomTypes/getAllRoomType",
+  async (
+    { sort, categoryRooms, views, typeBeds, features },
+    { rejectWithValue }
+  ) => {
+    try {
+      const res = await instanceLocal.get(
+        `room-types/?categoryRooms=${categoryRooms}&views=${views}&typeBeds=${typeBeds}&features=${features}&sort=${sort}`
+      );
+      return res.data.data;
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        return rejectWithValue(error.response?.data?.message);
+      }
+      return rejectWithValue("An unexpected error occurred");
+    }
+  }
+);
+
 const getAllRoomTypeDeleted = createAsyncThunk<
   IRoomType[],
   string,
@@ -140,6 +170,7 @@ const forceDeleteRoomType = createAsyncThunk<
 
 export {
   getAllRoomType,
+  getAllRoomTypeFilter,
   getAllRoomTypeDeleted,
   getRoomType,
   addRoomType,

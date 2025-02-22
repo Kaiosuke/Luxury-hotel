@@ -35,7 +35,6 @@ import { categoryRoomsSelector } from "@/redux/selectors/categoryRoomsSelector";
 import { typeBedsSelector } from "@/redux/selectors/typeBedsSelector";
 import { viewsSelector } from "@/redux/selectors/viewsSelector";
 import { DialogClose } from "@radix-ui/react-dialog";
-import { features } from "process";
 import { useSelector } from "react-redux";
 import { z } from "zod";
 import FormUploadImage from "./FormUploadImage";

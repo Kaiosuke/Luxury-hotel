@@ -329,6 +329,24 @@
       "title": "Vip"
     }
   ],
+  "typeBedList": [
+    {
+      "id": "typeBed1",
+      "title": "1 King bed"
+    },
+    {
+      "id": "typeBed2",
+      "title": "2 Twin beds"
+    },
+    {
+      "id": "typeBed3",
+      "title": "2 King bed"
+    },
+    {
+      "id": "typeBed4",
+      "title": "3 Twin beds"
+    }
+  ],
   "quickDesList": [
     "Bathtub",
     "Unlimited access to spa",

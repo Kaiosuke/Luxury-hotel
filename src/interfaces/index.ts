@@ -49,6 +49,7 @@ interface IRoomType {
   detailFeatures: string[];
   shortDes: string;
   detailDes: string;
+  typeBed?: any;
 }
 
 interface IRoom {
