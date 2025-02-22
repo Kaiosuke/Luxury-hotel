@@ -21,12 +21,7 @@ import {
 } from "@/components/ui/dialog";
 
 import { roomTypesFilterSelector } from "@/redux/selectors/roomTypesSelector";
-import {
-  filterByCategories,
-  filterByFeatures,
-  filterBySort,
-  filterByViews,
-} from "@/redux/slices/roomTypesSlice";
+
 import { FaAngleDown } from "react-icons/fa6";
 import { useDispatch, useSelector } from "react-redux";
 

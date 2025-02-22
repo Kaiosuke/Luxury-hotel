@@ -2,6 +2,7 @@
 
 import BreadcrumbComponent from "@/app/_components/BreadcrumbComponent";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,17 +13,18 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useState } from "react";
+import { FaPlus } from "react-icons/fa";
 import { IoMdOptions } from "react-icons/io";
-import RoomTypeDeletedTable from "./RoomTypeDeletedTable";
+import RoomDeletedTable from "./RoomDeletedTable";
 
 const page = () => {
   const [openForm, setOpenForm] = useState(false);
   return (
     <div>
-      <BreadcrumbComponent page="RoomTypes" />
+      <BreadcrumbComponent page="Rooms" />
       <div className="mt-6 flex justify-between text-sidebar-primary">
         <div className="flex items-center gap-4">
-          <h1 className="text-size-3xl">Room Type List</h1>
+          <h1 className="text-size-3xl">Room List</h1>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Badge variant={"outline-primary"}>
@@ -42,9 +44,19 @@ const page = () => {
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
+        <div>
+          <Button
+            variant={"secondary"}
+            type="button"
+            onClick={() => setOpenForm(true)}
+          >
+            <FaPlus />
+            Add Room
+          </Button>
+        </div>
       </div>
       <div className="mt-6">
-        <RoomTypeDeletedTable open={openForm} onClose={setOpenForm} />
+        <RoomDeletedTable open={openForm} onClose={setOpenForm} />
       </div>
     </div>
   );

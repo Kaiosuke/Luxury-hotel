@@ -16,7 +16,6 @@ import View from "../models/View.js";
 import Cart from "../models/Cart.js";
 import { deleteData, forceDeleteData } from "../services/deleteService.js";
 import {
-  getAllData,
   getAllDataDeleted,
   getData,
   getDataById,
@@ -28,22 +27,87 @@ import {
   restoreData,
 } from "../services/patchService.js";
 import { createData } from "../services/postService.js";
+import data from "../../app/data.json" assert { type: "json" };
 
 const RoomTypeController = {
   getAll: async (req, res) => {
     try {
       const search = req.query.search || "";
-      const roomTypes = await getAllData(
-        RoomType,
-        [
-          { viewId: "title" },
-          { typeBedId: "title" },
-          { categoryRoomId: "title" },
-        ],
-        search.trim()
-      );
+      let views = req.query.views || "All";
+      let categoryRooms = req.query.categoryRooms || "All";
+      let typeBeds = req.query.typeBeds || "All";
+      let features = req.query.features || "All";
+      let sort = req.query.sort || "price,asc";
+      let sortArray = sort.split(",");
 
-      return handleSuccess200(res, roomTypes);
+      const { viewsList, categoryRoomsList, typeBedsList, featuresList } = data;
+
+      views === "All"
+        ? (views = [...viewsList])
+        : (views = req.query.views.split(","));
+
+      categoryRooms === "All"
+        ? (categoryRooms = [...categoryRoomsList])
+        : (categoryRooms = req.query.categoryRooms.split(","));
+
+      typeBeds === "All"
+        ? (typeBeds = [...typeBedsList])
+        : (typeBeds = req.query.typeBeds.split(","));
+
+      features === "All"
+        ? (features = [...featuresList])
+        : (features = req.query.features.split(","));
+
+      let sortby = {};
+      sortby[sortArray[0]] = sortArray[1] === "desc" ? -1 : 1;
+
+      const roomTypes = await RoomType.aggregate([
+        {
+          $lookup: {
+            from: "views",
+            localField: "viewId",
+            foreignField: "_id",
+            as: "view",
+          },
+        },
+        { $unwind: "$view" },
+        {
+          $lookup: {
+            from: "categoryrooms",
+            localField: "categoryRoomId",
+            foreignField: "_id",
+            as: "categoryRoom",
+          },
+        },
+        { $unwind: "$categoryRoom" },
+
+        {
+          $lookup: {
+            from: "typebeds",
+            localField: "typeBedId",
+            foreignField: "_id",
+            as: "typeBed",
+          },
+        },
+        { $unwind: "$typeBed" },
+
+        {
+          $match: {
+            "view.title": { $in: views },
+            "typeBed.title": { $in: typeBeds },
+            "categoryRoom.title": { $in: categoryRooms },
+            title: { $regex: search, $options: "i" },
+          },
+        },
+        { $sort: sortby },
+      ]);
+      const filteredRooms = roomTypes.filter((room) => {
+        return features.some((feature) =>
+          room.detailFeatures?.includes(feature)
+        );
+      });
+
+      return handleSuccess200(res, filteredRooms);
     } catch (error) {
       return handleError500(res, error);
     }

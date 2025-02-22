@@ -46,23 +46,25 @@ function FormRoom({ open, onClose, _id }: IForm) {
   const dispatch = useAppDispatch();
   const { toast } = useToast();
 
-  console.log(typeof floor, floor);
-
   useEffect(() => {
     if (_id) {
       (async () => {
         const room = await dispatch(getRoom(_id)).unwrap();
-
         reset({
           roomNumber: room.roomNumber,
           roomTypeId: room.roomTypeId,
         });
+
         setStatus(room.status);
         setFloor(room.floor);
         setRoomTypeId(room.roomTypeId);
       })();
     }
   }, [_id]);
+
+  // useEffect(() => {
+  //   setValue("roomTypeId", roomTypeId, { shouldValidate: true });
+  // }, [roomTypeId, setValue]);
 
   const handleGetData = (data: any) => {
     const newRoom = {
@@ -110,7 +112,7 @@ function FormRoom({ open, onClose, _id }: IForm) {
         }
       })();
     }
-    // return onClose(false);
+    return onClose(false);
   };
 
   return (

@@ -346,7 +346,8 @@
     "Coffee & tea point",
     "It is located on the 2nd, 3rd and 4th floor. Subject to availability."
   ],
-  "featuresList": [
+
+  "shortFeaturesList": [
     "Separate Shower",
     "Air Conditioning",
     "Desk or Workplace",
@@ -359,5 +360,32 @@
     "Hairdryer",
     "Speaker phone",
     "Television"
-  ]
+  ],
+
+  "featuresList": [
+    "King bed",
+    "Coffee/Tea maker",
+    "Bathroom amenities",
+    "Hairdryer",
+    "TV",
+    "Slippers",
+    "Speaker phone",
+    "Television",
+    "Data port",
+    "Telephone",
+    "Minibar",
+    "Bathrobe",
+    "Safe",
+    "Wake-up calls",
+    "Maid service",
+    "Bathroom telephone",
+    "Bidet",
+    "Cable television",
+    "Smoke detectors",
+    "Sitting area",
+    "Twin bed"
+  ],
+  "categoryRoomsList": ["Normal", "Premium", "Vip"],
+  "viewsList": ["Mountain", "Pool", "Sea"],
+  "typeBedsList": ["1 King bed", "2 Twin beds", "2 King bed", "3 Twin beds"]
 }

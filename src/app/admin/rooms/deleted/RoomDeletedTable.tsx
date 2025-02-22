@@ -3,12 +3,12 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 
-import FormDeleteRoom from "@/app/_components/dashboard/room/FormDeleteRoom";
-import FormRoom from "@/app/_components/dashboard/room/FormRoom";
+import FormForceDeleteRoom from "@/app/_components/dashboard/room/FormForceDeleteRoom";
 import DataTable from "@/app/_components/DataTable";
-import { getAllRoom, updateRoom } from "@/app/api/roomRequest";
+import { getAllRoomDeleted, restoreRoom } from "@/app/api/roomRequest";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
+import { format } from "date-fns";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -18,37 +18,50 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useToast } from "@/hooks/use-toast";
-import useDebounce from "@/hooks/useDebounce";
 import { IForm, IRoom } from "@/interfaces";
 import { roomsSelector } from "@/redux/selectors/roomsSelector";
-import { roomTypesSelector } from "@/redux/selectors/roomTypesSelector";
 import { useAppDispatch } from "@/redux/store";
-import { format } from "date-fns";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import FormRoom from "@/app/_components/dashboard/room/FormRoom";
+import useDebounce from "@/hooks/useDebounce";
 
-const RoomsTable = ({ open, onClose }: IForm) => {
-  const { rooms } = useSelector(roomsSelector);
-  const { roomTypes } = useSelector(roomTypesSelector);
+const RoomDeletedTable = ({ open, onClose }: IForm) => {
+  const dispatch = useAppDispatch();
 
   const [search, setSearch] = useState("");
 
   const debounce = useDebounce({ value: search });
 
-  const dispatch = useAppDispatch();
-
   useEffect(() => {
-    dispatch(getAllRoom(search));
+    dispatch(getAllRoomDeleted(search));
   }, [debounce]);
+  const { roomsDeleted } = useSelector(roomsSelector);
 
   const [selectedRoomId, setSelectedRoomId] = useState<string | null>(null);
   const [openFormDelete, setOpenFormDelete] = useState(false);
 
-  const handleUpdate = (id: string) => {
-    setSelectedRoomId(id);
-    onClose(true);
+  const { toast } = useToast();
+
+  const handleRestore = async (id: string) => {
+    try {
+      await dispatch(restoreRoom(id)).unwrap();
+      toast({
+        variant: "success",
+        title: "Successfully!",
+        description: "Restore Room success",
+      });
+    } catch (error) {
+      const errorMessage =
+        typeof error === "string" ? error : "Something went wrong";
+      toast({
+        variant: "destructive",
+        title: "Restore failed",
+        description: errorMessage,
+      });
+    }
   };
-  const handleDelete = (id: string) => {
+  const handleForceDelete = (id: string) => {
     setSelectedRoomId(id);
     setOpenFormDelete(true);
   };
@@ -59,35 +72,7 @@ const RoomsTable = ({ open, onClose }: IForm) => {
     onClose(false);
   };
 
-  const { toast } = useToast();
-
-  const handleChangeStatus = async (
-    id: string,
-    value: string,
-    roomTypeId: string
-  ) => {
-    try {
-      const status = value === "available" ? "maintenance" : "available";
-      await dispatch(
-        updateRoom({ _id: id, room: { status, roomTypeId } })
-      ).unwrap();
-      toast({
-        variant: "success",
-        title: "Failed",
-        description: "Update Status Room Success",
-      });
-    } catch (error) {
-      const errorMessage =
-        typeof error === "string" ? error : "Something went wrong";
-      toast({
-        variant: "destructive",
-        title: "Failed",
-        description: errorMessage,
-      });
-    }
-  };
-
-  const roomTypeColumns: ColumnDef<IRoom>[] = [
+  const RoomColumns: ColumnDef<IRoom>[] = [
     {
       id: "select",
       header: ({ table }) => (
@@ -124,11 +109,11 @@ const RoomsTable = ({ open, onClose }: IForm) => {
         );
       },
       cell: ({ row }) => {
-        const roomType = row.original.roomType as {
+        const roomType = row.original.roomTypeId as unknown as {
           title: string;
         };
-        const title = row.original.title;
-        return <div>{title ? title : roomType ? roomType.title : "NaN"}</div>;
+
+        return <div>{roomType.title}</div>;
       },
     },
     {
@@ -161,12 +146,10 @@ const RoomsTable = ({ open, onClose }: IForm) => {
       },
       cell: ({ row }) => {
         const status = row.getValue("status") as string;
-        const id = row.original._id;
-        const roomTypeId = row.original.roomTypeId;
         return (
           <Button
+            className="cursor-default"
             variant={`${status === "available" ? "secondary" : "destructive"}`}
-            onClick={() => handleChangeStatus(id, status, roomTypeId)}
           >
             {status ? status : "hi"}
           </Button>
@@ -226,18 +209,19 @@ const RoomsTable = ({ open, onClose }: IForm) => {
               className="bg-sidebar-four text-primary"
             >
               <DropdownMenuLabel>Actions</DropdownMenuLabel>
+
               <DropdownMenuSeparator />
               <DropdownMenuItem
                 className="cursor-pointer"
-                onClick={() => id && handleUpdate(id)}
+                onClick={() => id && handleRestore(id)}
               >
-                Update
+                Restore
               </DropdownMenuItem>
               <DropdownMenuItem
                 className="cursor-pointer"
-                onClick={() => id && handleDelete(id)}
+                onClick={() => id && handleForceDelete(id)}
               >
-                Delete
+                Force Delete
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -246,7 +230,7 @@ const RoomsTable = ({ open, onClose }: IForm) => {
     },
   ];
 
-  // const { loading } = useSelector(roomsSelector);
+  // const { loading } = useSelector(RoomsSelector);
 
   // if (loading) {
   //   return <LoadingProcess />;
@@ -255,9 +239,9 @@ const RoomsTable = ({ open, onClose }: IForm) => {
   return (
     <>
       <DataTable
-        data={rooms}
-        columns={roomTypeColumns}
-        filterPlaceholders="roomNumber"
+        data={roomsDeleted}
+        columns={RoomColumns}
+        filterPlaceholders="title"
         search={search}
         setSearch={setSearch}
       />
@@ -265,7 +249,7 @@ const RoomsTable = ({ open, onClose }: IForm) => {
         <FormRoom open={open} onClose={handleCloseForm} _id={selectedRoomId} />
       )}
       {openFormDelete && (
-        <FormDeleteRoom
+        <FormForceDeleteRoom
           open={openFormDelete}
           onClose={handleCloseForm}
           _id={selectedRoomId}
@@ -275,4 +259,4 @@ const RoomsTable = ({ open, onClose }: IForm) => {
   );
 };
 
-export default RoomsTable;
+export default RoomDeletedTable;

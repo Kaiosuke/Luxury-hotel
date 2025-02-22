@@ -66,7 +66,13 @@ const addRoom = createAsyncThunk<IRoom, IRoom, { rejectValue: string }>(
 
 const updateRoom = createAsyncThunk<
   IRoom,
-  { _id: string; room: IRoom },
+  {
+    _id: string;
+    room: {
+      status: string;
+      roomTypeId: string;
+    };
+  },
   { rejectValue: string }
 >("rooms/updateRoom", async ({ _id, room }, { rejectWithValue }) => {
   try {
@@ -95,7 +101,7 @@ const deleteRoom = createAsyncThunk<string, string, { rejectValue: string }>(
   }
 );
 
-const restoreRoom = createAsyncThunk<IRoom, IRoom, { rejectValue: string }>(
+const restoreRoom = createAsyncThunk<IRoom, string, { rejectValue: string }>(
   "rooms/restoreRoom",
   async (_id, { rejectWithValue }) => {
     try {

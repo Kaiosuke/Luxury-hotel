@@ -29,7 +29,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
-import { featureList, quickDesList, featuresList } from "@/app/data.json";
+import { featureList, quickDesList, shortFeaturesList } from "@/app/data.json";
 import { Checkbox } from "@/components/ui/checkbox";
 import { categoryRoomsSelector } from "@/redux/selectors/categoryRoomsSelector";
 import { typeBedsSelector } from "@/redux/selectors/typeBedsSelector";
@@ -116,6 +116,12 @@ function FormRoomType({ open, onClose, _id }: IForm) {
       })();
     }
   }, [_id]);
+
+  useEffect(() => {
+    setValue("viewId", viewId, { shouldValidate: true });
+    setValue("categoryRoomId", categoryRoomId, { shouldValidate: true });
+    setValue("typeBedId", typeBedId, { shouldValidate: true });
+  }, [viewId, categoryRoomId, typeBedId, setValue]);
 
   const UPLOAD_PRESET = process.env.NEXT_PUBLIC_UPLOAD_PRESET!;
   const CLOUD_NAME = process.env.NEXT_PUBLIC_CLOUD_NAME;
@@ -547,7 +553,7 @@ function FormRoomType({ open, onClose, _id }: IForm) {
                       </DialogTitle>
                     </DialogHeader>
                     <div className="grid sm:grid-cols-2 grid-cols-1 items-start w-full">
-                      {featuresList.map((feature, index) => (
+                      {shortFeaturesList.map((feature, index) => (
                         <div
                           key={index}
                           className="flex items-center space-x-2"
