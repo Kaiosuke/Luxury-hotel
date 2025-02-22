@@ -31,11 +31,11 @@ const CartList = ({ cart, showDelete, setShowDelete }: ICartList) => {
       ).unwrap();
       setRoomType(findRoomType);
 
-      const findRoom = await disPatch(getRoom(cart.roomId)).unwrap();
-      setRoom(findRoom);
+      // const findRoom = await disPatch(getRoom(cart.roomId)).unwrap();
+      // setRoom(findRoom);
 
-      const findOption = await disPatch(getOption(cart.optionId)).unwrap();
-      setOption(findOption);
+      // const findOption = await disPatch(getOption(cart.optionId)).unwrap();
+      // setOption(findOption);
     })();
   }, []);
 

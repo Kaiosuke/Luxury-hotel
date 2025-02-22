@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { ToastAction } from "@/components/ui/toast";
 import { useToast } from "@/hooks/use-toast";
 import useAppContext from "@/hooks/useAppContext";
-import { ICart, IRoom, IRoomType } from "@/interfaces";
+import { IRoom, IRoomType } from "@/interfaces";
 import { authSelector } from "@/redux/selectors/authSelector";
 import { optionsSelector } from "@/redux/selectors/optionsSelector";
 import { useAppDispatch } from "@/redux/store";
@@ -126,13 +126,25 @@ const BookingList = ({
         useAvailableCarts({ carts: cartsUsers, newBooking });
 
       if (!availableCart.length) {
-        dispatch(addCart(newBooking)).unwrap();
-        setRoomId("");
-        return toast({
-          variant: "success",
-          title: "success",
-          description: "Booking has been added to cart",
-        });
+        (async () => {
+          try {
+            await dispatch(addCart(newBooking)).unwrap();
+            setRoomId("");
+            return toast({
+              variant: "success",
+              title: "success",
+              description: "Booking has been added to cart",
+            });
+          } catch (error) {
+            const errorMessage =
+              typeof error === "string" ? error : "Something went wrong";
+            toast({
+              variant: "destructive",
+              title: "Registration failed",
+              description: errorMessage,
+            });
+          }
+        })();
       } else {
         return toast({
           variant: "destructive",

@@ -1,3 +1,4 @@
+import { data } from "@/app/data.json";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import instanceLocal from "./instances";
@@ -41,6 +42,7 @@ const getAllCartByUserId = createAsyncThunk<
 >("carts/getAllCartByUserId", async (userId, { rejectWithValue }) => {
   try {
     const res = await instanceLocal.get(`carts?userId=${userId}`);
+    console.log(res.data.data);
     return res.data.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -65,13 +67,15 @@ const getCart = createAsyncThunk<ICart, string, { rejectValue: string }>(
   }
 );
 
-const addCart = createAsyncThunk<any, any, { rejectValue: string }>(
+const addCart = createAsyncThunk<ICart, ICart, { rejectValue: string }>(
   "carts/addCart",
   async (cart, { rejectWithValue }) => {
     try {
+      console.log(cart);
       const res = await instanceLocal.post(`carts/create`, cart);
       return res.data.data;
     } catch (error) {
+      console.log(error);
       if (axios.isAxiosError(error)) {
         return rejectWithValue(error.response?.data?.message);
       }

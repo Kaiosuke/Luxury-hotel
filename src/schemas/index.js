@@ -161,7 +161,7 @@ const CartSchema = z.object({
   totalPrice: z
     .number()
     .min(1, "Total price must be greater than or equal to 1"),
-  dayNumber: z.string().min(1, "Minimum number of dayNumber is 1 character"),
+  day: z.number().min(1, "Minimum number of day is 1 character"),
   bookedDates: z.object({
     from: z.string().refine((date) => !isNaN(Date.parse(date)), {
       message: "Invalid date format",
@@ -170,9 +170,6 @@ const CartSchema = z.object({
       message: "Invalid date format",
     }),
   }),
-  paymentMethod: z
-    .string()
-    .min(1, "Minimum number of payment method is 1 character"),
 });
 
 export {

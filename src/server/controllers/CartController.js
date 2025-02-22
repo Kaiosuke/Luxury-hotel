@@ -35,12 +35,7 @@ const CartController = {
       const search = req.query.search || "";
       const carts = await getAllData(
         Cart,
-        [
-          { optionId: "title" },
-          { userId: "username" },
-          { roomId: "roomNumber" },
-          { roomTypeId: "title" },
-        ],
+        [{ userId: "username" }],
         search.trim()
       );
 
@@ -77,12 +72,22 @@ const CartController = {
     try {
       const { id } = req.params;
 
-      const cart = await getDataById(Cart, id, [
-        { optionId: "title" },
-        { userId: "username" },
-        { roomId: "roomNumber" },
-        { roomTypeId: "title" },
-      ]);
+      const cart = await getDataById(Cart, id, []);
+      if (!cart) {
+        return handleError404(res);
+      }
+
+      return handleSuccess200(res, cart);
+    } catch (error) {
+      return handleError500(res, error);
+    }
+  },
+
+  getByUser: async (req, res) => {
+    try {
+      const { id } = req.params;
+
+      const cart = await getDataById(Cart, id, []);
       if (!cart) {
         return handleError404(res);
       }

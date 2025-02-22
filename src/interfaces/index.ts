@@ -65,20 +65,20 @@ interface IRoom {
   };
 }
 
-export enum ECart {
-  pending = "pending",
-  booked = "booked",
-  confirm = "confirm",
-}
+// export enum ECart {
+//   pending = "pending",
+//   booked = "booked",
+//   confirm = "confirm",
+// }
 
 interface ICart {
-  _id: string;
-  userId: string;
+  _id?: string;
+  userId: string | undefined;
   roomTypeId: string;
   optionId: string;
   roomId: string;
   day: number;
-  status: ECart;
+  status: string;
   price: number;
   totalPrice: number;
   reservation?: string;
