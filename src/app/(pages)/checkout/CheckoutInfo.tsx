@@ -76,13 +76,12 @@ const CheckoutInfo = () => {
   }, []);
 
   useEffect(() => {
-    currentUser && dispatch(getAllCart());
+    currentUser && dispatch(getAllCart(""));
   }, []);
 
   const handleGetData = async (data: IUser) => {
     try {
       setLoading(true);
-
       const newData = {
         ...currentUser,
         ...data,
@@ -106,6 +105,7 @@ const CheckoutInfo = () => {
           };
 
           currentUser._id &&
+            cart._id &&
             (await dispatch(updateCart({ _id: cart._id, cart: newCart })));
 
           const availableCart = useAvailableCartsUsers({
@@ -114,7 +114,7 @@ const CheckoutInfo = () => {
           });
 
           const existCart = availableCart.find((data) => data._id !== cart._id);
-          if (existCart) {
+          if (existCart?._id) {
             dispatch(deleteCart(existCart._id));
           }
 

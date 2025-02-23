@@ -1,4 +1,3 @@
-import { data } from "@/app/data.json";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import instanceLocal from "./instances";
@@ -41,8 +40,7 @@ const getAllCartByUserId = createAsyncThunk<
   { rejectValue: string }
 >("carts/getAllCartByUserId", async (userId, { rejectWithValue }) => {
   try {
-    const res = await instanceLocal.get(`carts?userId=${userId}`);
-    console.log(res.data.data);
+    const res = await instanceLocal.get(`carts/${userId}`);
     return res.data.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {

@@ -5,7 +5,7 @@ import { validateBody } from "../middlewares/validateBody.js";
 import { FoodSchema } from "../../schemas/index.js";
 const route = Router();
 
-route.get("/", FoodController.getAll);
+route.get("/", verifyAdmin, FoodController.getAll);
 route.get("/deleted", FoodController.getAllDeleted);
 route.get("/:id", FoodController.getById);
 

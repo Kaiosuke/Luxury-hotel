@@ -6,6 +6,7 @@ import { validateBody } from "../middlewares/validateBody.js";
 const route = Router();
 
 route.get("/", CartController.getAll);
+route.get("/:id", CartController.getAllForUser);
 route.get("/deleted", CartController.getAllDeleted);
 route.get("/:id", CartController.getById);
 

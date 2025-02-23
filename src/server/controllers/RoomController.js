@@ -205,8 +205,6 @@ const RoomController = {
       const { id } = req.params;
       const { roomTypeId } = req.body;
 
-      console.log(id, roomTypeId);
-
       const findRoom = await getDataById(Room, id);
       if (!findRoom) {
         return handleError404(res);

@@ -49,7 +49,7 @@ const AuthController = {
         user: user._id,
       },
       env.ACCESS_TOKEN,
-      { expiresIn: "1d" }
+      { expiresIn: "20s" }
     );
   },
 
@@ -112,6 +112,7 @@ const AuthController = {
         return res.status(401).json(err);
       }
       const newUser = await User.findById(user.user);
+
       const newAccessToken = AuthController.generateAccessToken(newUser);
       const newRefreshToken = AuthController.generateRefreshToken(newUser);
 

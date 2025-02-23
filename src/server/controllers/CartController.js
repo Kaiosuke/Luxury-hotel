@@ -33,15 +33,177 @@ const CartController = {
   getAll: async (req, res) => {
     try {
       const search = req.query.search || "";
-      const carts = await getAllData(
-        Cart,
-        [{ userId: "username" }],
-        search.trim()
-      );
 
-      if (!carts.length) {
-        return handleError404(res);
+      const carts = await Cart.aggregate([
+        {
+          $addFields: {
+            userId: { $toObjectId: "$userId" },
+          },
+        },
+        {
+          $lookup: {
+            from: "roomtypes",
+            localField: "roomTypeId",
+            foreignField: "_id",
+            as: "roomType",
+          },
+        },
+        {
+          $unwind: "$roomType",
+        },
+        {
+          $lookup: {
+            from: "users",
+            localField: "userId",
+            foreignField: "_id",
+            as: "user",
+          },
+        },
+        {
+          $unwind: "$user",
+        },
+        {
+          $lookup: {
+            from: "rooms",
+            localField: "roomId",
+            foreignField: "_id",
+            as: "room",
+          },
+        },
+        {
+          $unwind: "$room",
+        },
+        {
+          $lookup: {
+            from: "options",
+            localField: "optionId",
+            foreignField: "_id",
+            as: "option",
+          },
+        },
+        {
+          $unwind: "$option",
+        },
+        {
+          $match: {
+            "user._id": { $regex: search.trim(), $options: "i" },
+          },
+        },
+        {
+          $project: {
+            _id: 1,
+            status: 1,
+            roomTypeId: 1,
+            userId: 1,
+            optionId: 1,
+            roomId: 1,
+            price: 1,
+            totalPrice: 1,
+            bookedDates: 1,
+            "user.username": 1,
+            "roomType.title": 1,
+            "roomType.price": 1,
+            "roomType.thumbnail": 1,
+            "room.roomNumber": 1,
+            "option.title": 1,
+            "option.price": 1,
+          },
+        },
+      ]);
+
+      return handleSuccess200(res, carts);
+    } catch (error) {
+      return handleError500(res, error);
+    }
+  },
+
+  getAllForUser: async (req, res) => {
+    try {
+      const { id } = req.params;
+
+      const findUser = await getDataById(User, id);
+
+      if (!findUser) {
+        return handleError404WithData(res, "user");
       }
+
+      const carts = await Cart.aggregate([
+        {
+          $addFields: {
+            userId: { $toObjectId: "$userId" },
+          },
+        },
+        {
+          $lookup: {
+            from: "roomtypes",
+            localField: "roomTypeId",
+            foreignField: "_id",
+            as: "roomType",
+          },
+        },
+        {
+          $unwind: "$roomType",
+        },
+        {
+          $lookup: {
+            from: "users",
+            localField: "userId",
+            foreignField: "_id",
+            as: "user",
+          },
+        },
+        {
+          $unwind: "$user",
+        },
+        {
+          $lookup: {
+            from: "rooms",
+            localField: "roomId",
+            foreignField: "_id",
+            as: "room",
+          },
+        },
+        {
+          $unwind: "$room",
+        },
+        {
+          $lookup: {
+            from: "options",
+            localField: "optionId",
+            foreignField: "_id",
+            as: "option",
+          },
+        },
+        {
+          $unwind: "$option",
+        },
+        {
+          $match: {
+            userId: findUser._id,
+          },
+        },
+        {
+          $project: {
+            _id: 1,
+            status: 1,
+            roomTypeId: 1,
+            userId: 1,
+            optionId: 1,
+            roomId: 1,
+            price: 1,
+            totalPrice: 1,
+            bookedDates: 1,
+            "user.username": 1,
+            "roomType.title": 1,
+            "roomType.price": 1,
+            "roomType.thumbnail": 1,
+            "room.roomNumber": 1,
+            "option.title": 1,
+            "option.price": 1,
+          },
+        },
+      ]);
+
       return handleSuccess200(res, carts);
     } catch (error) {
       return handleError500(res, error);
@@ -137,7 +299,84 @@ const CartController = {
 
       await findByIdAndPushData(RoomType, roomTypeId, "carts", newCart._id);
 
-      return handleSuccess201(res, newCart);
+      const cart = await Cart.aggregate([
+        {
+          $addFields: {
+            userId: { $toObjectId: "$userId" },
+          },
+        },
+        {
+          $lookup: {
+            from: "roomtypes",
+            localField: "roomTypeId",
+            foreignField: "_id",
+            as: "roomType",
+          },
+        },
+        {
+          $unwind: "$roomType",
+        },
+        {
+          $lookup: {
+            from: "users",
+            localField: "userId",
+            foreignField: "_id",
+            as: "user",
+          },
+        },
+        {
+          $unwind: "$user",
+        },
+        {
+          $lookup: {
+            from: "rooms",
+            localField: "roomId",
+            foreignField: "_id",
+            as: "room",
+          },
+        },
+        {
+          $unwind: "$room",
+        },
+        {
+          $lookup: {
+            from: "options",
+            localField: "optionId",
+            foreignField: "_id",
+            as: "option",
+          },
+        },
+        {
+          $unwind: "$option",
+        },
+        {
+          $match: {
+            _id: newCart._id,
+          },
+        },
+        {
+          $project: {
+            _id: 1,
+            status: 1,
+            roomTypeId: 1,
+            userId: 1,
+            optionId: 1,
+            roomId: 1,
+            price: 1,
+            totalPrice: 1,
+            bookedDates: 1,
+            "user.username": 1,
+            "roomType.title": 1,
+            "roomType.price": 1,
+            "roomType.thumbnail": 1,
+            "room.roomNumber": 1,
+            "option.title": 1,
+            "option.price": 1,
+          },
+        },
+      ]);
+
+      return handleSuccess201(res, cart[0]);
     } catch (error) {
       return handleError500(res, error);
     }
@@ -205,7 +444,84 @@ const CartController = {
         await findByIdAndPushData(RoomType, roomTypeId, "carts", id);
       }
 
-      return handleSuccess200(res, updateCart);
+      const cart = await Cart.aggregate([
+        {
+          $addFields: {
+            userId: { $toObjectId: "$userId" },
+          },
+        },
+        {
+          $lookup: {
+            from: "roomtypes",
+            localField: "roomTypeId",
+            foreignField: "_id",
+            as: "roomType",
+          },
+        },
+        {
+          $unwind: "$roomType",
+        },
+        {
+          $lookup: {
+            from: "users",
+            localField: "userId",
+            foreignField: "_id",
+            as: "user",
+          },
+        },
+        {
+          $unwind: "$user",
+        },
+        {
+          $lookup: {
+            from: "rooms",
+            localField: "roomId",
+            foreignField: "_id",
+            as: "room",
+          },
+        },
+        {
+          $unwind: "$room",
+        },
+        {
+          $lookup: {
+            from: "options",
+            localField: "optionId",
+            foreignField: "_id",
+            as: "option",
+          },
+        },
+        {
+          $unwind: "$option",
+        },
+        {
+          $match: {
+            _id: findCart._id,
+          },
+        },
+        {
+          $project: {
+            _id: 1,
+            status: 1,
+            roomTypeId: 1,
+            userId: 1,
+            optionId: 1,
+            roomId: 1,
+            price: 1,
+            totalPrice: 1,
+            bookedDates: 1,
+            "user.username": 1,
+            "roomType.title": 1,
+            "roomType.price": 1,
+            "roomType.thumbnail": 1,
+            "room.roomNumber": 1,
+            "option.title": 1,
+            "option.price": 1,
+          },
+        },
+      ]);
+
+      return handleSuccess200(res, cart[0]);
     } catch (error) {
       return handleError500(res, error);
     }
@@ -315,7 +631,85 @@ const CartController = {
         await findByIdAndPushData(RoomType, env.DEFAULT_ROOM_TYPE, "carts", id);
       }
       findCart.save();
-      return handleSuccess200(res, findCart);
+
+      const cart = await Cart.aggregate([
+        {
+          $addFields: {
+            userId: { $toObjectId: "$userId" },
+          },
+        },
+        {
+          $lookup: {
+            from: "roomtypes",
+            localField: "roomTypeId",
+            foreignField: "_id",
+            as: "roomType",
+          },
+        },
+        {
+          $unwind: "$roomType",
+        },
+        {
+          $lookup: {
+            from: "users",
+            localField: "userId",
+            foreignField: "_id",
+            as: "user",
+          },
+        },
+        {
+          $unwind: "$user",
+        },
+        {
+          $lookup: {
+            from: "rooms",
+            localField: "roomId",
+            foreignField: "_id",
+            as: "room",
+          },
+        },
+        {
+          $unwind: "$room",
+        },
+        {
+          $lookup: {
+            from: "options",
+            localField: "optionId",
+            foreignField: "_id",
+            as: "option",
+          },
+        },
+        {
+          $unwind: "$option",
+        },
+        {
+          $match: {
+            _id: cart._id,
+          },
+        },
+        {
+          $project: {
+            _id: 1,
+            status: 1,
+            roomTypeId: 1,
+            userId: 1,
+            optionId: 1,
+            roomId: 1,
+            price: 1,
+            totalPrice: 1,
+            bookedDates: 1,
+            "user.username": 1,
+            "roomType.title": 1,
+            "roomType.price": 1,
+            "roomType.thumbnail": 1,
+            "room.roomNumber": 1,
+            "option.title": 1,
+            "option.price": 1,
+          },
+        },
+      ]);
+
+      return handleSuccess200(res, cart[0]);
     } catch (error) {
       return handleError500(res, error);
     }

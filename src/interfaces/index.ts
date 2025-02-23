@@ -83,6 +83,21 @@ interface ICart {
   totalPrice: number;
   reservation?: string;
   bookedDates: { from: Date; to: Date };
+  room?: {
+    roomNumber: number;
+  };
+  user?: {
+    username: string;
+  };
+  roomType?: {
+    title: string;
+    thumbnail: string;
+    price: number;
+  };
+  option?: {
+    title: string;
+    price: number;
+  };
 }
 
 interface IOption {
