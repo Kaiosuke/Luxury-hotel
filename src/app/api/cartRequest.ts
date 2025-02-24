@@ -69,7 +69,6 @@ const addCart = createAsyncThunk<ICart, ICart, { rejectValue: string }>(
   "carts/addCart",
   async (cart, { rejectWithValue }) => {
     try {
-      console.log(cart);
       const res = await instanceLocal.post(`carts/create`, cart);
       return res.data.data;
     } catch (error) {
@@ -113,6 +112,22 @@ const deleteCart = createAsyncThunk<string, string, { rejectValue: string }>(
   }
 );
 
+const userDeleteCart = createAsyncThunk<
+  string,
+  string,
+  { rejectValue: string }
+>("carts/userDeleteCart", async (_id, { rejectWithValue }) => {
+  try {
+    await instanceLocal.delete(`carts/user/delete/force/${_id}`);
+    return _id;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      return rejectWithValue(error.response?.data?.message);
+    }
+    return rejectWithValue("An unexpected error occurred");
+  }
+});
+
 const restoreCart = createAsyncThunk<ICart, ICart, { rejectValue: string }>(
   "carts/restoreCart",
   async (_id, { rejectWithValue }) => {
@@ -152,6 +167,7 @@ export {
   addCart,
   updateCart,
   deleteCart,
+  userDeleteCart,
   restoreCart,
   forceDeleteCart,
 };

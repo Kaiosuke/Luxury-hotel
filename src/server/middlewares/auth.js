@@ -9,20 +9,21 @@ import {
 
 const verifyToken = async (req, res, next) => {
   try {
-    const token = req.headers.authorization;
-    if (token) {
-      const accessToken = token.split(" ")[1];
-      jwt.verify(accessToken, env.ACCESS_TOKEN, (err, user) => {
-        if (err) {
-          return res.status(401).json({ message: "Token is not valid!" });
-        }
+    const token = req.headers.authorization?.split(" ")[1];
 
-        req.user = user;
-        next();
-      });
-    } else {
+    if (!token) {
       return res.status(401).json({ message: "You're not authenticated!" });
     }
+
+    jwt.verify(token, process.env.ACCESS_TOKEN, (err, user) => {
+      if (err) {
+        console.log("JWT Verify Error:", err);
+        return res.status(401).json({ message: "Token is not valid!" });
+      }
+
+      req.user = user;
+      next();
+    });
   } catch (error) {
     return handleError500(res, error);
   }
@@ -35,7 +36,6 @@ const verifyAdmin = async (req, res, next) => {
       if (!user) {
         return res.status(404).json({ message: "User not found!" });
       }
-
       if (user.role === "admin" || user.role === "ceo") {
         next();
       } else {

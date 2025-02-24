@@ -1,6 +1,6 @@
 "use client";
 
-import DeleteRoom from "@/app/_components/booking/DeleteRoom";
+import DeleteRoom from "@/app/_components/booking/DeleteCart";
 import HeroImage from "@/app/_components/HeroImage";
 import LoadingPage from "@/app/_components/LoadingPage";
 import PriceDetail from "@/app/_components/PriceDetail";
@@ -26,8 +26,6 @@ const page = () => {
 
   const { cartsUsers } = useSelector(cartUserRemainingSelector);
 
-  const { loading } = useSelector(cartsSelector);
-
   const router = useRouter();
 
   useEffect(() => {
@@ -43,7 +41,7 @@ const page = () => {
       dispatch(getAllCartByUserId(currentUser._id));
   }, []);
 
-  if (!currentUser || loading) {
+  if (!currentUser) {
     return <LoadingPage />;
   }
 

@@ -17,7 +17,18 @@ const initialState: IAuthState = {
 const authSlice = createSlice({
   name: "auth",
   initialState,
-  reducers: {},
+
+  reducers: {
+    loginUser: (state, action) => {
+      state.currentUser = action.payload;
+    },
+    updateCurrentUser: (state, action) => {
+      state.currentUser = action.payload;
+    },
+    logoutUser: (state) => {
+      state.currentUser = null;
+    },
+  },
   extraReducers(builder) {
     builder.addCase(login.pending, (state: IAuthState) => {
       state.loading = true;
@@ -54,3 +65,4 @@ const authSlice = createSlice({
 });
 
 export default authSlice.reducer;
+export const { updateCurrentUser } = authSlice.actions;

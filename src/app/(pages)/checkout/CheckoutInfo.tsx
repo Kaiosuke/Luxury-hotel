@@ -10,6 +10,13 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
+import {
+  deleteCart,
+  getAllCart,
+  updateCart,
+  userDeleteCart,
+} from "@/app/api/cartRequest";
+import { getRoom, updateRoom } from "@/app/api/roomRequest";
 import { updateUser } from "@/app/api/userRequest";
 import {
   Accordion,
@@ -18,9 +25,16 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
-import { ECart, ICart, IUser } from "@/interfaces";
+import { useToast } from "@/hooks/use-toast";
+import { useAvailableCartsUsers } from "@/hooks/useAvailableCarts";
+import { ICart, IUser } from "@/interfaces";
 import { authSelector } from "@/redux/selectors/authSelector";
+import {
+  cartsSelector,
+  cartUserRemainingSelector,
+} from "@/redux/selectors/cartsSelector";
 import { updateCurrentUser } from "@/redux/slices/authSlice";
+import { addCartSuccess } from "@/redux/slices/cartsSlice";
 import { useAppDispatch } from "@/redux/store";
 import { CheckOutSchema } from "@/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -28,22 +42,14 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
-import {
-  cartsSelector,
-  cartUserRemainingSelector,
-} from "@/redux/selectors/cartsSelector";
-import { deleteCart, getAllCart, updateCart } from "@/app/api/cartRequest";
-import LoadingPage from "@/app/_components/LoadingPage";
-import { getRoom, updateRoom } from "@/app/api/roomRequest";
-import { addCartSuccess } from "@/redux/slices/cartsSlice";
-import { useAvailableCartsUsers } from "@/hooks/useAvailableCarts";
-import sendMail from "@/app/api/sendMailRequuest";
-import { useToast } from "@/hooks/use-toast";
 const CheckoutInfo = () => {
   const [country, setCountry] = useState("VN");
   const { currentUser } = useSelector(authSelector);
 
-  const [loading, setLoading] = useState(false);
+  const { toast } = useToast();
+
+  const dispatch = useAppDispatch();
+  const router = useRouter();
 
   const { register, formState, handleSubmit, reset } = useForm({
     resolver: zodResolver(CheckOutSchema),
@@ -58,10 +64,21 @@ const CheckoutInfo = () => {
   const { cartsUsers } = useSelector(cartUserRemainingSelector);
   const { carts } = useSelector(cartsSelector);
 
-  const { toast } = useToast();
-
-  const dispatch = useAppDispatch();
-  const router = useRouter();
+  // useEffect(() => {
+  //   (async () => {
+  //     try {
+  //       await dispatch(getAllCart("")).unwrap();
+  //     } catch (error) {
+  //       const errorMessage =
+  //         typeof error === "string" ? error : "Something went wrong";
+  //       toast({
+  //         variant: "destructive",
+  //         title: "Registration failed",
+  //         description: errorMessage,
+  //       });
+  //     }
+  //   })();
+  // }, []);
 
   useEffect(() => {
     if (currentUser) {
@@ -81,7 +98,6 @@ const CheckoutInfo = () => {
 
   const handleGetData = async (data: IUser) => {
     try {
-      setLoading(true);
       const newData = {
         ...currentUser,
         ...data,
@@ -94,19 +110,24 @@ const CheckoutInfo = () => {
           JSON.stringify(newData) === JSON.stringify(currentUser);
 
         if (!areArraysEqual) {
-          dispatch(updateUser({ _id: currentUser._id, user: newData }));
+          await dispatch(
+            updateUser({ _id: currentUser._id, user: newData })
+          ).unwrap();
+
           dispatch(updateCurrentUser(newData));
         }
 
         for (const cart of cartsUsers) {
           const newCart: ICart = {
             ...cart,
-            status: ECart.booked,
+            status: "booked",
           };
 
           currentUser._id &&
             cart._id &&
-            (await dispatch(updateCart({ _id: cart._id, cart: newCart })));
+            (await dispatch(
+              updateCart({ _id: cart._id, cart: newCart })
+            ).unwrap());
 
           const availableCart = useAvailableCartsUsers({
             carts: carts,
@@ -115,10 +136,11 @@ const CheckoutInfo = () => {
 
           const existCart = availableCart.find((data) => data._id !== cart._id);
           if (existCart?._id) {
-            dispatch(deleteCart(existCart._id));
+            await dispatch(userDeleteCart(existCart._id)).unwrap();
           }
 
           const findRoom = await dispatch(getRoom(cart.roomId)).unwrap();
+
           const updatedBookedDates = [
             ...findRoom.bookedDates,
             {
@@ -132,7 +154,7 @@ const CheckoutInfo = () => {
               _id: cart.roomId,
               room: { ...findRoom, bookedDates: updatedBookedDates },
             })
-          );
+          ).unwrap();
         }
       }
 
@@ -143,25 +165,27 @@ const CheckoutInfo = () => {
       });
 
       router.push("/booking/success");
-      if (currentUser) {
-        await sendMail({ user: currentUser });
-      }
+      // if (currentUser) {
+      //   await sendMail({ user: currentUser });
+      // }
 
       dispatch(addCartSuccess(cartsUsers));
     } catch (error) {
+      const errorMessage =
+        typeof error === "string" ? error : "Something went wrong";
       toast({
         variant: "destructive",
-        title: "Error",
-        description: "Something went wrong during booking.",
+        title: "Registration failed",
+        description: errorMessage,
       });
-    } finally {
-      setLoading(false);
     }
   };
 
-  if (!carts.length || loading) {
-    return <LoadingPage />;
-  }
+  // if (!carts.length || loading) {
+  //   return <LoadingPage />;
+  // }
+
+  console.log(carts);
 
   return (
     <div className="border border-secondary rounded-lg p-4 text-third">

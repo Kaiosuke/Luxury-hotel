@@ -2,6 +2,7 @@ import { Router } from "express";
 import { RoomSchema } from "../../schemas/index.js";
 import RoomController from "../controllers/RoomController.js";
 import { verifyAdmin } from "../middlewares/auth.js";
+import { verifyCartAdminAndUser } from "../middlewares/cart.js";
 import { validateBody } from "../middlewares/validateBody.js";
 const route = Router();
 
@@ -16,7 +17,7 @@ route.post(
   RoomController.create
 );
 
-route.patch("/update/:id", verifyAdmin, RoomController.update);
+route.patch("/update/:id", verifyCartAdminAndUser, RoomController.update);
 
 route.delete("/delete/:id", verifyAdmin, RoomController.delete);
 

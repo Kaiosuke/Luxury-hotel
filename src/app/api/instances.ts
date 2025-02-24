@@ -3,21 +3,19 @@ import Cookies from "js-cookie";
 
 const instanceLocal = axios.create({
   baseURL: "http://localhost:8080/",
+  withCredentials: true,
   headers: { "Content-type": "application/json" },
 });
 
 instanceLocal.interceptors.request.use(
   (config) => {
-    const accessToken = localStorage.getItem("accessToken");
+    const accessToken = Cookies.get("accessToken");
     if (accessToken) {
-      console.log(accessToken);
-      config.headers["Authorization"] = `Bearer ${accessToken}`;
+      config.headers.Authorization = `Bearer ${accessToken}`;
     }
     return config;
   },
-  (error) => {
-    return Promise.reject(error);
-  }
+  (error) => Promise.reject(error)
 );
 
 instanceLocal.interceptors.response.use(
@@ -32,11 +30,15 @@ instanceLocal.interceptors.response.use(
           {},
           { withCredentials: true }
         );
-        localStorage.setItem("accessToken", res.data.newAccessToken);
+        const newAccessToken = res.data.newAccessToken;
 
-        originalRequest.headers[
-          "Authorization"
-        ] = `Bearer ${res.data.newAccessToken}`;
+        Cookies.set("accessToken", newAccessToken, {
+          expires: 1,
+          secure: true,
+          sameSite: "Strict",
+        });
+
+        originalRequest.headers.Authorization = `Bearer ${res.data.newAccessToken}`;
 
         return instanceLocal(originalRequest);
       } catch (err) {
@@ -48,4 +50,5 @@ instanceLocal.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+
 export default instanceLocal;

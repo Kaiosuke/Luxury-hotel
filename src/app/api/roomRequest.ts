@@ -68,10 +68,7 @@ const updateRoom = createAsyncThunk<
   IRoom,
   {
     _id: string;
-    room: {
-      status: string;
-      roomTypeId: string;
-    };
+    room: IRoom;
   },
   { rejectValue: string }
 >("rooms/updateRoom", async ({ _id, room }, { rejectWithValue }) => {

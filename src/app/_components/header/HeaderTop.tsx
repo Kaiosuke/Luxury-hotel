@@ -26,6 +26,7 @@ import { MdOutlineDashboard } from "react-icons/md";
 import { useSelector } from "react-redux";
 import { useToast } from "@/hooks/use-toast";
 import { logout } from "@/app/api/authRequest";
+import { useRouter } from "next/navigation";
 
 const HeaderTop = ({
   isScrolled,
@@ -43,9 +44,13 @@ const HeaderTop = ({
 
   const { toast } = useToast();
 
+  const router = useRouter();
+
   const handleSigOut = async () => {
     try {
       await dispatch(logout()).unwrap();
+      router.push("/");
+
       return toast({
         variant: "success",
         title: "success",

@@ -55,7 +55,7 @@ const page = () => {
             <div className="h-[680px] overflow-auto">
               <div className="flex flex-col gap-4 mt-4">
                 {cartsUsers.map((room, index) => (
-                  <PriceDetail key={room.id} cart={room} index={index + 1} />
+                  <PriceDetail key={room._id} cart={room} index={index + 1} />
                 ))}
               </div>
             </div>

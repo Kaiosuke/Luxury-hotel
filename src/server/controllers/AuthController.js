@@ -1,6 +1,7 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import env from "../config/envConfig.js";
+import redis from "../config/redisClient.js";
 
 import {
   handleError401,
@@ -14,8 +15,6 @@ import { createData } from "../services/postService.js";
 import { getData } from "../services/getService.js";
 
 import User from "../models/User.js";
-
-let refreshTokens = [];
 
 const AuthController = {
   register: async (req, res) => {
@@ -49,7 +48,7 @@ const AuthController = {
         user: user._id,
       },
       env.ACCESS_TOKEN,
-      { expiresIn: "20s" }
+      { expiresIn: "1h" }
     );
   },
 
@@ -84,7 +83,12 @@ const AuthController = {
 
       const refreshToken = AuthController.generateRefreshToken(findUser);
 
-      refreshTokens.push(refreshToken);
+      await redis.set(
+        findUser._id.toString(),
+        refreshToken,
+        "EX",
+        365 * 24 * 60 * 60
+      );
 
       res.cookie("refreshToken", refreshToken, {
         httpOnly: true,
@@ -103,9 +107,17 @@ const AuthController = {
 
   refreshToken: async (req, res) => {
     const refreshToken = req.cookies.refreshToken;
-
-    if (!refreshTokens.includes(refreshToken)) {
-      return res.status(401).json("Refresh Token is not valid!");
+    const userId = await redis.keys("*");
+    let userKey = null;
+    for (let id of userId) {
+      const storedToken = await redis.get(id);
+      if (storedToken === refreshToken) {
+        userKey = id;
+        break;
+      }
+    }
+    if (!userKey) {
+      return res.status(403).json("Refresh Token is not valid!");
     }
     jwt.verify(refreshToken, env.REFRESH_TOKEN, async (err, user) => {
       if (err) {
@@ -116,9 +128,8 @@ const AuthController = {
       const newAccessToken = AuthController.generateAccessToken(newUser);
       const newRefreshToken = AuthController.generateRefreshToken(newUser);
 
-      refreshTokens = refreshTokens.filter((token) => token !== refreshToken);
-
-      refreshTokens.push(newRefreshToken);
+      await redis.del(userKey);
+      await redis.set(userKey, newRefreshToken, "EX", 365 * 24 * 60 * 60);
 
       res.cookie("refreshToken", newRefreshToken, {
         httpOnly: true,
@@ -135,11 +146,22 @@ const AuthController = {
   },
   logout: async (req, res) => {
     try {
+      const refreshToken = req.cookies.refreshToken;
+      if (!refreshToken) {
+        return handleError401(res, "You're not authenticated");
+      }
+
+      const userId = await redis.keys("*");
+      for (let id of userId) {
+        const storedToken = await redis.get(id);
+        if (storedToken === refreshToken) {
+          await redis.del(id);
+          break;
+        }
+      }
+
       res.clearCookie("refreshToken");
-      refreshTokens = refreshTokens.filter(
-        (token) => token !== req.cookies.refreshToken
-      );
-      return handleSuccess200(res);
+      return handleSuccess200(res, "Logged out successfully");
     } catch (error) {
       return handleError500(res, error);
     }

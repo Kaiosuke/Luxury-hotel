@@ -11,7 +11,12 @@ const RoomSchema = new Schema(
     roomNumber: { type: Number, require: true },
     floor: { type: Number, require: true },
     status: { type: String, require: true },
-    bookedDates: [{ type: String }],
+    bookedDates: [
+      {
+        from: Date,
+        to: Date,
+      },
+    ],
     carts: [
       {
         type: Schema.Types.ObjectId,

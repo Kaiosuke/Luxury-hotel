@@ -86,7 +86,7 @@ const CartController = {
         },
         {
           $match: {
-            "user._id": { $regex: search.trim(), $options: "i" },
+            "user.username": { $regex: search.trim(), $options: "i" },
           },
         },
         {
@@ -551,6 +551,37 @@ const CartController = {
       await findByIdAndPullData(RoomType, findCart.roomTypeId, "carts", id);
 
       await deleteData(Cart, id);
+
+      return handleSuccess200(res, id);
+    } catch (error) {
+      return handleError500(res, error);
+    }
+  },
+
+  userDelete: async (req, res) => {
+    try {
+      const { id } = req.params;
+
+      const findCart = await getDataById(Cart, id);
+
+      if (!findCart) {
+        return handleError404(res);
+      }
+
+      const findPayment = await getData(Payment, "cartId", findCart._id);
+      if (findPayment) {
+        return handleError409(
+          res,
+          "Payment conflict, cannot be deleted due to other constraints"
+        );
+      }
+
+      await findByIdAndPullData(Option, findCart.optionId, "carts", id);
+      await findByIdAndPullData(User, findCart.userId, "carts", id);
+      await findByIdAndPullData(Room, findCart.roomId, "carts", id);
+      await findByIdAndPullData(RoomType, findCart.roomTypeId, "carts", id);
+
+      await forceDeleteData(Cart, id);
 
       return handleSuccess200(res, id);
     } catch (error) {

@@ -82,7 +82,7 @@ const page = () => {
                   {cartsSuccess.length &&
                     cartsSuccess.map((cart, index) => (
                       <PriceDetail
-                        key={cart.id}
+                        key={cart._id}
                         cart={cart}
                         index={index + 1}
                       />

@@ -7,6 +7,7 @@ import {
   getAllCartDeleted,
   restoreCart,
   updateCart,
+  userDeleteCart,
 } from "@/app/api/cartRequest";
 import { ICart } from "@/interfaces";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
@@ -114,6 +115,25 @@ const cartsSlice = createSlice({
       }
     );
     builder.addCase(deleteCart.rejected, setError);
+
+    builder.addCase(userDeleteCart.pending, setLoading);
+    builder.addCase(
+      userDeleteCart.fulfilled,
+      (state, action: PayloadAction<string>) => {
+        state.loading = false;
+        const findCart = state.carts.find(
+          (cart) => cart._id === action.payload
+        );
+        if (findCart) {
+          state.cartsDeleted = [...state.cartsDeleted, findCart];
+        }
+        state.carts = state.carts.filter((cart) => cart._id !== action.payload);
+        state.cartsUser = state.cartsUser.filter(
+          (cart) => cart._id !== action.payload
+        );
+      }
+    );
+    builder.addCase(userDeleteCart.rejected, setError);
 
     builder.addCase(forceDeleteCart.pending, setLoading);
     builder.addCase(
