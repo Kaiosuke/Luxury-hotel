@@ -44,8 +44,30 @@ const RoomController = {
             as: "roomType",
           },
         },
+        { $unwind: "$roomType" },
         {
-          $unwind: "$roomType",
+          $lookup: {
+            from: "carts",
+            localField: "_id",
+            foreignField: "roomId",
+            as: "carts",
+          },
+        },
+        {
+          $addFields: {
+            bookedDates: {
+              $reduce: {
+                input: "$carts",
+                initialValue: [],
+                in: {
+                  $concatArrays: [
+                    "$$value",
+                    [{ $ifNull: ["$$this.bookedDates", {}] }],
+                  ],
+                },
+              },
+            },
+          },
         },
         {
           $match: {
@@ -60,7 +82,7 @@ const RoomController = {
             floor: 1,
             status: 1,
             bookedDates: 1,
-            carts: 1,
+            carts: { $map: { input: "$carts", as: "cart", in: "$$cart._id" } },
             "roomType.title": 1,
           },
         },

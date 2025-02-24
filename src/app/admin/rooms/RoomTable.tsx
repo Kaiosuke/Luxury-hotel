@@ -124,9 +124,7 @@ const RoomsTable = ({ open, onClose }: IForm) => {
         );
       },
       cell: ({ row }) => {
-        const roomType = row.original.roomType as {
-          title: string;
-        };
+        const roomType = row.original.roomType;
         const title = row.original.title;
         return <div>{title ? title : roomType ? roomType.title : "NaN"}</div>;
       },

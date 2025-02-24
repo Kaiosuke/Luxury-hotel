@@ -11,7 +11,7 @@ import { useSelector } from "react-redux";
 import Booking from "./Booking";
 
 const page = () => {
-  const { loading, error } = useSelector(roomsSelector);
+  const { loading } = useSelector(roomsSelector);
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(getAllRoom(""));
@@ -22,9 +22,6 @@ const page = () => {
     return <LoadingPage />;
   }
 
-  if (error) {
-    return error;
-  }
   return (
     <>
       <HeroImage

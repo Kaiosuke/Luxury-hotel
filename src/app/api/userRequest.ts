@@ -80,6 +80,22 @@ const updateUser = createAsyncThunk<
   }
 });
 
+const userUpdateUser = createAsyncThunk<
+  IUser,
+  { _id: string; user: IUser },
+  { rejectValue: string }
+>("users/updateUser", async ({ _id, user }, { rejectWithValue }) => {
+  try {
+    const res = await instanceLocal.patch(`users/user/update/${_id}`, user);
+    return res.data.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      return rejectWithValue(error.response?.data.message);
+    }
+    return rejectWithValue("An unexpected error occurred");
+  }
+});
+
 const deleteUser = createAsyncThunk<string, string, { rejectValue: string }>(
   "users/deleteUser",
   async (_id, { rejectWithValue }) => {
@@ -132,6 +148,7 @@ export {
   addUser,
   getUser,
   updateUser,
+  userUpdateUser,
   deleteUser,
   restoreUser,
   forceDeleteUser,

@@ -13,16 +13,16 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useState } from "react";
 import { IoMdOptions } from "react-icons/io";
-import OptionDeletedTable from "./OptionDeletedTable";
+import CartDeletedTable from "./CartDeletedTable";
 
 const page = () => {
   const [openForm, setOpenForm] = useState(false);
   return (
     <div>
-      <BreadcrumbComponent page="Views" />
+      <BreadcrumbComponent page="Carts" />
       <div className="mt-6 flex justify-between text-sidebar-primary">
         <div className="flex items-center gap-4">
-          <h1 className="text-size-3xl">View List</h1>
+          <h1 className="text-size-3xl">Cart List</h1>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Badge variant={"outline-primary"}>
@@ -36,7 +36,7 @@ const page = () => {
               <DropdownMenuSeparator />
               <DropdownMenuGroup>
                 <DropdownMenuItem className="cursor-pointer">
-                  DeleteAll
+                  Restore All
                 </DropdownMenuItem>
               </DropdownMenuGroup>
             </DropdownMenuContent>
@@ -44,7 +44,7 @@ const page = () => {
         </div>
       </div>
       <div className="mt-6">
-        <OptionDeletedTable open={openForm} onClose={setOpenForm} />
+        <CartDeletedTable open={openForm} onClose={setOpenForm} />
       </div>
     </div>
   );

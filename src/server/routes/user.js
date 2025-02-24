@@ -7,7 +7,13 @@ const route = Router();
 route.get("/", verifyAdmin, UserController.getAll);
 route.get("/deleted", UserController.getAllDeleted);
 route.get("/:id", UserController.getById);
+
 route.patch("/update/:id", verifyCartAdminAndUser, UserController.update);
+route.patch(
+  "/user/update/:id",
+  verifyCartAdminAndUser,
+  UserController.userUpdate
+);
 
 route.delete("/delete/:id", verifyAdmin, UserController.delete);
 

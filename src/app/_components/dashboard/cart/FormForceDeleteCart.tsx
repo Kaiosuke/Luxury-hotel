@@ -1,5 +1,4 @@
-import { deleteCart, getCart } from "@/app/api/cartRequest";
-import { deleteRoom, getRoom, updateRoom } from "@/app/api/roomRequest";
+import { forceDeleteCart } from "@/app/api/cartRequest";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -13,36 +12,37 @@ import { useToast } from "@/hooks/use-toast";
 import { IForm } from "@/interfaces";
 import { useAppDispatch } from "@/redux/store";
 
-function FormDeleteCart({ open, onClose, _id }: IForm) {
+function FormForceDeleteCart({ open, onClose, _id }: IForm) {
   const dispatch = useAppDispatch();
   const { toast } = useToast();
 
   const handleDelete = async () => {
-    if (_id) {
-      try {
-        await dispatch(deleteCart(_id)).unwrap();
-        toast({
-          variant: "success",
-          title: "Success",
-          description: "Delete Cart success",
-        });
-        onClose(false);
-      } catch (error) {
-        const errorMessage =
-          typeof error === "string" ? error : "Something went wrong";
-        toast({
-          variant: "destructive",
-          title: "Registration failed",
-          description: errorMessage,
-        });
-      }
+    try {
+      _id && (await dispatch(forceDeleteCart(_id)).unwrap());
+      toast({
+        variant: "success",
+        title: "Success",
+        description: "Delete Cart success",
+      });
+      return onClose(false);
+    } catch (error) {
+      const errorMessage =
+        typeof error === "string" ? error : "Something went wrong";
+      toast({
+        variant: "destructive",
+        title: "Failed",
+        description: errorMessage,
+      });
+      return onClose(false);
     }
   };
   return (
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-[425px]  bg-sidebar-four text-sidebar-primary">
         <DialogHeader>
-          <DialogTitle className="md:text-2xl text-xl">Delete Cart</DialogTitle>
+          <DialogTitle className="md:text-2xl text-xl">
+            Force Delete Cart
+          </DialogTitle>
           <DialogDescription className="text-sidebar-primary">
             Are you sure you want to delete this Cart?
           </DialogDescription>
@@ -65,4 +65,4 @@ function FormDeleteCart({ open, onClose, _id }: IForm) {
   );
 }
 
-export default FormDeleteCart;
+export default FormForceDeleteCart;

@@ -7,8 +7,8 @@ import { verifyCartAdminAndUser } from "../middlewares/cart.js";
 const route = Router();
 
 route.get("/", CartController.getAll);
-route.get("/:id", CartController.getAllForUser);
 route.get("/deleted", CartController.getAllDeleted);
+route.get("/user/:id", CartController.getAllForUser);
 route.get("/:id", CartController.getById);
 
 route.post(

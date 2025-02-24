@@ -40,7 +40,7 @@ const getAllCartByUserId = createAsyncThunk<
   { rejectValue: string }
 >("carts/getAllCartByUserId", async (userId, { rejectWithValue }) => {
   try {
-    const res = await instanceLocal.get(`carts/${userId}`);
+    const res = await instanceLocal.get(`carts/user/${userId}`);
     return res.data.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -128,7 +128,7 @@ const userDeleteCart = createAsyncThunk<
   }
 });
 
-const restoreCart = createAsyncThunk<ICart, ICart, { rejectValue: string }>(
+const restoreCart = createAsyncThunk<ICart, string, { rejectValue: string }>(
   "carts/restoreCart",
   async (_id, { rejectWithValue }) => {
     try {

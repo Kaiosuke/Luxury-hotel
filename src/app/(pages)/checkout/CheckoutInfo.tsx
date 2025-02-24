@@ -10,14 +10,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-import {
-  deleteCart,
-  getAllCart,
-  updateCart,
-  userDeleteCart,
-} from "@/app/api/cartRequest";
-import { getRoom, updateRoom } from "@/app/api/roomRequest";
-import { updateUser } from "@/app/api/userRequest";
+import { getAllCart, updateCart, userDeleteCart } from "@/app/api/cartRequest";
+import { userUpdateUser } from "@/app/api/userRequest";
 import {
   Accordion,
   AccordionContent,
@@ -111,7 +105,7 @@ const CheckoutInfo = () => {
 
         if (!areArraysEqual) {
           await dispatch(
-            updateUser({ _id: currentUser._id, user: newData })
+            userUpdateUser({ _id: currentUser._id, user: newData })
           ).unwrap();
 
           dispatch(updateCurrentUser(newData));
@@ -138,23 +132,6 @@ const CheckoutInfo = () => {
           if (existCart?._id) {
             await dispatch(userDeleteCart(existCart._id)).unwrap();
           }
-
-          const findRoom = await dispatch(getRoom(cart.roomId)).unwrap();
-
-          const updatedBookedDates = [
-            ...findRoom.bookedDates,
-            {
-              from: cart.bookedDates.from,
-              to: cart.bookedDates.to,
-            },
-          ];
-
-          await dispatch(
-            updateRoom({
-              _id: cart.roomId,
-              room: { ...findRoom, bookedDates: updatedBookedDates },
-            })
-          ).unwrap();
         }
       }
 

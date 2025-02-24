@@ -3,10 +3,9 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 
-import FormDeleteCart from "@/app/_components/dashboard/cart/FormDeleteCart";
-import FormRoom from "@/app/_components/dashboard/room/FormRoom";
+import FormForceDeleteCart from "@/app/_components/dashboard/cart/FormForceDeleteCart";
 import DataTable from "@/app/_components/DataTable";
-import { updateCart } from "@/app/api/cartRequest";
+import { getAllCartDeleted, restoreCart } from "@/app/api/cartRequest";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
@@ -17,41 +16,52 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
-import { ECart, IForm } from "@/interfaces";
+import { IForm, ICart } from "@/interfaces";
 import { cartsSelector } from "@/redux/selectors/cartsSelector";
-import { optionsSelector } from "@/redux/selectors/optionsSelector";
-import { roomsSelector } from "@/redux/selectors/roomsSelector";
-import { roomTypesSelector } from "@/redux/selectors/roomTypesSelector";
-import { usersSelector } from "@/redux/selectors/usersSelector";
 import { useAppDispatch } from "@/redux/store";
-import { format } from "date-fns";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import LoadingProcess from "@/app/_components/Loading";
+import useDebounce from "@/hooks/useDebounce";
+import { format } from "date-fns";
 import { formatMoney } from "@/utils/helpers";
 
-const CartsTable = ({ open, onClose }: IForm) => {
-  const { carts } = useSelector(cartsSelector);
+const CartDeletedTable = ({ open, onClose }: IForm) => {
+  const dispatch = useAppDispatch();
 
-  const [selectCartId, setSelectedCartId] = useState<string | null>(null);
+  const [search, setSearch] = useState("");
+
+  const debounce = useDebounce({ value: search });
+
+  useEffect(() => {
+    dispatch(getAllCartDeleted(search));
+  }, [debounce]);
+  const { cartsDeleted } = useSelector(cartsSelector);
+
+  const [selectedCartId, setSelectedCartId] = useState<string | null>(null);
   const [openFormDelete, setOpenFormDelete] = useState(false);
 
   const { toast } = useToast();
 
-  const { users } = useSelector(usersSelector);
-  const { roomTypes } = useSelector(roomTypesSelector);
-  const { rooms } = useSelector(roomsSelector);
-  const { options } = useSelector(optionsSelector);
-
-  const handleDelete = (id: string) => {
+  const handleRestore = async (id: string) => {
+    try {
+      await dispatch(restoreCart(id)).unwrap();
+      toast({
+        variant: "success",
+        title: "Successfully!",
+        description: "Restore Cart success",
+      });
+    } catch (error) {
+      const errorMessage =
+        typeof error === "string" ? error : "Something went wrong";
+      toast({
+        variant: "destructive",
+        title: "Restore failed",
+        description: errorMessage,
+      });
+    }
+  };
+  const handleForceDelete = (id: string) => {
     setSelectedCartId(id);
     setOpenFormDelete(true);
   };
@@ -62,9 +72,7 @@ const CartsTable = ({ open, onClose }: IForm) => {
     onClose(false);
   };
 
-  const disPatch = useAppDispatch();
-
-  const roomTypeColumns: ColumnDef<any>[] = [
+  const CartColumns: ColumnDef<ICart>[] = [
     {
       id: "select",
       header: ({ table }) => (
@@ -87,6 +95,7 @@ const CartsTable = ({ open, onClose }: IForm) => {
       enableSorting: false,
       enableHiding: false,
     },
+
     {
       accessorKey: "userId",
       header: ({ column }) => {
@@ -95,15 +104,14 @@ const CartsTable = ({ open, onClose }: IForm) => {
             className="flex text-size-xl items-center cursor-pointer hover:text-sidebar-primary"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            Room Type
+            User
             <ArrowUpDown />
           </div>
         );
       },
       cell: ({ row }) => {
-        const userId = row.getValue("userId") as string;
-        const findUser = users.find((user) => user._id === userId);
-        return <div>{findUser?.username || "N/A"}</div>;
+        const user = row.original.user;
+        return <div>{user.username || "N/A"}</div>;
       },
     },
     {
@@ -120,31 +128,8 @@ const CartsTable = ({ open, onClose }: IForm) => {
         );
       },
       cell: ({ row }) => {
-        const roomTypeId = row.getValue("roomTypeId") as string;
-        const findRoomType = roomTypes.find(
-          (roomType) => roomType._id === roomTypeId
-        );
-        return <div>{findRoomType?.title || "N/A"}</div>;
-      },
-    },
-    {
-      accessorKey: "optionId",
-      header: ({ column }) => {
-        return (
-          <div
-            className="flex text-size-xl items-center cursor-pointer hover:text-sidebar-primary"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
-            Option
-            <ArrowUpDown />
-          </div>
-        );
-      },
-      cell: ({ row }) => {
-        const optionId = row.getValue("optionId") as string;
-        const findOption =
-          options && options.find((option) => option._id === optionId);
-        return <div>{findOption?.title || "N/A"}</div>;
+        const roomType = row.original.roomType;
+        return <div>{roomType.title || "N/A"}</div>;
       },
     },
     {
@@ -161,9 +146,26 @@ const CartsTable = ({ open, onClose }: IForm) => {
         );
       },
       cell: ({ row }) => {
-        const roomId = row.getValue("roomId") as string;
-        const findRoom = rooms.find((room) => room._id === roomId);
-        return <div>{findRoom?.roomNumber || "N/A"}</div>;
+        const room = row.original.room;
+        return <div>{room.roomNumber || "N/A"}</div>;
+      },
+    },
+    {
+      accessorKey: "optionId",
+      header: ({ column }) => {
+        return (
+          <div
+            className="flex text-size-xl items-center cursor-pointer hover:text-sidebar-primary"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            Option
+            <ArrowUpDown />
+          </div>
+        );
+      },
+      cell: ({ row }) => {
+        const option = row.original.option;
+        return <div>{option.title || "N/A"}</div>;
       },
     },
 
@@ -180,7 +182,9 @@ const CartsTable = ({ open, onClose }: IForm) => {
           </div>
         );
       },
-      cell: ({ row }) => <div>{row.getValue("day")}</div>,
+      cell: ({ row }) => {
+        return <div>{row.getValue("day")}</div>;
+      },
     },
     {
       accessorKey: "totalPrice",
@@ -198,76 +202,6 @@ const CartsTable = ({ open, onClose }: IForm) => {
       cell: ({ row }) => {
         const totalPrice = formatMoney(row.getValue("totalPrice"));
         return <div>{totalPrice}</div>;
-      },
-    },
-    {
-      accessorKey: "status",
-      header: ({ column }) => {
-        return (
-          <div
-            className="flex text-size-xl items-center cursor-pointer hover:text-sidebar-primary"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
-            Status
-            <ArrowUpDown />
-          </div>
-        );
-      },
-      cell: ({ row }) => {
-        const statusCart = row.getValue("status") as string;
-        const [status, setStatus] = useState<string>(statusCart);
-
-        useEffect(() => {
-          setStatus(statusCart);
-        }, [statusCart]);
-
-        const handleChangeStatus = (value: string) => {
-          const newStatus =
-            value === "booked"
-              ? ECart.booked
-              : value === "pending"
-              ? ECart.pending
-              : ECart.confirm;
-
-          disPatch(
-            updateCart({
-              _id: row.original._id,
-              cart: { ...row.original, status: newStatus },
-            })
-          );
-
-          toast({
-            variant: "success",
-            title: "Success",
-            description: "Change status Cart success",
-          });
-
-          return setStatus(value);
-        };
-
-        return (
-          <Select
-            value={status}
-            onValueChange={(value) => handleChangeStatus(value)}
-          >
-            <SelectTrigger
-              className={`w-[180px] text-sm ${
-                status === "booked"
-                  ? "bg-secondary"
-                  : status === "pending"
-                  ? "bg-blue-500"
-                  : "bg-green-500"
-              }`}
-            >
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent className="bg-sidebar-four text-sidebar-primary ">
-              <SelectItem value="booked">Booked</SelectItem>
-              <SelectItem value="pending">Pending</SelectItem>
-              <SelectItem value="confirm">Confirm</SelectItem>
-            </SelectContent>
-          </Select>
-        );
       },
     },
 
@@ -300,7 +234,7 @@ const CartsTable = ({ open, onClose }: IForm) => {
       id: "actions",
       enableHiding: false,
       cell: ({ row }) => {
-        const id = row.original.id;
+        const id = row.original._id;
         return (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -314,13 +248,19 @@ const CartsTable = ({ open, onClose }: IForm) => {
               className="bg-sidebar-four text-primary"
             >
               <DropdownMenuLabel>Actions</DropdownMenuLabel>
-              <DropdownMenuSeparator />
 
+              <DropdownMenuSeparator />
               <DropdownMenuItem
                 className="cursor-pointer"
-                onClick={() => id && handleDelete(id)}
+                onClick={() => id && handleRestore(id)}
               >
-                Delete
+                Restore
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                className="cursor-pointer"
+                onClick={() => id && handleForceDelete(id)}
+              >
+                Force Delete
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -329,7 +269,7 @@ const CartsTable = ({ open, onClose }: IForm) => {
     },
   ];
 
-  // const { loading } = useSelector(cartsSelector);
+  // const { loading } = useSelector(CartsSelector);
 
   // if (loading) {
   //   return <LoadingProcess />;
@@ -338,22 +278,22 @@ const CartsTable = ({ open, onClose }: IForm) => {
   return (
     <>
       <DataTable
-        data={carts}
-        columns={roomTypeColumns}
-        filterPlaceholders="roomTypeId"
+        data={cartsDeleted}
+        columns={CartColumns}
+        filterPlaceholders="title"
+        search={search}
+        setSearch={setSearch}
       />
-      {open && (
-        <FormRoom open={open} onClose={handleCloseForm} _id={selectCartId} />
-      )}
+
       {openFormDelete && (
-        <FormDeleteCart
+        <FormForceDeleteCart
           open={openFormDelete}
           onClose={handleCloseForm}
-          _id={selectCartId}
+          _id={selectedCartId}
         />
       )}
     </>
   );
 };
 
-export default CartsTable;
+export default CartDeletedTable;

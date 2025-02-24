@@ -413,12 +413,7 @@ const CartController = {
         return handleError404WithData(res, "roomType");
       }
 
-      const updateCart = await findByIdAndUpdateData(Cart, id, req.body, [
-        { optionId: "title" },
-        { userId: "username" },
-        { roomId: "roomNumber" },
-        { roomTypeId: "title" },
-      ]);
+      const updateCart = await findByIdAndUpdateData(Cart, id, req.body);
 
       if (optionId !== updateCart.optionId) {
         await findByIdAndPullData(Option, findCart.optionId, "carts", id);
@@ -568,14 +563,6 @@ const CartController = {
         return handleError404(res);
       }
 
-      const findPayment = await getData(Payment, "cartId", findCart._id);
-      if (findPayment) {
-        return handleError409(
-          res,
-          "Payment conflict, cannot be deleted due to other constraints"
-        );
-      }
-
       await findByIdAndPullData(Option, findCart.optionId, "carts", id);
       await findByIdAndPullData(User, findCart.userId, "carts", id);
       await findByIdAndPullData(Room, findCart.roomId, "carts", id);
@@ -598,21 +585,7 @@ const CartController = {
         return handleError404(res);
       }
 
-      const findCart = await getDataById(Cart, id, [
-        { optionId: "title" },
-        { userId: "username" },
-        { roomId: "roomNumber" },
-        { roomTypeId: "title" },
-      ]);
-
-      const findPayment = await getData(Payment, "cartId", id);
-
-      if (findPayment) {
-        return handleError409(
-          res,
-          "Payment type conflict, cannot be deleted due to other constraints"
-        );
-      }
+      const findCart = await getDataById(Cart, id);
 
       const findOption = await findByIdAndPushData(
         Option,
@@ -715,7 +688,7 @@ const CartController = {
         },
         {
           $match: {
-            _id: cart._id,
+            _id: findCart._id,
           },
         },
         {

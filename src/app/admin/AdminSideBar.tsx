@@ -94,7 +94,7 @@ const data = {
       items: [
         {
           title: "Cart List",
-          url: "/admin/cart",
+          url: "/admin/carts",
         },
         {
           title: "Cart Deleted List",

@@ -100,6 +100,34 @@ const UserController = {
     }
   },
 
+  userUpdate: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const findUser = await getDataById(User, id);
+      const isUser = await getDataById(User, req.user.user);
+
+      if (!findUser) {
+        return handleError404(res);
+      }
+
+      if (findUser._id.toString() !== isUser._id.toString()) {
+        return handleError403(res);
+      }
+
+      const updateUser = await findByIdAndUpdateData(User, id, req.body, [
+        { carts: "title" },
+        { reviews: "title" },
+        { payments: "title" },
+      ]);
+
+      const { password, ...others } = updateUser._doc;
+
+      return handleSuccess200(res, others);
+    } catch (error) {
+      return handleError500(res, error);
+    }
+  },
+
   delete: async (req, res) => {
     try {
       const { id } = req.params;
