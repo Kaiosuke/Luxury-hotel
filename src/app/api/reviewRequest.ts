@@ -19,6 +19,22 @@ const getAllReview = createAsyncThunk<
   }
 });
 
+const getAllRoomTypeReview = createAsyncThunk<
+  IReview[],
+  string,
+  { rejectValue: string }
+>("reviews/getAllRoomTypeReview", async (_id, { rejectWithValue }) => {
+  try {
+    const res = await instanceLocal.get(`reviews/room-type/${_id}`);
+    return res.data.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      return rejectWithValue(error.response?.data?.message);
+    }
+    return rejectWithValue("An unexpected error occurred");
+  }
+});
+
 const getAllReviewDeleted = createAsyncThunk<
   IReview[],
   string,
@@ -131,6 +147,7 @@ const forceDeleteReview = createAsyncThunk<
 export {
   getAllReview,
   getAllReviewDeleted,
+  getAllRoomTypeReview,
   getReview,
   addReview,
   updateReview,

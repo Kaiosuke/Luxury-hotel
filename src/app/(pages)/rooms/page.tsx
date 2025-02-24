@@ -14,13 +14,13 @@ import LoadingPage from "@/app/_components/LoadingPage";
 import { IRoomType } from "@/interfaces";
 
 const page = () => {
-  const { roomTypes, loading, error } = useSelector(roomTypesSelector);
+  const { roomTypes, loading } = useSelector(roomTypesSelector);
 
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     (async () => {
-      await dispatch(getAllRoomType());
+      await dispatch(getAllRoomType(""));
     })();
   }, []);
 
@@ -30,10 +30,6 @@ const page = () => {
 
   if (loading) {
     return <LoadingPage />;
-  }
-
-  if (error) {
-    return error;
   }
 
   return (

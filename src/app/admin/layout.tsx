@@ -8,17 +8,53 @@ import {
 
 import { authSelector } from "@/redux/selectors/authSelector";
 import { useRouter } from "next/navigation";
-import { ReactNode, useEffect } from "react";
+import { ReactNode, useEffect, useLayoutEffect } from "react";
 import { useSelector } from "react-redux";
 import LoadingPage from "../_components/LoadingPage";
 import AppSidebar from "./AdminSideBar";
+import { useToast } from "@/hooks/use-toast";
+import { getAllUser } from "../api/userRequest";
+import { useAppDispatch } from "@/redux/store";
+import { getRoomType } from "../api/roomTypeRequest";
+import { getAllRoom } from "../api/roomRequest";
+import { getAllCategoryRoom } from "../api/categoryRoomRequest";
+import { getAllTypeBed } from "../api/typeBedRequest";
+import { getAllView } from "../api/viewRequest";
+import { getAllOption } from "../api/optionRequest";
+import { getAllFood } from "../api/foodRequest";
+import { getAllCart } from "../api/cartRequest";
 
 function layoutAdmin({ children }: { children: ReactNode }) {
   const { currentUser } = useSelector(authSelector);
 
   const router = useRouter();
-
+  const { toast } = useToast();
+  const dispatch = useAppDispatch();
   useEffect(() => {
+    (async () => {
+      try {
+        await dispatch(getAllUser("")).unwrap();
+        await dispatch(getRoomType("")).unwrap();
+        await dispatch(getAllRoom("")).unwrap();
+        await dispatch(getAllCategoryRoom("")).unwrap();
+        await dispatch(getAllTypeBed("")).unwrap();
+        await dispatch(getAllView("")).unwrap();
+        await dispatch(getAllOption("")).unwrap();
+        await dispatch(getAllFood("")).unwrap();
+        await dispatch(getAllCart("")).unwrap();
+      } catch (error) {
+        const errorMessage =
+          typeof error === "string" ? error : "Something went wrong";
+        toast({
+          variant: "destructive",
+          title: "Registration failed",
+          description: errorMessage,
+        });
+      }
+    })();
+  }, []);
+
+  useLayoutEffect(() => {
     if (!currentUser || currentUser.role === "user") {
       router.push("/");
     }

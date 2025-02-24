@@ -1,24 +1,26 @@
 import { Router } from "express";
 import { ReviewSchema } from "../../schemas/index.js";
 import ReviewController from "../controllers/ReviewController.js";
-import { verifyAdmin } from "../middlewares/auth.js";
+import { verifyAdmin, verifyToken } from "../middlewares/auth.js";
+import { verifyReviewAdminAndUser } from "../middlewares/review.js";
 import { validateBody } from "../middlewares/validateBody.js";
 const route = Router();
 
 route.get("/", ReviewController.getAll);
+route.get("/room-type/:id", ReviewController.roomTypeGetAll);
 route.get("/deleted", ReviewController.getAllDeleted);
 route.get("/:id", ReviewController.getById);
 
 route.post(
   "/create",
-  verifyAdmin,
+  verifyToken,
   validateBody(ReviewSchema),
   ReviewController.create
 );
 
-route.patch("/update/:id", verifyAdmin, ReviewController.update);
+route.patch("/update/:id", verifyReviewAdminAndUser, ReviewController.update);
 
-route.delete("/delete/:id", verifyAdmin, ReviewController.delete);
+route.delete("/delete/:id", verifyReviewAdminAndUser, ReviewController.delete);
 
 route.patch("/restore/:id", verifyAdmin, ReviewController.restore);
 

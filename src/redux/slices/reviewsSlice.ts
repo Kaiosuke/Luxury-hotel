@@ -4,6 +4,7 @@ import {
   forceDeleteReview,
   getAllReview,
   getAllReviewDeleted,
+  getAllRoomTypeReview,
   restoreReview,
   updateReview,
 } from "@/app/api/reviewRequest";
@@ -12,6 +13,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface IReviewState {
   reviews: IReview[] | [];
+  roomTypeReview: IReview[] | [];
   reviewsDeleted: IReview[] | [];
   loading: boolean;
   error: null | string | undefined;
@@ -19,6 +21,7 @@ export interface IReviewState {
 
 const initialState: IReviewState = {
   reviews: [],
+  roomTypeReview: [],
   reviewsDeleted: [],
   loading: false,
   error: null,
@@ -51,12 +54,23 @@ const reviewsSlice = createSlice({
     );
     builder.addCase(getAllReview.rejected, setError);
 
+    builder.addCase(getAllRoomTypeReview.pending, setLoading);
+    builder.addCase(
+      getAllRoomTypeReview.fulfilled,
+      (state, action: PayloadAction<IReview[]>) => {
+        state.loading = false;
+        state.roomTypeReview = action.payload;
+      }
+    );
+    builder.addCase(getAllRoomTypeReview.rejected, setError);
+
     builder.addCase(addReview.pending, setLoading);
     builder.addCase(
       addReview.fulfilled,
       (state, action: PayloadAction<IReview>) => {
         state.loading = false;
         state.reviews = [...state.reviews, action.payload];
+        state.roomTypeReview = [...state.roomTypeReview, action.payload];
       }
     );
     builder.addCase(addReview.rejected, setError);
@@ -67,6 +81,9 @@ const reviewsSlice = createSlice({
       (state, action: PayloadAction<IReview>) => {
         state.loading = false;
         state.reviews = state.reviews.map((review) =>
+          review._id === action.payload._id ? action.payload : review
+        );
+        state.roomTypeReview = state.roomTypeReview.map((review) =>
           review._id === action.payload._id ? action.payload : review
         );
       }
@@ -85,6 +102,9 @@ const reviewsSlice = createSlice({
           state.reviewsDeleted = [...state.reviewsDeleted, findReview];
         }
         state.reviews = state.reviews.filter(
+          (review) => review._id !== action.payload
+        );
+        state.roomTypeReview = state.roomTypeReview.filter(
           (review) => review._id !== action.payload
         );
       }
@@ -119,6 +139,7 @@ const reviewsSlice = createSlice({
       (state, action: PayloadAction<IReview>) => {
         state.loading = false;
         state.reviews = [...state.reviews, action.payload];
+        state.roomTypeReview = [...state.roomTypeReview, action.payload];
         state.reviewsDeleted = state.reviewsDeleted.filter(
           (review) => review._id !== action.payload._id
         );

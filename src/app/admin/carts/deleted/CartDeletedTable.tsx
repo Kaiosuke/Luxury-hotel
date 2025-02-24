@@ -110,7 +110,9 @@ const CartDeletedTable = ({ open, onClose }: IForm) => {
         );
       },
       cell: ({ row }) => {
-        const user = row.original.user;
+        const user = row.original.userId as unknown as {
+          username: string;
+        };
         return <div>{user.username || "N/A"}</div>;
       },
     },
@@ -128,7 +130,9 @@ const CartDeletedTable = ({ open, onClose }: IForm) => {
         );
       },
       cell: ({ row }) => {
-        const roomType = row.original.roomType;
+        const roomType = row.original.roomTypeId as unknown as {
+          title: string;
+        };
         return <div>{roomType.title || "N/A"}</div>;
       },
     },
@@ -146,7 +150,9 @@ const CartDeletedTable = ({ open, onClose }: IForm) => {
         );
       },
       cell: ({ row }) => {
-        const room = row.original.room;
+        const room = row.original.roomId as unknown as {
+          roomNumber: number;
+        };
         return <div>{room.roomNumber || "N/A"}</div>;
       },
     },
@@ -164,7 +170,9 @@ const CartDeletedTable = ({ open, onClose }: IForm) => {
         );
       },
       cell: ({ row }) => {
-        const option = row.original.option;
+        const option = row.original.optionId as unknown as {
+          title: string;
+        };
         return <div>{option.title || "N/A"}</div>;
       },
     },
@@ -280,7 +288,7 @@ const CartDeletedTable = ({ open, onClose }: IForm) => {
       <DataTable
         data={cartsDeleted}
         columns={CartColumns}
-        filterPlaceholders="title"
+        filterPlaceholders="username"
         search={search}
         setSearch={setSearch}
       />

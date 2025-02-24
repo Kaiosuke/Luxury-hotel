@@ -26,6 +26,7 @@ const getAllDataDeleted = async (model, populate = [], search) => {
     null,
     { withDeleted: true }
   );
+  console.log(query);
   if (populate.length) {
     populate.forEach((field) => {
       const [path, select] = Object.entries(field)[0];

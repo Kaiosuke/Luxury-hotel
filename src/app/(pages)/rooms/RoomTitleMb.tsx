@@ -11,7 +11,7 @@ const RoomTitleMb = ({ room, setSelectID }: IRoomTitleMb) => {
   return (
     <DropdownMenuRadioItem
       value={room.title}
-      onClick={() => setSelectID(room.id)}
+      onClick={() => setSelectID(room._id)}
       className="text-white hover:text-third cursor-pointer text-xl"
     >
       {room.title}

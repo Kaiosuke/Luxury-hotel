@@ -21,7 +21,6 @@ import { useToast } from "@/hooks/use-toast";
 import useDebounce from "@/hooks/useDebounce";
 import { IForm, IRoom } from "@/interfaces";
 import { roomsSelector } from "@/redux/selectors/roomsSelector";
-import { roomTypesSelector } from "@/redux/selectors/roomTypesSelector";
 import { useAppDispatch } from "@/redux/store";
 import { format } from "date-fns";
 import { useEffect, useState } from "react";
@@ -29,7 +28,6 @@ import { useSelector } from "react-redux";
 
 const RoomsTable = ({ open, onClose }: IForm) => {
   const { rooms } = useSelector(roomsSelector);
-  const { roomTypes } = useSelector(roomTypesSelector);
 
   const [search, setSearch] = useState("");
 
@@ -255,7 +253,7 @@ const RoomsTable = ({ open, onClose }: IForm) => {
       <DataTable
         data={rooms}
         columns={roomTypeColumns}
-        filterPlaceholders="roomNumber"
+        filterPlaceholders="roomType"
         search={search}
         setSearch={setSearch}
       />

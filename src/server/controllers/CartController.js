@@ -213,16 +213,14 @@ const CartController = {
   getAllDeleted: async (req, res) => {
     try {
       const search = req.query.search || "";
-      const carts = await getAllDataDeleted(
-        Cart,
-        [
-          { optionId: "title" },
-          { userId: "username" },
-          { roomId: "roomNumber" },
-          { roomTypeId: "title" },
-        ],
-        search.trim()
-      );
+
+      const carts = await Cart.find({ deleted: true }, null, {
+        withDeleted: true,
+      })
+        .populate("userId", "username")
+        .populate("roomTypeId", "title")
+        .populate("roomId", "roomNumber")
+        .populate("optionId", "title");
 
       return handleSuccess200(res, carts);
     } catch (error) {

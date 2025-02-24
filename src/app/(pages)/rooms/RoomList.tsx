@@ -29,7 +29,7 @@ const RoomList = ({ room }: IRoomList) => {
           <div className="flex-[1_0_auto] md:max-w-[60%] max-w-[100%]">
             <p className="text-size-lg">{room.description}</p>
             <div className="flex gap-4 mt-10 flex-row">
-              <Link href={`rooms/${room.id}`}>
+              <Link href={`rooms/${room._id}`}>
                 <Button variant={"third"}>View more</Button>
               </Link>
               <Link href="/booking">

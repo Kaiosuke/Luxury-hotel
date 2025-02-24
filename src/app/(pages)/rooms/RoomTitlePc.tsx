@@ -12,9 +12,9 @@ const RoomTitlePc = ({ room, selectID, setSelectID }: IRoomTitlePc) => {
   return (
     <li
       className={`text-size-4xl cursor-pointer ${
-        room.id === selectID ? "text-third" : "opacity-25"
+        room._id === selectID ? "text-third" : "opacity-50"
       }`}
-      onClick={() => setSelectID(room.id)}
+      onClick={() => setSelectID(room._id)}
     >
       <MotionWrapper>
         <div>{room.title}</div>

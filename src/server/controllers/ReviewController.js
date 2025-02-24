@@ -39,6 +39,18 @@ const ReviewController = {
     }
   },
 
+  roomTypeGetAll: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const reviews = await Review.find({ roomTypeId: id })
+        .populate("userId", "username")
+        .populate("roomTypeId");
+      return handleSuccess200(res, reviews);
+    } catch (error) {
+      return handleError500(res, error);
+    }
+  },
+
   getAllDeleted: async (req, res) => {
     try {
       const search = req.query.search || "";

@@ -1,44 +1,118 @@
-import React, { useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuPortal,
-  DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Textarea } from "@/components/ui/textarea";
+import { useEffect, useRef, useState } from "react";
 
-import { SlOptionsVertical } from "react-icons/sl";
+import AlertDialogDelete from "@/app/_components/AlertDialogDelete";
+import { addReview, getAllRoomTypeReview } from "@/app/api/reviewRequest";
+import { ToastAction } from "@/components/ui/toast";
+import { useToast } from "@/hooks/use-toast";
+import { authSelector } from "@/redux/selectors/authSelector";
+import { useAppDispatch } from "@/redux/store";
+import Link from "next/link";
+import { useParams } from "next/navigation";
 import { CiEdit } from "react-icons/ci";
 import { FaDeleteLeft } from "react-icons/fa6";
-import AlertDialogDelete from "@/app/_components/AlertDialogDelete";
+import { SlOptionsVertical } from "react-icons/sl";
+import { useSelector } from "react-redux";
+import { reviewsSelector } from "@/redux/selectors/reviewsSelector";
 
 const Review = () => {
+  const { id }: { id: string } = useParams();
+
   const [reviewId, setReviewId] = useState("");
   const [openFormDelete, setOpenFormDelete] = useState(false);
+  const [comment, setComment] = useState("");
+
+  const { currentUser } = useSelector(authSelector);
+  const { roomTypeReview } = useSelector(reviewsSelector);
+
+  const ref = useRef<HTMLTextAreaElement>(null);
+
+  const dispatch = useAppDispatch();
+
+  const { toast } = useToast();
+
+  useEffect(() => {
+    (async () => {
+      try {
+        await dispatch(getAllRoomTypeReview(id)).unwrap();
+      } catch (error) {
+        const errorMessage =
+          typeof error === "string" ? error : "Something went wrong";
+        toast({
+          variant: "destructive",
+          title: "Registration failed",
+          description: errorMessage,
+        });
+      }
+    })();
+  }, []);
+
+  const handleComment = async () => {
+    if (!comment.length) {
+      toast({
+        variant: "destructive",
+        title: "Failed!",
+        description: "Comment box cannot be left blank",
+      });
+      return ref.current && ref.current.focus();
+    }
+
+    try {
+      if (!currentUser?._id) {
+        return toast({
+          variant: "destructive",
+          title: "Uh oh! Something went wrong.",
+          description: "Please login to book a room",
+          action: (
+            <ToastAction altText="Try again">
+              <Link href="/auth">Login Now</Link>
+            </ToastAction>
+          ),
+        });
+      }
+      const newComment = {
+        userId: currentUser._id,
+        roomTypeId: id,
+        description: comment,
+      };
+
+      await dispatch(addReview(newComment)).unwrap();
+    } catch (error) {
+      const errorMessage =
+        typeof error === "string" ? error : "Something went wrong";
+      toast({
+        variant: "destructive",
+        title: "Registration failed",
+        description: errorMessage,
+      });
+    }
+  };
 
   return (
     <div className="padding-main text-third">
-      <form>
+      <div>
         <div>
           <Textarea
+            ref={ref}
             className="bg-gray-100 text-third text-2xl "
             placeholder="Your comment"
+            value={comment}
+            onChange={(e) => setComment(e.target.value)}
           />
           <div className="pt-1">
-            <Button variant={"secondary"}>Submit</Button>
+            <Button variant={"secondary"} onClick={handleComment}>
+              Comment
+            </Button>
           </div>
         </div>
-      </form>
+      </div>
       <div className="line-1 bg-gray-200" />
       <div className="w-full">
         <div>
@@ -50,113 +124,53 @@ const Review = () => {
           </div>
         </div>
         <div className="pt-6 w-full">
-          <div className="flex w-full">
-            <div className="flex items-center gap-4 w-[99%]">
-              <Avatar>
-                <AvatarImage
-                  src="https://github.com/shadcn.png"
-                  alt="@shadcn"
-                />
-                <AvatarFallback>CN</AvatarFallback>
-              </Avatar>
-              <div className="w-full">
-                <span className="text-lg font-medium">Kaio</span>
-                <div>
-                  beautiful beautiful beautiful beautiful beautiful beautiful
-                  beautiful
+          {roomTypeReview.map((review) => {
+            const user = review.userId as unknown as {
+              username: string;
+            };
+
+            return (
+              <div key={review._id} className="flex w-full">
+                <div className="flex items-center gap-4 w-[99%]">
+                  <Avatar>
+                    <AvatarImage
+                      src="https://github.com/shadcn.png"
+                      alt="@shadcn"
+                    />
+                    <AvatarFallback>CN</AvatarFallback>
+                  </Avatar>
+                  <div className="w-full">
+                    <span className="text-lg font-medium">{user.username}</span>
+                    <div>{review.description}</div>
+                  </div>
                 </div>
-                {/* <Textarea
-                  className="bg-gray-100 text-third text-2xl w-full"
-                  value={
-                    " beautiful beautiful beautiful beautiful beautiful beautiful beautiful"
-                  }
-                  placeholder="beautiful beautiful beautiful beautiful beautiful beautiful
-                  beautiful"
-                />
-                <div className="pt-1">
-                  <Button variant={"secondary"}>Submit</Button>
-                </div> */}
-              </div>
-            </div>
 
-            <div>
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild className="cursor-pointer">
-                  <SlOptionsVertical />
-                </DropdownMenuTrigger>
-                <DropdownMenuContent className="w-14 p-1.5">
-                  <div className="flex items-center justify-between cursor-pointer">
-                    <span>Edit</span>
-                    <CiEdit />
-                  </div>
-                  <div
-                    className="flex items-center justify-between cursor-pointer pt-2"
-                    onClick={() => {
-                      setReviewId("1");
-                      setOpenFormDelete(true);
-                    }}
-                  >
-                    <span className="text-red-500">Delete</span>
-                    <FaDeleteLeft />
-                  </div>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </div>
-          </div>
-
-          <div className="flex w-full pt-10">
-            <div className="flex items-center gap-4 w-[99%]">
-              <Avatar>
-                <AvatarImage
-                  src="https://github.com/shadcn.png"
-                  alt="@shadcn"
-                />
-                <AvatarFallback>CN</AvatarFallback>
-              </Avatar>
-              <div className="w-full">
-                <span className="text-lg font-medium">Kaio</span>
                 <div>
-                  beautiful beautiful beautiful beautiful beautiful beautiful
-                  beautiful
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild className="cursor-pointer">
+                      <SlOptionsVertical />
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent className="w-14 p-1.5">
+                      <div className="flex items-center justify-between cursor-pointer">
+                        <span>Edit</span>
+                        <CiEdit />
+                      </div>
+                      <div
+                        className="flex items-center justify-between cursor-pointer pt-2"
+                        onClick={() => {
+                          setReviewId("1");
+                          setOpenFormDelete(true);
+                        }}
+                      >
+                        <span className="text-red-500">Delete</span>
+                        <FaDeleteLeft />
+                      </div>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
                 </div>
-                {/* <Textarea
-                  className="bg-gray-100 text-third text-2xl w-full"
-                  value={
-                    " beautiful beautiful beautiful beautiful beautiful beautiful beautiful"
-                  }
-                  placeholder="beautiful beautiful beautiful beautiful beautiful beautiful
-                  beautiful"
-                />
-                <div className="pt-1">
-                  <Button variant={"secondary"}>Submit</Button>
-                </div> */}
               </div>
-            </div>
-
-            <div>
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild className="cursor-pointer">
-                  <SlOptionsVertical />
-                </DropdownMenuTrigger>
-                <DropdownMenuContent className="w-14 p-1.5">
-                  <div className="flex items-center justify-between cursor-pointer">
-                    <span>Edit</span>
-                    <CiEdit />
-                  </div>
-                  <div
-                    className="flex items-center justify-between cursor-pointer pt-2"
-                    onClick={() => {
-                      setReviewId("1");
-                      setOpenFormDelete(true);
-                    }}
-                  >
-                    <span className="text-red-500">Delete</span>
-                    <FaDeleteLeft />
-                  </div>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </div>
-          </div>
+            );
+          })}
         </div>
       </div>
 

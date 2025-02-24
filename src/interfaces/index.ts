@@ -153,7 +153,7 @@ interface IPayment {
 }
 
 interface IReview {
-  _id: string;
+  _id?: string;
   userId: string;
   roomTypeId: string;
   description: string;

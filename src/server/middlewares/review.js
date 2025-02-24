@@ -1,21 +1,21 @@
 import User from "../models/User.js";
-import Cart from "../models/Cart.js";
+import Review from "../models/Review.js";
 import { verifyToken } from "./auth.js";
 import { getData, getDataById } from "../services/getService.js";
 
-const verifyCartAdminAndUser = async (req, res, next) => {
+const verifyReviewAdminAndUser = async (req, res, next) => {
   try {
     await verifyToken(req, res, async () => {
       const user = await getDataById(User, req.user.user);
 
-      const findCart = await getData(Cart, "userId", user._id);
+      const finReview = await getData(Review, "userId", user._id);
 
       if (!user) {
         return res.status(404).json({ message: "User not found!" });
       }
 
-      if (!findCart) {
-        return res.status(404).json({ message: "Cart not found!" });
+      if (!finReview) {
+        return res.status(404).json({ message: "Comment not found!" });
       }
 
       if (user.role === "admin" || user.role === "ceo") {
@@ -24,7 +24,7 @@ const verifyCartAdminAndUser = async (req, res, next) => {
 
       if (
         user.role === "user" &&
-        findCart.userId.toString() === user._id.toString()
+        finReview.userId.toString() === user._id.toString()
       ) {
         return next();
       }
@@ -34,4 +34,4 @@ const verifyCartAdminAndUser = async (req, res, next) => {
   }
 };
 
-export { verifyCartAdminAndUser };
+export { verifyReviewAdminAndUser };

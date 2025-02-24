@@ -33,19 +33,10 @@ const OptionRoom = ({
             <Link href="#!">{option.title}</Link>
           </h3>
           <div className="flex flex-col gap-1 mt-2">
-            {/* {option.extensions.map((ex, index) => (
-              <span
-                key={index}
-                className="font-bold text-size-lg flex items-center gap-2"
-              >
-                <div className="text-2xl">{filterIconFeature(ex)}</div>
-                {ex}
-              </span>
-            ))} */}
             <span className="font-bold text-size-lg flex items-center gap-2">
-              {/* <div className="text-2xl">
+              <div className="text-2xl">
                 {filterIconFeature(option.extension)}
-              </div> */}
+              </div>
               {option.extension}
             </span>
           </div>

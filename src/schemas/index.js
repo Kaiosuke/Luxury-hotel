@@ -134,7 +134,6 @@ const OptionSchema = z.object({
 });
 
 const ReviewSchema = z.object({
-  title: z.string().min(1, "Minimum number of review 1 characters"),
   userId: z.string().min(1, "Cannot be left blank"),
   roomTypeId: z.string().min(1, "Cannot be left blank"),
   description: z

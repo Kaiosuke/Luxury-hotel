@@ -241,7 +241,7 @@ const RoomDeletedTable = ({ open, onClose }: IForm) => {
       <DataTable
         data={roomsDeleted}
         columns={RoomColumns}
-        filterPlaceholders="title"
+        filterPlaceholders="roomType"
         search={search}
         setSearch={setSearch}
       />

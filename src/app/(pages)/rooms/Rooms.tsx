@@ -16,7 +16,7 @@ import RoomTitleMb from "./RoomTitleMb";
 import RoomTitlePc from "./RoomTitlePc";
 
 const Rooms = () => {
-  const [selectID, setSelectID] = useState("1");
+  const [selectID, setSelectID] = useState("67b863a717957bde26aafc03");
   const [position, setPosition] = useState("Dreamer");
 
   const { roomTypes } = useSelector(roomTypesSelector);
@@ -26,14 +26,13 @@ const Rooms = () => {
       <MotionWrapper>
         <div className="bg-secondary w-fit lg:hidden block">
           <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="outline" className="md:text-2xl text-xl">
+            <DropdownMenuTrigger className="border-none" asChild>
+              <Button variant="secondary" className="md:text-2xl text-xl">
                 {position}
               </Button>
             </DropdownMenuTrigger>
-            <h1>Hello</h1>
+
             <DropdownMenuContent className="w-56 bg-secondary">
-              <DropdownMenuSeparator />
               <DropdownMenuRadioGroup
                 value={position}
                 onValueChange={setPosition}
@@ -41,7 +40,7 @@ const Rooms = () => {
                 {roomTypes.length &&
                   roomTypes.map((room) => (
                     <RoomTitleMb
-                      key={room.id}
+                      key={room._id}
                       room={room}
                       setSelectID={setSelectID}
                     />
@@ -55,9 +54,9 @@ const Rooms = () => {
         <div className="max-w-[30%] w-full lg:block hidden">
           <ul className="flex flex-col gap-10">
             {roomTypes.length &&
-              roomTypes.map((room) => (
+              roomTypes.map((room, index) => (
                 <RoomTitlePc
-                  key={room.id}
+                  key={index}
                   room={room}
                   selectID={selectID}
                   setSelectID={setSelectID}
@@ -68,8 +67,8 @@ const Rooms = () => {
         <div className="flex-[1_0_auto] lg:max-w-[60%] max-w-[100%]">
           {roomTypes &&
             roomTypes
-              .filter((room) => room.id === selectID)
-              .map((room) => <RoomList key={room.id} room={room} />)}
+              .filter((room) => room._id === selectID)
+              .map((room) => <RoomList key={room._id} room={room} />)}
         </div>
       </section>
     </section>

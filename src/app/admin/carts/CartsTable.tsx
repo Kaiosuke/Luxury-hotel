@@ -330,7 +330,7 @@ const CartsTable = ({ open, onClose }: IForm) => {
       <DataTable
         data={carts}
         columns={roomTypeColumns}
-        filterPlaceholders="roomTypeId"
+        filterPlaceholders="username"
         search={search}
         setSearch={setSearch}
       />
