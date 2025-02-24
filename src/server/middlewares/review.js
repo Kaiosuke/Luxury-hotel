@@ -8,7 +8,7 @@ const verifyReviewAdminAndUser = async (req, res, next) => {
     await verifyToken(req, res, async () => {
       const user = await getDataById(User, req.user.user);
 
-      const finReview = await getData(Review, "userId", user._id);
+      const finReview = await getDataById(Review, req.params.id);
 
       if (!user) {
         return res.status(404).json({ message: "User not found!" });
@@ -21,11 +21,12 @@ const verifyReviewAdminAndUser = async (req, res, next) => {
       if (user.role === "admin" || user.role === "ceo") {
         return next();
       }
-
+      console.log(2);
       if (
         user.role === "user" &&
         finReview.userId.toString() === user._id.toString()
       ) {
+        console.log(1);
         return next();
       }
     });

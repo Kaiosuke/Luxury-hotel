@@ -9,11 +9,31 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
+import { useToast } from "@/hooks/use-toast";
 import { IForm } from "@/interfaces";
+import { useAppDispatch } from "@/redux/store";
+import { deleteReview } from "../api/reviewRequest";
 
 function AlertDialogDelete({ open, onClose, _id }: IForm) {
-  const handleDelete = () => {
-    onClose(false);
+  const dispatch = useAppDispatch();
+  const { toast } = useToast();
+
+  const handleDelete = async () => {
+    if (_id) {
+      console.log(_id);
+      try {
+        await dispatch(deleteReview(_id)).unwrap();
+      } catch (error) {
+        const errorMessage =
+          typeof error === "string" ? error : "Something went wrong";
+        toast({
+          variant: "destructive",
+          title: "Registration failed",
+          description: errorMessage,
+        });
+      }
+      onClose(false);
+    }
   };
 
   const handleClose = () => {

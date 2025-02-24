@@ -158,7 +158,7 @@ const Review = () => {
                       <div
                         className="flex items-center justify-between cursor-pointer pt-2"
                         onClick={() => {
-                          setReviewId("1");
+                          review._id && setReviewId(review._id);
                           setOpenFormDelete(true);
                         }}
                       >
