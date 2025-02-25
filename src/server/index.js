@@ -1,4 +1,4 @@
-import express, { json } from "express";
+import express, { json, urlencoded } from "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import connect from "./config/db.js";
@@ -10,6 +10,7 @@ connect();
 const app = express();
 
 app.use(json());
+app.use(urlencoded({ extended: true }));
 
 app.use(cookieParser());
 

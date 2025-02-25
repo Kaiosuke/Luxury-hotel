@@ -23,7 +23,7 @@ const routes = (app) => {
   app.use("/foods", foodRoute);
   app.use("/options", optionRoute);
   app.use("/reviews", reviewRoute);
-  app.use("/payments", paymentRoute);
+  app.use("/payment", paymentRoute);
 };
 
 export default routes;

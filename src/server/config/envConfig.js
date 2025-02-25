@@ -16,6 +16,8 @@ const env = {
   DEFAULT_OPTION: process.env.DEFAULT_OPTION,
   DEFAULT_ROOM: process.env.DEFAULT_ROOM,
   DEFAULT_CART: process.env.DEFAULT_CART,
+  KEY_PAYMENT_1: process.env.KEY_PAYMENT_1,
+  KEY_PAYMENT_2: process.env.KEY_PAYMENT_2,
 };
 
 export default env;
