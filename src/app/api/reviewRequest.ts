@@ -105,6 +105,7 @@ const deleteReview = createAsyncThunk<string, string, { rejectValue: string }>(
       return _id;
     } catch (error) {
       if (axios.isAxiosError(error)) {
+        console.log(error);
         return rejectWithValue(error.response?.data.message);
       }
       return rejectWithValue("An unexpected error occurred");

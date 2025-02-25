@@ -2,6 +2,10 @@ import User from "../models/User.js";
 import Review from "../models/Review.js";
 import { verifyToken } from "./auth.js";
 import { getData, getDataById } from "../services/getService.js";
+import {
+  handleError403,
+  handleError500,
+} from "../../utils/helpers/handleStatusCode.js";
 
 const verifyReviewAdminAndUser = async (req, res, next) => {
   try {
@@ -21,14 +25,13 @@ const verifyReviewAdminAndUser = async (req, res, next) => {
       if (user.role === "admin" || user.role === "ceo") {
         return next();
       }
-      console.log(2);
       if (
         user.role === "user" &&
         finReview.userId.toString() === user._id.toString()
       ) {
-        console.log(1);
         return next();
       }
+      return handleError403(res);
     });
   } catch (error) {
     return handleError500(res, error);

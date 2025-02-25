@@ -20,7 +20,6 @@ function AlertDialogDelete({ open, onClose, _id }: IForm) {
 
   const handleDelete = async () => {
     if (_id) {
-      console.log(_id);
       try {
         await dispatch(deleteReview(_id)).unwrap();
       } catch (error) {
