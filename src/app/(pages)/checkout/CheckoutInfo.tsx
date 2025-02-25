@@ -36,14 +36,15 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
+import LoadingPage from "@/app/_components/LoadingPage";
+import payment from "@/app/api/paymentRequest";
 const CheckoutInfo = () => {
   const [country, setCountry] = useState("VN");
-  const { currentUser } = useSelector(authSelector);
+  const { currentUser, loading } = useSelector(authSelector);
 
   const { toast } = useToast();
 
   const dispatch = useAppDispatch();
-  const router = useRouter();
 
   const { register, formState, handleSubmit, reset } = useForm({
     resolver: zodResolver(CheckOutSchema),
@@ -57,6 +58,8 @@ const CheckoutInfo = () => {
   });
   const { cartsUsers } = useSelector(cartUserRemainingSelector);
   const { carts } = useSelector(cartsSelector);
+
+  const router = useRouter();
 
   // useEffect(() => {
   //   (async () => {
@@ -97,56 +100,67 @@ const CheckoutInfo = () => {
         ...data,
         country,
       };
-      dispatch(addCartSuccess(carts));
+      // dispatch(addCartSuccess(carts));
 
-      if (currentUser && currentUser._id) {
-        const areArraysEqual =
-          JSON.stringify(newData) === JSON.stringify(currentUser);
+      // if (currentUser && currentUser._id) {
+      //   const areArraysEqual =
+      //     JSON.stringify(newData) === JSON.stringify(currentUser);
 
-        if (!areArraysEqual) {
-          await dispatch(
-            userUpdateUser({ _id: currentUser._id, user: newData })
-          ).unwrap();
+      //   if (!areArraysEqual) {
+      //     await dispatch(
+      //       userUpdateUser({ _id: currentUser._id, user: newData })
+      //     ).unwrap();
 
-          dispatch(updateCurrentUser(newData));
-        }
+      //     dispatch(updateCurrentUser(newData));
+      //   }
 
-        for (const cart of cartsUsers) {
-          const newCart: ICart = {
-            ...cart,
-            status: "booked",
-          };
+      //   for (const cart of cartsUsers) {
+      //     const newCart: ICart = {
+      //       ...cart,
+      //       status: "booked",
+      //     };
 
-          currentUser._id &&
-            cart._id &&
-            (await dispatch(
-              updateCart({ _id: cart._id, cart: newCart })
-            ).unwrap());
+      //     currentUser._id &&
+      //       cart._id &&
+      //       (await dispatch(
+      //         updateCart({ _id: cart._id, cart: newCart })
+      //       ).unwrap());
 
-          const availableCart = useAvailableCartsUsers({
-            carts: carts,
-            newBooking: cart,
-          });
+      //     const availableCart = useAvailableCartsUsers({
+      //       carts: carts,
+      //       newBooking: cart,
+      //     });
 
-          const existCart = availableCart.find((data) => data._id !== cart._id);
-          if (existCart?._id) {
-            await dispatch(userDeleteCart(existCart._id)).unwrap();
-          }
-        }
-      }
+      //     const existCart = availableCart.find((data) => data._id !== cart._id);
+      //     if (existCart?._id) {
+      //       await dispatch(userDeleteCart(existCart._id)).unwrap();
+      //     }
+      //   }
+      // }
+
+      const cartIds = cartsUsers
+        .map((cart) => cart._id)
+        .filter((id): id is string => id !== undefined);
+
+      const totalMoney = cartsUsers.reduce((acc, cur) => {
+        return acc + cur.totalPrice;
+      }, 0);
+
+      const res: any = await dispatch(
+        payment({ cartIds, totalMoney })
+      ).unwrap();
+
+      console.log(res);
+
+      // router.push(res.order_url);
 
       toast({
         variant: "success",
         title: "success",
-        description: "Booking has been added to cart",
+        description: "Booking Success",
       });
 
-      router.push("/booking/success");
-      // if (currentUser) {
-      //   await sendMail({ user: currentUser });
-      // }
-
-      dispatch(addCartSuccess(cartsUsers));
+      // dispatch(addCartSuccess(cartsUsers));
     } catch (error) {
       const errorMessage =
         typeof error === "string" ? error : "Something went wrong";
@@ -158,11 +172,9 @@ const CheckoutInfo = () => {
     }
   };
 
-  // if (!carts.length || loading) {
-  //   return <LoadingPage />;
-  // }
-
-  console.log(carts);
+  if (!carts.length || loading) {
+    return <LoadingPage />;
+  }
 
   return (
     <div className="border border-secondary rounded-lg p-4 text-third">

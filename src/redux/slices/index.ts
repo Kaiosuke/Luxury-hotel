@@ -9,4 +9,3 @@ export { default as viewsSlice } from "./viewsSlice";
 export { default as categoryRoomsSlice } from "./categoryRoomsSlice";
 export { default as foodsSlice } from "./foodsSlice";
 export { default as reviewsSlice } from "./reviewsSlice";
-export { default as paymentsSlice } from "./paymentsSlice";

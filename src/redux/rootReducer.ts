@@ -5,7 +5,6 @@ import {
   categoryRoomsSlice,
   foodsSlice,
   optionsSlice,
-  paymentsSlice,
   reviewsSlice,
   roomsSlice,
   roomTypesSlice,
@@ -26,7 +25,6 @@ const rootReducer = combineReducers({
   categoryRoomsSlice: categoryRoomsSlice,
   foodsSlice: foodsSlice,
   reviewsSlice: reviewsSlice,
-  paymentsSlice: paymentsSlice,
 });
 
 export default rootReducer;

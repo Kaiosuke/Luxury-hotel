@@ -391,50 +391,54 @@ const CartController = {
         return handleError404(res);
       }
 
-      const findOption = await getDataById(Option, optionId);
-      if (!findOption) {
-        return handleError404WithData(res, "option");
-      }
+      if (optionId && userId && roomId && roomTypeId) {
+        const findOption = await getDataById(Option, optionId);
+        if (!findOption) {
+          return handleError404WithData(res, "option");
+        }
 
-      const findUser = await getDataById(User, userId);
-      if (!findUser) {
-        return handleError404WithData(res, "user");
-      }
+        const findUser = await getDataById(User, userId);
+        if (!findUser) {
+          return handleError404WithData(res, "user");
+        }
 
-      const findRoom = await getDataById(Room, roomId);
-      if (!findRoom) {
-        return handleError404WithData(res, "room");
-      }
+        const findRoom = await getDataById(Room, roomId);
+        if (!findRoom) {
+          return handleError404WithData(res, "room");
+        }
 
-      const findRoomType = await getDataById(RoomType, roomTypeId);
-      if (!findRoomType) {
-        return handleError404WithData(res, "roomType");
-      }
+        const findRoomType = await getDataById(RoomType, roomTypeId);
+        if (!findRoomType) {
+          return handleError404WithData(res, "roomType");
+        }
 
-      const updateCart = await findByIdAndUpdateData(Cart, id, req.body);
+        const updateCart = await findByIdAndUpdateData(Cart, id, req.body);
 
-      if (optionId !== updateCart.optionId) {
-        await findByIdAndPullData(Option, findCart.optionId, "carts", id);
+        if (optionId !== updateCart.optionId) {
+          await findByIdAndPullData(Option, findCart.optionId, "carts", id);
 
-        await findByIdAndPushData(Option, optionId, "carts", id);
-      }
+          await findByIdAndPushData(Option, optionId, "carts", id);
+        }
 
-      if (userId !== updateCart.userId) {
-        await findByIdAndPullData(User, findCart.userId, "carts", id);
+        if (userId !== updateCart.userId) {
+          await findByIdAndPullData(User, findCart.userId, "carts", id);
 
-        await findByIdAndPushData(User, userId, "carts", id);
-      }
+          await findByIdAndPushData(User, userId, "carts", id);
+        }
 
-      if (roomId !== updateCart.roomId) {
-        await findByIdAndPullData(Room, findCart.roomId, "carts", id);
+        if (roomId !== updateCart.roomId) {
+          await findByIdAndPullData(Room, findCart.roomId, "carts", id);
 
-        await findByIdAndPushData(Room, roomId, "carts", id);
-      }
+          await findByIdAndPushData(Room, roomId, "carts", id);
+        }
 
-      if (roomTypeId !== updateCart.roomTypeId) {
-        await findByIdAndPullData(RoomType, findCart.roomTypeId, "carts", id);
+        if (roomTypeId !== updateCart.roomTypeId) {
+          await findByIdAndPullData(RoomType, findCart.roomTypeId, "carts", id);
 
-        await findByIdAndPushData(RoomType, roomTypeId, "carts", id);
+          await findByIdAndPushData(RoomType, roomTypeId, "carts", id);
+        }
+      } else {
+        await findByIdAndUpdateData(Cart, id, req.body);
       }
 
       const cart = await Cart.aggregate([

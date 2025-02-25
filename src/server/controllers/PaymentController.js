@@ -7,6 +7,7 @@ import {
 } from "../../utils/helpers/handleStatusCode.js";
 import env from "../config/envConfig.js";
 import qs from "qs";
+import Cart from "../models/Cart.js";
 
 const config = {
   app_id: "2553",
@@ -17,14 +18,13 @@ const config = {
 
 const PaymentController = {
   payment: async (req, res) => {
-    const { id } = req.params;
-    const embed_data = {};
-
+    const { cartIds } = req.body;
+    const embed_data = { cartIds };
+    console.log(cartIds);
     const items = [{}];
     const transID = Math.floor(Math.random() * 1000000);
     const order = {
       app_id: config.app_id,
-      cart_id: id,
       app_trans_id: `${moment().format("YYMMDD")}_${transID}`,
       app_user: "user123",
       app_time: Date.now(),
@@ -33,7 +33,7 @@ const PaymentController = {
       amount: 50000,
       description: `Zalo - Payment for the order #${transID}`,
       bank_code: "",
-      callback_url: `https://a7e9-42-115-249-214.ngrok-free.app/payment/callback/${id}`,
+      callback_url: `https://633b-42-115-249-214.ngrok-free.app/payment/callback`,
     };
 
     const data =
@@ -63,7 +63,6 @@ const PaymentController = {
     }
   },
   callback: async (req, res) => {
-    const { id } = req.params;
     let result = {};
 
     try {
@@ -82,7 +81,15 @@ const PaymentController = {
         });
       } else {
         let dataJson = JSON.parse(dataStr, config.key2);
-        console.log("success", id);
+
+        let { embed_data } = dataJson;
+
+        let cartIds = JSON.parse(embed_data).cartIds;
+
+        await Cart.updateMany(
+          { _id: { $in: cartIds } },
+          { $set: { status: "paid" } }
+        );
 
         result.return_code = 1;
         result.return_message = "success";

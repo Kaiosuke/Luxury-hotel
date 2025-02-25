@@ -53,13 +53,13 @@ const HeaderTop = ({
 
       return toast({
         variant: "success",
-        title: "success",
+        title: "Success",
         description: `Logout success`,
       });
     } catch (error) {
       return toast({
-        variant: "success",
-        title: "success",
+        variant: "destructive",
+        title: "Failed",
         description: `Logout failed`,
       });
     }
