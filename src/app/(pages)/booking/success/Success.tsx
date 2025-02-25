@@ -5,10 +5,43 @@ import Link from "next/link";
 import { FaCcVisa } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import CartSuccessList from "./CartSuccessList";
+import { useToast } from "@/hooks/use-toast";
+import sendInfo from "@/app/api/sendMailRequest";
+import { useAppDispatch } from "@/redux/store";
+import { addCartSuccess } from "@/redux/slices/cartsSlice";
 
 const Success = () => {
   const { currentUser } = useSelector(authSelector);
   const { cartsSuccess } = useSelector(cartsSelector);
+
+  const dispatch = useAppDispatch();
+  const { toast } = useToast();
+
+  const handleSendInfo = async () => {
+    if (currentUser && currentUser.email) {
+      try {
+        await dispatch(
+          sendInfo({
+            user: currentUser?.username,
+            email: currentUser?.email,
+          })
+        ).unwrap();
+        toast({
+          variant: "success",
+          title: "Successfully!",
+          description: "Please check your email",
+        });
+      } catch (error) {
+        const errorMessage =
+          typeof error === "string" ? error : "Something went wrong";
+        toast({
+          variant: "destructive",
+          title: "Failed",
+          description: errorMessage,
+        });
+      }
+    }
+  };
 
   return (
     <div className="border border-secondary rounded-lg p-4 text-third">
@@ -79,7 +112,10 @@ const Success = () => {
         </div>
       </div>
 
-      <div className="mt-4 text-right">
+      <div className="mt-4  flex gap-2">
+        <Button variant={"secondary"} onClick={handleSendInfo}>
+          Send Mail
+        </Button>
         <Link href="/">
           <Button variant={"third"}>Back to Homepage</Button>
         </Link>

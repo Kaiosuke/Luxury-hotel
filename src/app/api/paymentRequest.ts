@@ -4,12 +4,13 @@ import instanceLocal from "./instances";
 import { IPayment } from "@/interfaces";
 
 const payment = createAsyncThunk<
-  void,
+  string,
   { cartIds: string[]; totalMoney: number },
   { rejectValue: string }
 >("payments/addPayment", async (payment, { rejectWithValue }) => {
   try {
-    await instanceLocal.post(`payment`, payment);
+    const res = await instanceLocal.post(`payment`, payment);
+    return res.data.data.order_url;
   } catch (error) {
     if (axios.isAxiosError(error)) {
       return rejectWithValue(error.response?.data.message);

@@ -100,59 +100,46 @@ const CheckoutInfo = () => {
         ...data,
         country,
       };
-      // dispatch(addCartSuccess(carts));
+      dispatch(addCartSuccess(carts));
 
-      // if (currentUser && currentUser._id) {
-      //   const areArraysEqual =
-      //     JSON.stringify(newData) === JSON.stringify(currentUser);
+      if (currentUser && currentUser._id) {
+        const areArraysEqual =
+          JSON.stringify(newData) === JSON.stringify(currentUser);
 
-      //   if (!areArraysEqual) {
-      //     await dispatch(
-      //       userUpdateUser({ _id: currentUser._id, user: newData })
-      //     ).unwrap();
+        if (!areArraysEqual) {
+          await dispatch(
+            userUpdateUser({ _id: currentUser._id, user: newData })
+          ).unwrap();
 
-      //     dispatch(updateCurrentUser(newData));
-      //   }
+          dispatch(updateCurrentUser(newData));
+        }
 
-      //   for (const cart of cartsUsers) {
-      //     const newCart: ICart = {
-      //       ...cart,
-      //       status: "booked",
-      //     };
+        for (const cart of cartsUsers) {
+          const availableCart = useAvailableCartsUsers({
+            carts: carts,
+            newBooking: cart,
+          });
 
-      //     currentUser._id &&
-      //       cart._id &&
-      //       (await dispatch(
-      //         updateCart({ _id: cart._id, cart: newCart })
-      //       ).unwrap());
-
-      //     const availableCart = useAvailableCartsUsers({
-      //       carts: carts,
-      //       newBooking: cart,
-      //     });
-
-      //     const existCart = availableCart.find((data) => data._id !== cart._id);
-      //     if (existCart?._id) {
-      //       await dispatch(userDeleteCart(existCart._id)).unwrap();
-      //     }
-      //   }
-      // }
+          const existCart = availableCart.find((data) => data._id !== cart._id);
+          if (existCart?._id) {
+            await dispatch(userDeleteCart(existCart._id)).unwrap();
+          }
+        }
+      }
 
       const cartIds = cartsUsers
         .map((cart) => cart._id)
         .filter((id): id is string => id !== undefined);
 
       const totalMoney = cartsUsers.reduce((acc, cur) => {
-        return acc + cur.totalPrice;
+        return acc + cur.totalPrice * 23500;
       }, 0);
 
       const res: any = await dispatch(
         payment({ cartIds, totalMoney })
       ).unwrap();
 
-      console.log(res);
-
-      // router.push(res.order_url);
+      router.push(res);
 
       toast({
         variant: "success",
@@ -160,7 +147,7 @@ const CheckoutInfo = () => {
         description: "Booking Success",
       });
 
-      // dispatch(addCartSuccess(cartsUsers));
+      dispatch(addCartSuccess(cartsUsers));
     } catch (error) {
       const errorMessage =
         typeof error === "string" ? error : "Something went wrong";

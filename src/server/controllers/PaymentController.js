@@ -16,11 +16,16 @@ const config = {
   endpoint: "https://sb-openapi.zalopay.vn/v2/create",
 };
 
+const url = "https://eee5-42-115-249-214.ngrok-free.app";
+
 const PaymentController = {
   payment: async (req, res) => {
-    const { cartIds } = req.body;
-    const embed_data = { cartIds };
-    console.log(cartIds);
+    const { cartIds, totalMoney } = req.body;
+    const embed_data = {
+      cartIds,
+      redirecturl: "http://localhost:3000/booking/success",
+    };
+
     const items = [{}];
     const transID = Math.floor(Math.random() * 1000000);
     const order = {
@@ -30,10 +35,10 @@ const PaymentController = {
       app_time: Date.now(),
       item: JSON.stringify(items),
       embed_data: JSON.stringify(embed_data),
-      amount: 50000,
+      amount: totalMoney,
       description: `Zalo - Payment for the order #${transID}`,
       bank_code: "",
-      callback_url: `https://633b-42-115-249-214.ngrok-free.app/payment/callback`,
+      callback_url: `${url}/payment/callback`,
     };
 
     const data =
@@ -82,9 +87,7 @@ const PaymentController = {
       } else {
         let dataJson = JSON.parse(dataStr, config.key2);
 
-        let { embed_data } = dataJson;
-
-        let cartIds = JSON.parse(embed_data).cartIds;
+        const { cartIds } = JSON.parse(dataJson.embed_data);
 
         await Cart.updateMany(
           { _id: { $in: cartIds } },

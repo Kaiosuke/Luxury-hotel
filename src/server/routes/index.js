@@ -10,6 +10,7 @@ import foodRoute from "./food.js";
 import optionRoute from "./option.js";
 import reviewRoute from "./review.js";
 import paymentRoute from "./payment.js";
+import mailRoute from "./sendMail.js";
 
 const routes = (app) => {
   app.use("/auth", authRoute);
@@ -24,6 +25,7 @@ const routes = (app) => {
   app.use("/options", optionRoute);
   app.use("/reviews", reviewRoute);
   app.use("/payment", paymentRoute);
+  app.use("/mail", mailRoute);
 };
 
 export default routes;

@@ -59,7 +59,8 @@ const page = () => {
                     Success! You reservation is booked
                   </p>
                   <p className="font-semibold">
-                    Check trongleele@gmail.com to view your confirmation email
+                    If you want to receive invoice information, please scroll
+                    down and click receive invoice
                   </p>
                 </div>
               </div>

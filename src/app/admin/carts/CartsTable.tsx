@@ -242,19 +242,18 @@ const CartsTable = ({ open, onClose }: IForm) => {
           >
             <SelectTrigger
               className={`w-[180px] text-sm ${
-                status === "booked"
-                  ? "bg-secondary"
-                  : status === "pending"
+                status === "paid"
                   ? "bg-blue-500"
+                  : status === "pending"
+                  ? "bg-secondary"
                   : "bg-green-500"
               }`}
             >
               <SelectValue />
             </SelectTrigger>
             <SelectContent className="bg-sidebar-four text-sidebar-primary ">
-              <SelectItem value="booked">Booked</SelectItem>
+              <SelectItem value="paid">Paid</SelectItem>
               <SelectItem value="pending">Pending</SelectItem>
-              <SelectItem value="confirm">Confirm</SelectItem>
             </SelectContent>
           </Select>
         );

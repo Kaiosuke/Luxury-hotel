@@ -18,6 +18,8 @@ const env = {
   DEFAULT_CART: process.env.DEFAULT_CART,
   KEY_PAYMENT_1: process.env.KEY_PAYMENT_1,
   KEY_PAYMENT_2: process.env.KEY_PAYMENT_2,
+  EMAIL_USER: process.env.NEXT_PUBLIC_EMAIL_USER,
+  EMAIL_PASS: process.env.NEXT_PUBLIC_EMAIL_PASS,
 };
 
 export default env;
