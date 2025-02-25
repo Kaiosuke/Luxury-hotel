@@ -38,6 +38,7 @@ import { DialogClose } from "@radix-ui/react-dialog";
 import { useSelector } from "react-redux";
 import { z } from "zod";
 import FormUploadImage from "./FormUploadImage";
+12;
 
 function FormRoomType({ open, onClose, _id }: IForm) {
   const [quickDes, setQuickDes] = useState<string[]>([]);

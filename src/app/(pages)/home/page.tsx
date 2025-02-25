@@ -24,8 +24,8 @@ const Home = () => {
   const dispatch = useAppDispatch();
   useEffect(() => {
     currentUser &&
-      currentUser.id &&
-      dispatch(getAllCartByUserId(currentUser.id));
+      currentUser._id &&
+      dispatch(getAllCartByUserId(currentUser._id));
   }, []);
 
   const { loading } = useSelector(cartsSelector);

@@ -48,7 +48,7 @@ const Footer = () => {
                   <FormControl>
                     <Input
                       placeholder="username"
-                      className="lg:w-[400px] md:w-[300px]"
+                      className="lg:w-[400px] md:w-[300px] placeholder:text-primary"
                       {...field}
                     />
                   </FormControl>
@@ -66,7 +66,7 @@ const Footer = () => {
                     <Input
                       type="email"
                       placeholder="email"
-                      className="lg:w-[400px] md:w-[300px]"
+                      className="lg:w-[400px] md:w-[300px] placeholder:text-primary"
                       {...field}
                     />
                   </FormControl>

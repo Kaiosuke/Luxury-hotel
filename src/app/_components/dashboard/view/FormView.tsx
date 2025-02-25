@@ -38,7 +38,7 @@ function FormView({ open, onClose, _id }: IForm) {
     }
   }, [_id]);
 
-  const handleGetData = (data: IView) => {
+  const handleGetData = (data: any) => {
     if (_id) {
       (async () => {
         try {

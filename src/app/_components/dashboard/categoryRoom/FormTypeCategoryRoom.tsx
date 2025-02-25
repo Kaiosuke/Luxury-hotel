@@ -42,7 +42,7 @@ function FormCategoryRoom({ open, onClose, _id }: IForm) {
     }
   }, [_id]);
 
-  const handleGetData = (data: ICategoryRoom) => {
+  const handleGetData = (data: any) => {
     if (_id) {
       (async () => {
         try {
