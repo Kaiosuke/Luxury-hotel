@@ -36,6 +36,8 @@ const UserSchema = new Schema(
         ref: "payments",
       },
     ],
+    resetToken: { type: String, default: null },
+    resetTokenExpire: { type: Date, default: null },
   },
   { timestamps: true }
 );

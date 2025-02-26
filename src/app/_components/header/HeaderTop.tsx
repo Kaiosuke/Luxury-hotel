@@ -27,6 +27,7 @@ import { useSelector } from "react-redux";
 import { useToast } from "@/hooks/use-toast";
 import { logout } from "@/app/api/authRequest";
 import { useRouter } from "next/navigation";
+import { RiLockPasswordLine } from "react-icons/ri";
 
 const HeaderTop = ({
   isScrolled,
@@ -152,11 +153,11 @@ const HeaderTop = ({
                     </Link>
                   )}
                 </DropdownMenuGroup>
-                <Link href="https://github.com/Kaiosuke">
+                <Link href="/auth/change-password">
                   <DropdownMenuItem className="text-lg cursor-pointer hover:bg-primary hover:text-secondary">
-                    GitHub
+                    Change Password
                     <DropdownMenuShortcut>
-                      <FaGithub className="text-lg" />
+                      <RiLockPasswordLine className="text-lg" />
                     </DropdownMenuShortcut>
                   </DropdownMenuItem>
                 </Link>

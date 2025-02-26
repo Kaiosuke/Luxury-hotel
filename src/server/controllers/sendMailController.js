@@ -17,11 +17,11 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-const sendMailController = {
+const sendInfo = {
   sendInfo: async (req, res) => {
     try {
       const { email, user } = req.body;
-      const info = await transporter.sendMail({
+      const mailOptions = await transporter.sendMail({
         from: "Luxury Hotel <noreply@luxuryhotel.com>",
         to: email,
         subject: "Booking Hotel success",
@@ -40,11 +40,22 @@ const sendMailController = {
         </div>
       `,
       });
-      return handleSuccess200(res, info);
+      return handleSuccess200(res, mailOptions);
     } catch (error) {
       return handleError500(res, error);
     }
   },
 };
 
-export default sendMailController;
+const sendResetPassword = async (email, token) => {
+  const resetLink = `http://localhost:3000/auth/reset-password/${token}`;
+  const mailOptions = {
+    from: env.EMAIL_USER,
+    to: email,
+    subject: "Reset password",
+    html: `<p>Click <a href="${resetLink}">here</a> to reset your password. This link is valid for 15 minutes.</p>`,
+  };
+  await transporter.sendMail(mailOptions);
+};
+
+export { sendInfo, sendResetPassword };

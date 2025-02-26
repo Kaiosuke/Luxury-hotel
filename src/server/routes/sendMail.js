@@ -1,7 +1,7 @@
 import { Router } from "express";
-import sendMailController from "../controllers/sendMailController.js";
+import { sendInfo } from "../controllers/sendMailController.js";
 const route = Router();
 
-route.post("/info", sendMailController.sendInfo);
+route.post("/info", sendInfo.sendInfo);
 
 export default route;

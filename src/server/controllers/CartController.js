@@ -8,26 +8,21 @@ import {
 } from "../../utils/helpers/handleStatusCode.js";
 import env from "../config/envConfig.js";
 import Cart from "../models/Cart.js";
-import RoomType from "../models/RoomType.js";
-import Room from "../models/Room.js";
-import User from "../models/User.js";
 import Option from "../models/Option.js";
 import Payment from "../models/Payment.js";
+import Room from "../models/Room.js";
+import RoomType from "../models/RoomType.js";
+import User from "../models/User.js";
 
-import {
-  getAllData,
-  getAllDataDeleted,
-  getData,
-  getDataById,
-} from "../services/getService.js";
-import { createData } from "../services/postService.js";
+import { deleteData, forceDeleteData } from "../services/deleteService.js";
+import { getData, getDataById } from "../services/getService.js";
 import {
   findByIdAndPullData,
   findByIdAndPushData,
   findByIdAndUpdateData,
   restoreData,
 } from "../services/patchService.js";
-import { deleteData, forceDeleteData } from "../services/deleteService.js";
+import { createData } from "../services/postService.js";
 
 const CartController = {
   getAll: async (req, res) => {

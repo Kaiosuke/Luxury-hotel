@@ -1,9 +1,10 @@
-import express, { json, urlencoded } from "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
+import express, { json, urlencoded } from "express";
 import connect from "./config/db.js";
-import routes from "./routes/index.js";
 import env from "./config/envConfig.js";
+import routes from "./routes/index.js";
+import cleanupCart from "./jobs/cartCleanup.js";
 
 connect();
 
@@ -21,9 +22,13 @@ app.use(
   })
 );
 
+app.options("*", cors());
+
 routes(app);
 
 const port = env.PORT;
+
+cleanupCart();
 
 app.use((req, res) => {
   return res.send("Not found page");

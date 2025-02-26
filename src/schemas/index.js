@@ -36,6 +36,37 @@ const RegisterSchema = z
     path: ["confirm"],
   });
 
+const ChangePasswordSchema = z
+  .object({
+    password: z
+      .string()
+      .min(6, "Password must be greater than or equal to 6 characters"),
+    newPassword: z
+      .string()
+      .min(6, "Password must be greater than or equal to 6 characters"),
+    confirm: z.string(),
+  })
+  .refine((data) => data.newPassword === data.confirm, {
+    message: "Password don't match",
+    path: ["confirm"],
+  });
+
+const ForgotPassword = z.object({
+  email: z.string().email({ message: "Invalid email address" }),
+});
+
+const ResetPassword = z
+  .object({
+    newPassword: z
+      .string()
+      .min(6, "Password must be greater than or equal to 6 characters"),
+    confirm: z.string(),
+  })
+  .refine((data) => data.newPassword === data.confirm, {
+    message: "Password don't match",
+    path: ["confirm"],
+  });
+
 // Check out
 
 const CheckOutSchema = z.object({
@@ -175,6 +206,9 @@ export {
   SubscribeSchema,
   LoginSchema,
   RegisterSchema,
+  ChangePasswordSchema,
+  ForgotPassword,
+  ResetPassword,
   CheckOutSchema,
   UserSchema,
   RoomTypesSchema,

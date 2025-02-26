@@ -6,15 +6,17 @@ import redis from "../config/redisClient.js";
 import {
   handleError401,
   handleError404,
+  handleError404WithData,
   handleError409,
   handleError500,
   handleSuccess200,
 } from "../../utils/helpers/handleStatusCode.js";
 
 import { createData } from "../services/postService.js";
-import { getData } from "../services/getService.js";
+import { getData, getDataById } from "../services/getService.js";
 
 import User from "../models/User.js";
+import { sendResetPassword } from "./sendMailController.js";
 
 const AuthController = {
   register: async (req, res) => {
@@ -58,6 +60,7 @@ const AuthController = {
         user: user._id,
       },
       env.REFRESH_TOKEN,
+
       { expiresIn: "365d" }
     );
   },
@@ -69,18 +72,16 @@ const AuthController = {
       if (!findUser) {
         return handleError404(res);
       }
-
       const isValidPassword = await bcrypt.compare(
         req.body.password,
         findUser.password
       );
 
       if (!isValidPassword) {
-        return handleError401(res, "Invalid password");
+        return handleError401(res, "Invalid Password");
       }
 
       const accessToken = AuthController.generateAccessToken(findUser);
-
       const refreshToken = AuthController.generateRefreshToken(findUser);
 
       await redis.set(
@@ -89,6 +90,7 @@ const AuthController = {
         "EX",
         365 * 24 * 60 * 60
       );
+      console.log(1);
 
       res.cookie("refreshToken", refreshToken, {
         httpOnly: true,
@@ -98,7 +100,6 @@ const AuthController = {
       });
 
       const { password, ...user } = findUser._doc;
-
       return handleSuccess200(res, { ...user, accessToken });
     } catch (error) {
       return handleError500(res, error);
@@ -144,6 +145,7 @@ const AuthController = {
       return res.status(401).json("You're not authenticated");
     }
   },
+
   logout: async (req, res) => {
     try {
       const refreshToken = req.cookies.refreshToken;
@@ -162,6 +164,94 @@ const AuthController = {
 
       res.clearCookie("refreshToken");
       return handleSuccess200(res, "Logged out successfully");
+    } catch (error) {
+      return handleError500(res, error);
+    }
+  },
+
+  changePassword: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const { password, newPassword } = req.body;
+
+      const user = await getDataById(User, id);
+
+      if (!user) {
+        return handleError404WithData(res, "User");
+      }
+
+      const isValidPassword = await bcrypt.compare(password, user.password);
+
+      if (!isValidPassword) {
+        return handleError401(res, "Invalid password");
+      }
+
+      const salt = await bcrypt.genSalt(10);
+      const hash = await bcrypt.hash(newPassword, salt);
+
+      user.password = hash;
+
+      await user.save();
+      return res.status(200).json({ message: "Change password success" });
+    } catch (error) {
+      return handleError500(res, error);
+    }
+  },
+
+  forgotPassword: async (req, res) => {
+    try {
+      const { email } = req.body;
+
+      const user = await getData(User, "email", email);
+      if (!user) {
+        return handleError404WithData(res, "User!");
+      }
+
+      const token = jwt.sign({ id: user._id }, env.ACCESS_TOKEN, {
+        expiresIn: "15m",
+      });
+
+      user.resetToken = token;
+      user.resetTokenExpire = Date.now() + 15 * 60 * 1000;
+
+      await user.save();
+
+      await sendResetPassword(email, token);
+      return res
+        .status(200)
+        .json({ message: "Password reset code sent to email" });
+    } catch (error) {
+      return handleError500(res, error);
+    }
+  },
+
+  resetPassword: async (req, res) => {
+    try {
+      const { token } = req.params;
+      const { newPassword } = req.body;
+
+      const decode = jwt.verify(token, env.ACCESS_TOKEN);
+
+      const user = await getDataById(User, decode.id);
+
+      if (
+        !user ||
+        user.resetToken !== token ||
+        user.resetTokenExpire.getTime() < Date.now()
+      ) {
+        return res.status(400).json({ message: "Token is invalid or expired" });
+      }
+      const salt = await bcrypt.genSalt(10);
+      const hash = await bcrypt.hash(newPassword, salt);
+
+      user.password = hash;
+      user.resetToken = null;
+      user.resetTokenExpire = null;
+      await user.save();
+
+      return res
+        .status(200)
+        .json({ message: "Password was reset successfully" });
     } catch (error) {
       return handleError500(res, error);
     }

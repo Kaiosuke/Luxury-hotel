@@ -107,12 +107,14 @@ const Login = () => {
                 </span>
               </div>
 
-              <Link
-                href="#!"
-                className="text-sm underline underline-offset-2 italic hover:text-primary-textOpacity"
-              >
-                Forgot your password?
-              </Link>
+              <div className="flex justify-between">
+                <Link
+                  href="/auth/forgot-password"
+                  className="text-sm underline underline-offset-2 italic hover:text-primary-textOpacity"
+                >
+                  Forgot your password?
+                </Link>
+              </div>
             </CardContent>
             <CardFooter className="mt-4">
               <Button variant={"four"}>Signin</Button>

@@ -10,7 +10,12 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-import { getAllCart, updateCart, userDeleteCart } from "@/app/api/cartRequest";
+import {
+  getAllCart,
+  getAllCartByUserId,
+  updateCart,
+  userDeleteCart,
+} from "@/app/api/cartRequest";
 import { userUpdateUser } from "@/app/api/userRequest";
 import {
   Accordion,
@@ -33,7 +38,7 @@ import { useAppDispatch } from "@/redux/store";
 import { CheckOutSchema } from "@/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import LoadingPage from "@/app/_components/LoadingPage";
@@ -61,21 +66,23 @@ const CheckoutInfo = () => {
 
   const router = useRouter();
 
-  // useEffect(() => {
-  //   (async () => {
-  //     try {
-  //       await dispatch(getAllCart("")).unwrap();
-  //     } catch (error) {
-  //       const errorMessage =
-  //         typeof error === "string" ? error : "Something went wrong";
-  //       toast({
-  //         variant: "destructive",
-  //         title: "Registration failed",
-  //         description: errorMessage,
-  //       });
-  //     }
-  //   })();
-  // }, []);
+  useEffect(() => {
+    (async () => {
+      try {
+        await dispatch(getAllCart("")).unwrap();
+        currentUser?._id &&
+          (await dispatch(getAllCartByUserId(currentUser._id)));
+      } catch (error) {
+        const errorMessage =
+          typeof error === "string" ? error : "Something went wrong";
+        toast({
+          variant: "destructive",
+          title: "Registration failed",
+          description: errorMessage,
+        });
+      }
+    })();
+  }, []);
 
   useEffect(() => {
     if (currentUser) {
@@ -87,10 +94,6 @@ const CheckoutInfo = () => {
         city: currentUser.city,
       });
     }
-  }, []);
-
-  useEffect(() => {
-    currentUser && dispatch(getAllCart(""));
   }, []);
 
   const handleGetData = async (data: IUser) => {
@@ -159,7 +162,12 @@ const CheckoutInfo = () => {
     }
   };
 
-  if (!carts.length || loading) {
+  useLayoutEffect(() => {
+    if (!carts.length || !currentUser || !cartsUsers.length) {
+      router.push("/");
+    }
+  }, []);
+  if (!carts.length || loading || !currentUser || !cartsUsers.length) {
     return <LoadingPage />;
   }
 

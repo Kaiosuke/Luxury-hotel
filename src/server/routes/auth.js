@@ -12,4 +12,8 @@ route.post("/logout", AuthController.logout);
 
 route.post("/refresh-token", AuthController.refreshToken);
 
+route.post("/change-password/:id", AuthController.changePassword);
+route.post("/forgot-password", AuthController.forgotPassword);
+route.post("/reset-password/:token", AuthController.resetPassword);
+
 export default route;
