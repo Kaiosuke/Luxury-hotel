@@ -1,5 +1,6 @@
 import {
   addUser,
+  adminAddUser,
   deleteUser,
   forceDeleteUser,
   getAllUser,
@@ -60,6 +61,16 @@ const usersSlice = createSlice({
       }
     );
     builder.addCase(addUser.rejected, setError);
+
+    builder.addCase(adminAddUser.pending, setLoading);
+    builder.addCase(
+      adminAddUser.fulfilled,
+      (state, action: PayloadAction<IUser>) => {
+        state.loading = false;
+        state.users = [...state.users, action.payload];
+      }
+    );
+    builder.addCase(adminAddUser.rejected, setError);
 
     builder.addCase(updateUser.pending, setLoading);
     builder.addCase(

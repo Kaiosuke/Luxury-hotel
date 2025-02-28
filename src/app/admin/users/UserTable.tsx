@@ -6,6 +6,8 @@ import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 import FormDeleteUser from "@/app/_components/dashboard/user/FormDeleteUser";
 import FormUser from "@/app/_components/dashboard/user/FormUser";
 import DataTable from "@/app/_components/DataTable";
+import LoadingProcess from "@/app/_components/Loading";
+import { getAllUser } from "@/app/api/userRequest";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
@@ -16,13 +18,12 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import useDebounce from "@/hooks/useDebounce";
 import { IForm, IUser } from "@/interfaces";
 import { usersSelector } from "@/redux/selectors/usersSelector";
+import { useAppDispatch } from "@/redux/store";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useAppDispatch } from "@/redux/store";
-import { getAllUser } from "@/app/api/userRequest";
-import useDebounce from "@/hooks/useDebounce";
 
 const UserTable = ({ open, onClose }: IForm) => {
   const dispatch = useAppDispatch();
@@ -118,11 +119,19 @@ const UserTable = ({ open, onClose }: IForm) => {
       accessorKey: "carts",
       header: "Orders",
       cell: ({ row }) => {
-        const carts = row.original;
-        return <div className="capitalize">{row.getValue("carts")}</div>;
+        const carts = row.original.carts;
+        return <div className="capitalize">{carts?.length}</div>;
       },
     },
 
+    {
+      accessorKey: "comments",
+      header: "comment",
+      cell: ({ row }) => {
+        const reviews = row.original.reviews;
+        return <div className="capitalize">{reviews?.length}</div>;
+      },
+    },
     {
       id: "actions",
       enableHiding: false,
@@ -161,12 +170,6 @@ const UserTable = ({ open, onClose }: IForm) => {
       },
     },
   ];
-
-  // const { loading } = useSelector(usersSelector);
-
-  // if (loading) {
-  //   return <LoadingProcess />;
-  // }
 
   return (
     <>

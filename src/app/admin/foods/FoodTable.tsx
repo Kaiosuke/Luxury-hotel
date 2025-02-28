@@ -23,6 +23,7 @@ import { useSelector } from "react-redux";
 import useDebounce from "@/hooks/useDebounce";
 import { useAppDispatch } from "@/redux/store";
 import { getAllFood } from "@/app/api/foodRequest";
+import LoadingProcess from "@/app/_components/Loading";
 
 const FoodTable = ({ open, onClose }: IForm) => {
   const { foods } = useSelector(foodsSelector);

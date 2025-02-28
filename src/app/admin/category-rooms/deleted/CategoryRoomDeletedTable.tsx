@@ -28,6 +28,7 @@ import { useAppDispatch } from "@/redux/store";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import useDebounce from "@/hooks/useDebounce";
+import LoadingProcess from "@/app/_components/Loading";
 
 const CategoryRoomDeletedTable = ({ open, onClose }: IForm) => {
   const dispatch = useAppDispatch();
@@ -179,12 +180,6 @@ const CategoryRoomDeletedTable = ({ open, onClose }: IForm) => {
       },
     },
   ];
-
-  // const { loading } = useSelector(CategoryRoomsSelector);
-
-  // if (loading) {
-  //   return <LoadingProcess />;
-  // }
 
   return (
     <>

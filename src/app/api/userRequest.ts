@@ -64,6 +64,21 @@ const addUser = createAsyncThunk<IUser, IUser, { rejectValue: string }>(
   }
 );
 
+const adminAddUser = createAsyncThunk<IUser, IUser, { rejectValue: string }>(
+  "users/adminAddUser",
+  async (user, { rejectWithValue }) => {
+    try {
+      const res = await instanceLocal.post(`users/create`, user);
+      return res.data.data;
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        return rejectWithValue(error.response?.data.message);
+      }
+      return rejectWithValue("An unexpected error occurred");
+    }
+  }
+);
+
 const updateUser = createAsyncThunk<
   IUser,
   { _id: string; user: IUser },
@@ -146,6 +161,7 @@ export {
   getAllUser,
   getAllUserDeleted,
   addUser,
+  adminAddUser,
   getUser,
   updateUser,
   userUpdateUser,

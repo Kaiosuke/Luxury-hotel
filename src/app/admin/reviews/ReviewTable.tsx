@@ -3,9 +3,8 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 
-import FormDeleteCategoryRoom from "@/app/_components/dashboard/categoryRoom/FormDeleteCategoryRoom";
-import FormCategoryRoom from "@/app/_components/dashboard/categoryRoom/FormTypeCategoryRoom";
 import DataTable from "@/app/_components/DataTable";
+import { getAllReview, updateReview } from "@/app/api/reviewRequest";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
@@ -16,49 +15,45 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { ICategoryRoom, IForm } from "@/interfaces";
-import { categoryRoomsSelector } from "@/redux/selectors/categoryRoomsSelector";
+import { useToast } from "@/hooks/use-toast";
+import useDebounce from "@/hooks/useDebounce";
+import { IForm, IReview } from "@/interfaces";
+import { reviewsSelector } from "@/redux/selectors/reviewsSelector";
+import { useAppDispatch } from "@/redux/store";
+import { format } from "date-fns";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useAppDispatch } from "@/redux/store";
-import useDebounce from "@/hooks/useDebounce";
-import { getAllCategoryRoom } from "@/app/api/categoryRoomRequest";
 import LoadingProcess from "@/app/_components/Loading";
+import FormDeleteReview from "@/app/_components/dashboard/reviews/FormDeleteReview";
 
-const CategoryRoomTable = ({ open, onClose }: IForm) => {
-  const { categoryRooms } = useSelector(categoryRoomsSelector);
+const ReviewsTable = ({ open, onClose }: IForm) => {
+  const { reviews } = useSelector(reviewsSelector);
 
   const [search, setSearch] = useState("");
 
-  const dispatch = useAppDispatch();
-
   const debounce = useDebounce({ value: search });
 
+  const dispatch = useAppDispatch();
+
   useEffect(() => {
-    dispatch(getAllCategoryRoom(search));
+    dispatch(getAllReview(search));
   }, [debounce]);
 
-  const [selectedCategoryRoomId, setSelectedCategoryRoomId] = useState<
-    string | null
-  >(null);
+  const [selectedReviewId, setSelectedReviewId] = useState<string | null>(null);
   const [openFormDelete, setOpenFormDelete] = useState(false);
 
-  const handleUpdate = (id: string) => {
-    setSelectedCategoryRoomId(id);
-    onClose(true);
-  };
   const handleDelete = (id: string) => {
-    setSelectedCategoryRoomId(id);
+    setSelectedReviewId(id);
     setOpenFormDelete(true);
   };
 
   const handleCloseForm = () => {
-    setSelectedCategoryRoomId(null);
+    setSelectedReviewId(null);
     setOpenFormDelete(false);
     onClose(false);
   };
 
-  const CategoryRoomColumns: ColumnDef<ICategoryRoom>[] = [
+  const ReviewTypeColumns: ColumnDef<IReview>[] = [
     {
       id: "select",
       header: ({ table }) => (
@@ -82,42 +77,39 @@ const CategoryRoomTable = ({ open, onClose }: IForm) => {
       enableHiding: false,
     },
     {
-      accessorKey: "title",
+      accessorKey: "userId",
       header: ({ column }) => {
         return (
           <div
             className="flex text-size-xl items-center cursor-pointer hover:text-sidebar-primary"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            Title
-            <ArrowUpDown />
-          </div>
-        );
-      },
-      cell: ({ row }) => <div>{row.getValue("title")}</div>,
-    },
-    {
-      accessorKey: "roomTypes",
-      header: ({ column }) => {
-        return (
-          <div
-            className="flex text-size-xl items-center cursor-pointer hover:text-sidebar-primary"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
-            Room Types
+            User
             <ArrowUpDown />
           </div>
         );
       },
       cell: ({ row }) => {
-        const roomTypes = row.original.roomTypes;
+        const user = row.original.user;
+        return <div>{user?.username}</div>;
+      },
+    },
+    {
+      accessorKey: "roomTypeId",
+      header: ({ column }) => {
         return (
-          <div>
-            {roomTypes.map((roomType: { _id: string; title: string }) => (
-              <div key={roomType._id}>{roomType.title}</div>
-            ))}
+          <div
+            className="flex text-size-xl items-center cursor-pointer hover:text-sidebar-primary"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            Room Type
+            <ArrowUpDown />
           </div>
         );
+      },
+      cell: ({ row }) => {
+        const roomType = row.original.roomType;
+        return <div>{roomType?.title}</div>;
       },
     },
 
@@ -140,12 +132,7 @@ const CategoryRoomTable = ({ open, onClose }: IForm) => {
             >
               <DropdownMenuLabel>Actions</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem
-                className="cursor-pointer"
-                onClick={() => id && handleUpdate(id)}
-              >
-                Update
-              </DropdownMenuItem>
+
               <DropdownMenuItem
                 className="cursor-pointer"
                 onClick={() => id && handleDelete(id)}
@@ -162,28 +149,22 @@ const CategoryRoomTable = ({ open, onClose }: IForm) => {
   return (
     <>
       <DataTable
-        data={categoryRooms}
-        columns={CategoryRoomColumns}
-        filterPlaceholders="title"
+        data={reviews}
+        columns={ReviewTypeColumns}
+        filterPlaceholders="ReviewType"
         search={search}
         setSearch={setSearch}
       />
-      {open && (
-        <FormCategoryRoom
-          open={open}
-          onClose={handleCloseForm}
-          _id={selectedCategoryRoomId}
-        />
-      )}
+
       {openFormDelete && (
-        <FormDeleteCategoryRoom
+        <FormDeleteReview
           open={openFormDelete}
           onClose={handleCloseForm}
-          _id={selectedCategoryRoomId}
+          _id={selectedReviewId}
         />
       )}
     </>
   );
 };
 
-export default CategoryRoomTable;
+export default ReviewsTable;

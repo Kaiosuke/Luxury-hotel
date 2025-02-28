@@ -1,4 +1,4 @@
-import { addUser, getUser, updateUser } from "@/app/api/userRequest";
+import { adminAddUser, getUser, updateUser } from "@/app/api/userRequest";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -18,21 +18,20 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { ERole, IForm, IUser } from "@/interfaces";
 import { useAppDispatch } from "@/redux/store";
-import { UserSchema } from "@/schemas";
+import { UserUpdateSchema } from "@/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
 function FormUser({ open, onClose, _id }: IForm) {
   const [role, setRole] = useState("user");
+
   const { register, formState, handleSubmit, reset } = useForm({
-    resolver: zodResolver(UserSchema),
+    resolver: zodResolver(UserUpdateSchema),
     defaultValues: {
       username: "",
       email: "",
       phoneNumber: "",
-      confirm: "",
-      password: "",
       country: "",
       address: "",
       city: "",
@@ -49,8 +48,6 @@ function FormUser({ open, onClose, _id }: IForm) {
         reset({
           username: user.username,
           email: user.email,
-          password: user.password,
-          confirm: user.password,
           phoneNumber: user.phoneNumber,
           country: user.country,
           address: user.address,
@@ -97,7 +94,7 @@ function FormUser({ open, onClose, _id }: IForm) {
     } else {
       (async () => {
         try {
-          await dispatch(addUser(newUser)).unwrap();
+          await dispatch(adminAddUser(newUser)).unwrap();
           toast({
             variant: "success",
             title: "Success",
@@ -160,7 +157,7 @@ function FormUser({ open, onClose, _id }: IForm) {
               </div>
             </div>
 
-            {role !== "ceo" && (
+            {_id && role !== "ceo" && (
               <div className="">
                 <Select value={role} onValueChange={(value) => setRole(value)}>
                   <Label>Role</Label>
@@ -174,38 +171,7 @@ function FormUser({ open, onClose, _id }: IForm) {
                 </Select>
               </div>
             )}
-            <div className="grid md:grid-cols-2 gap-4 grid-cols-1 md:py-4">
-              <div className="">
-                <Label htmlFor="password" className="text-right">
-                  Password
-                </Label>
-                <Input
-                  id="password"
-                  type="password"
-                  className="mt-1"
-                  placeholder=". . ."
-                  {...register("password")}
-                />
-                <span className="text-red-500 text-sm">
-                  {formState.errors.password?.message}
-                </span>
-              </div>
-              <div className="">
-                <Label htmlFor="confirm" className="text-right">
-                  Confirm
-                </Label>
-                <Input
-                  id="confirm"
-                  type="password"
-                  className="mt-1"
-                  placeholder=". . ."
-                  {...register("confirm")}
-                />
-                <span className="text-red-500 text-sm">
-                  {formState.errors.confirm?.message}
-                </span>
-              </div>
-            </div>
+
             <div className="grid md:grid-cols-2 gap-4 grid-cols-1 md:py-4">
               <div className="">
                 <Label htmlFor="phoneNumber" className="text-right">

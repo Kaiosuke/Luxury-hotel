@@ -24,6 +24,7 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import FormOption from "@/app/_components/dashboard/option/FormOption";
 import useDebounce from "@/hooks/useDebounce";
+import LoadingProcess from "@/app/_components/Loading";
 
 const OptionDeletedTable = ({ open, onClose }: IForm) => {
   const dispatch = useAppDispatch();
@@ -200,12 +201,6 @@ const OptionDeletedTable = ({ open, onClose }: IForm) => {
       },
     },
   ];
-
-  // const { loading } = useSelector(OptionsSelector);
-
-  // if (loading) {
-  //   return <LoadingProcess />;
-  // }
 
   return (
     <>

@@ -99,8 +99,8 @@ const RoomTypeController = {
             title: { $regex: search, $options: "i" },
           },
         },
-        { $sort: sortby },
       ]);
+
       const filteredRooms = roomTypes.filter((room) => {
         return features.some((feature) =>
           room.detailFeatures?.includes(feature)
@@ -171,10 +171,43 @@ const RoomTypeController = {
         return handleError404WithData(res, "category room");
       }
 
-      const newRoomType = await createData(RoomType, req.body, [
-        { viewId: "title" },
-        { typeBedId: "title" },
-        { categoryRoomId: "title" },
+      const newRoomType = await createData(RoomType, req.body);
+
+      const roomTypes = await RoomType.aggregate([
+        {
+          $lookup: {
+            from: "views",
+            localField: "viewId",
+            foreignField: "_id",
+            as: "view",
+          },
+        },
+        { $unwind: "$view" },
+        {
+          $lookup: {
+            from: "categoryrooms",
+            localField: "categoryRoomId",
+            foreignField: "_id",
+            as: "categoryRoom",
+          },
+        },
+        { $unwind: "$categoryRoom" },
+
+        {
+          $lookup: {
+            from: "typebeds",
+            localField: "typeBedId",
+            foreignField: "_id",
+            as: "typeBed",
+          },
+        },
+        { $unwind: "$typeBed" },
+
+        {
+          $match: {
+            _id: newRoomType._id,
+          },
+        },
       ]);
 
       await findByIdAndPushData(View, viewId, "roomTypes", newRoomType._id);
@@ -191,7 +224,7 @@ const RoomTypeController = {
         newRoomType._id
       );
 
-      return handleSuccess201(res, newRoomType);
+      return handleSuccess201(res, roomTypes[0]);
     } catch (error) {
       return handleError500(res, error);
     }
@@ -227,12 +260,7 @@ const RoomTypeController = {
       const updateRoomType = await findByIdAndUpdateData(
         RoomType,
         id,
-        req.body,
-        [
-          { viewId: "title" },
-          { typeBedId: "title" },
-          { categoryRoomId: "title" },
-        ]
+        req.body
       );
 
       if (viewId !== findRoomType.viewId.toString()) {
@@ -283,7 +311,44 @@ const RoomTypeController = {
         );
       }
 
-      return handleSuccess200(res, updateRoomType);
+      const roomTypes = await RoomType.aggregate([
+        {
+          $lookup: {
+            from: "views",
+            localField: "viewId",
+            foreignField: "_id",
+            as: "view",
+          },
+        },
+        { $unwind: "$view" },
+        {
+          $lookup: {
+            from: "categoryrooms",
+            localField: "categoryRoomId",
+            foreignField: "_id",
+            as: "categoryRoom",
+          },
+        },
+        { $unwind: "$categoryRoom" },
+
+        {
+          $lookup: {
+            from: "typebeds",
+            localField: "typeBedId",
+            foreignField: "_id",
+            as: "typeBed",
+          },
+        },
+        { $unwind: "$typeBed" },
+
+        {
+          $match: {
+            _id: findRoomType._id,
+          },
+        },
+      ]);
+
+      return handleSuccess200(res, roomTypes[0]);
     } catch (error) {
       return handleError500(res, error);
     }
@@ -383,10 +448,43 @@ const RoomTypeController = {
         return handleError404(res);
       }
 
-      const findRoomType = await getDataById(RoomType, id, [
-        { viewId: "title" },
-        { typeBedId: "title" },
-        { categoryRoomId: "title" },
+      const findRoomType = await getDataById(RoomType, id);
+
+      const roomTypes = await RoomType.aggregate([
+        {
+          $lookup: {
+            from: "views",
+            localField: "viewId",
+            foreignField: "_id",
+            as: "view",
+          },
+        },
+        { $unwind: "$view" },
+        {
+          $lookup: {
+            from: "categoryrooms",
+            localField: "categoryRoomId",
+            foreignField: "_id",
+            as: "categoryRoom",
+          },
+        },
+        { $unwind: "$categoryRoom" },
+
+        {
+          $lookup: {
+            from: "typebeds",
+            localField: "typeBedId",
+            foreignField: "_id",
+            as: "typeBed",
+          },
+        },
+        { $unwind: "$typeBed" },
+
+        {
+          $match: {
+            _id: findRoomType._id,
+          },
+        },
       ]);
 
       const findView = await findByIdAndPushData(
@@ -436,7 +534,7 @@ const RoomTypeController = {
       }
 
       findRoomType.save();
-      return handleSuccess200(res, findRoomType);
+      return handleSuccess200(res, roomTypes[0]);
     } catch (error) {
       return handleError500(res, error);
     }

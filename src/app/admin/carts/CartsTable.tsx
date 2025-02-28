@@ -33,6 +33,7 @@ import { format } from "date-fns";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import FormDeleteCart from "@/app/_components/dashboard/cart/FormDeleteCart";
+import LoadingProcess from "@/app/_components/Loading";
 
 const CartsTable = ({ open, onClose }: IForm) => {
   const { carts } = useSelector(cartsSelector);
@@ -317,12 +318,6 @@ const CartsTable = ({ open, onClose }: IForm) => {
       },
     },
   ];
-
-  // const { loading } = useSelector(cartsSelector);
-
-  // if (loading) {
-  //   return <LoadingProcess />;
-  // }
 
   return (
     <>

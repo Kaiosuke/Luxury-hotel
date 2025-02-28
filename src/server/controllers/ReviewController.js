@@ -27,12 +27,33 @@ const ReviewController = {
   getAll: async (req, res) => {
     try {
       const search = req.query.search || "";
+      const reviews = await Review.aggregate([
+        {
+          $lookup: {
+            from: "users",
+            localField: "userId",
+            foreignField: "_id",
+            as: "user",
+          },
+        },
+        { $unwind: "$user" },
+        {
+          $lookup: {
+            from: "roomtypes",
+            localField: "roomTypeId",
+            foreignField: "_id",
+            as: "roomType",
+          },
+        },
+        { $unwind: "$roomType" },
 
-      const reviews = await getAllData(
-        Review,
-        [{ userId: "username" }, { roomTypeId: "title" }],
-        search.trim()
-      );
+        {
+          $match: {
+            "user.username": { $regex: search.trim(), $options: "i" },
+          },
+        },
+      ]);
+
       return handleSuccess200(res, reviews);
     } catch (error) {
       return handleError500(res, error);
@@ -53,13 +74,11 @@ const ReviewController = {
 
   getAllDeleted: async (req, res) => {
     try {
-      const search = req.query.search || "";
-
-      const reviews = await getAllDataDeleted(
-        Review,
-        [{ userId: "username" }, { roomTypeId: "title" }],
-        search.trim()
-      );
+      let reviews = await Review.find({ deleted: true }, null, {
+        withDeleted: true,
+      })
+        .populate("userId", "username")
+        .populate("roomTypeId", "title");
 
       return handleSuccess200(res, reviews);
     } catch (error) {

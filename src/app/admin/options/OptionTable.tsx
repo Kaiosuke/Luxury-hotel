@@ -23,6 +23,7 @@ import { useSelector } from "react-redux";
 import useDebounce from "@/hooks/useDebounce";
 import { useAppDispatch } from "@/redux/store";
 import { getAllOption } from "@/app/api/optionRequest";
+import LoadingProcess from "@/app/_components/Loading";
 
 const OptionTable = ({ open, onClose }: IForm) => {
   const { options } = useSelector(optionsSelector);

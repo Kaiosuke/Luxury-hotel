@@ -176,12 +176,6 @@ const TypeBedDeletedTable = ({ open, onClose }: IForm) => {
     },
   ];
 
-  // const { loading } = useSelector(TypeBedsSelector);
-
-  // if (loading) {
-  //   return <LoadingProcess />;
-  // }
-
   return (
     <>
       <DataTable

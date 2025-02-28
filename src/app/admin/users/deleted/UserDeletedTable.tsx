@@ -131,14 +131,6 @@ const UserDeletedTable = ({ open, onClose }: IForm) => {
         <div className="capitalize">{row.getValue("role")}</div>
       ),
     },
-    {
-      accessorKey: "carts",
-      header: "Orders",
-      cell: ({ row }) => {
-        const carts = row.original;
-        return <div className="capitalize">{row.getValue("carts")}</div>;
-      },
-    },
 
     {
       id: "actions",
@@ -178,12 +170,6 @@ const UserDeletedTable = ({ open, onClose }: IForm) => {
       },
     },
   ];
-
-  // const { loading } = useSelector(usersSelector);
-
-  // if (loading) {
-  //   return <LoadingProcess />;
-  // }
 
   return (
     <>

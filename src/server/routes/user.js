@@ -15,6 +15,8 @@ route.patch(
   UserController.userUpdate
 );
 
+route.post("/create", verifyAdmin, UserController.create);
+
 route.delete("/delete/:id", verifyAdmin, UserController.delete);
 
 route.patch("/restore/:id", verifyAdmin, UserController.restore);

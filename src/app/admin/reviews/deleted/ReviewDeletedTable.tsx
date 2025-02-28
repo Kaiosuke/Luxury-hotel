@@ -3,15 +3,11 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 
-import FormForceDeleteRoomType from "@/app/_components/dashboard/roomType/FormForceDeleteRoomType";
-import FormRoomType from "@/app/_components/dashboard/roomType/FormRoomType";
 import DataTable from "@/app/_components/DataTable";
-import {
-  getAllRoomTypeDeleted,
-  restoreRoomType,
-} from "@/app/api/roomTypeRequest";
+import { getAllReviewDeleted, restoreReview } from "@/app/api/reviewRequest";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
+import { format } from "date-fns";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -21,43 +17,38 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useToast } from "@/hooks/use-toast";
-import { IForm, IRoomType } from "@/interfaces";
-import { roomTypesSelector } from "@/redux/selectors/roomTypesSelector";
+import { IForm, IReview } from "@/interfaces";
+import { reviewsSelector } from "@/redux/selectors/reviewsSelector";
 import { useAppDispatch } from "@/redux/store";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { AspectRatio } from "@/components/ui/aspect-ratio";
-import Image from "next/image";
-import { formatMoney } from "@/utils/helpers";
 import useDebounce from "@/hooks/useDebounce";
-import LoadingProcess from "@/app/_components/Loading";
+import FormForceDeleteReview from "@/app/_components/dashboard/reviews/FormForceDeleteReview";
 
-const RoomTypeDeletedTable = ({ open, onClose }: IForm) => {
+const ReviewDeletedTable = ({ open, onClose }: IForm) => {
   const dispatch = useAppDispatch();
+
   const [search, setSearch] = useState("");
 
   const debounce = useDebounce({ value: search });
 
   useEffect(() => {
-    dispatch(getAllRoomTypeDeleted(search));
+    dispatch(getAllReviewDeleted(search));
   }, [debounce]);
+  const { reviewsDeleted } = useSelector(reviewsSelector);
 
-  const { roomTypesDeleted } = useSelector(roomTypesSelector);
-
-  const [selectedRoomTypeId, setSelectedRoomTypeId] = useState<string | null>(
-    null
-  );
+  const [selectedReviewId, setSelectedReviewId] = useState<string | null>(null);
   const [openFormDelete, setOpenFormDelete] = useState(false);
 
   const { toast } = useToast();
 
   const handleRestore = async (id: string) => {
     try {
-      await dispatch(restoreRoomType(id)).unwrap();
+      await dispatch(restoreReview(id)).unwrap();
       toast({
         variant: "success",
         title: "Successfully!",
-        description: "Restore RoomType success",
+        description: "Restore Review success",
       });
     } catch (error) {
       const errorMessage =
@@ -70,17 +61,17 @@ const RoomTypeDeletedTable = ({ open, onClose }: IForm) => {
     }
   };
   const handleForceDelete = (id: string) => {
-    setSelectedRoomTypeId(id);
+    setSelectedReviewId(id);
     setOpenFormDelete(true);
   };
 
   const handleCloseForm = () => {
-    setSelectedRoomTypeId(null);
+    setSelectedReviewId(null);
     setOpenFormDelete(false);
     onClose(false);
   };
 
-  const RoomTypeColumns: ColumnDef<IRoomType>[] = [
+  const ReviewColumns: ColumnDef<IReview>[] = [
     {
       id: "select",
       header: ({ table }) => (
@@ -105,118 +96,44 @@ const RoomTypeDeletedTable = ({ open, onClose }: IForm) => {
     },
 
     {
-      accessorKey: "title",
+      accessorKey: "userId",
       header: ({ column }) => {
         return (
           <div
             className="flex text-size-xl items-center cursor-pointer hover:text-sidebar-primary"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            Title
-            <ArrowUpDown />
-          </div>
-        );
-      },
-      cell: ({ row }) => <div>{row.getValue("title")}</div>,
-    },
-    {
-      accessorKey: "view",
-      header: ({ column }) => {
-        return (
-          <div
-            className="flex text-size-xl items-center cursor-pointer hover:text-sidebar-primary"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
-            View
+            User
             <ArrowUpDown />
           </div>
         );
       },
       cell: ({ row }) => {
-        const view = row.original.viewId;
-        return <div>{view?.title}</div>;
+        const user = row.original.userId as unknown as { username: string };
+        return <div>{user?.username}</div>;
       },
     },
     {
-      accessorKey: "typeBed",
+      accessorKey: "roomTypeId",
       header: ({ column }) => {
         return (
           <div
             className="flex text-size-xl items-center cursor-pointer hover:text-sidebar-primary"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            Type Bed
+            Room Type
             <ArrowUpDown />
           </div>
         );
       },
       cell: ({ row }) => {
-        const typeBed = row.original.typeBedId;
-        return <div>{typeBed?.title}</div>;
+        const roomType = row.original.roomTypeId as unknown as {
+          title: string;
+        };
+        return <div>{roomType?.title}</div>;
       },
     },
 
-    {
-      accessorKey: "categoryRoom",
-      header: ({ column }) => {
-        return (
-          <div
-            className="flex text-size-xl items-center cursor-pointer hover:text-sidebar-primary"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
-            Category Room
-            <ArrowUpDown />
-          </div>
-        );
-      },
-      cell: ({ row }) => {
-        const categoryRoom = row.original.categoryRoomId;
-        return <div>{categoryRoom?.title}</div>;
-      },
-    },
-    {
-      accessorKey: "price",
-      header: ({ column }) => {
-        return (
-          <div
-            className="flex text-size-xl items-center cursor-pointer hover:text-sidebar-primary"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
-            Price basic
-            <ArrowUpDown />
-          </div>
-        );
-      },
-      cell: ({ row }) => {
-        const price = formatMoney(row.getValue("price"));
-        return <div>{price}</div>;
-      },
-    },
-    {
-      accessorKey: "thumbnail",
-      header: () => {
-        return (
-          <div className="flex text-size-xl items-center cursor-pointer hover:text-sidebar-primary">
-            Thumbnail
-          </div>
-        );
-      },
-      cell: ({ row }) => {
-        const thumbnailUrl = row.getValue("thumbnail");
-        return (
-          <AspectRatio ratio={16 / 9} className="bg-muted">
-            <Image
-              src={thumbnailUrl as string}
-              alt="Photo by Kaio"
-              fill
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              className="h-full w-full rounded-md object-cover"
-              priority
-            />
-          </AspectRatio>
-        );
-      },
-    },
     {
       id: "actions",
       enableHiding: false,
@@ -259,28 +176,22 @@ const RoomTypeDeletedTable = ({ open, onClose }: IForm) => {
   return (
     <>
       <DataTable
-        data={roomTypesDeleted}
-        columns={RoomTypeColumns}
-        filterPlaceholders="title"
+        data={reviewsDeleted}
+        columns={ReviewColumns}
+        filterPlaceholders="ReviewType"
         search={search}
         setSearch={setSearch}
       />
-      {open && (
-        <FormRoomType
-          open={open}
-          onClose={handleCloseForm}
-          _id={selectedRoomTypeId}
-        />
-      )}
+
       {openFormDelete && (
-        <FormForceDeleteRoomType
+        <FormForceDeleteReview
           open={openFormDelete}
           onClose={handleCloseForm}
-          _id={selectedRoomTypeId}
+          _id={selectedReviewId}
         />
       )}
     </>
   );
 };
 
-export default RoomTypeDeletedTable;
+export default ReviewDeletedTable;

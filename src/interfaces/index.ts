@@ -26,30 +26,22 @@ interface IRoomType {
   price: number;
   quantity: number;
   rate: number;
-  categoryRoomId: {
-    _id: string;
-    title: string;
-  };
-  viewId: {
-    _id: string;
-    title: string;
-  };
-
+  categoryRoomId: string;
+  viewId: string;
   description: string;
   quickDes: string[];
   features: string[];
   square: string;
-  typeBedId: {
-    _id: string;
-    title: string;
-  };
+  typeBedId: string;
   sleeps: number;
   images: string[];
   map: string;
   detailFeatures: string[];
   shortDes: string;
   detailDes: string;
-  typeBed?: any;
+  typeBed?: ITypeBed;
+  view?: IView;
+  categoryRoom?: ICategoryRoom;
 }
 
 interface IRoom {
@@ -157,6 +149,8 @@ interface IReview {
   userId: string;
   roomTypeId: string;
   description: string;
+  user?: IUser;
+  roomType?: IRoomType;
 }
 
 export { ERole };

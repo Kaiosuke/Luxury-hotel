@@ -25,6 +25,7 @@ import { useSelector } from "react-redux";
 import useDebounce from "@/hooks/useDebounce";
 import { format } from "date-fns";
 import { formatMoney } from "@/utils/helpers";
+import LoadingProcess from "@/app/_components/Loading";
 
 const CartDeletedTable = ({ open, onClose }: IForm) => {
   const dispatch = useAppDispatch();
@@ -276,12 +277,6 @@ const CartDeletedTable = ({ open, onClose }: IForm) => {
       },
     },
   ];
-
-  // const { loading } = useSelector(CartsSelector);
-
-  // if (loading) {
-  //   return <LoadingProcess />;
-  // }
 
   return (
     <>

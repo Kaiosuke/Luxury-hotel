@@ -9,7 +9,6 @@ import {
 import env from "../config/envConfig.js";
 import Cart from "../models/Cart.js";
 import Option from "../models/Option.js";
-import Payment from "../models/Payment.js";
 import Room from "../models/Room.js";
 import RoomType from "../models/RoomType.js";
 import User from "../models/User.js";
@@ -207,8 +206,6 @@ const CartController = {
 
   getAllDeleted: async (req, res) => {
     try {
-      const search = req.query.search || "";
-
       const carts = await Cart.find({ deleted: true }, null, {
         withDeleted: true,
       })
@@ -528,15 +525,6 @@ const CartController = {
       if (!findCart) {
         return handleError404(res);
       }
-
-      const findPayment = await getData(Payment, "cartId", findCart._id);
-      if (findPayment) {
-        return handleError409(
-          res,
-          "Payment conflict, cannot be deleted due to other constraints"
-        );
-      }
-
       await findByIdAndPullData(Option, findCart.optionId, "carts", id);
       await findByIdAndPullData(User, findCart.userId, "carts", id);
       await findByIdAndPullData(Room, findCart.roomId, "carts", id);

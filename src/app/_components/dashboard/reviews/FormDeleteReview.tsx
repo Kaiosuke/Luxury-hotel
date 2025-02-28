@@ -1,4 +1,4 @@
-import { deleteFood } from "@/app/api/foodRequest";
+import { deleteReview } from "@/app/api/reviewRequest";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -12,18 +12,19 @@ import { useToast } from "@/hooks/use-toast";
 import { IForm } from "@/interfaces";
 import { useAppDispatch } from "@/redux/store";
 
-function FormDeleteFood({ open, onClose, _id }: IForm) {
+function FormDeleteReview({ open, onClose, _id }: IForm) {
   const dispatch = useAppDispatch();
   const { toast } = useToast();
 
   const handleDelete = async () => {
     try {
-      _id && (await dispatch(deleteFood(_id)).unwrap());
+      _id && (await dispatch(deleteReview(_id)).unwrap());
       toast({
         variant: "success",
         title: "Success",
-        description: "Delete Food success",
+        description: "Delete Review success",
       });
+      return onClose(false);
     } catch (error) {
       const errorMessage =
         typeof error === "string" ? error : "Something went wrong";
@@ -32,16 +33,18 @@ function FormDeleteFood({ open, onClose, _id }: IForm) {
         title: "Failed",
         description: errorMessage,
       });
+      return onClose(false);
     }
-    return onClose(false);
   };
   return (
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-[425px]  bg-sidebar-four text-sidebar-primary">
         <DialogHeader>
-          <DialogTitle className="md:text-2xl text-xl">Delete Food</DialogTitle>
+          <DialogTitle className="md:text-2xl text-xl">
+            Delete Review
+          </DialogTitle>
           <DialogDescription className="text-sidebar-primary">
-            Are you sure you want to delete this Food?
+            Are you sure you want to delete this Review?
           </DialogDescription>
         </DialogHeader>
 
@@ -62,4 +65,4 @@ function FormDeleteFood({ open, onClose, _id }: IForm) {
   );
 }
 
-export default FormDeleteFood;
+export default FormDeleteReview;

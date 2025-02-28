@@ -25,6 +25,7 @@ import { useAppDispatch } from "@/redux/store";
 import { format } from "date-fns";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import LoadingProcess from "@/app/_components/Loading";
 
 const RoomsTable = ({ open, onClose }: IForm) => {
   const { rooms } = useSelector(roomsSelector);
@@ -241,12 +242,6 @@ const RoomsTable = ({ open, onClose }: IForm) => {
       },
     },
   ];
-
-  // const { loading } = useSelector(roomsSelector);
-
-  // if (loading) {
-  //   return <LoadingProcess />;
-  // }
 
   return (
     <>

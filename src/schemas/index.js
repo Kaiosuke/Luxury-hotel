@@ -101,6 +101,15 @@ const UserSchema = z
     path: ["confirm"],
   });
 
+const UserUpdateSchema = z.object({
+  username: z.string().min(2, "Username must be at least 2 characters."),
+  email: z.string().email({ message: "Invalid email address" }),
+  phoneNumber: z.string().optional(),
+  country: z.string().optional(),
+  address: z.string().optional(),
+  city: z.string().optional(),
+});
+
 // Rooms
 
 const RoomTypesSchema = z.object({
@@ -221,4 +230,5 @@ export {
   ReviewSchema,
   PaymentSchema,
   CartSchema,
+  UserUpdateSchema,
 };

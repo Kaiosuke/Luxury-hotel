@@ -6,6 +6,7 @@ import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 import FormDeleteRoomType from "@/app/_components/dashboard/roomType/FormDeleteRoomType";
 import FormRoomType from "@/app/_components/dashboard/roomType/FormRoomType";
 import DataTable from "@/app/_components/DataTable";
+import { getAllRoomType } from "@/app/api/roomTypeRequest";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -17,15 +18,14 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import useDebounce from "@/hooks/useDebounce";
 import { IForm, IRoomType } from "@/interfaces";
 import { roomTypesSelector } from "@/redux/selectors/roomTypesSelector";
+import { useAppDispatch } from "@/redux/store";
 import { formatMoney } from "@/utils/helpers";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { getAllRoomType } from "@/app/api/roomTypeRequest";
-import { useAppDispatch } from "@/redux/store";
-import useDebounce from "@/hooks/useDebounce";
 
 const RoomTypeTable = ({ open, onClose }: IForm) => {
   const { roomTypes } = useSelector(roomTypesSelector);
@@ -111,7 +111,7 @@ const RoomTypeTable = ({ open, onClose }: IForm) => {
         );
       },
       cell: ({ row }) => {
-        const view = row.original.viewId;
+        const view = row.original.view;
         return <div>{view?.title}</div>;
       },
     },
@@ -129,7 +129,7 @@ const RoomTypeTable = ({ open, onClose }: IForm) => {
         );
       },
       cell: ({ row }) => {
-        const typeBed = row.original.typeBedId;
+        const typeBed = row.original.typeBed;
         return <div>{typeBed?.title}</div>;
       },
     },
@@ -148,7 +148,7 @@ const RoomTypeTable = ({ open, onClose }: IForm) => {
         );
       },
       cell: ({ row }) => {
-        const categoryRoom = row.original.categoryRoomId;
+        const categoryRoom = row.original.categoryRoom;
         return <div>{categoryRoom?.title}</div>;
       },
     },

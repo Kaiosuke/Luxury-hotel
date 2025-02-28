@@ -30,12 +30,7 @@ const UserSchema = new Schema(
         require: true,
       },
     ],
-    payments: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "payments",
-      },
-    ],
+
     resetToken: { type: String, default: null },
     resetTokenExpire: { type: Date, default: null },
   },

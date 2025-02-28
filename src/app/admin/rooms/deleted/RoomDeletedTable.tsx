@@ -230,12 +230,6 @@ const RoomDeletedTable = ({ open, onClose }: IForm) => {
     },
   ];
 
-  // const { loading } = useSelector(RoomsSelector);
-
-  // if (loading) {
-  //   return <LoadingProcess />;
-  // }
-
   return (
     <>
       <DataTable

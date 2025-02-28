@@ -7,13 +7,13 @@ import {
 } from "../../utils/helpers/handleStatusCode.js";
 import env from "../config/envConfig.js";
 import Cart from "../models/Cart.js";
-import Payment from "../models/Payment.js";
 import Review from "../models/Review.js";
 import User from "../models/User.js";
 
+import bcrypt from "bcryptjs";
+
 import { deleteData, forceDeleteData } from "../services/deleteService.js";
 import {
-  getAllUser,
   getAllUserDeleted,
   getData,
   getDataById,
@@ -22,16 +22,52 @@ import {
   findByIdAndUpdateData,
   restoreData,
 } from "../services/patchService.js";
+import { createData } from "../services/postService.js";
 
 const UserController = {
   getAll: async (req, res) => {
     try {
       const search = req.query.search || "";
-      const users = await getAllUser(
-        User,
-        [{ carts: "title" }, { reviews: "title" }, { payments: "title" }],
-        search.trim()
-      );
+      const users = await User.aggregate([
+        {
+          $lookup: {
+            from: "carts",
+            localField: "_id",
+            foreignField: "userId",
+            as: "carts",
+          },
+        },
+
+        {
+          $lookup: {
+            from: "reviews",
+            localField: "_id",
+            foreignField: "userId",
+            as: "reviews",
+          },
+        },
+
+        {
+          $match: {
+            username: { $regex: search.trim(), $options: "i" },
+          },
+        },
+        {
+          $project: {
+            _id: 1,
+            username: 1,
+            email: 1,
+            address: 1,
+            city: 1,
+            country: 1,
+            phoneNumber: 1,
+            price: 1,
+            role: 1,
+            carts: 1,
+            reviews: 1,
+          },
+        },
+      ]);
       return handleSuccess200(res, users);
     } catch (error) {
       console.log(error);
@@ -42,13 +78,17 @@ const UserController = {
   getAllDeleted: async (req, res) => {
     try {
       const search = req.query.search || "";
-      const users = await getAllUserDeleted(
+      let users = await getAllUserDeleted(
         User,
-        [{ carts: "title" }, { reviews: "title" }, { payments: "title" }],
+        [{ carts: "title" }, { reviews: "title" }],
         search
       );
+
+      users.filter((user) => user.username.includes(search));
+
       return handleSuccess200(res, users);
     } catch (error) {
+      console.log(error);
       return handleError500(res, req);
     }
   },
@@ -56,17 +96,118 @@ const UserController = {
   getById: async (req, res) => {
     try {
       const { id } = req.params;
-      const user = await getDataById(User, id, [
-        { carts: "title" },
-        { reviews: "title" },
-        { payments: "title" },
-      ]);
-      if (!user) {
+
+      const findUser = await getDataById(User, id);
+
+      if (!findUser) {
         return handleError404(res);
       }
-      return handleSuccess200(res, user);
+
+      const users = await User.aggregate([
+        {
+          $lookup: {
+            from: "carts",
+            localField: "_id",
+            foreignField: "userId",
+            as: "carts",
+          },
+        },
+
+        {
+          $lookup: {
+            from: "reviews",
+            localField: "_id",
+            foreignField: "userId",
+            as: "reviews",
+          },
+        },
+
+        {
+          $match: {
+            _id: findUser._id,
+          },
+        },
+        {
+          $project: {
+            _id: 1,
+            username: 1,
+            email: 1,
+            address: 1,
+            city: 1,
+            country: 1,
+            phoneNumber: 1,
+            price: 1,
+            role: 1,
+            carts: 1,
+            reviews: 1,
+          },
+        },
+      ]);
+
+      return handleSuccess200(res, users[0]);
     } catch (error) {
       return handleError500(res, error);
+    }
+  },
+  create: async (req, res) => {
+    try {
+      const email = await getData(User, "email", req.body.email);
+
+      if (email) {
+        return handleError409(res, "Email already exists!");
+      }
+
+      const defaultPassword = "123456";
+
+      var salt = bcrypt.genSaltSync(10);
+      var hash = bcrypt.hashSync(defaultPassword, salt);
+
+      const newUser = await createData(User, { ...req.body, password: hash });
+
+      const users = await User.aggregate([
+        {
+          $lookup: {
+            from: "carts",
+            localField: "_id",
+            foreignField: "userId",
+            as: "carts",
+          },
+        },
+
+        {
+          $lookup: {
+            from: "reviews",
+            localField: "_id",
+            foreignField: "userId",
+            as: "reviews",
+          },
+        },
+
+        {
+          $match: {
+            _id: newUser._id,
+          },
+        },
+        {
+          $project: {
+            _id: 1,
+            username: 1,
+            email: 1,
+            address: 1,
+            city: 1,
+            country: 1,
+            phoneNumber: 1,
+            price: 1,
+            role: 1,
+            carts: 1,
+            reviews: 1,
+          },
+        },
+      ]);
+
+      return handleSuccess200(res, users[0]);
+    } catch (error) {
+      handleError500(res, error);
     }
   },
 
@@ -86,15 +227,50 @@ const UserController = {
       ) {
         return handleError403(res);
       }
-      const updateUser = await findByIdAndUpdateData(User, id, req.body, [
-        { carts: "title" },
-        { reviews: "title" },
-        { payments: "title" },
+      const updateUser = await findByIdAndUpdateData(User, id, req.body);
+
+      const users = await User.aggregate([
+        {
+          $lookup: {
+            from: "carts",
+            localField: "_id",
+            foreignField: "userId",
+            as: "carts",
+          },
+        },
+
+        {
+          $lookup: {
+            from: "reviews",
+            localField: "_id",
+            foreignField: "userId",
+            as: "reviews",
+          },
+        },
+
+        {
+          $match: {
+            _id: updateUser._id,
+          },
+        },
+        {
+          $project: {
+            _id: 1,
+            username: 1,
+            email: 1,
+            address: 1,
+            city: 1,
+            country: 1,
+            phoneNumber: 1,
+            price: 1,
+            role: 1,
+            carts: 1,
+            reviews: 1,
+          },
+        },
       ]);
 
-      const { password, ...others } = updateUser._doc;
-
-      return handleSuccess200(res, others);
+      return handleSuccess200(res, users[0]);
     } catch (error) {
       return handleError500(res, error);
     }
@@ -114,15 +290,50 @@ const UserController = {
         return handleError403(res);
       }
 
-      const updateUser = await findByIdAndUpdateData(User, id, req.body, [
-        { carts: "title" },
-        { reviews: "title" },
-        { payments: "title" },
+      const updateUser = await findByIdAndUpdateData(User, id);
+
+      const users = await User.aggregate([
+        {
+          $lookup: {
+            from: "carts",
+            localField: "_id",
+            foreignField: "userId",
+            as: "carts",
+          },
+        },
+
+        {
+          $lookup: {
+            from: "reviews",
+            localField: "_id",
+            foreignField: "userId",
+            as: "reviews",
+          },
+        },
+
+        {
+          $match: {
+            _id: updateUser._id,
+          },
+        },
+        {
+          $project: {
+            _id: 1,
+            username: 1,
+            email: 1,
+            address: 1,
+            city: 1,
+            country: 1,
+            phoneNumber: 1,
+            price: 1,
+            role: 1,
+            carts: 1,
+            reviews: 1,
+          },
+        },
       ]);
 
-      const { password, ...others } = updateUser._doc;
-
-      return handleSuccess200(res, others);
+      return handleSuccess200(res, users[0]);
     } catch (error) {
       return handleError500(res, error);
     }
@@ -158,14 +369,6 @@ const UserController = {
         );
       }
 
-      const findPayment = await getData(Payment, "userId", findUser._id);
-      if (findPayment) {
-        return handleError409(
-          res,
-          "Payment conflict, cannot be deleted due to other constraints"
-        );
-      }
-
       const findReview = await getData(Review, "userId", findUser._id);
       if (findReview) {
         return handleError409(
@@ -191,15 +394,50 @@ const UserController = {
         return handleError404(res);
       }
 
-      const findUser = await getDataById(User, id, [
-        { carts: "title" },
-        { reviews: "title" },
-        { payments: "title" },
+      const findUser = await getDataById(User, id);
+
+      const users = await User.aggregate([
+        {
+          $lookup: {
+            from: "carts",
+            localField: "_id",
+            foreignField: "userId",
+            as: "carts",
+          },
+        },
+
+        {
+          $lookup: {
+            from: "reviews",
+            localField: "_id",
+            foreignField: "userId",
+            as: "reviews",
+          },
+        },
+
+        {
+          $match: {
+            _id: findUser._id,
+          },
+        },
+        {
+          $project: {
+            _id: 1,
+            username: 1,
+            email: 1,
+            address: 1,
+            city: 1,
+            country: 1,
+            phoneNumber: 1,
+            price: 1,
+            role: 1,
+            carts: 1,
+            reviews: 1,
+          },
+        },
       ]);
 
-      const { password, ...others } = findUser._doc;
-
-      return handleSuccess200(res, others);
+      return handleSuccess200(res, users[0]);
     } catch (error) {
       return handleError500(res, error);
     }

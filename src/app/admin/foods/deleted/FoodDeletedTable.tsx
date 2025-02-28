@@ -24,6 +24,7 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import FormFood from "@/app/_components/dashboard/food/FormFood";
 import useDebounce from "@/hooks/useDebounce";
+import LoadingProcess from "@/app/_components/Loading";
 
 const FoodDeletedTable = ({ open, onClose }: IForm) => {
   const dispatch = useAppDispatch();
@@ -163,12 +164,6 @@ const FoodDeletedTable = ({ open, onClose }: IForm) => {
       },
     },
   ];
-
-  // const { loading } = useSelector(FoodsSelector);
-
-  // if (loading) {
-  //   return <LoadingProcess />;
-  // }
 
   return (
     <>

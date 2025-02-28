@@ -115,7 +115,7 @@ const deleteReview = createAsyncThunk<string, string, { rejectValue: string }>(
 
 const restoreReview = createAsyncThunk<
   IReview,
-  IReview,
+  string,
   { rejectValue: string }
 >("reviews/restoreReview", async (_id, { rejectWithValue }) => {
   try {

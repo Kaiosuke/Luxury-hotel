@@ -15,16 +15,16 @@ import {
 import { useState } from "react";
 import { FaPlus } from "react-icons/fa";
 import { IoMdOptions } from "react-icons/io";
-import RoomDeletedTable from "./RoomDeletedTable";
+import ReviewDeletedTable from "./ReviewDeletedTable";
 
 const page = () => {
   const [openForm, setOpenForm] = useState(false);
   return (
     <div>
-      <BreadcrumbComponent page="Rooms" />
+      <BreadcrumbComponent page="Review" />
       <div className="mt-6 flex justify-between text-sidebar-primary">
         <div className="flex items-center gap-4">
-          <h1 className="text-size-3xl">Room List</h1>
+          <h1 className="text-size-3xl">Review List</h1>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Badge variant={"outline-primary"}>
@@ -46,7 +46,7 @@ const page = () => {
         </div>
       </div>
       <div className="mt-6">
-        <RoomDeletedTable open={openForm} onClose={setOpenForm} />
+        <ReviewDeletedTable open={openForm} onClose={setOpenForm} />
       </div>
     </div>
   );

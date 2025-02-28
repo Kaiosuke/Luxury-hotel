@@ -81,10 +81,6 @@ const data = {
           title: "Room Deleted List",
           url: "/admin/rooms/deleted",
         },
-        {
-          title: "Quantum",
-          url: "#",
-        },
       ],
     },
     {
@@ -99,10 +95,6 @@ const data = {
         {
           title: "Cart Deleted List",
           url: "/admin/carts/deleted",
-        },
-        {
-          title: "Quantum",
-          url: "#",
         },
       ],
     },
@@ -119,10 +111,6 @@ const data = {
           title: "Type Bed Deleted List",
           url: "/admin/type-beds/deleted",
         },
-        {
-          title: "Quantum",
-          url: "#",
-        },
       ],
     },
     {
@@ -137,10 +125,6 @@ const data = {
         {
           title: "View Deleted List",
           url: "/admin/views/deleted",
-        },
-        {
-          title: "Quantum",
-          url: "#",
         },
       ],
     },
@@ -157,10 +141,6 @@ const data = {
           title: "Category Room  Deleted List",
           url: "/admin/category-rooms/deleted",
         },
-        {
-          title: "Quantum",
-          url: "#",
-        },
       ],
     },
     {
@@ -175,10 +155,6 @@ const data = {
         {
           title: "Food Deleted List",
           url: "/admin/foods/deleted",
-        },
-        {
-          title: "Quantum",
-          url: "#",
         },
       ],
     },
@@ -195,31 +171,9 @@ const data = {
           title: "Option Deleted List",
           url: "/admin/options/deleted",
         },
-        {
-          title: "Quantum",
-          url: "#",
-        },
       ],
     },
-    {
-      title: "Payment",
-      url: "#",
-      icon: MdOutlinePayment,
-      items: [
-        {
-          title: "Payment List",
-          url: "/admin/payments",
-        },
-        {
-          title: "Payment Deleted List",
-          url: "/admin/payments/deleted",
-        },
-        {
-          title: "Quantum",
-          url: "#",
-        },
-      ],
-    },
+
     {
       title: "Review",
       url: "#",
@@ -232,10 +186,6 @@ const data = {
         {
           title: "review Deleted List",
           url: "/admin/reviews/deleted",
-        },
-        {
-          title: "Quantum",
-          url: "#",
         },
       ],
     },
