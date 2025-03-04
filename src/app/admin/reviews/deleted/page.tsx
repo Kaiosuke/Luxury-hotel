@@ -2,7 +2,6 @@
 
 import BreadcrumbComponent from "@/app/_components/BreadcrumbComponent";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,7 +12,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useState } from "react";
-import { FaPlus } from "react-icons/fa";
 import { IoMdOptions } from "react-icons/io";
 import ReviewDeletedTable from "./ReviewDeletedTable";
 

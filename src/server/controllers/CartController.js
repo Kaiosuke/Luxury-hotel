@@ -111,6 +111,77 @@ const CartController = {
     }
   },
 
+  getTotalRevenue: async (req, res) => {
+    try {
+      const carts = await Cart.aggregate([
+        {
+          $match: { status: "paid" },
+        },
+        {
+          $project: {
+            totalPrice: 1,
+            month: {
+              $dateToString: { format: "%m", date: "$createdAt" },
+            },
+            year: {
+              $dateToString: { format: "%Y", date: "$createdAt" },
+            },
+          },
+        },
+        {
+          $group: {
+            _id: {
+              month: "$month",
+              year: "$year",
+            },
+            totalRevenue: { $sum: "$totalPrice" },
+          },
+        },
+        {
+          $project: {
+            _id: 0,
+            monthYear: {
+              $concat: [
+                {
+                  $switch: {
+                    branches: [
+                      { case: { $eq: ["$_id.month", "01"] }, then: "January" },
+                      { case: { $eq: ["$_id.month", "02"] }, then: "February" },
+                      { case: { $eq: ["$_id.month", "03"] }, then: "March" },
+                      { case: { $eq: ["$_id.month", "04"] }, then: "April" },
+                      { case: { $eq: ["$_id.month", "05"] }, then: "May" },
+                      { case: { $eq: ["$_id.month", "06"] }, then: "June" },
+                      { case: { $eq: ["$_id.month", "07"] }, then: "July" },
+                      { case: { $eq: ["$_id.month", "08"] }, then: "August" },
+                      {
+                        case: { $eq: ["$_id.month", "09"] },
+                        then: "September",
+                      },
+                      { case: { $eq: ["$_id.month", "10"] }, then: "October" },
+                      { case: { $eq: ["$_id.month", "11"] }, then: "November" },
+                      { case: { $eq: ["$_id.month", "12"] }, then: "December" },
+                    ],
+                    default: "Unknown",
+                  },
+                },
+                " ",
+                "$_id.year",
+              ],
+            },
+            totalRevenue: 1,
+          },
+        },
+        {
+          $sort: { monthYear: 1 },
+        },
+      ]);
+
+      return handleSuccess200(res, carts);
+    } catch (error) {
+      return handleError500(res, error);
+    }
+  },
+
   getAllForUser: async (req, res) => {
     try {
       const { id } = req.params;

@@ -43,10 +43,6 @@ const data = {
           title: "User Deleted List",
           url: "/admin/users/deleted",
         },
-        {
-          title: "Profile",
-          url: "#",
-        },
       ],
     },
     {
@@ -61,10 +57,6 @@ const data = {
         {
           title: "Room Type Deleted List",
           url: "/admin/room-types/deleted",
-        },
-        {
-          title: "Explorer",
-          url: "#",
         },
       ],
     },

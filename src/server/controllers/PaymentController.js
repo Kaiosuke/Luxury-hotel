@@ -16,8 +16,7 @@ const config = {
   endpoint: "https://sb-openapi.zalopay.vn/v2/create",
 };
 
-const url =
-  "https://27dd-2001-ee0-40e1-da25-6c4e-95e4-5849-874b.ngrok-free.app";
+const url = "https://065c-42-114-39-192.ngrok-free.app";
 
 const PaymentController = {
   payment: async (req, res) => {

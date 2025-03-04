@@ -78,9 +78,7 @@ interface ICart {
   room?: {
     roomNumber: number;
   };
-  user?: {
-    username: string;
-  };
+  user?: IUser;
   roomType?: {
     title: string;
     thumbnail: string;
