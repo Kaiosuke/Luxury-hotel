@@ -12,7 +12,7 @@ const FoodSChema = new Schema(
       },
     ],
   },
-  { timeseries: true }
+  { timestamps: true }
 );
 
 FoodSChema.plugin(MongooseDelete, {

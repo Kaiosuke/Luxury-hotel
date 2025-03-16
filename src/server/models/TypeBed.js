@@ -12,7 +12,7 @@ const TypeBedSchema = new Schema(
       },
     ],
   },
-  { timeseries: true }
+  { timestamps: true }
 );
 
 TypeBedSchema.plugin(MongooseDelete, {

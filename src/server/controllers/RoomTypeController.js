@@ -99,6 +99,7 @@ const RoomTypeController = {
             title: { $regex: search, $options: "i" },
           },
         },
+        { $sort: sortby },
       ]);
 
       const filteredRooms = roomTypes.filter((room) => {

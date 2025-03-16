@@ -69,9 +69,9 @@ const page = () => {
                   {formatMoney(sumMoney(cartsUsers))}
                 </span>
               </div>
-              <Button variant={"secondary"} className="w-full">
+              {/* <Button variant={"secondary"} className="w-full">
                 Add more Room
-              </Button>
+              </Button> */}
             </div>
           </div>
         </div>

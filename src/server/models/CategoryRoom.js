@@ -12,7 +12,7 @@ const CategoryRoomSchema = new Schema(
       },
     ],
   },
-  { timeseries: true }
+  { timestamps: true }
 );
 
 CategoryRoomSchema.plugin(MongooseDelete, {

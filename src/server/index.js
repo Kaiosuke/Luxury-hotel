@@ -4,8 +4,7 @@ import express, { json, urlencoded } from "express";
 import connect from "./config/db.js";
 import env from "./config/envConfig.js";
 import routes from "./routes/index.js";
-import cleanupCart from "./jobs/cartCleanup.js";
-
+import { cleanupCart, cleanupDeleted } from "./jobs/cleanup.js";
 connect();
 
 const app = express();
@@ -29,6 +28,7 @@ routes(app);
 const port = env.PORT;
 
 cleanupCart();
+cleanupDeleted();
 
 app.use((req, res) => {
   return res.send("Not found page");

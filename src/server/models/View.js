@@ -12,7 +12,7 @@ const ViewSchema = new Schema(
       },
     ],
   },
-  { timeseries: true }
+  { timestamps: true }
 );
 
 ViewSchema.plugin(MongooseDelete, {
