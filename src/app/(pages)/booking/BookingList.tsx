@@ -236,7 +236,10 @@ const BookingList = ({
                 checkIn &&
                 checkOut &&
                 options.map((option) => {
-                  if (option._id !== process.env.NEXT_PUBLIC_DEFAULT_OPTION)
+                  if (
+                    option._id !== process.env.NEXT_PUBLIC_DEFAULT_OPTION ||
+                    option.title === "Uncategorized"
+                  )
                     return (
                       <OptionRoom
                         key={option._id}
