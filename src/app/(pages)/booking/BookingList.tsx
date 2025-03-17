@@ -43,21 +43,22 @@ const BookingList = ({
   getQuantityAvailableRoom,
 }: IBookingList) => {
   const filterIconFeature = (value: string) => {
-    return value.includes("Conditioning") ? (
-      <FaTemperatureHigh />
-    ) : value.includes("Desk ") ? (
-      <LuLamp />
-    ) : value.includes("Wifi") ? (
-      <FaWifi />
-    ) : value.includes("Bathtub") ? (
-      <MdOutlineBathtub />
-    ) : value.includes("Deposit ") ? (
-      <BsCreditCard2BackFill />
-    ) : value.includes("Breakfast") ? (
-      <MdEmojiFoodBeverage />
-    ) : (
-      <BsFillSafe2Fill />
-    );
+    if (value)
+      return value.includes("Conditioning") ? (
+        <FaTemperatureHigh />
+      ) : value.includes("Desk ") ? (
+        <LuLamp />
+      ) : value.includes("Wifi") ? (
+        <FaWifi />
+      ) : value.includes("Bathtub") ? (
+        <MdOutlineBathtub />
+      ) : value.includes("Deposit ") ? (
+        <BsCreditCard2BackFill />
+      ) : value.includes("Breakfast") ? (
+        <MdEmojiFoodBeverage />
+      ) : (
+        <BsFillSafe2Fill />
+      );
   };
 
   const [roomId, setRoomId] = useState<string>("");
