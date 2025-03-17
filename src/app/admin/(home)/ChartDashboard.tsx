@@ -48,8 +48,6 @@ function SalesChartDashboard() {
     })();
   }, []);
 
-  console.log(revenue);
-
   return (
     <>
       {revenue.length && (

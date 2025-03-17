@@ -26,13 +26,13 @@ interface IRoomType {
   price: number;
   quantity: number;
   rate: number;
-  categoryRoomId: string;
-  viewId: string;
+  categoryRoomId: any;
+  viewId: any;
   description: string;
   quickDes: string[];
   features: string[];
   square: string;
-  typeBedId: string;
+  typeBedId: any;
   sleeps: number;
   images: string[];
   map: string;

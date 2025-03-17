@@ -203,7 +203,7 @@ const BookingList = ({
                   {getQuantityAvailableRoom(roomType._id)} rooms available.
                 </span>
               )}
-              <span className="text-size-base">{roomType.typeBed.title}</span>
+              <span className="text-size-base">{roomType.typeBed?.title}</span>
               <span>Sleeps {roomType.sleeps}</span>
               <span>{roomType.square}</span>
             </div>

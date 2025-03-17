@@ -61,6 +61,14 @@ const page = () => {
             <h2 className="text-size-3xl">
               YourCart: {cartsUsers.length} Items
             </h2>
+            {cartsUsers.length ? (
+              <span>
+                You have <span className="text-red-600">15 minutes</span> to
+                checkout
+              </span>
+            ) : (
+              <span></span>
+            )}
             {!cartsUsers.length && (
               <div className="mt-10">
                 <Link

@@ -2,7 +2,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 
 const instanceLocal = axios.create({
-  baseURL: "http://localhost:8080/",
+  baseURL: "https://hotel-backend-production-a519.up.railway.app/",
   withCredentials: true,
   headers: { "Content-type": "application/json" },
 });
