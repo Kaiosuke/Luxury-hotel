@@ -238,7 +238,7 @@ const BookingList = ({
                 options.map((option) => {
                   if (
                     option._id !== process.env.NEXT_PUBLIC_DEFAULT_OPTION ||
-                    option.title === "Uncategorized"
+                    option.title !== "Uncategorized"
                   )
                     return (
                       <OptionRoom
