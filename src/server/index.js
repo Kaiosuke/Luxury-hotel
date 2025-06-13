@@ -17,10 +17,11 @@ app.use(cookieParser());
 app.use(
   cors({
     origin: [
-      "http://localhost:3000",
-      "https://luxury-hotel-xngecrx6s-kaios-projects-1c6a688d.vercel.app"
+      "https://luxury-hotel-xngecrx6s-kaios-projects-1c6a688d.vercel.app",
+      "http://localhost:3000"
     ],
-    credentials: true
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"]
   })
 );
 
