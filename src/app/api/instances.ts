@@ -1,10 +1,13 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 
+// const url = "https://hotel-backend-production-a519.up.railway.app"
+const url = "https://hotel-backend-s287.onrender.com";
+
 const instanceLocal = axios.create({
-  baseURL: "https://hotel-backend-production-a519.up.railway.app/",
+  baseURL: url,
   withCredentials: true,
-  headers: { "Content-type": "application/json" },
+  headers: { "Content-type": "application/json" }
 });
 
 instanceLocal.interceptors.request.use(
@@ -39,7 +42,7 @@ instanceLocal.interceptors.response.use(
         Cookies.set("accessToken", newAccessToken, {
           expires: 1,
           secure: true,
-          sameSite: "Strict",
+          sameSite: "Strict"
         });
 
         originalRequest.headers.Authorization = `Bearer ${res.data.newAccessToken}`;
